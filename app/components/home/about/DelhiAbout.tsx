@@ -124,18 +124,19 @@ export default function DelhiAbout() {
               <span
                 className="
                   whitespace-nowrap
-                  text-[7px]
+                  text-[8px]
                   font-bold
                   uppercase
                   tracking-[0.15em]
                   text-[#03C35E]
-                  xs:text-[8px]
+                  xs:text-[9px]
                   xs:tracking-[0.17em]
                   sm:text-[9px]
                   sm:tracking-[0.2em]
                   md:text-[10px]
                   md:tracking-[0.22em]
-                  lg:text-xs
+                  lg:text-[11px]
+                  xl:text-xs
                   lg:tracking-[0.25em]
                 "
               >
@@ -161,13 +162,13 @@ export default function DelhiAbout() {
             ================================================== */}
             <h2
               className="
-                text-[34px]
-                xs:text-[38px]
-                sm:text-[44px]
-                md:text-[50px]
-                lg:text-[44px]
-                xl:text-[52px]
-                2xl:text-[58px]
+                text-[24px]
+              xs:text-[26px]
+              sm:text-[28px]
+              md:text-[32px]
+              lg:text-[42px]
+              xl:text-[50px]
+              2xl:text-[58px]
                 font-extrabold
                 leading-[1]
                 tracking-[-0.04em]
@@ -205,12 +206,14 @@ export default function DelhiAbout() {
                 max-w-[590px]
                 space-y-3
                 xs:space-y-4
-                text-[12px]
                 leading-[1.75]
                 text-[#303944]
-                xs:text-[13px]
-                sm:text-[14px]
-                md:text-[15px]
+                text-[10px]
+              xs:text-[11px]
+              sm:text-[11px]
+              md:text-xs
+              lg:text-sm
+              xl:text-base
               "
             >
               <p>
@@ -562,3 +565,5 @@ export default function DelhiAbout() {
     </section>
   );
 }
+
+

@@ -1,7 +1,7 @@
+// app/components/how-it-works/DelhiHowItWorks.tsx
 "use client";
 
 import Image from "next/image";
-import { MdDirectionsCar } from "react-icons/md";
 
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
@@ -35,152 +35,194 @@ const steps = [
 
 export default function DelhiHowItWorks() {
   return (
-    <section className="relative w-full overflow-hidden bg-white py-14 sm:py-16 md:py-20 lg:py-24">
-      {/* =====================================================
-          BACKGROUND DOTS - TOP LEFT
-      ====================================================== */}
-      <div
-        className="pointer-events-none absolute left-4 top-5 h-20 w-20 opacity-50 sm:left-8 sm:top-7 sm:h-24 sm:w-24"
-        style={{
-          backgroundImage: `radial-gradient(${GREEN}70 1.5px, transparent 1.5px)`,
-          backgroundSize: "11px 11px",
-        }}
-      />
-
-      {/* =====================================================
-          BACKGROUND DOTS - TOP RIGHT
-      ====================================================== */}
-      <div
-        className="pointer-events-none absolute right-4 top-5 h-20 w-20 opacity-50 sm:right-8 sm:top-7 sm:h-24 sm:w-24"
-        style={{
-          backgroundImage: `radial-gradient(${GREEN}70 1.5px, transparent 1.5px)`,
-          backgroundSize: "11px 11px",
-        }}
-      />
-
-      {/* =====================================================
-          LIGHT DECORATIVE BUILDINGS
-      ====================================================== */}
-      <div className="pointer-events-none absolute bottom-[25%] left-0 hidden opacity-[0.10] lg:block">
-        <div className="flex items-end gap-2">
-          <div className="h-28 w-10 border border-[#03C35E]" />
-          <div className="h-40 w-12 border border-[#03C35E]" />
-          <div className="h-24 w-8 border border-[#03C35E]" />
-          <div className="h-32 w-10 border border-[#03C35E]" />
-          <div className="h-20 w-7 border border-[#03C35E]" />
-        </div>
-      </div>
-
-      <div className="pointer-events-none absolute bottom-[25%] right-0 hidden opacity-[0.10] lg:block">
-        <div className="flex items-end gap-2">
-          <div className="h-20 w-7 border border-[#03C35E]" />
-          <div className="h-32 w-10 border border-[#03C35E]" />
-          <div className="h-24 w-8 border border-[#03C35E]" />
-          <div className="h-40 w-12 border border-[#03C35E]" />
-          <div className="h-28 w-10 border border-[#03C35E]" />
-        </div>
-      </div>
-
+    <section
+      className="
+        relative
+        w-full
+        overflow-hidden
+        bg-white
+        py-12
+        xs:py-14
+        sm:py-16
+        md:py-20
+        lg:py-24
+        xl:py-28
+      "
+    >
       {/* =====================================================
           MAIN CONTAINER
       ====================================================== */}
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          w-full
+          max-w-[1400px]
+          px-4
+          xs:px-5
+          sm:px-8
+          md:px-10
+          lg:px-12
+          xl:px-16
+        "
+      >
         {/* =====================================================
-            HEADER
+            HEADER — SAME STYLE AS DELHI ABOUT
         ====================================================== */}
-        <div className="mb-14 text-center sm:mb-16 md:mb-20">
-          {/* Small pill */}
+        <div
+          className="
+            mb-14
+            w-full
+            max-w-[650px]
+            text-left
+            sm:mb-16
+            md:mb-20
+          "
+        >
+          {/* =================================================
+              SMALL LABEL
+          ================================================== */}
           <div
             className="
-              mx-auto mb-4
-              inline-flex
+              mb-4
+              flex
+              w-full
               items-center
-              gap-3
-              rounded-full
-              border
-              bg-white
-              px-5
-              py-2
-              shadow-sm
-              sm:px-6
-              sm:py-2.5
+              justify-start
+              gap-1.5
+              xs:gap-2
+              sm:gap-2.5
+              md:gap-3
             "
-            style={{
-              borderColor: `${GREEN}55`,
-            }}
           >
-            <span
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: ORANGE }}
-            />
-
+            {/* LEFT LINE */}
             <span
               className="
-                text-[11px]
-                font-extrabold
-                uppercase
-                tracking-[0.18em]
-                sm:text-xs
-                md:text-sm
+                block
+                h-px
+                w-6
+                bg-gray-400/60
+                sm:w-8
+                md:w-10
+                lg:w-12
               "
-              style={{ color: "#145A27" }}
+            />
+
+            {/* LABEL */}
+            <span
+              className="
+                whitespace-nowrap
+                text-[8px]
+                font-bold
+                uppercase
+                tracking-[0.15em]
+                text-[#03C35E]
+                xs:text-[9px]
+                xs:tracking-[0.17em]
+                sm:text-[9px]
+                sm:tracking-[0.2em]
+                md:text-[10px]
+                md:tracking-[0.22em]
+                lg:text-[11px]
+                xl:text-xs
+                lg:tracking-[0.25em]
+              "
             >
               How It Works
             </span>
 
+            {/* RIGHT LINE */}
             <span
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: ORANGE }}
+              className="
+                block
+                h-px
+                w-6
+                bg-gray-400/60
+                sm:w-8
+                md:w-10
+                lg:w-12
+              "
             />
           </div>
 
-          {/* Main heading */}
+          {/* =================================================
+              MAIN TITLE
+          ================================================== */}
           <h2
             className="
-              text-[42px]
-              font-black
-              leading-[0.95]
+              text-[24px]
+              xs:text-[26px]
+              sm:text-[28px]
+              md:text-[32px]
+              lg:text-[42px]
+              xl:text-[50px]
+              2xl:text-[58px]
+              font-extrabold
+              leading-[1]
               tracking-[-0.04em]
-              text-[#111827]
-              sm:text-[54px]
-              md:text-[64px]
-              lg:text-[76px]
-              xl:text-[82px]
+              text-black
             "
           >
-            How It{" "}
-            <span style={{ color: "#087C26" }}>
-              Works
-            </span>
+            HOW IT WORKS
           </h2>
 
-          {/* Orange divider */}
-          <div className="mx-auto mt-6 flex items-center justify-center gap-4">
-            <span className="h-[2px] w-16 bg-[#F7941E] sm:w-24" />
-
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F7941E] text-white shadow-md">
-              <MdDirectionsCar className="text-xl" />
-            </div>
-
-            <span className="h-[2px] w-16 bg-[#F7941E] sm:w-24" />
-          </div>
-
-          {/* Subtitle */}
+          {/* =================================================
+              SUBHEADING
+          ================================================== */}
           <p
             className="
-              mx-auto
-              mt-5
-              max-w-[650px]
-              px-3
-              text-sm
-              leading-relaxed
-              text-[#252B35]
-              sm:text-base
-              md:text-lg
+              mt-3
+              font-serif
+              text-[21px]
+              italic
+              leading-tight
+              text-[#03C35E]
+              xs:text-[23px]
+              sm:text-[27px]
+              md:text-[29px]
             "
           >
-            Simple steps to book your perfect ride with Urban Cruise
+            Simple Steps, Smooth Journey
           </p>
+
+          {/* =================================================
+              DESCRIPTION
+          ================================================== */}
+          <div
+            className="
+              mt-5
+              max-w-[590px]
+              space-y-3
+              xs:space-y-4
+              leading-[1.75]
+              text-[#303944]
+              text-[10px]
+              xs:text-[11px]
+              sm:text-[11px]
+              md:text-xs
+              lg:text-sm
+              xl:text-base
+            "
+          >
+            <p>
+              Booking your perfect ride with Urban Cruise is{" "}
+              <strong className="font-bold text-[#03C35E]">
+                simple
+              </strong>{" "}
+              and hassle-free. Just follow three easy steps to
+              get started.
+            </p>
+
+            <p>
+              Share your travel requirements, choose the{" "}
+              <strong className="font-bold text-[#03C35E]">
+                right vehicle
+              </strong>{" "}
+              for your journey, and confirm your booking with
+              our professional team.
+            </p>
+          </div>
         </div>
 
         {/* =====================================================
@@ -242,7 +284,13 @@ export default function DelhiHowItWorks() {
             {steps.map((step) => (
               <div
                 key={step.number}
-                className="relative flex flex-col items-center"
+                className="
+                  group
+                  relative
+                  flex
+                  flex-col
+                  items-center
+                "
               >
                 {/* =================================================
                     NUMBER BADGE
@@ -263,6 +311,9 @@ export default function DelhiHowItWorks() {
                     font-black
                     text-white
                     shadow-[0_8px_20px_rgba(0,0,0,0.18)]
+                    transition-transform
+                    duration-300
+                    group-hover:scale-105
                     sm:h-[82px]
                     sm:w-[82px]
                     sm:text-[28px]
@@ -323,7 +374,9 @@ export default function DelhiHowItWorks() {
                       sm:text-[23px]
                       lg:text-[25px]
                     "
-                    style={{ color: step.color }}
+                    style={{
+                      color: step.color,
+                    }}
                   >
                     {step.title}
                   </h3>
@@ -348,14 +401,21 @@ export default function DelhiHowItWorks() {
                       xl:h-[325px]
                     "
                   >
-                    {/* Soft background */}
+                    {/* SOFT BACKGROUND */}
                     <div
-                      className="absolute inset-x-[12%] bottom-3 top-5 rounded-[30px]"
+                      className="
+                        absolute
+                        inset-x-[12%]
+                        bottom-3
+                        top-5
+                        rounded-[30px]
+                      "
                       style={{
                         backgroundColor: `${step.color}07`,
                       }}
                     />
 
+                    {/* IMAGE */}
                     <Image
                       src={step.image}
                       alt={step.title}
@@ -401,6 +461,18 @@ export default function DelhiHowItWorks() {
             ))}
           </div>
         </div>
+
+        {/* =====================================================
+            BOTTOM SPACING
+        ====================================================== */}
+        <div
+          className="
+            h-2
+            sm:h-10
+            lg:h-16
+            xl:h-20
+          "
+        />
       </div>
     </section>
   );

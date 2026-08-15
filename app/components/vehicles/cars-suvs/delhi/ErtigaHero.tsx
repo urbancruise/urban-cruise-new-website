@@ -1,9 +1,9 @@
-// app/components/hero/DelhiHero.tsx
+// app/components/hero/ErtigaHero.tsx
 "use client";
 
-import QuickCallForm from "../../shared/QuickCallForm";
+import QuickCallForm from "@/app/components/shared/QuickCallForm";
 
-export default function DelhiHero() {
+export default function ErtigaHero() {
   return (
     <section className="relative w-full bg-white">
       {/* =====================================================
@@ -360,3 +360,4 @@ export default function DelhiHero() {
   );
 }
 
+    

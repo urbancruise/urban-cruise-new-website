@@ -1,9 +1,12 @@
-// app/components/hero/DelhiHero.tsx
+// app/components/hero/Hero.tsx
 "use client";
 
-import QuickCallForm from "../../shared/QuickCallForm";
+import QuickCallForm from "@/app/components/shared/QuickCallForm";
 
-export default function DelhiHero() {
+
+
+
+export default function Hero() {
   return (
     <section className="relative w-full bg-white">
       {/* =====================================================
@@ -27,7 +30,7 @@ export default function DelhiHero() {
         ================================================== */}
         <img
           src="/images/hero/herobg.webp"
-          alt="Premium car rental in Delhi"
+          alt="Premium car rental in Mumbai"
           className="
             absolute
             inset-0
@@ -256,7 +259,7 @@ export default function DelhiHero() {
         >
           <img
             src="/images/hero/3 images.webp"
-            alt="Premium cars and buses available for rental in Delhi"
+            alt="Premium cars and buses available for rental in Mumbai"
             className="
               w-full
               h-auto
@@ -343,7 +346,7 @@ export default function DelhiHero() {
       </div>
 
       {/* =====================================================
-          SMALL GAP BEFORE DELHI ABOUT
+          SMALL GAP BEFORE MUMBAI ABOUT
       ====================================================== */}
       <div
         className="
