@@ -101,11 +101,9 @@ export default function DelhiAbout() {
                 items-center
                 justify-center
                 gap-1.5
-
                 xs:gap-2
                 sm:gap-2.5
                 md:gap-3
-
                 lg:justify-start
               "
             >
@@ -116,7 +114,6 @@ export default function DelhiAbout() {
                   h-px
                   w-6
                   bg-gray-400/60
-
                   sm:w-8
                   md:w-10
                   lg:w-12
@@ -132,16 +129,12 @@ export default function DelhiAbout() {
                   uppercase
                   tracking-[0.15em]
                   text-[#03C35E]
-
                   xs:text-[8px]
                   xs:tracking-[0.17em]
-
                   sm:text-[9px]
                   sm:tracking-[0.2em]
-
                   md:text-[10px]
                   md:tracking-[0.22em]
-
                   lg:text-xs
                   lg:tracking-[0.25em]
                 "
@@ -156,7 +149,6 @@ export default function DelhiAbout() {
                   h-px
                   w-6
                   bg-gray-400/60
-
                   sm:w-8
                   md:w-10
                   lg:w-12
@@ -176,7 +168,6 @@ export default function DelhiAbout() {
                 lg:text-[44px]
                 xl:text-[52px]
                 2xl:text-[58px]
-
                 font-extrabold
                 leading-[1]
                 tracking-[-0.04em]
@@ -185,71 +176,6 @@ export default function DelhiAbout() {
             >
               URBAN CRUISE
             </h2>
-
-            {/* =================================================
-                GREEN DIVIDER
-            ================================================== */}
-            <div
-              className="
-                mt-4
-                flex
-                w-full
-                max-w-[390px]
-                items-center
-                gap-2
-                sm:mt-5
-              "
-            >
-              <span
-                className="
-                  h-px
-                  flex-1
-                  bg-[#03C35E]/30
-                "
-              />
-
-              <span
-                className="
-                  h-[6px]
-                  w-[6px]
-                  shrink-0
-                  rounded-full
-                  bg-[#03C35E]
-                "
-              />
-
-              <span
-                className="
-                  flex
-                  h-7
-                  w-[42px]
-                  shrink-0
-                  items-center
-                  justify-center
-                  text-[#03C35E]
-                "
-              >
-                <FaCarSide className="text-xl sm:text-[22px]" />
-              </span>
-
-              <span
-                className="
-                  h-[6px]
-                  w-[6px]
-                  shrink-0
-                  rounded-full
-                  bg-[#03C35E]
-                "
-              />
-
-              <span
-                className="
-                  h-px
-                  flex-1
-                  bg-[#03C35E]/30
-                "
-              />
-            </div>
 
             {/* =================================================
                 TAGLINE
@@ -262,7 +188,6 @@ export default function DelhiAbout() {
                 italic
                 leading-tight
                 text-[#03C35E]
-
                 xs:text-[23px]
                 sm:text-[27px]
                 md:text-[29px]
@@ -279,13 +204,10 @@ export default function DelhiAbout() {
                 mt-5
                 max-w-[590px]
                 space-y-3
-
                 xs:space-y-4
-
                 text-[12px]
                 leading-[1.75]
                 text-[#303944]
-
                 xs:text-[13px]
                 sm:text-[14px]
                 md:text-[15px]
@@ -329,8 +251,6 @@ export default function DelhiAbout() {
                 and professional drivers.
               </p>
             </div>
-
-            
           </div>
 
           {/* =====================================================

@@ -436,19 +436,15 @@ export default function Navbar() {
           mx-auto
           relative
           overflow-visible
-
           transition-all
           duration-500
           ease-out
-
           /* PREMIUM GLASS */
           bg-white/40
           backdrop-blur-[24px]
           backdrop-saturate-150
-
           border
           border-white/70
-
           ring-1
           ring-black/[0.03]
 
@@ -465,9 +461,7 @@ export default function Navbar() {
                 sm:rounded-2xl
                 md:rounded-3xl
                 lg:rounded-full
-
                 max-w-7xl
-
                 shadow-[0_8px_35px_rgba(0,0,0,0.12)]
               `
           }
@@ -513,15 +507,12 @@ export default function Navbar() {
           className={`
             relative
             z-20
-
             flex
             items-center
             justify-between
-
             transition-all
             duration-500
             ease-out
-
             ${navHeight}
           `}
         >
@@ -552,7 +543,6 @@ export default function Navbar() {
                 object-contain
                 transition-all
                 duration-500
-
                 ${logoHeight}
               `}
               style={{
@@ -575,7 +565,6 @@ export default function Navbar() {
             "
           >
             {/* ABOUT */}
-
             <div
               ref={aboutRef}
               className="relative"
@@ -586,14 +575,12 @@ export default function Navbar() {
                 className={`
                   flex
                   items-center
-                  gap-0.5
+                  gap-1.5
                   font-medium
                   cursor-pointer
                   whitespace-nowrap
-
                   transition-all
                   duration-300
-
                   ${
                     aboutOpen
                       ? "text-[#03C35E]"
@@ -637,26 +624,19 @@ export default function Navbar() {
                     left-1/2
                     -translate-x-1/2
                     mt-3
-
                     w-52
                     sm:w-56
                     md:w-60
                     lg:w-64
-
                     bg-white/90
                     backdrop-blur-2xl
                     backdrop-saturate-150
-
                     border
                     border-white/80
-
                     rounded-2xl
-
                     shadow-[0_15px_45px_rgba(0,0,0,0.14)]
-
                     overflow-hidden
                     py-2
-
                     animate-in
                     fade-in
                     slide-in-from-top-2
@@ -673,15 +653,11 @@ export default function Navbar() {
                         block
                         px-4
                         py-2.5
-
                         text-xs
                         sm:text-sm
-
                         text-[#3A3D33]
-
                         hover:bg-[#F3EFE4]
                         hover:text-[#03C35E]
-
                         transition-all
                         duration-200
                       "
@@ -706,20 +682,17 @@ export default function Navbar() {
                 className={`
                   flex
                   items-center
-                  gap-0.5
+                  gap-1.5
                   font-medium
                   cursor-pointer
                   whitespace-nowrap
-
                   transition-all
                   duration-300
-
                   ${
                     vehiclesOpen
                       ? "text-[#03C35E]"
                       : "text-[#3A3D33] hover:text-[#03C35E]"
                   }
-
                   ${
                     isScrolled
                       ? "text-xs sm:text-sm md:text-[14px]"
@@ -743,25 +716,18 @@ export default function Navbar() {
                     left-1/2
                     -translate-x-1/2
                     mt-3
-
                     w-64
                     lg:w-72
                     xl:w-80
-
                     bg-white/90
                     backdrop-blur-2xl
                     backdrop-saturate-150
-
                     border
                     border-white/80
-
                     rounded-2xl
-
                     shadow-[0_15px_45px_rgba(0,0,0,0.14)]
-
                     overflow-visible
                     py-2
-
                     animate-in
                     fade-in
                     slide-in-from-top-2
@@ -782,15 +748,11 @@ export default function Navbar() {
                           flex
                           items-center
                           justify-between
-
                           px-4
                           py-2.5
-
                           cursor-pointer
-
                           transition-all
                           duration-200
-
                           ${
                             activeCategory === category.category
                               ? "bg-[#F3EFE4]"
@@ -803,7 +765,6 @@ export default function Navbar() {
                             text-xs
                             sm:text-sm
                             font-medium
-
                             ${
                               activeCategory === category.category
                                 ? "text-[#03C35E]"
@@ -819,10 +780,8 @@ export default function Navbar() {
                             className={`
                               w-4
                               h-4
-
                               transition-all
                               duration-200
-
                               ${
                                 activeCategory === category.category
                                   ? "text-[#03C35E] rotate-90"
@@ -844,7 +803,6 @@ export default function Navbar() {
                       </div>
 
                       {/* SUB MENU */}
-
                       {activeCategory === category.category &&
                         category.items.length > 0 && (
                           <div
@@ -852,24 +810,17 @@ export default function Navbar() {
                               absolute
                               left-full
                               top-0
-
                               w-64
                               xl:w-72
-
                               bg-white/90
                               backdrop-blur-2xl
                               backdrop-saturate-150
-
                               border
                               border-white/80
-
                               rounded-2xl
-
                               shadow-[0_15px_45px_rgba(0,0,0,0.14)]
-
                               overflow-hidden
                               py-2
-
                               animate-in
                               fade-in
                               slide-in-from-left-2
@@ -886,15 +837,11 @@ export default function Navbar() {
                                   block
                                   px-4
                                   py-2.5
-
                                   text-xs
                                   sm:text-sm
-
                                   text-[#3A3D33]
-
                                   hover:bg-[#F3EFE4]
                                   hover:text-[#03C35E]
-
                                   transition-all
                                   duration-200
                                 "
@@ -915,7 +862,6 @@ export default function Navbar() {
             </div>
 
             {/* SERVICES */}
-
             <div
               ref={servicesRef}
               className="relative"
@@ -926,20 +872,17 @@ export default function Navbar() {
                 className={`
                   flex
                   items-center
-                  gap-0.5
+                  gap-1.5
                   font-medium
                   cursor-pointer
                   whitespace-nowrap
-
                   transition-all
                   duration-300
-
                   ${
                     servicesOpen
                       ? "text-[#03C35E]"
                       : "text-[#3A3D33] hover:text-[#03C35E]"
                   }
-
                   ${
                     isScrolled
                       ? "text-xs sm:text-sm md:text-[14px]"
@@ -963,23 +906,16 @@ export default function Navbar() {
                     left-1/2
                     -translate-x-1/2
                     mt-3
-
                     w-64
-
                     bg-white/90
                     backdrop-blur-2xl
                     backdrop-saturate-150
-
                     border
                     border-white/80
-
                     rounded-2xl
-
                     shadow-[0_15px_45px_rgba(0,0,0,0.14)]
-
                     overflow-hidden
                     py-2
-
                     animate-in
                     fade-in
                     slide-in-from-top-2
@@ -996,15 +932,11 @@ export default function Navbar() {
                         block
                         px-4
                         py-2.5
-
                         text-xs
                         sm:text-sm
-
                         text-[#3A3D33]
-
                         hover:bg-[#F3EFE4]
                         hover:text-[#03C35E]
-
                         transition-all
                         duration-200
                       "
@@ -1018,7 +950,6 @@ export default function Navbar() {
             </div>
 
             {/* INFO */}
-
             <div
               ref={infoRef}
               className="relative"
@@ -1029,14 +960,12 @@ export default function Navbar() {
                 className={`
                   flex
                   items-center
-                  gap-0.5
+                  gap-1.5
                   font-medium
                   cursor-pointer
                   whitespace-nowrap
-
                   transition-all
                   duration-300
-
                   ${
                     infoOpen
                       ? "text-[#03C35E]"
@@ -1066,23 +995,16 @@ export default function Navbar() {
                     left-1/2
                     -translate-x-1/2
                     mt-3
-
                     w-56
-
                     bg-white/90
                     backdrop-blur-2xl
                     backdrop-saturate-150
-
                     border
                     border-white/80
-
                     rounded-2xl
-
                     shadow-[0_15px_45px_rgba(0,0,0,0.14)]
-
                     overflow-hidden
                     py-2
-
                     animate-in
                     fade-in
                     slide-in-from-top-2
@@ -1099,15 +1021,11 @@ export default function Navbar() {
                         block
                         px-4
                         py-2.5
-
                         text-xs
                         sm:text-sm
-
                         text-[#3A3D33]
-
                         hover:bg-[#F3EFE4]
                         hover:text-[#03C35E]
-
                         transition-all
                         duration-200
                       "
@@ -1127,7 +1045,7 @@ export default function Navbar() {
             className="
               flex
               items-center
-              gap-1
+              gap-1.5
               xs:gap-1.5
               sm:gap-2
               md:gap-2.5
@@ -1144,40 +1062,29 @@ export default function Navbar() {
                 items-center
                 gap-1
                 sm:gap-1.5
-
                 bg-[#03C35E]/90
                 backdrop-blur-md
-
                 border
                 border-white/40
-
                 text-white
                 font-medium
-
                 px-2
                 xs:px-2.5
                 sm:px-3
                 md:px-4
                 lg:px-4
                 xl:px-5
-
-                py-1
+                py-1.5
                 sm:py-1.5
                 md:py-2
                 lg:py-2.5
-
                 rounded-full
-
                 shadow-[0_4px_18px_rgba(3,195,94,0.22)]
-
                 transition-all
                 duration-300
-
                 whitespace-nowrap
-
                 hover:bg-[#03C35E]
                 hover:scale-105
-
                 active:scale-95
               "
             >
@@ -1205,8 +1112,8 @@ export default function Navbar() {
                 className="
                   w-2.5
                   h-2.5
-                  sm:w-3
-                  sm:h-3
+                  sm:w-4
+                  sm:h-4
                 "
               />
             </button>
@@ -1218,36 +1125,24 @@ export default function Navbar() {
               className="
                 hidden
                 lg:flex
-
                 items-center
                 justify-center
                 gap-1.5
-
                 bg-[#03C35E]/90
                 backdrop-blur-md
-
                 border
                 border-white/40
-
                 text-white
-
                 font-medium
-
                 px-4
                 xl:px-5
-
                 py-2
                 lg:py-2.5
-
                 rounded-full
-
                 shadow-[0_4px_18px_rgba(3,195,94,0.22)]
-
                 transition-all
                 duration-300
-
                 whitespace-nowrap
-
                 hover:bg-[#03C35E]
                 hover:scale-105
                 active:scale-95
@@ -1259,42 +1154,29 @@ export default function Navbar() {
             </Link>
 
             {/* PHONE */}
-
             <a
               href={`tel:${locationConfig.phone.replace(/\s/g, "")}`}
               className="
                 hidden
                 lg:flex
-
                 items-center
                 justify-center
                 gap-1.5
-
                 bg-[#03C35E]/90
                 backdrop-blur-md
-
                 border
                 border-white/40
-
                 text-white
-
                 font-medium
-
                 px-4
                 xl:px-5
-
                 py-2
                 lg:py-2.5
-
                 rounded-full
-
                 shadow-[0_4px_18px_rgba(3,195,94,0.22)]
-
                 transition-all
                 duration-300
-
                 whitespace-nowrap
-
                 hover:bg-[#03C35E]
                 hover:scale-105
                 active:scale-95
@@ -1317,25 +1199,17 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="
                 lg:hidden
-
                 p-2
-
                 rounded-full
-
                 bg-white/50
                 backdrop-blur-md
-
                 border
                 border-white/70
-
                 text-[#2A2E22]
-
                 transition-all
                 duration-300
-
                 hover:bg-white/80
                 hover:scale-105
-
                 active:scale-90
               "
               aria-label="Toggle menu"
@@ -1373,40 +1247,29 @@ export default function Navbar() {
         </div>
 
         {/* MOBILE NAVIGATION */}
-
         {isOpen && (
           <div
             className="
               relative
               z-30
-
               lg:hidden
-
               mt-2
-
               border-t
               border-white/60
-
               px-2
               pt-3
               pb-5
-
               max-h-[75vh]
-
               overflow-y-auto
-
               bg-white/25
               backdrop-blur-xl
-
               rounded-b-2xl
-
               animate-in
               slide-in-from-top-4
               duration-300
             "
           >
             {/* MOBILE ABOUT */}
-
             <button
               onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
               className={`
@@ -1414,21 +1277,15 @@ export default function Navbar() {
                 flex
                 items-center
                 justify-between
-
                 px-4
                 py-3
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 font-medium
-
                 rounded-xl
-
                 transition-all
                 duration-300
-
                 ${
                   mobileAboutOpen
                     ? "text-[#03C35E] bg-white/60"
@@ -1453,21 +1310,15 @@ export default function Navbar() {
                     href={getLocationUrl(item.href)}
                     className="
                       block
-
                       px-4
                       py-2.5
-
                       text-xs
                       xs:text-[13px]
                       sm:text-sm
-
                       text-[#3A3D33]
-
                       hover:bg-white/60
                       hover:text-[#03C35E]
-
                       rounded-xl
-
                       transition-all
                       duration-200
                     "
@@ -1483,7 +1334,6 @@ export default function Navbar() {
             )}
 
             {/* MOBILE VEHICLES */}
-
             <button
               onClick={() => setMobileVehiclesOpen(!mobileVehiclesOpen)}
               className={`
@@ -1491,21 +1341,15 @@ export default function Navbar() {
                 flex
                 items-center
                 justify-between
-
                 px-4
                 py-3
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 font-medium
-
                 rounded-xl
-
                 transition-all
                 duration-300
-
                 ${
                   mobileVehiclesOpen
                     ? "text-[#03C35E] bg-white/60"
@@ -1539,18 +1383,13 @@ export default function Navbar() {
                         flex
                         items-center
                         justify-between
-
                         px-4
                         py-2.5
-
                         text-xs
                         xs:text-[13px]
                         sm:text-sm
-
                         font-medium
-
                         rounded-xl
-
                         transition-all
                         duration-300
 
@@ -1579,22 +1418,16 @@ export default function Navbar() {
                             href={getLocationUrl(item.href)}
                             className="
                               block
-
                               px-4
                               py-2
                               ml-4
-
                               text-[11px]
                               xs:text-xs
                               sm:text-sm
-
                               text-[#3A3D33]
-
                               hover:bg-white/60
                               hover:text-[#03C35E]
-
                               rounded-xl
-
                               transition-all
                               duration-200
                             "
@@ -1605,7 +1438,6 @@ export default function Navbar() {
                             }}
                           >
                             <span className="mr-2">•</span>
-
                             {item.label}
                           </Link>
                         ))}
@@ -1617,7 +1449,6 @@ export default function Navbar() {
             )}
 
             {/* MOBILE SERVICES */}
-
             <button
               onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
               className={`
@@ -1625,18 +1456,13 @@ export default function Navbar() {
                 flex
                 items-center
                 justify-between
-
                 px-4
                 py-3
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 font-medium
-
                 rounded-xl
-
                 transition-all
                 duration-300
 
@@ -1664,21 +1490,15 @@ export default function Navbar() {
                     href={getFullServiceUrl(location, item.href)}
                     className="
                       block
-
                       px-4
                       py-2.5
-
                       text-xs
                       xs:text-[13px]
                       sm:text-sm
-
                       text-[#3A3D33]
-
                       hover:bg-white/60
                       hover:text-[#03C35E]
-
                       rounded-xl
-
                       transition-all
                       duration-200
                     "
@@ -1694,7 +1514,6 @@ export default function Navbar() {
             )}
 
             {/* MOBILE INFO */}
-
             <button
               onClick={() => setMobileInfoOpen(!mobileInfoOpen)}
               className={`
@@ -1702,18 +1521,13 @@ export default function Navbar() {
                 flex
                 items-center
                 justify-between
-
                 px-4
                 py-3
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 font-medium
-
                 rounded-xl
-
                 transition-all
                 duration-300
 
@@ -1741,21 +1555,15 @@ export default function Navbar() {
                     href={getLocationUrl(item.href)}
                     className="
                       block
-
                       px-4
                       py-2.5
-
                       text-xs
                       xs:text-[13px]
                       sm:text-sm
-
                       text-[#3A3D33]
-
                       hover:bg-white/60
                       hover:text-[#03C35E]
-
                       rounded-xl
-
                       transition-all
                       duration-200
                     "
@@ -1771,7 +1579,6 @@ export default function Navbar() {
             )}
 
             {/* MOBILE CITY */}
-
             <button
               onClick={() => {
                 setIsOpen(false);
@@ -1779,35 +1586,24 @@ export default function Navbar() {
               }}
               className="
                 w-full
-
                 flex
                 items-center
                 justify-between
-
                 px-4
                 py-3
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 font-medium
-
                 rounded-xl
-
                 bg-[#03C35E]/90
                 backdrop-blur-md
-
                 border
                 border-white/30
-
                 text-white
-
                 shadow-[0_5px_20px_rgba(3,195,94,0.18)]
-
                 transition-all
                 duration-300
-
                 hover:bg-[#03C35E]
               "
             >
@@ -1822,39 +1618,26 @@ export default function Navbar() {
             </button>
 
             {/* MOBILE GET QUOTE */}
-
             <Link
               href={getLocationUrl("/book")}
               className="
                 block
-
                 mt-4
                 mx-4
-
                 text-center
-
                 bg-[#2A2E22]
-
                 text-white
-
                 py-3
-
                 rounded-full
-
                 font-medium
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 shadow-[0_5px_20px_rgba(0,0,0,0.10)]
-
                 transition-all
                 duration-300
-
                 hover:bg-[#03C35E]
                 hover:scale-[1.02]
-
                 active:scale-95
               "
               onClick={() => setIsOpen(false)}
@@ -1863,44 +1646,29 @@ export default function Navbar() {
             </Link>
 
             {/* MOBILE PHONE */}
-
             <a
               href={`tel:${locationConfig.phone.replace(/\s/g, "")}`}
               className="
                 block
-
                 mt-3
                 mx-4
-
                 text-center
-
                 bg-[#03C35E]/90
-
                 backdrop-blur-md
-
                 border
                 border-white/30
-
                 text-white
-
                 py-3
-
                 rounded-full
-
                 font-medium
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 shadow-[0_5px_20px_rgba(3,195,94,0.18)]
-
                 transition-all
                 duration-300
-
                 hover:bg-[#03C35E]
                 hover:scale-[1.02]
-
                 active:scale-95
               "
               onClick={() => setIsOpen(false)}
@@ -1909,29 +1677,21 @@ export default function Navbar() {
             </a>
 
             {/* TALK TO TEAM */}
-
             <a
               href={`tel:${locationConfig.phone.replace(/\s/g, "")}`}
               className="
                 block
-
                 px-4
                 py-3
-
                 text-[#6B6E62]
-
                 underline
                 underline-offset-4
-
                 text-center
-
                 text-xs
                 xs:text-[13px]
                 sm:text-sm
-
                 transition-all
                 duration-300
-
                 hover:text-[#03C35E]
               "
             >
