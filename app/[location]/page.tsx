@@ -8,6 +8,7 @@ import {
 import HeroSelector from "@/app/components/HeroSelector";
 import AboutSelector from "@/app/components/AboutSelector";
 import HowItWorksSelector from "@/app/components/HowItWorksSelector";
+import VehicleForEveryBudgetSelector from "@/app/components/VehicleForEveryBudgetSelector";
 
 interface LocationPageProps {
   params: Promise<{
@@ -53,6 +54,9 @@ export default async function LocationHome({
 
           {/* HOW IT WORKS */}
       <HowItWorksSelector />
+
+          {/* VEHICLE FOR EVERY BUDGET */}
+      <VehicleForEveryBudgetSelector />
 
           {/* FEATURES */}
       <section
