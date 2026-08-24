@@ -36,6 +36,30 @@ const steps = [
 export default function DelhiHowItWorks() {
   return (
     <section className="relative w-full overflow-hidden bg-white py-12 xs:py-14 sm:py-16 md:py-20 lg:py-24 xl:py-28">
+      {/* =================================================
+          TOP FADE — blends smoothly from the previous
+          section above (DelhiVehicleForEveryBudget),
+          same soft-fade pattern used in DelhiHero
+      ================================================== */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-0
+          z-[1]
+          h-10
+          xs:h-12
+          sm:h-14
+          md:h-16
+          lg:h-20
+          bg-gradient-to-b
+          from-white
+          via-white/60
+          to-transparent
+        "
+      />
+
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
         {/* HEADER */}
         <div className="mb-14 w-full max-w-[650px] text-left sm:mb-16 md:mb-20">
@@ -171,5 +195,3 @@ export default function DelhiHowItWorks() {
     </section>
   );
 }
-
-

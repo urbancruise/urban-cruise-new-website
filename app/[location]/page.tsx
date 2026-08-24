@@ -9,6 +9,8 @@ import HeroSelector from "@/app/components/HeroSelector";
 import AboutSelector from "@/app/components/AboutSelector";
 import HowItWorksSelector from "@/app/components/HowItWorksSelector";
 import VehicleForEveryBudgetSelector from "@/app/components/VehicleForEveryBudgetSelector";
+import VehicleForEveryGroupSizeSelector from "../components/VehicleForEveryGroupSizeSelector";
+import VehicleForEveryOccasionSelector from "../components/VehicleForEveryOccasionSelector";
 
 interface LocationPageProps {
   params: Promise<{
@@ -57,6 +59,12 @@ export default async function LocationHome({
 
           {/* VEHICLE FOR EVERY BUDGET */}
       <VehicleForEveryBudgetSelector />
+
+      {/* VEHICLE FOR EVERY GROUP SIZE */}
+      <VehicleForEveryGroupSizeSelector />
+
+      {/* VEHICLE FOR EVERY OCCASION */}
+      <VehicleForEveryOccasionSelector />
 
           {/* FEATURES */}
       <section
