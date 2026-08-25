@@ -26,7 +26,7 @@ type Testimonial = {
   location: string;
   message: string;
   avatar: string;
-  videoId: string; // YouTube video ID
+  videoId: string;
   rating: number;
   accent: "green" | "orange";
 };
@@ -40,7 +40,7 @@ const testimonials: Testimonial[] = [
     message:
       "Booked an SUV for a family trip. The comfort and space were excellent. Will definitely book again with Urban Cruise.",
     avatar: "/images/testimonials/1.jpg",
-    videoId: "dQw4w9WgXcQ", // Replace with actual YouTube video ID
+    videoId: "mOvg5tm_azM",
     rating: 5,
     accent: "green",
   },
@@ -51,7 +51,7 @@ const testimonials: Testimonial[] = [
     message:
       "Urban Cruise made our trip super smooth! The car was clean, well-maintained and the driver was polite and professional. Highly recommended!",
     avatar: "/images/testimonials/2.jpg",
-    videoId: "dQw4w9WgXcQ", // Replace with actual YouTube video ID
+    videoId: "mOvg5tm_azM", // Replace with actual YouTube video ID
     rating: 5,
     accent: "green",
   },
@@ -62,7 +62,7 @@ const testimonials: Testimonial[] = [
     message:
       "On-time pickup, transparent pricing and great customer support. Overall a hassle-free and wonderful experience.",
     avatar: "/images/testimonials/3.jpg",
-    videoId: "dQw4w9WgXcQ", // Replace with actual YouTube video ID
+    videoId: "mOvg5tm_azM", // Replace with actual YouTube video ID
     rating: 5,
     accent: "orange",
   },
@@ -73,7 +73,7 @@ const testimonials: Testimonial[] = [
     message:
       "The vehicle was extremely clean and comfortable. The driver was professional and arrived exactly on time.",
     avatar: "/images/testimonials/4.jpg",
-    videoId: "dQw4w9WgXcQ", // Replace with actual YouTube video ID
+    videoId: "mOvg5tm_azM", // Replace with actual YouTube video ID
     rating: 5,
     accent: "green",
   },
@@ -84,7 +84,7 @@ const testimonials: Testimonial[] = [
     message:
       "Excellent service from booking to drop-off. The entire family had a comfortable and enjoyable journey.",
     avatar: "/images/testimonials/5.jpg",
-    videoId: "dQw4w9WgXcQ", // Replace with actual YouTube video ID
+    videoId: "mOvg5tm_azM", // Replace with actual YouTube video ID
     rating: 5,
     accent: "orange",
   },
@@ -411,10 +411,10 @@ function CenterTestimonialCard({
         />
 
         {/* White transparent overlay */}
-        <div className="absolute inset-0 bg-white/[0.55]" />
+        <div className="absolute inset-0 bg-white/[0.4]" />
 
         {/* Green soft overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/40 to-[#DFF3DD]/50" />
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/40 to-[#DFF3DD]/50" /> */}
       </div>
 
           {/* TOP GREEN BAR */}
@@ -559,13 +559,9 @@ export default function DelhiTestimonials() {
         overflow-hidden
         bg-white
         py-10
-
         sm:py-12
-
         md:py-14
-
         lg:py-16
-
         xl:py-[70px]
       "
     >
@@ -580,36 +576,6 @@ export default function DelhiTestimonials() {
         <div className="absolute right-[7%] top-[55px] rotate-180 select-none font-serif text-[170px] font-black leading-none text-[#F7941E]/[0.055]">
           “
         </div>
-
-        {/* Left dotted decoration */}
-        <div
-          className="
-            absolute
-            bottom-[10px]
-            left-0
-            h-[100px]
-            w-[120px]
-            opacity-40
-
-            [background-image:radial-gradient(#087F35_1px,transparent_1px)]
-            [background-size:8px_8px]
-          "
-        />
-
-        {/* Right dotted decoration */}
-        <div
-          className="
-            absolute
-            bottom-[10px]
-            right-0
-            h-[100px]
-            w-[120px]
-            opacity-30
-
-            [background-image:radial-gradient(#F7941E_1px,transparent_1px)]
-            [background-size:8px_8px]
-          "
-        />
       </div>
 
           {/* MAIN CONTAINER */}
