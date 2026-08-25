@@ -12,20 +12,14 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 
-// ======================================================
 // COLORS
-// ======================================================
-
 const GREEN = "#087F35";
 const LIGHT_GREEN = "#03C35E";
 const ORANGE = "#F7941E";
 const DARK_ORANGE = "#E66F00";
 const NAVY = "#12233F";
 
-// ======================================================
 // TYPES
-// ======================================================
-
 type Testimonial = {
   id: number;
   name: string;
@@ -37,10 +31,7 @@ type Testimonial = {
   accent: "green" | "orange";
 };
 
-// ======================================================
 // TESTIMONIAL DATA
-// ======================================================
-
 const testimonials: Testimonial[] = [
   {
     id: 1,
@@ -99,10 +90,7 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-// ======================================================
 // STAR RATING
-// ======================================================
-
 function StarRating({
   rating,
   size = 15,
@@ -125,10 +113,7 @@ function StarRating({
   );
 }
 
-// ======================================================
-// YOUTUBE VIDEO COMPONENT - FULL SCREEN
-// ======================================================
-
+// YOUTUBE VIDEO COMPONENT
 function YouTubeVideo({
   videoId,
   className = "",
@@ -158,11 +143,8 @@ function YouTubeVideo({
   );
 }
 
-// ======================================================
 // AVATAR
 // VIDEO BACKGROUND + USER AVATAR
-// ======================================================
-
 function Avatar({
   testimonial,
   large = false,
@@ -188,19 +170,13 @@ function Avatar({
         }
       `}
     >
-      {/* ==================================================
-          YOUTUBE VIDEO BACKGROUND - FULL SCREEN
-          ================================================== */}
-
+          {/* YOUTUBE VIDEO BACKGROUND */}
       <YouTubeVideo
         videoId={testimonial.videoId}
         className="object-cover"
       />
 
-      {/* ==================================================
-          VIDEO SOFT OVERLAY
-          ================================================== */}
-
+          {/* VIDEO SOFT OVERLAY */}
       <div
         className="
           pointer-events-none
@@ -211,10 +187,7 @@ function Avatar({
         "
       />
 
-      {/* ==================================================
-          USER AVATAR
-          ================================================== */}
-
+          {/* USER AVATAR */}
       <Image
         src={testimonial.avatar}
         alt={testimonial.name}
@@ -228,10 +201,7 @@ function Avatar({
         "
       />
 
-      {/* ==================================================
-          SOFT BLEND
-          ================================================== */}
-
+          {/* SOFT BLEND */}
       <div
         className="
           pointer-events-none
@@ -249,10 +219,7 @@ function Avatar({
   );
 }
 
-// ======================================================
 // SIDE TESTIMONIAL CARD
-// ======================================================
-
 function SideTestimonialCard({
   testimonial,
   side,
@@ -319,26 +286,17 @@ function SideTestimonialCard({
         `}
       />
 
-      {/* ==================================================
-          AVATAR WITH YOUTUBE VIDEO
-          ================================================== */}
-
+          {/* AVATAR WITH YOUTUBE VIDEO */}
       <div className="relative z-10 flex justify-center pt-4">
         <Avatar testimonial={testimonial} />
       </div>
 
-      {/* ==================================================
-          STARS
-          ================================================== */}
-
+          {/* STARS */}
       <div className="relative z-10 mt-2">
         <StarRating rating={testimonial.rating} size={14} />
       </div>
 
-      {/* ==================================================
-          MESSAGE
-          ================================================== */}
-
+          {/* MESSAGE */}
       <p
         className="
           relative
@@ -364,10 +322,7 @@ function SideTestimonialCard({
         {testimonial.message}
       </p>
 
-      {/* ==================================================
-          SMALL UNDERLINE
-          ================================================== */}
-
+          {/* SMALL UNDERLINE */}
       <div
         className={`
           mx-auto
@@ -379,10 +334,7 @@ function SideTestimonialCard({
         `}
       />
 
-      {/* ==================================================
-          NAME
-          ================================================== */}
-
+          {/* NAME */}
       <h4
         className={`
           relative
@@ -398,10 +350,7 @@ function SideTestimonialCard({
         {testimonial.name}
       </h4>
 
-      {/* ==================================================
-          LOCATION
-          ================================================== */}
-
+          {/* LOCATION */}
       <div className="mt-1 flex items-center justify-center gap-1 text-[10px] text-[#303944]">
         <FaMapMarkerAlt
           className={
@@ -415,10 +364,7 @@ function SideTestimonialCard({
   );
 }
 
-// ======================================================
 // CENTER CARD
-// ======================================================
-
 function CenterTestimonialCard({
   testimonial,
 }: {
@@ -445,8 +391,8 @@ function CenterTestimonialCard({
         w-full
         overflow-hidden
         rounded-[18px]
-        border
-        border-[#a9c8a5]
+        border-5
+        border-[#087F35]
         bg-white
         shadow-[0_10px_35px_rgba(0,0,0,0.14)]
 
@@ -457,10 +403,7 @@ function CenterTestimonialCard({
         xl:h-[290px]
       "
     >
-      {/* ==================================================
-          CARD BACKGROUND YOUTUBE VIDEO - FULL SCREEN
-          ================================================== */}
-
+          {/* CARD BACKGROUND YOUTUBE VIDEO - FULL SCREEN */}
       <div className="absolute inset-0 overflow-hidden">
         <YouTubeVideo
           videoId={testimonial.videoId}
@@ -474,36 +417,24 @@ function CenterTestimonialCard({
         <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/40 to-[#DFF3DD]/50" />
       </div>
 
-      {/* ==================================================
-          TOP GREEN BAR
-          ================================================== */}
-
-      <div className="absolute right-0 top-0 z-20 flex h-[48px] w-[53%] items-center justify-center rounded-bl-[20px] bg-gradient-to-r from-[#03C35E] to-[#087F35]">
+          {/* TOP GREEN BAR */}
+      <div className="absolute right-0 top-0 z-20 flex h-[48px] w-[53%] items-center justify-center rounded-bl-[20px] bg-gradient-to-r from-[#087F35] to-[#087F35]">
         <StarRating rating={testimonial.rating} size={15} />
       </div>
 
-      {/* ==================================================
-          QUOTE
-          ================================================== */}
-
+          {/* QUOTE */}
       <div className="absolute left-[20px] top-[21px] z-20">
         <span className="font-serif text-[65px] font-black leading-none text-[#087F35] opacity-95">
           “
         </span>
       </div>
 
-      {/* ==================================================
-          CENTER AVATAR + YOUTUBE VIDEO
-          ================================================== */}
-
+          {/* CENTER AVATAR + YOUTUBE VIDEO */}
       <div className="absolute left-1/2 top-[-2px] z-40 -translate-x-1/2">
         <Avatar testimonial={testimonial} large />
       </div>
 
-      {/* ==================================================
-          CONTENT
-          ================================================== */}
-
+          {/* CONTENT */}
       <div className="relative z-20 flex h-full flex-col items-center px-8 pt-[94px]">
         <p
           className="
@@ -536,10 +467,7 @@ function CenterTestimonialCard({
         </div>
       </div>
 
-      {/* ==================================================
-          BOTTOM CAR ICON
-          ================================================== */}
-
+          {/* BOTTOM CAR ICON */}
       <div className="absolute bottom-[-1px] left-1/2 z-40 flex h-[46px] w-[90px] -translate-x-1/2 items-start justify-center rounded-t-full bg-[#087F35]">
         <div className="mt-[9px] flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-[16px] text-[#087F35] shadow-md">
           <FaCar />
@@ -549,71 +477,48 @@ function CenterTestimonialCard({
   );
 }
 
-// ======================================================
 // MAIN COMPONENT WITH AUTOMATIC SCROLL
-// ======================================================
-
 export default function DelhiTestimonials() {
   const [activeIndex, setActiveIndex] = useState(1);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [progressWidth, setProgressWidth] = useState(0);
 
   const total = testimonials.length;
 
-  // ====================================================
   // PREVIOUS
-  // ====================================================
-
   const previous = useCallback(() => {
     setIsAutoPlaying(false);
-    setProgressWidth(0);
     setActiveIndex((current) =>
       current === 0 ? total - 1 : current - 1
     );
     // Resume auto-play after 5 seconds of inactivity
     setTimeout(() => {
       setIsAutoPlaying(true);
-      setProgressWidth(0);
     }, 5000);
   }, [total]);
 
-  // ====================================================
   // NEXT
-  // ====================================================
-
   const next = useCallback(() => {
     setIsAutoPlaying(false);
-    setProgressWidth(0);
     setActiveIndex((current) =>
       current === total - 1 ? 0 : current + 1
     );
     // Resume auto-play after 5 seconds of inactivity
     setTimeout(() => {
       setIsAutoPlaying(true);
-      setProgressWidth(0);
     }, 5000);
   }, [total]);
 
-  // ====================================================
   // PREVIOUS INDEX
-  // ====================================================
-
   const getPreviousIndex = useCallback(() => {
     return activeIndex === 0 ? total - 1 : activeIndex - 1;
   }, [activeIndex, total]);
 
-  // ====================================================
   // NEXT INDEX
-  // ====================================================
-
   const getNextIndex = useCallback(() => {
     return activeIndex === total - 1 ? 0 : activeIndex + 1;
   }, [activeIndex, total]);
 
-  // ====================================================
   // AUTOMATIC SCROLL EFFECT
-  // ====================================================
-
   useEffect(() => {
     if (!isAutoPlaying) return;
 
@@ -621,47 +526,28 @@ export default function DelhiTestimonials() {
       setActiveIndex((current) =>
         current === total - 1 ? 0 : current + 1
       );
-      setProgressWidth(0);
     }, 4000); // Change slide every 4 seconds
-
-    // Animate progress bar
-    const progressInterval = setInterval(() => {
-      setProgressWidth((prev) => {
-        if (prev >= 100) return 0;
-        return prev + 0.5;
-      });
-    }, 20);
 
     return () => {
       clearInterval(interval);
-      clearInterval(progressInterval);
     };
   }, [isAutoPlaying, total]);
 
-  // ====================================================
   // PAUSE AUTO-PLAY ON HOVER
-  // ====================================================
-
   const handleMouseEnter = useCallback(() => {
     setIsAutoPlaying(false);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     setIsAutoPlaying(true);
-    setProgressWidth(0);
   }, []);
 
-  // ====================================================
   // GO TO SPECIFIC SLIDE
-  // ====================================================
-
   const goToSlide = useCallback((index: number) => {
     setIsAutoPlaying(false);
-    setProgressWidth(0);
     setActiveIndex(index);
     setTimeout(() => {
       setIsAutoPlaying(true);
-      setProgressWidth(0);
     }, 5000);
   }, []);
 
@@ -683,10 +569,7 @@ export default function DelhiTestimonials() {
         xl:py-[70px]
       "
     >
-      {/* ==================================================
-          BACKGROUND
-          ================================================== */}
-
+          {/* BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* Top left quote */}
         <div className="absolute left-[7%] top-[60px] select-none font-serif text-[170px] font-black leading-none text-[#087F35]/[0.055]">
@@ -729,10 +612,7 @@ export default function DelhiTestimonials() {
         />
       </div>
 
-      {/* ==================================================
-          MAIN CONTAINER
-          ================================================== */}
-
+          {/* MAIN CONTAINER */}
       <div
         className="
           relative
@@ -752,10 +632,7 @@ export default function DelhiTestimonials() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* ==================================================
-            HEADER
-            ================================================== */}
-
+            {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -791,10 +668,7 @@ export default function DelhiTestimonials() {
             2xl:gap-10
           "
         >
-          {/* ==================================================
-              LEFT CONTENT
-              ================================================== */}
-
+              {/* LEFT CONTENT */}
           <div className="w-full max-w-[720px] text-left">
             {/* EYEBROW */}
             <div
@@ -981,10 +855,7 @@ export default function DelhiTestimonials() {
           />
         </motion.div>
 
-        {/* ==================================================
-            DESKTOP TESTIMONIAL CAROUSEL
-            ================================================== */}
-
+            {/* DESKTOP TESTIMONIAL CAROUSEL */}
         <div className="relative hidden items-center lg:flex">
           {/* LEFT ARROW */}
           <button
@@ -1019,10 +890,7 @@ export default function DelhiTestimonials() {
             <FaChevronLeft />
           </button>
 
-          {/* ==================================================
-              CARDS
-              ================================================== */}
-
+              {/* CARDS */}
           <div className="grid w-full grid-cols-[1fr_1.35fr_1fr] items-center gap-0">
             {/* LEFT CARD */}
             <div className="relative z-10 mr-[-18px] pt-[10px]">
@@ -1083,10 +951,7 @@ export default function DelhiTestimonials() {
           </button>
         </div>
 
-        {/* ==================================================
-            TABLET / MOBILE CARD
-            ================================================== */}
-
+            {/* TABLET / MOBILE CARD */}
         <div className="relative lg:hidden">
           <AnimatePresence mode="wait">
             <motion.div
@@ -1113,10 +978,7 @@ export default function DelhiTestimonials() {
             </motion.div>
           </AnimatePresence>
 
-          {/* ==================================================
-              MOBILE ARROWS
-              ================================================== */}
-
+              {/* MOBILE ARROWS */}
           <div className="mt-4 flex items-center justify-center gap-3">
             {/* Previous */}
             <button
@@ -1182,28 +1044,6 @@ export default function DelhiTestimonials() {
               <FaChevronRight />
             </button>
           </div>
-        </div>
-
-        {/* ==================================================
-            AUTO-PLAY INDICATOR WITH PROGRESS BAR
-            ================================================== */}
-
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <span className="text-[10px] font-medium text-gray-400">
-            {isAutoPlaying ? "▶ Auto-playing" : "⏸ Paused"}
-          </span>
-          <div className="h-1.5 w-32 overflow-hidden rounded-full bg-gray-200">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-[#03C35E] to-[#087F35] transition-all duration-100 ease-linear"
-              style={{
-                width: `${progressWidth}%`,
-                transition: isAutoPlaying ? 'width 0.02s linear' : 'none',
-              }}
-            />
-          </div>
-          <span className="text-[10px] text-gray-400">
-            {Math.round((progressWidth / 100) * 4)}s
-          </span>
         </div>
       </div>
     </section>
