@@ -11,6 +11,8 @@ import HowItWorksSelector from "@/app/components/HowItWorksSelector";
 import VehicleForEveryBudgetSelector from "@/app/components/VehicleForEveryBudgetSelector";
 import VehicleForEveryGroupSizeSelector from "../components/VehicleForEveryGroupSizeSelector";
 import VehicleForEveryOccasionSelector from "../components/VehicleForEveryOccasionSelector";
+import WhyChooseUrbanCruiseSelector from "../components/WhyChooseUrbanCruiseSelector";
+import TestimonialSelector from "../components/TestimonialSelector";
 
 interface LocationPageProps {
   params: Promise<{
@@ -65,6 +67,12 @@ export default async function LocationHome({
 
       {/* VEHICLE FOR EVERY OCCASION */}
       <VehicleForEveryOccasionSelector />
+
+      {/* WHY CHOOSE URBAN CRUISE */}
+      <WhyChooseUrbanCruiseSelector />
+
+      {/* Testimonial */}
+      <TestimonialSelector />
 
           {/* FEATURES */}
       <section
