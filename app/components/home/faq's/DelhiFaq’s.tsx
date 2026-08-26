@@ -1629,43 +1629,13 @@ function FAQItem({
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            initial={{
-              height: 0,
-              opacity: 0,
-            }}
-            animate={{
-              height: "auto",
-              opacity: 1,
-            }}
-            exit={{
-              height: 0,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.25,
-            }}
+            initial={{ height: 0, opacity: 0, }}
+            animate={{ height: "auto", opacity: 1, }}
+            exit={{ height: 0, opacity: 0, }}
+            transition={{ duration: 0.25, }}
           >
             <div
-              className="
-                border-t
-                border-[#edf1ed]
-                px-[47px]
-                pb-3
-                pt-2.5
-                text-[9px]
-                leading-[1.55]
-                text-[#5b6470]
-
-                sm:px-[53px]
-                sm:text-[9.5px]
-
-                md:px-[57px]
-                md:text-[10px]
-
-                lg:pr-10
-
-                xl:text-[10.5px]
-              "
+              className=" border-t border-[#edf1ed] px-[47px] pb-3 pt-2.5 text-[9px] leading-[1.55] text-[#5b6470] sm:px-[53px] sm:text-[9.5px] md:px-[57px] md:text-[10px] lg:pr-10 xl:text-[10.5px] "
             >
               {item.answer}
             </div>
@@ -1676,140 +1646,43 @@ function FAQItem({
   );
 }
 
-// ======================================================
 // SUPPORT CARD
-// ======================================================
-
 function SupportCard() {
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        y: 15,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.6,
-      }}
-      viewport={{
-        once: true,
-      }}
-      className="
-        relative
-        z-30
-        mx-auto
-        mt-[-4px]
-        w-[88%]
-        max-w-[290px]
-        rounded-[13px]
-        border
-        border-[#e1e9dd]
-        bg-white
-        px-3
-        py-2.5
-        shadow-[0_7px_22px_rgba(0,0,0,0.09)]
-
-        sm:w-[82%]
-        sm:max-w-[310px]
-        sm:px-4
-        sm:py-3
-
-        md:max-w-[320px]
-
-        lg:absolute
-        lg:bottom-[4px]
-        lg:left-[7%]
-        lg:mt-0
-        lg:w-[250px]
-        lg:px-3
-        lg:py-2.5
-
-        xl:left-[6%]
-        xl:w-[270px]
-        xl:px-4
-        xl:py-3
-      "
+      initial={{ opacity: 0, y: 15, }}
+      whileInView={{ opacity: 1, y: 0, }}
+      transition={{ duration: 0.6, }}
+      viewport={{ once: true, }}
+      className=" relative z-30 mx-auto mt-[-4px] w-[88%] max-w-[290px] rounded-[13px] border border-[#e1e9dd] bg-white px-3 py-2.5 shadow-[0_7px_22px_rgba(0,0,0,0.09)] sm:w-[82%] sm:max-w-[310px] sm:px-4 sm:py-3 md:max-w-[320px] lg:absolute lg:bottom-[4px] lg:left-[7%] lg:mt-0 lg:w-[250px] lg:px-3 lg:py-2.5 xl:left-[6%] xl:w-[270px] xl:px-4 xl:py-3 "
     >
       <div className="flex items-center gap-2.5">
         {/* ICON */}
-
         <div
-          className="
-            flex
-            h-[34px]
-            w-[34px]
-            shrink-0
-            items-center
-            justify-center
-            rounded-full
-            bg-[#EAF5E5]
-            text-[#087F35]
-
-            sm:h-[38px]
-            sm:w-[38px]
-
-            xl:h-[42px]
-            xl:w-[42px]
-          "
+          className=" flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-[#EAF5E5] text-[#087F35] sm:h-[38px] sm:w-[38px] xl:h-[42px] xl:w-[42px]"
         >
           <FaHeadset
-            className="
-              text-[17px]
-              sm:text-[19px]
-              xl:text-[20px]
-            "
+            className=" text-[17px] sm:text-[19px] xl:text-[20px] "
           />
         </div>
 
         {/* CONTENT */}
-
         <div className="min-w-0">
           <p
-            className="
-              text-[9px]
-              font-extrabold
-              text-[#1f2937]
-
-              sm:text-[10px]
-
-              xl:text-[11px]
-            "
+            className=" text-[9px] font-extrabold text-[#1f2937] sm:text-[10px] xl:text-[11px] "
           >
             Still have questions?
           </p>
 
           <p
-            className="
-              mt-[1px]
-              text-[7px]
-              leading-[1.4]
-              text-[#727b84]
-
-              sm:text-[8px]
-
-              xl:text-[9px]
-            "
+            className=" mt-[1px] text-[7px] leading-[1.4] text-[#727b84] sm:text-[8px] xl:text-[9px] "
           >
             Our support team is here to help you!
           </p>
 
           <button
             type="button"
-            className="
-              mt-[2px]
-              text-[8px]
-              font-extrabold
-              text-[#087F35]
-              transition-colors
-              hover:text-[#03C35E]
-
-              sm:text-[9px]
-
-              xl:text-[10px]
-            "
+            className=" mt-[2px] text-[8px] font-extrabold text-[#087F35] transition-colors hover:text-[#03C35E] sm:text-[9px] xl:text-[10px] "
           >
             Contact Us →
           </button>
@@ -1819,10 +1692,7 @@ function SupportCard() {
   );
 }
 
-// ======================================================
 // MAIN COMPONENT
-// ======================================================
-
 export default function DelhiFaqs() {
   const [openFaq, setOpenFaq] = useState(0);
 
@@ -1832,42 +1702,28 @@ export default function DelhiFaqs() {
   // Pause auto scroll when user hovers
   const [isFaqHovered, setIsFaqHovered] = useState(false);
 
-  // ====================================================
   // FAQ TOGGLE
-  // ====================================================
-
   const toggleFaq = (index: number) => {
     setOpenFaq((current) => (current === index ? -1 : index));
   };
 
-  // ====================================================
   // AUTOMATIC INFINITE FAQ SCROLL
-  // ====================================================
-
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
 
     const handleAutoScroll = () => {
       const container = faqScrollRef.current;
-
       if (!container) return;
-
       // Do not auto-scroll while hovering
       if (isFaqHovered) return;
-
       // Desktop only
       if (!mediaQuery.matches) return;
-
       const maxScroll = container.scrollHeight - container.clientHeight;
-
       // Nothing to scroll
       if (maxScroll <= 0) return;
-
       const currentScroll = container.scrollTop;
-
       // Scroll amount
       const scrollAmount = 75;
-
       // Reached bottom
       if (currentScroll >= maxScroll - 5) {
         container.scrollTo({
@@ -1881,86 +1737,27 @@ export default function DelhiFaqs() {
         });
       }
     };
-
     const interval = window.setInterval(handleAutoScroll, 2500);
-
     return () => {
       window.clearInterval(interval);
     };
   }, [isFaqHovered]);
 
-  // ====================================================
   // RETURN
-  // ====================================================
-
   return (
     <section
-      className="
-        relative
-        w-full
-        overflow-hidden
-        bg-cover
-        bg-bottom
-        bg-no-repeat
-        px-3
-        py-5
-
-        min-[375px]:px-4
-        min-[375px]:py-6
-
-        sm:px-5
-        sm:py-8
-
-        md:px-7
-        md:py-10
-
-        lg:px-4
-        lg:py-5
-
-        xl:px-6
-        xl:py-7
-      "
+      className=" relative w-full overflow-hidden bg-cover bg-bottom bg-no-repeat px-3 py-5 min-[375px]:px-4 min-[375px]:py-6 sm:px-5 sm:py-8 md:px-7 md:py-10 lg:px-4 lg:py-5 xl:px-6 xl:py-7 "
       style={{
         backgroundImage: "url('/images/faq/bg.webp')",
       }}
     >
-      {/* ==================================================
-          BACKGROUND OVERLAY
-          ================================================== */}
-
+          {/* BACKGROUND OVERLAY */}
       <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-0
-          bg-white/[0.82]
-        "
+        className=" pointer-events-none absolute inset-0 z-0 bg-white/[0.82] "
       />
-
-      {/* ==================================================
-          OUTER FAQ CONTAINER
-          ================================================== */}
-
+          {/* OUTER FAQ CONTAINER */}
       <div
-        className="
-          relative
-          z-10
-          mx-auto
-          w-full
-          max-w-[1440px]
-          overflow-hidden
-          rounded-[15px]
-          border
-          border-[#e8ebe8]
-          bg-white
-          shadow-[0_5px_25px_rgba(0,0,0,0.06)]
-
-          lg:min-h-[515px]
-
-          xl:min-h-[535px]
-
-          2xl:min-h-[550px]
+        className=" relative z-10 mx-auto w-full max-w-[1440px] overflow-hidden rounded-[15px] border border-[#e8ebe8] bg-white shadow-[0_5px_25px_rgba(0,0,0,0.06)] lg:min-h-[515px] xl:min-h-[535px] 2xl:min-h-[550px]
         "
       >
             {/* BACKGROUND DECORATION */}
