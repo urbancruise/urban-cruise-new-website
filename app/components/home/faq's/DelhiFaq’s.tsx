@@ -1560,59 +1560,15 @@ function FAQItem({
         />
 
         {/* QUESTION */}
-
         <span
-          className="
-            min-w-0
-            flex-1
-            pr-1
-            text-[10px]
-            font-extrabold
-            leading-[1.35]
-            text-[#1d2735]
-
-            min-[375px]:text-[10.5px]
-
-            sm:text-[11px]
-
-            md:text-[11.5px]
-
-            lg:text-[12px]
-
-            xl:text-[13px]
-
-            2xl:text-[14px]
-          "
+          className=" min-w-0 flex-1 pr-1 text-[10px] font-extrabold leading-[1.35] text-[#1d2735] min-[375px]:text-[10.5px] sm:text-[11px] md:text-[11.5px] lg:text-[12px] xl:text-[13px] 2xl:text-[14px] "
         >
           {item.question}
         </span>
 
         {/* PLUS / MINUS */}
-
         <span
-          className={`
-            flex
-            h-[25px]
-            w-[25px]
-            shrink-0
-            items-center
-            justify-center
-            rounded-full
-            border
-            text-[15px]
-            font-medium
-            transition-all
-            duration-300
-
-            sm:h-[27px]
-            sm:w-[27px]
-
-            md:h-[28px]
-            md:w-[28px]
-
-            lg:h-[29px]
-            lg:w-[29px]
-
+          className={` flex h-[25px] w-[25px] shrink-0 items-center justify-center rounded-full border text-[15px] font-medium transition-all duration-300 sm:h-[27px] sm:w-[27px] md:h-[28px] md:w-[28px] lg:h-[29px] lg:w-[29px]
             ${
               isOpen
                 ? "border-[#087F35] bg-[#087F35] text-white"
