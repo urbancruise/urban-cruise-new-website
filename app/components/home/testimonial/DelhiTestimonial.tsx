@@ -387,12 +387,13 @@ function CenterTestimonialCard({
       className="
         relative
         z-30
+        mt-0
         h-[285px]
         w-full
-        overflow-hidden
+        overflow-visible
         rounded-[18px]
-        border-5
-        border-[#087F35]
+        border
+        border-[#e7e7e7]
         bg-white
         shadow-[0_10px_35px_rgba(0,0,0,0.14)]
 
@@ -403,39 +404,39 @@ function CenterTestimonialCard({
         xl:h-[290px]
       "
     >
-          {/* CARD BACKGROUND YOUTUBE VIDEO - FULL SCREEN */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* CARD BACKGROUND YOUTUBE VIDEO */}
+      <div className="absolute inset-0 overflow-hidden rounded-[18px]">
         <YouTubeVideo
           videoId={testimonial.videoId}
           className="object-cover"
         />
 
         {/* White transparent overlay */}
-        <div className="absolute inset-0 bg-white/[0.4]" />
-
-        {/* Green soft overlay */}
-        {/* <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/40 to-[#DFF3DD]/50" /> */}
+        <div className="absolute inset-0 bg-white/[0.55]" />
       </div>
 
-          {/* TOP GREEN BAR */}
-      <div className="absolute right-0 top-0 z-20 flex h-[48px] w-[53%] items-center justify-center rounded-bl-[20px] bg-gradient-to-r from-[#087F35] to-[#087F35]">
-        <StarRating rating={testimonial.rating} size={15} />
+      {/* TOP GREEN BAR */}
+      <div className="absolute right-0 top-0 z-20 flex h-[48px] w-[53%] items-center justify-center rounded-tr-[20px] rounded-bl-[20px] bg-gradient-to-r from-[#087F35] to-[#087F35]">
+        <StarRating rating={testimonial.rating} size={20} />
       </div>
 
-          {/* QUOTE */}
-      <div className="absolute left-[20px] top-[21px] z-20">
+      {/* QUOTE */}
+      <div className="absolute left-[20px] top-[18px] z-20">
         <span className="font-serif text-[65px] font-black leading-none text-[#087F35] opacity-95">
           “
         </span>
       </div>
 
-          {/* CENTER AVATAR + YOUTUBE VIDEO */}
-      <div className="absolute left-1/2 top-[-2px] z-40 -translate-x-1/2">
+      {/* ========================= */}
+      {/* CENTER AVATAR (FIXED) */}
+      {/* ========================= */}
+      <div className="absolute left-1/2 top-0 z-50 -translate-x-1/2 -translate-y-1/2">
         <Avatar testimonial={testimonial} large />
       </div>
 
-          {/* CONTENT */}
-      <div className="relative z-20 flex h-full flex-col items-center px-8 pt-[94px]">
+      {/* CONTENT */}
+      <div className="relative z-20 flex h-full flex-col items-center px-8 pt-[72px] sm:pt-[78px]">
+        {/* MESSAGE */}
         <p
           className="
             max-w-[315px]
@@ -452,25 +453,18 @@ function CenterTestimonialCard({
           {testimonial.message}
         </p>
 
-        {/* Underline */}
+        {/* UNDERLINE */}
         <div className="mt-3 h-[2px] w-[32px] bg-[#087F35]" />
 
-        {/* Name */}
+        {/* NAME */}
         <h3 className="mt-2 text-[14px] font-extrabold text-[#087F35] sm:text-[15px]">
           {testimonial.name}
         </h3>
 
-        {/* Location */}
+        {/* LOCATION */}
         <div className="mt-1 flex items-center gap-1 text-[10px] text-[#303944] sm:text-[11px]">
           <FaMapMarkerAlt className="text-[#087F35]" />
           <span>{testimonial.location}</span>
-        </div>
-      </div>
-
-          {/* BOTTOM CAR ICON */}
-      <div className="absolute bottom-[-1px] left-1/2 z-40 flex h-[46px] w-[90px] -translate-x-1/2 items-start justify-center rounded-t-full bg-[#087F35]">
-        <div className="mt-[9px] flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-[16px] text-[#087F35] shadow-md">
-          <FaCar />
         </div>
       </div>
     </motion.div>
