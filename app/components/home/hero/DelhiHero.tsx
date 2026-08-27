@@ -126,7 +126,7 @@ export default function DelhiHero() {
                 sm:text-[9px]
                 md:text-[10px]
                 lg:text-[11px]
-                xl:text-xs
+                xl:text-[15px]
                 tracking-[0.15em]
                 xs:tracking-[0.17em]
                 sm:tracking-[0.2em]

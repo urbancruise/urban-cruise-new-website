@@ -14,6 +14,7 @@ import VehicleForEveryOccasionSelector from "../components/VehicleForEveryOccasi
 import WhyChooseUrbanCruiseSelector from "../components/WhyChooseUrbanCruiseSelector";
 import TestimonialSelector from "../components/TestimonialSelector";
 import FaqsSelector from "@/app/components/Faq'sSelector";
+import VehicleRentalServiceInIndiaSelector from "@/app/components/VehicleRentalServiceInIndiaSelector";
 
 interface LocationPageProps {
   params: Promise<{
@@ -77,6 +78,9 @@ export default async function LocationHome({
 
       {/* Faq's */}
       <FaqsSelector />
+
+      {/* VEHICLE RENTAL SERVICE IN INDIA */}
+      <VehicleRentalServiceInIndiaSelector />
 
           {/* FEATURES */}
       <section

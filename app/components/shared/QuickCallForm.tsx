@@ -13,54 +13,10 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
     >
       {/* Floating phone icon */}
       <div
-        className="
-          absolute
-          -top-5
-          xs:-top-5.5
-          sm:-top-6
-          md:-top-6.5
-          lg:-top-7
-          left-1/2
-          -translate-x-1/2
-          z-30
-          w-10
-          h-10
-          xs:w-11
-          xs:h-11
-          sm:w-12
-          sm:h-12
-          md:w-12.5
-          md:h-12.5
-          lg:w-13
-          lg:h-13
-          rounded-full
-          bg-white
-          border
-          border-gray-100
-          shadow-[0_5px_20px_rgba(0,0,0,0.15)]
-          flex
-          items-center
-          justify-center
-        "
+        className=" absolute -top-5 xs:-top-5.5 sm:-top-6 md:-top-6.5 lg:-top-7 left-1/2 -translate-x-1/2 z-30 w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-12.5 md:h-12.5 lg:w-13 lg:h-13 rounded-full bg-white border border-gray-100 shadow-[0_5px_20px_rgba(0,0,0,0.15)] flex items-center justify-center "
       >
         <div
-          className="
-            w-7
-            h-7
-            xs:w-8
-            xs:h-8
-            sm:w-8.5
-            sm:h-8.5
-            md:w-9
-            md:h-9
-            lg:w-9.5
-            lg:h-9.5
-            rounded-full
-            bg-[#03C35E]
-            flex
-            items-center
-            justify-center
-          "
+          className=" w-7 h-7 xs:w-8 xs:h-8 sm:w-8.5 sm:h-8.5 md:w-9 md:h-9 lg:w-9.5 lg:h-9.5 rounded-full bg-[#03C35E] flex items-center justify-center "
         >
           <FaPhoneAlt className="text-white text-[9px] xs:text-[10px] sm:text-[11px] md:text-xs lg:text-sm" />
         </div>
@@ -68,79 +24,17 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
 
       {/* Form Card */}
       <div
-        className="
-          relative
-          bg-white
-          rounded-[20px]
-          xs:rounded-[22px]
-          sm:rounded-[24px]
-          md:rounded-[28px]
-          lg:rounded-[32px]
-          shadow-[0_-8px_35px_rgba(0,0,0,0.14)]
-          border
-          border-white
-          px-3
-          xs:px-4
-          sm:px-5
-          md:px-6
-          lg:px-8
-          xl:px-10
-          pt-5
-          xs:pt-6
-          sm:pt-7
-          md:pt-8
-          lg:pt-9
-          pb-3.5
-          xs:pb-4
-          sm:pb-4.5
-          md:pb-5
-          lg:pb-6
-        "
+        className=" relative bg-white rounded-[20px] xs:rounded-[22px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[32px] shadow-[0_-8px_35px_rgba(0,0,0,0.14)] border border-white px-3 xs:px-4 sm:px-5 md:px-6 lg:px-8 xl:px-8 pt-5 xs:pt-6 sm:pt-7 md:pt-8 lg:pt-9 pb-3.5 xs:pb-4 sm:pb-4.5 md:pb-5 lg:pb-6 "
       >
         {/* Left decorative dots */}
         <div
-          className="
-            absolute
-            left-3
-            xs:left-4
-            sm:left-4.5
-            md:left-5
-            lg:left-6
-            xl:left-7
-            top-3.5
-            xs:top-4
-            sm:top-4.5
-            md:top-5
-            lg:top-6
-            w-6
-            h-6
-            xs:w-7
-            xs:h-7
-            sm:w-7.5
-            sm:h-7.5
-            md:w-8
-            md:h-8
-            opacity-30
-            xs:opacity-40
-            pointer-events-none
-            hidden
-            xs:block
-          "
+          className=" absolute left-3 xs:left-4 sm:left-4.5 md:left-5 lg:left-6 xl:left-7 top-3.5 xs:top-4 sm:top-4.5 md:top-5 lg:top-6 w-6 h-6 xs:w-7 xs:h-7 sm:w-7.5 sm:h-7.5 md:w-8 md:h-8 opacity-30 xs:opacity-40 pointer-events-none hidden xs:block "
         >
           <div className="grid grid-cols-3 gap-1">
             {Array.from({ length: 9 }).map((_, index) => (
               <span
                 key={index}
-                className="
-                  w-0.5
-                  h-0.5
-                  xs:w-0.5
-                  xs:h-0.5
-                  sm:w-1
-                  sm:h-1
-                  rounded-full
-                  bg-[#D9C9A5]
-                "
+                className=" w-0.5 h-0.5 xs:w-0.5 xs:h-0.5 sm:w-1 sm:h-1 rounded-full bg-[#D9C9A5] "
               />
             ))}
           </div>
@@ -148,48 +42,13 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
 
         {/* Right decorative dots */}
         <div
-          className="
-            absolute
-            right-3
-            xs:right-4
-            sm:right-4.5
-            md:right-5
-            lg:right-6
-            xl:right-7
-            top-3.5
-            xs:top-4
-            sm:top-4.5
-            md:top-5
-            lg:top-6
-            w-6
-            h-6
-            xs:w-7
-            xs:h-7
-            sm:w-7.5
-            sm:h-7.5
-            md:w-8
-            md:h-8
-            opacity-30
-            xs:opacity-40
-            pointer-events-none
-            hidden
-            xs:block
-          "
+          className=" absolute right-3 xs:right-4 sm:right-4.5 md:right-5 lg:right-6 xl:right-7 top-3.5 xs:top-4 sm:top-4.5 md:top-5 lg:top-6 w-6 h-6 xs:w-7 xs:h-7 sm:w-7.5 sm:h-7.5 md:w-8 md:h-8 opacity-30 xs:opacity-40 pointer-events-none hidden xs:block "
         >
           <div className="grid grid-cols-3 gap-1">
             {Array.from({ length: 9 }).map((_, index) => (
               <span
                 key={index}
-                className="
-                  w-0.5
-                  h-0.5
-                  xs:w-0.5
-                  xs:h-0.5
-                  sm:w-1
-                  sm:h-1
-                  rounded-full
-                  bg-[#D9C9A5]
-                "
+                className=" w-0.5 h-0.5 xs:w-0.5 xs:h-0.5 sm:w-1 sm:h-1 rounded-full bg-[#D9C9A5] "
               />
             ))}
           </div>
@@ -198,31 +57,13 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
         {/* Form title */}
         <div className="text-center">
           <h2
-            className="
-              text-base
-              xs:text-[17px]
-              sm:text-lg
-              md:text-xl
-              lg:text-2xl
-              xl:text-[26px]
-              font-bold
-              text-gray-900
-            "
+            className=" text-base xs:text-[17px] sm:text-lg md:text-xl lg:text-2xl xl:text-[26px] font-bold text-gray-900 "
           >
             Get a Quick Call
           </h2>
 
           <p
-            className="
-              mt-0.5
-              xs:mt-1
-              text-[8px]
-              xs:text-[8.5px]
-              sm:text-[9px]
-              md:text-[10px]
-              lg:text-xs
-              text-gray-500
-            "
+            className=" mt-0.5 xs:mt-1 text-[8px] xs:text-[8.5px] sm:text-[9px] md:text-[10px] lg:text-xs text-gray-500 "
           >
             Fill in your details and we will call you within 10 mins.
           </p>
@@ -230,68 +71,17 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
 
         {/* FORM */}
         <form
-          className="
-            mt-2.5
-            xs:mt-3
-            sm:mt-3.5
-            md:mt-4
-            lg:mt-4.5
-            xl:mt-5
-            flex
-            flex-col
-            xs:flex-col
-            sm:flex-row
-            gap-2
-            xs:gap-2
-            sm:gap-2.5
-            md:gap-2.5
-            lg:gap-3
-          "
+          className=" mt-2.5 xs:mt-3 sm:mt-3.5 md:mt-4 lg:mt-4.5 xl:mt-5 flex flex-col xs:flex-col sm:flex-row gap-2 xs:gap-2 sm:gap-2.5 md:gap-2.5 lg:gap-3 "
           onSubmit={(event) => {
             event.preventDefault();
           }}
         >
           {/* Name */}
           <div
-            className="
-              flex
-              items-center
-              gap-2
-              xs:gap-2.5
-              sm:gap-2.5
-              md:gap-3
-              flex-1
-              h-9
-              xs:h-9.5
-              sm:h-10
-              md:h-10.5
-              lg:h-11
-              xl:h-12
-              px-2.5
-              xs:px-3
-              sm:px-3.5
-              md:px-3.5
-              lg:px-4
-              rounded-lg
-              border
-              border-gray-200
-              bg-white
-              transition-all
-              focus-within:border-[#03C35E]
-              focus-within:ring-2
-              focus-within:ring-[#03C35E]/10
-            "
+            className=" flex items-center gap-2 xs:gap-2.5 sm:gap-2.5 md:gap-3 flex-[2] h-9 xs:h-9.5 sm:h-10 md:h-10.5 lg:h-11 xl:h-12 px-2.5 xs:px-3 sm:px-3.5 md:px-3.5 lg:px-4 rounded-lg border border-gray-200 bg-white transition-all focus-within:border-[#03C35E] focus-within:ring-2 focus-within:ring-[#03C35E]/10 "
           >
             <FaUser
-              className="
-                text-gray-400
-                text-[10px]
-                xs:text-[10px]
-                sm:text-[11px]
-                md:text-xs
-                lg:text-sm
-                shrink-0
-              "
+              className=" text-gray-400 text-[10px] xs:text-[10px] sm:text-[11px] md:text-xs lg:text-sm shrink-0 "
             />
 
             <input
@@ -299,68 +89,16 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
               name="name"
               placeholder="Your Name"
               autoComplete="name"
-              className="
-              h-9
-              xs:h-9.5
-              sm:h-10
-              md:h-10.5
-              lg:h-11
-                w-full
-                outline-none
-                border-none
-                bg-transparent
-                text-[10px]
-                xs:text-[10.5px]
-                sm:text-[11px]
-                md:text-xs
-                lg:text-sm
-                text-gray-800
-                placeholder:text-gray-400
-              "
+              className=" h-9 xs:h-9.5 sm:h-10 md:h-10.5 lg:h-11 w-full outline-none border-none bg-transparent text-[10px] xs:text-[10.5px] sm:text-[11px] md:text-xs lg:text-sm text-gray-800 placeholder:text-gray-400 "
             />
           </div>
 
           {/* Phone */}
           <div
-            className="
-              flex
-              items-center
-              gap-2
-              xs:gap-2.5
-              sm:gap-2.5
-              md:gap-3
-              flex-1
-              h-9
-              xs:h-9.5
-              sm:h-10
-              md:h-10.5
-              lg:h-11
-              xl:h-12
-              px-2.5
-              xs:px-3
-              sm:px-3.5
-              md:px-3.5
-              lg:px-4
-              rounded-lg
-              border
-              border-gray-200
-              bg-white
-              transition-all
-              focus-within:border-[#03C35E]
-              focus-within:ring-2
-              focus-within:ring-[#03C35E]/10
-            "
+            className=" flex items-center gap-2 xs:gap-2.5 sm:gap-2.5 md:gap-3 flex-[2] h-9 xs:h-9.5 sm:h-10 md:h-10.5 lg:h-11 xl:h-12 px-2.5 xs:px-3 sm:px-3.5 md:px-3.5 lg:px-4 rounded-lg border border-gray-200 bg-white transition-all focus-within:border-[#03C35E] focus-within:ring-2 focus-within:ring-[#03C35E]/10 "
           >
             <FaPhoneAlt
-              className="
-                text-gray-400
-                text-[10px]
-                xs:text-[10px]
-                sm:text-[11px]
-                md:text-xs
-                lg:text-sm
-                shrink-0
-              "
+              className=" text-gray-400 text-[10px] xs:text-[10px] sm:text-[11px] md:text-xs lg:text-sm shrink-0"
             />
 
             <input
@@ -368,76 +106,16 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
               name="phone"
               placeholder="+91 98765 43210"
               autoComplete="tel"
-              className="
-              h-9
-              xs:h-9.5
-              sm:h-10
-              md:h-10.5
-              lg:h-11
-                w-full
-                outline-none
-                border-none
-                bg-transparent
-                text-[10px]
-                xs:text-[10.5px]
-                sm:text-[11px]
-                md:text-xs
-                lg:text-sm
-                text-gray-800
-                placeholder:text-gray-400
-              "
+              className=" h-9 xs:h-9.5 sm:h-10 md:h-10.5 lg:h-11 w-full outline-none border-none bg-transparent text-[10px] xs:text-[10.5px] sm:text-[11px] md:text-xs lg:text-sm text-gray-800 placeholder:text-gray-400 "
             />
           </div>
 
           {/* Submit */}
           <button
             type="submit"
-            className="
-              h-9
-              xs:h-9.5
-              sm:h-10
-              md:h-10.5
-              lg:h-11
-              xl:h-12
-              w-full
-              xs:w-full
-              sm:w-auto
-              sm:min-w-[100px]
-              md:min-w-[120px]
-              lg:min-w-[140px]
-              xl:min-w-[160px]
-              2xl:min-w-[175px]
-              px-3
-              xs:px-4
-              sm:px-4.5
-              md:px-5
-              lg:px-5.5
-              xl:px-6
-              rounded-lg
-              bg-[#03C35E]
-              hover:bg-[#02A950]
-              active:scale-[0.98]
-              text-white
-              text-[10px]
-              xs:text-[10.5px]
-              sm:text-[11px]
-              md:text-xs
-              lg:text-sm
-              font-semibold
-              flex
-              items-center
-              justify-center
-              gap-2
-              xs:gap-2
-              sm:gap-2.5
-              md:gap-2.5
-              lg:gap-3
-              shadow-[0_6px_18px_rgba(3,195,94,0.25)]
-              transition-all
-              duration-300
-            "
+            className=" h-9 xs:h-9.5 sm:h-10 md:h-10.5 lg:h-11 xl:h-12 w-full xs:w-full sm:w-auto sm:min-w-[100px] md:min-w-[120px] lg:min-w-[140px] xl:min-w-[160px] 2xl:min-w-[175px] px-3 xs:px-4 sm:px-4.5 md:px-5 lg:px-5.5 xl:px-6 rounded-lg bg-[#03C35E] hover:bg-[#02A950] active:scale-[0.98] text-white text-[10px] xs:text-[10.5px] sm:text-[11px] md:text-xs lg:text-sm font-semibold flex items-center justify-center gap-2 xs:gap-2 sm:gap-2.5 md:gap-2.5 lg:gap-3 shadow-[0_6px_18px_rgba(3,195,94,0.25)] transition-all duration-300 "
           >
-            <span>Get a Free Call</span>
+            <span>Submit</span>
             <FaArrowRight className="text-[9px] xs:text-[9px] sm:text-[10px] md:text-[10px] lg:text-xs" />
           </button>
         </form>
