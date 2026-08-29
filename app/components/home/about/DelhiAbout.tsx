@@ -172,7 +172,7 @@ export default function DelhiAbout() {
                 font-extrabold
                 leading-[1]
                 tracking-[-0.04em]
-                text-black
+                text-[#142236]
               "
             >
               URBAN CRUISE

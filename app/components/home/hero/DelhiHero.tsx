@@ -185,7 +185,7 @@ export default function DelhiHero() {
               xs:tracking-[-0.025em]
               sm:tracking-[-0.03em]
               md:tracking-[-0.035em]
-              text-black
+              text-[#142236]
               px-2
             "
           >
@@ -286,34 +286,6 @@ export default function DelhiHero() {
       {/* =====================================================
           QUICK CALL FORM
       ====================================================== */}
-      {/* <div
-        className="
-          relative
-          z-30
-
-          -mt-16
-          xs:-mt-18
-          sm:-mt-10
-          md:-mt-12
-          lg:-mt-24
-          xl:-mt-18
-        "
-      >
-        <div
-          className="
-            w-full
-            max-w-[700px]
-            mx-auto
-
-            px-3
-            xs:px-4
-            sm:px-5
-            md:px-6
-          "
-        >
-          <QuickCallForm />
-        </div>
-      </div> */}
       <div
         className="
     relative

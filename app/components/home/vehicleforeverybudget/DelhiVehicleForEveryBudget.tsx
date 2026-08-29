@@ -227,13 +227,13 @@ export default function DelhiVehicleForEveryBudget() {
             </motion.div>
 
             <motion.h2
-              className=" text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-black min-[375px]:text-[25px] min-[430px]:text-[27px sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]
+              className=" text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]
               "
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              A VEHICLE FOR EVERY BUDGET
+              A VEHICLE FOR <span className="text-[#188A31]"> EVERY BUDGET </span>
             </motion.h2>
 
             <motion.p

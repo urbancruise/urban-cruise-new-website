@@ -227,7 +227,7 @@ function BenefitCard({
             uppercase
             leading-[1.15]
             tracking-[-0.01em]
-            text-[#12233F]
+            text-[#142236]
 
             sm:text-[15px]
             md:text-[16px]
@@ -726,7 +726,7 @@ export default function DelhiWhyChooseUrbanCruise() {
                 font-extrabold
                 leading-[1.05]
                 tracking-[-0.04em]
-                text-black
+                text-[#142236]
 
                 min-[375px]:text-[25px]
 

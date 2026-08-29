@@ -71,8 +71,8 @@ export default function DelhiHowItWorks() {
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
 
-          <h2 className="text-[24px] font-extrabold leading-[1] tracking-[-0.04em] text-black xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px]">
-            HOW IT WORKS
+          <h2 className="text-[24px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px]">
+            HOW IT <span className="text-[#188A31]"> WORKS </span>
           </h2>
 
           <p className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">

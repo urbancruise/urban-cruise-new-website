@@ -719,7 +719,7 @@ export default function DelhiTestimonials() {
                 font-extrabold
                 leading-[1.05]
                 tracking-[-0.04em]
-                text-black
+                text-[#142236]
 
                 min-[375px]:text-[25px]
 
@@ -1009,3 +1009,4 @@ export default function DelhiTestimonials() {
     </section>
   );
 }
+

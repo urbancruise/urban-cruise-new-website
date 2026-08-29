@@ -57,7 +57,7 @@ export default function QuickCallForm({ className = "" }: QuickCallFormProps) {
         {/* Form title */}
         <div className="text-center">
           <h2
-            className=" text-base xs:text-[17px] sm:text-lg md:text-xl lg:text-2xl xl:text-[26px] font-bold text-gray-900 "
+            className=" text-base xs:text-[17px] sm:text-lg md:text-xl lg:text-2xl xl:text-[26px] font-bold text-[#142236] "
           >
             Get a Quick Call
           </h2>

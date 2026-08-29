@@ -466,7 +466,7 @@ function VehicleCard({
       {/* TITLE + PRICE */}
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto] sm:items-center px-2.5 pt-[75px] sm:px-2.5 sm:pt-[75px] md:px-2.5 md:pt-[90px] xl:px-2.5 xl:pt-[95px] 2xl:px-2.5 2xl:pt-[80px]">
         <div className="min-w-0">
-          <h3 className="truncate text-[20px] font-extrabold leading-tight tracking-[-0.04em] text-[#12233F] min-[375px]:text-[21px] sm:text-[22px] md:text-[24px]">
+          <h3 className="truncate text-[20px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] min-[375px]:text-[21px] sm:text-[22px] md:text-[24px]">
             {vehicle.name}
           </h3>
 
@@ -612,8 +612,8 @@ export default function DelhiVehicleForEveryGroupSize() {
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
-            <h2 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-black min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
-              VEHICLES FOR EVERY GROUP SIZE
+            <h2 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
+              VEHICLES FOR <span className="text-[#188A31]"> EVERY GROUP SIZE </span>
             </h2>
 
             <p className="mt-3 font-serif text-[19px] italic leading-tight text-[#03C35E] min-[375px]:text-[20px] min-[430px]:text-[21px] sm:text-[22px] md:text-[25px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]">
