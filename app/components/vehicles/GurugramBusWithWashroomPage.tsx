@@ -1,12 +1,12 @@
-// app/components/vehicles/GurugramBharatBenzBusPage.tsx
+// app/components/vehicles/GurugramBusWithWashroomPage.tsx
 "use client";
 
-import BharatBenzBus from "./luxury-buses/gurugram/BharatBenzBus";
+import BusWithWashroom from "./luxury-buses/gurugram/BusWithWashroom";
 
-export default function GurugramBharatBenzBusPage() {
+export default function GurugramBusWithWashroomPage() {
   return (
     <main className="min-h-screen w-full bg-white">
-      <BharatBenzBus />
+      <BusWithWashroom />
     </main>
   );
 }
