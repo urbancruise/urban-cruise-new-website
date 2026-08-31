@@ -1,14 +1,14 @@
 // app/components/vehicles/MumbaiErtigaPage.tsx
 "use client";
 
-import ErtigaHero from "./cars-suvs/mumbai/ErtigaHero";
+import Ertiga from "./cars-suvs/mumbai/Ertiga";
 
 
 
 export default function MumbaiErtigaPage() {
   return (
     <main className="min-h-screen w-full bg-white">
-      <ErtigaHero />
+      <Ertiga />
     </main>
   );
 }

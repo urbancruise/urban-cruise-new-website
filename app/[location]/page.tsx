@@ -15,7 +15,7 @@ import WhyChooseUrbanCruiseSelector from "../components/WhyChooseUrbanCruiseSele
 import TestimonialSelector from "../components/TestimonialSelector";
 import FaqsSelector from "@/app/components/Faq'sSelector";
 import VehicleRentalServiceInIndiaSelector from "@/app/components/VehicleRentalServiceInIndiaSelector";
-import DelhiOurTrustedPartner from "../components/home/ourtrustedpartner/DelhiOurTrustedPartner";
+import OurTrustedPartner from "../components/ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../components/download-app/DownloadApp";
 
 interface LocationPageProps {
@@ -32,24 +32,6 @@ export default async function LocationHome({
   if (!isValidLocation(location)) {
     notFound();
   }
-
-  const features = [
-    {
-      title: "Premium Service",
-      desc: "Top-notch service and attention to detail",
-      icon: "⭐",
-    },
-    {
-      title: "Expert Guides",
-      desc: "Knowledgeable local guides",
-      icon: "🎯",
-    },
-    {
-      title: "Best Experience",
-      desc: "Create lasting memories",
-      icon: "✨",
-    },
-  ];
 
   return (
     <div className="min-h-[calc(100vh-4rem)]">
@@ -85,7 +67,7 @@ export default async function LocationHome({
       <VehicleRentalServiceInIndiaSelector />
 
       {/* Our Trusted Partner */}
-      <DelhiOurTrustedPartner />
+      <OurTrustedPartner />
 
       {/* FEATURES */}
       <DownloadApp />

@@ -1,13 +1,13 @@
 // app/components/vehicles/PuneCarSuvsPage.tsx
 "use client";
 
-import CarSuvsHero from "./cars-suvs/pune/CarSuvsHero";
+import CarSuvs from "./cars-suvs/pune/CarSuvs";
 
 
 export default function PuneCarSuvsPage() {
   return (
     <main className="min-h-screen w-full bg-white">
-      <CarSuvsHero />
+      <CarSuvs />
     </main>
   );
 }

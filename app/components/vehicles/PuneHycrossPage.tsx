@@ -1,14 +1,14 @@
 // app/components/vehicles/PuneHycrossPage.tsx
 "use client";
 
-import HycrossHero from "./cars-suvs/pune/HycrossHero";
+import Hycross from "./cars-suvs/pune/Hycross";
 
 
 
 export default function PuneHycrossPage() {
   return (
     <main className="min-h-screen w-full bg-white">
-      <HycrossHero />
+      <Hycross />
     </main>
   );
 }

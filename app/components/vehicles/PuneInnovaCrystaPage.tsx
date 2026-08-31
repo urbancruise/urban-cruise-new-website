@@ -1,13 +1,13 @@
 // app/components/vehicles/PuneInnovaCrystaPage.tsx
 "use client";
 
-import InnovnaCrystaHero from "./cars-suvs/pune/InnovaCrystaHero";
+import InnovnaCrysta from "./cars-suvs/pune/InnovaCrysta";
 
 
 export default function PuneInnovaCrystaPage() {
   return (
     <main className="min-h-screen w-full bg-white">
-      <InnovnaCrystaHero />
+      <InnovnaCrysta />
     </main>
   );
 }

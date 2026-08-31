@@ -1,4 +1,4 @@
-// app/components/how-it-works/DelhiHowItWorks.tsx
+// app/components/home/howitworks/DelhiHowItWorks.tsx
 "use client";
 
 import Image from "next/image";
