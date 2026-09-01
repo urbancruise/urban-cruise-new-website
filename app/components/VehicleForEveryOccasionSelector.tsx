@@ -11,17 +11,17 @@ const DelhiVehicleForEveryOccasion = dynamic(
 );
 
 // Future components — enable when ready
-// const GurugramVehicleForEveryOccasion = dynamic(
-//   () => import("./home/vehicleforeveryoccasion/GurugramVehicleForEveryOccasion")
-// );
+const GurugramVehicleForEveryOccasion = dynamic(
+  () => import("./home/vehicleforeveryoccasion/GurugramVehicleForEveryOccasion")
+);
 
-// const MumbaiVehicleForEveryOccasion = dynamic(
-//   () => import("./home/vehicleforeveryoccasion/MumbaiVehicleForEveryOccasion")
-// );
+const MumbaiVehicleForEveryOccasion = dynamic(
+  () => import("./home/vehicleforeveryoccasion/MumbaiVehicleForEveryOccasion")
+);
 
-// const PuneVehicleForEveryOccasion = dynamic(
-//   () => import("./home/vehicleforeveryoccasion/PuneVehicleForEveryOccasion")
-// );
+const PuneVehicleForEveryOccasion = dynamic(
+  () => import("./home/vehicleforeveryoccasion/PuneVehicleForEveryOccasion")
+);
 
 export default function VehicleForEveryOccasionSelector() {
   const { location } = useLocation();
@@ -30,9 +30,9 @@ export default function VehicleForEveryOccasionSelector() {
   // Only add locations that have defined components
   const vehicleForEveryOccasionMap: Record<string, React.ComponentType> = {
     delhi: DelhiVehicleForEveryOccasion,
-    // gurugram: GurugramVehicleForEveryOccasion,
-    // mumbai: MumbaiVehicleForEveryOccasion,
-    // pune: PuneVehicleForEveryOccasion,
+    gurugram: GurugramVehicleForEveryOccasion,
+    mumbai: MumbaiVehicleForEveryOccasion,
+    pune: PuneVehicleForEveryOccasion,
   };
 
   // SELECT COMPONENT

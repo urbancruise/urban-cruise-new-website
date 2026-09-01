@@ -22,32 +22,32 @@ const DelhiFaqs = dynamic(
 // FUTURE LOCATIONS
 // ======================================================
 
-// const GurugramFaqs = dynamic(
-//   () => import("./home/faq's/GurugramFaqs"),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const GurugramFaqs = dynamic(
+  () => import("./home/faq's/GurugramFaq’s"),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
-// const MumbaiFaqs = dynamic(
-//   () => import("./home/faq's/MumbaiFaqs"),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const MumbaiFaqs = dynamic(
+  () => import("./home/faq's/MumbaiFaq's"),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
-// const PuneFaqs = dynamic(
-//   () => import("./home/faq's/PuneFaqs"),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const PuneFaqs = dynamic(
+  () => import("./home/faq's/PuneFaq’s"),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
 // ======================================================
 // COMPONENT
@@ -75,9 +75,9 @@ export default function FaqsSelector() {
     delhi: DelhiFaqs,
 
     // Future locations
-    // gurugram: GurugramFaqs,
-    // mumbai: MumbaiFaqs,
-    // pune: PuneFaqs,
+    gurugram: GurugramFaqs,
+    mumbai: MumbaiFaqs,
+    pune: PuneFaqs,
   };
 
   // ====================================================

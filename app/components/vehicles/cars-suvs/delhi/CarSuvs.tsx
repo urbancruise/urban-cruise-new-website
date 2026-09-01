@@ -13,6 +13,7 @@ import Faqs from "./ui/Faq's";
 import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
 import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
+import PlaceToVisit from "./ui/PlaceToVisit";
 
 
 export default function CarSuvs() {
@@ -34,6 +35,8 @@ export default function CarSuvs() {
       <WhyChooseUrbanCruise/>
       {/* Testimonials */}
       <Testimonials/>
+      {/* PlaceToVisit */}
+      <PlaceToVisit/>
       {/* Faq's */}
       <Faqs/>
       {/* VehicleRentalServiceInIndia */}

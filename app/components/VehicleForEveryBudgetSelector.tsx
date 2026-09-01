@@ -12,17 +12,17 @@ const DelhiVehicleForEveryBudget = dynamic(
 );
 
 // Future components — enable when ready
-// const GurugramVehicleForEveryBudget = dynamic(
-//   () => import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget")
-// );
+const GurugramVehicleForEveryBudget = dynamic(
+  () => import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget")
+);
 
-// const MumbaiVehicleForEveryBudget = dynamic(
-//   () => import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget")
-// );
+const MumbaiVehicleForEveryBudget = dynamic(
+  () => import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget")
+);
 
-// const PuneVehicleForEveryBudget = dynamic(
-//   () => import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget")
-// );
+const PuneVehicleForEveryBudget = dynamic(
+  () => import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget")
+);
 
 export default function VehicleForEveryBudgetSelector() {
   const { location } = useLocation();
@@ -31,9 +31,9 @@ export default function VehicleForEveryBudgetSelector() {
   // Only add locations that have defined components
   const vehicleForEveryBudgetMap: Record<string, React.ComponentType> = {
     delhi: DelhiVehicleForEveryBudget,
-    // gurugram: GurugramVehicleForEveryBudget,
-    // mumbai: MumbaiVehicleForEveryBudget,
-    // pune: PuneVehicleForEveryBudget,
+    gurugram: GurugramVehicleForEveryBudget,
+    mumbai: MumbaiVehicleForEveryBudget,
+    pune: PuneVehicleForEveryBudget,
   };
 
   // SELECT COMPONENT

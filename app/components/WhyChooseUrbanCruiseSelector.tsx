@@ -11,17 +11,17 @@ const DelhiWhyChooseUrbanCruise = dynamic(
 );
 
 // Future components — enable when ready
-// const GurugramWhyChooseUrbanCruise = dynamic(
-//   () => import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
-// );
+const GurugramWhyChooseUrbanCruise = dynamic(
+  () => import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
+);
 
-// const MumbaiWhyChooseUrbanCruise = dynamic(
-//   () => import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
-// );
+const MumbaiWhyChooseUrbanCruise = dynamic(
+  () => import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
+);
 
-// const PuneWhyChooseUrbanCruise = dynamic(
-//   () => import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
-// );
+const PuneWhyChooseUrbanCruise = dynamic(
+  () => import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
+);
 
 export default function WhyChooseUrbanCruiseSelector() {
   const { location } = useLocation();
@@ -30,9 +30,9 @@ export default function WhyChooseUrbanCruiseSelector() {
   // Only add locations that have defined components
   const whyChooseUrbanCruiseMap: Record<string, React.ComponentType> = {
     delhi: DelhiWhyChooseUrbanCruise,
-    // gurugram: GurugramWhyChooseUrbanCruise,
-    // mumbai: MumbaiWhyChooseUrbanCruise,
-    // pune: PuneWhyChooseUrbanCruise,
+    gurugram: GurugramWhyChooseUrbanCruise,
+    mumbai: MumbaiWhyChooseUrbanCruise,
+    pune: PuneWhyChooseUrbanCruise,
   };
 
   // SELECT COMPONENT

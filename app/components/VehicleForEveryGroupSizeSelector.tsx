@@ -12,17 +12,17 @@ const DelhiVehicleForEveryGroupSize = dynamic(
 );
 
 // Future components — enable when ready
-// const GurugramVehicleForEveryGroupSize = dynamic(
-//   () => import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
-// );
+const GurugramVehicleForEveryGroupSize = dynamic(
+  () => import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
+);
 
-// const MumbaiVehicleForEveryGroupSize = dynamic(
-//   () => import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
-// );
+const MumbaiVehicleForEveryGroupSize = dynamic(
+  () => import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
+);
 
-// const PuneVehicleForEveryGroupSize = dynamic(
-//   () => import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
-// );
+const PuneVehicleForEveryGroupSize = dynamic(
+  () => import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
+);
 
 export default function VehicleForEveryGroupSizeSelector() {
   const { location } = useLocation();
@@ -31,9 +31,9 @@ export default function VehicleForEveryGroupSizeSelector() {
   // Only add locations that have defined components
   const vehicleForEveryGroupSizeMap: Record<string, React.ComponentType> = {
     delhi: DelhiVehicleForEveryGroupSize,
-    // gurugram: GurugramVehicleForEveryGroupSize,
-    // mumbai: MumbaiVehicleForEveryGroupSize,
-    // pune: PuneVehicleForEveryGroupSize,
+    gurugram: GurugramVehicleForEveryGroupSize,
+    mumbai: MumbaiVehicleForEveryGroupSize,
+    pune: PuneVehicleForEveryGroupSize,
   };
 
   // SELECT COMPONENT

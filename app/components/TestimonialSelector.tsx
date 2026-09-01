@@ -24,41 +24,41 @@ const DelhiTestimonials = dynamic(
 // FUTURE LOCATIONS
 // ======================================================
 
-// const GurugramTestimonials = dynamic(
-//   () =>
-//     import(
-//       "./home/testimonial/GurugramTestimonial"
-//     ),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const GurugramTestimonials = dynamic(
+  () =>
+    import(
+      "./home/testimonial/GurugramTestimonial"
+    ),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
-// const MumbaiTestimonials = dynamic(
-//   () =>
-//     import(
-//       "./home/testimonial/MumbaiTestimonial"
-//     ),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const MumbaiTestimonials = dynamic(
+  () =>
+    import(
+      "./home/testimonial/MumbaiTestimonial"
+    ),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
-// const PuneTestimonials = dynamic(
-//   () =>
-//     import(
-//       "./home/testimonial/PuneTestimonial"
-//     ),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const PuneTestimonials = dynamic(
+  () =>
+    import(
+      "./home/testimonial/PuneTestimonial"
+    ),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
 // ======================================================
 // COMPONENT
@@ -86,9 +86,9 @@ export default function TestimonialSelector() {
     delhi: DelhiTestimonials,
 
     // Future locations
-    // gurugram: GurugramTestimonials,
-    // mumbai: MumbaiTestimonials,
-    // pune: PuneTestimonials,
+    gurugram: GurugramTestimonials,
+    mumbai: MumbaiTestimonials,
+    pune: PuneTestimonials,
   };
 
   // ====================================================

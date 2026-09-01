@@ -12,17 +12,17 @@ const DelhiHowItWorks = dynamic(
 );
 
 // Future components — enable when ready
-// const GurugramHowItWorks = dynamic(
-//   () => import("./home/howItworks/GurugramHowItWorks")
-// );
+const GurugramHowItWorks = dynamic(
+  () => import("./home/howItworks/GurugramHowItWorks")
+);
 
-// const MumbaiHowItWorks = dynamic(
-//   () => import("./home/howItworks/MumbaiHowItWorks")
-// );
+const MumbaiHowItWorks = dynamic(
+  () => import("./home/howItworks/MumbaiHowItWorks")
+);
 
-// const PuneHowItWorks = dynamic(
-//   () => import("./home/howItworks/PuneHowItWorks")
-// );
+const PuneHowItWorks = dynamic(
+  () => import("./home/howItworks/PuneHowItWorks")
+);
 
 export default function HowItWorksSelector() {
   const { location } = useLocation();
@@ -31,9 +31,9 @@ export default function HowItWorksSelector() {
   // Sirf jin locations ke liye component define hai, wahi map mein rakhein.
   const howItWorksMap: Record<string, React.ComponentType> = {
     delhi: DelhiHowItWorks,
-    // gurugram: GurugramHowItWorks,
-    // mumbai: MumbaiHowItWorks,
-    // pune: PuneHowItWorks,
+    gurugram: GurugramHowItWorks,
+    mumbai: MumbaiHowItWorks,
+    pune: PuneHowItWorks,
   };
 
   // SELECT COMPONENT

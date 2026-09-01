@@ -22,32 +22,32 @@ const DelhiVehicleRentalService = dynamic(
 // FUTURE LOCATIONS
 // ======================================================
 
-// const GurugramVehicleRentalService = dynamic(
-//   () => import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia"),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const GurugramVehicleRentalService = dynamic(
+  () => import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia"),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
-// const MumbaiVehicleRentalService = dynamic(
-//   () => import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia"),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const MumbaiVehicleRentalService = dynamic(
+  () => import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia"),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
-// const PuneVehicleRentalService = dynamic(
-//   () => import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia"),
-//   {
-//     loading: () => (
-//       <div className="min-h-[400px] w-full bg-white" />
-//     ),
-//   }
-// );
+const PuneVehicleRentalService = dynamic(
+  () => import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia"),
+  {
+    loading: () => (
+      <div className="min-h-[400px] w-full bg-white" />
+    ),
+  }
+);
 
 // ======================================================
 // COMPONENT
@@ -75,9 +75,9 @@ export default function VehicleRentalServiceInIndiaSelector() {
     delhi: DelhiVehicleRentalService,
 
     // Future locations
-    // gurugram: GurugramVehicleRentalService,
-    // mumbai: MumbaiVehicleRentalService,
-    // pune: PuneVehicleRentalService,
+    gurugram: GurugramVehicleRentalService,
+    mumbai: MumbaiVehicleRentalService,
+    pune: PuneVehicleRentalService,
   };
 
   // ====================================================
