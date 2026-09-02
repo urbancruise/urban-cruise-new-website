@@ -14,6 +14,7 @@ import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
 import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
 import PlaceToVisit from "./ui/PlaceToVisit";
+import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 
 
 export default function CarSuvs() {
@@ -29,6 +30,8 @@ export default function CarSuvs() {
       <VehicleForEveryBudget/>
       {/* VehicleForEveryGroupSize */}
       <VehicleForEveryGroupSize/>
+      {/* LookingForOtherVehicle */}
+      <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}
       <VehicleForEveryOccasion/>
       {/* WhyChooseUrbanCruise */}

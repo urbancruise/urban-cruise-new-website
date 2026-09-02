@@ -13,6 +13,7 @@ import Faqs from "./ui/Faq's";
 import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
 import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
+import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 
 
 export default function SleeperSemiSleeperBus() {
@@ -28,6 +29,8 @@ export default function SleeperSemiSleeperBus() {
       <VehicleForEveryBudget/>
       {/* VehicleForEveryGroupSize */}
       <VehicleForEveryGroupSize/>
+      {/* LookingForOtherVehicle */}
+      <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}
       <VehicleForEveryOccasion/>
       {/* WhyChooseUrbanCruise */}

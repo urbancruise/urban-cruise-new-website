@@ -13,6 +13,8 @@ import Faqs from "./ui/Faq's";
 import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
 import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
+import PlaceToVisit from "./ui/PlaceToVisit";
+import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 
 
 export default function Urbania() {
@@ -28,12 +30,16 @@ export default function Urbania() {
       <VehicleForEveryBudget/>
       {/* VehicleForEveryGroupSize */}
       <VehicleForEveryGroupSize/>
+      {/* LookingForOtherVehicle */}
+      <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}
       <VehicleForEveryOccasion/>
       {/* WhyChooseUrbanCruise */}
       <WhyChooseUrbanCruise/>
       {/* Testimonials */}
       <Testimonials/>
+      {/* PlaceToVisit */}
+      <PlaceToVisit/>
       {/* Faq's */}
       <Faqs/>
       {/* VehicleRentalServiceInIndia */}
