@@ -14,6 +14,7 @@ import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
 import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
+import CompressionWithVehicle from "./ui/CompressionWithVehicle";
 
 
 export default function Ertiga() {
@@ -29,6 +30,10 @@ export default function Ertiga() {
       <VehicleForEveryBudget/>
       {/* VehicleForEveryGroupSize */}
       <VehicleForEveryGroupSize/>
+      {/* CompressionWithVehicle */}
+      <CompressionWithVehicle/>
+      {/* CompressionWithVehicle */}
+      <CompressionWithVehicle/>
       {/* LookingForOtherVehicle */}
       <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}

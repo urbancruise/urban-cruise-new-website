@@ -15,6 +15,8 @@ import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
 import PlaceToVisit from "./ui/PlaceToVisit";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
+import CompressionWithVehicle from "./ui/CompressionWithVehicle";
+
 
 
 export default function TempoTraveller() {
@@ -30,6 +32,8 @@ export default function TempoTraveller() {
       <VehicleForEveryBudget/>
       {/* VehicleForEveryGroupSize */}
       <VehicleForEveryGroupSize/>
+      {/* CompressionWithVehicle */}
+      <CompressionWithVehicle/>
       {/* LookingForOtherVehicle */}
       <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}
