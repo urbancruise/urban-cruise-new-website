@@ -15,6 +15,7 @@ import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 import CompressionWithVehicle from "./ui/CompressionWithVehicle";
+import PricesCharges from "./ui/PricesCharges";
 
 
 export default function MaharajaTempoTraveller() {
@@ -32,6 +33,8 @@ export default function MaharajaTempoTraveller() {
       <VehicleForEveryGroupSize/>
       {/* CompressionWithVehicle */}
       <CompressionWithVehicle/>
+      {/* PricesCharges */}
+      <PricesCharges/>
       {/* LookingForOtherVehicle */}
       <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}

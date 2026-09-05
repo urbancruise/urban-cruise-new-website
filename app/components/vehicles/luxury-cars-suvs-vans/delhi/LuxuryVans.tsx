@@ -14,6 +14,7 @@ import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
 import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
+import PricesCharges from "./ui/PricesCharges";
 
 
 export default function LuxuryVans() {
@@ -29,6 +30,8 @@ export default function LuxuryVans() {
       <VehicleForEveryBudget/>
       {/* VehicleForEveryGroupSize */}
       <VehicleForEveryGroupSize/>
+      {/* PricesCharges */}
+      <PricesCharges/>
       {/* LookingForOtherVehicle */}
       <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}

@@ -16,6 +16,7 @@ import DownloadApp from "../../../download-app/DownloadApp";
 import PlaceToVisit from "./ui/PlaceToVisit";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 import CompressionWithVehicle from "./ui/CompressionWithVehicle";
+import PricesCharges from "./ui/PricesCharges";
 
 
 export default function Urbania() {
@@ -33,6 +34,8 @@ export default function Urbania() {
       <VehicleForEveryGroupSize/>
       {/* CompressionWithVehicle */}
       <CompressionWithVehicle/>
+      {/* PricesCharges */}
+      <PricesCharges/>
       {/* LookingForOtherVehicle */}
       <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}

@@ -16,6 +16,7 @@ import DownloadApp from "../../../download-app/DownloadApp";
 import PlaceToVisit from "./ui/PlaceToVisit";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 import CompressionWithVehicle from "./ui/CompressionWithVehicle";
+import PriceBookingCharges from "./ui/PriceBookingCharges";
 
 
 
@@ -34,6 +35,8 @@ export default function TempoTraveller() {
       <VehicleForEveryGroupSize/>
       {/* CompressionWithVehicle */}
       <CompressionWithVehicle/>
+      {/* PriceBookingCharges */}
+      <PriceBookingCharges/>
       {/* LookingForOtherVehicle */}
       <LookingForOtherVehicle/>
       {/* VehicleForEveryOccasion */}
