@@ -12,7 +12,7 @@ import { useLocation } from "@/app/context/LocationContext";
 const DelhiOurTrustedPartner = dynamic(
   () =>
     import(
-      "./home/ourtrustedpartner/DelhiOurTrustedPartner"
+      "./ourtrustedpartner/OurTrustedPartner"
     ),
   {
     loading: () => (

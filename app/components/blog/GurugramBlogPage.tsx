@@ -1,8 +1,6 @@
 // app/components/blog/GurugramBlogPage.tsx
 "use client";
 
-import Link from "next/link";
-import { useLocation } from "@/app/context/LocationContext";
 import { FaSearch, FaCalendar, FaUser, FaTag, FaArrowRight, FaClock, FaEye, FaBuilding, FaBriefcase } from "react-icons/fa";
 import { useState } from "react";
 
@@ -19,7 +17,6 @@ interface BlogPost {
 }
 
 export default function GurugramBlogPage() {
-  const { getLocationUrl } = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
 
@@ -183,22 +180,21 @@ export default function GurugramBlogPage() {
                   <span className="inline-block px-3 py-1 bg-[#6c5ce7]/10 text-[#6c5ce7] text-xs rounded-full mb-3">
                     {categories.find(c => c.id === post.category)?.label || post.category}
                   </span>
-                  <h3 className="text-lg font-semibold text-[#0c0c1d] mb-2 group-hover:text-[#6c5ce7] transition-colors duration-300">
+                  <h2 className="text-lg font-semibold text-[#0c0c1d] mb-2 group-hover:text-[#6c5ce7] transition-colors duration-300">
                     {post.title}
-                  </h3>
+                  </h2>
                   <p className="text-gray-600 text-sm mb-3">{post.excerpt}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500 flex items-center gap-1">
                       <FaUser className="text-[#6c5ce7]" />
                       {post.author}
                     </span>
-                    <Link
-                      href="#"
+                    <span
                       className="text-[#6c5ce7] font-medium hover:underline text-sm flex items-center gap-1"
                     >
-                      Read More
+                      Article preview
                       <FaArrowRight className="w-3 h-3" />
-                    </Link>
+                    </span>
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {post.tags.map((tag) => (

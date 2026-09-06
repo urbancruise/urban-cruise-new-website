@@ -121,7 +121,7 @@ export default function PuneVacationsPage() {
             <div className="relative">
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
                 <div className="relative h-[300px] md:h-[350px] rounded-xl overflow-hidden">
-                  <Image src={vehicleImages[selectedImage]} alt="Vacations" fill className="object-cover" />
+                  <Image src={vehicleImages[selectedImage]} alt="Vacation travel vehicle available from Pune" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 </div>
                 <div className="flex gap-2 mt-4">
                   {vehicleImages.map((img, index) => (
@@ -229,7 +229,7 @@ export default function PuneVacationsPage() {
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-full bg-[#00b894]/10 flex items-center justify-center text-[#00b894] font-bold text-lg">{review.name.charAt(0)}</div>
                   <div>
-                    <h4 className="font-semibold text-[#0a1a0a]">{review.name}</h4>
+                    <p className="font-semibold text-[#0a1a0a]">{review.name}</p>
                     <div className="flex items-center gap-1 text-yellow-400 text-sm">
                       {[...Array(5)].map((_, i) => <FaStar key={i} className={i < review.rating ? 'text-yellow-400' : 'text-gray-300'} />)}
                     </div>

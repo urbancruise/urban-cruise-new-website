@@ -1,16 +1,34 @@
 // app/[location]/[vehicle]/page.tsx
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { isValidLocation } from '@/app/lib/location';
 import VehicleSelector from '@/app/components/VehicleSelector';
 import ServiceSelector from '@/app/components/ServiceSelector';
 import { getVehicleSlug } from '@/app/lib/vehicleUrlMappings';
 import { getServiceSlug } from '@/app/lib/serviceUrlMappings';
+import JsonLd from '@/app/components/seo/JsonLd';
+import { serviceSchema, webPageSchema } from '@/lib/schema';
+import { createLocationMetadata, getDynamicPageType } from '@/lib/seo';
+import Breadcrumb from '@/app/components/seo/Breadcrumb';
+import { formatLocationName } from '@/app/lib/location';
+import ContextualInternalLinks from '@/app/components/seo/ContextualInternalLinks';
+import { getServiceSeoContent } from '@/lib/service-seo';
+import { getVehicleSeoContent } from '@/lib/vehicle-seo';
+import LocalSeoContent from '@/app/components/seo/LocalSeoContent';
 
 interface PageProps {
   params: Promise<{
     location: string;
     vehicle: string;
   }>;
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { location, vehicle } = await params;
+  return createLocationMetadata(
+    location,
+    getDynamicPageType(vehicle),
+    `/${location}/${vehicle}`,
+  );
 }
 
 export default async function DynamicPage({ params }: PageProps) {
@@ -159,11 +177,45 @@ export default async function DynamicPage({ params }: PageProps) {
     
     // If the slug doesn't match the expected slug for this location, redirect
     if (vehicle !== expectedSlug) {
-      redirect(`/${location}/${expectedSlug}`);
+      permanentRedirect(`/${location}/${expectedSlug}`);
     }
 
     // Render the vehicle selector
-    return <VehicleSelector vehicleType={vehicleType} />;
+    return (
+      <>
+        <JsonLd
+          data={[
+            webPageSchema({
+              name: `${getVehicleSeoContent(vehicleType).name} in ${formatLocationName(location)}`,
+              description: getVehicleSeoContent(vehicleType).description,
+              path: `/${location}/${vehicle}`,
+            }),
+            serviceSchema({
+              name: getVehicleSeoContent(vehicleType).name,
+              description: getVehicleSeoContent(vehicleType).description,
+              path: `/${location}/${vehicle}`,
+              location,
+            }),
+          ]}
+        />
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
+            <div className="pointer-events-auto">
+              <Breadcrumb
+                items={[
+                  { name: "Home", path: "/" },
+                  { name: formatLocationName(location), path: `/${location}` },
+                  { name: vehicleType, path: `/${location}/${vehicle}` },
+                ]}
+              />
+            </div>
+          </div>
+          <VehicleSelector vehicleType={vehicleType} />
+          <LocalSeoContent location={location} intent="vehicle" vehicleType={vehicleType} />
+          <ContextualInternalLinks location={location} />
+        </div>
+      </>
+    );
   }
 
   // Handle service pages
@@ -173,11 +225,45 @@ export default async function DynamicPage({ params }: PageProps) {
     
     // If the slug doesn't match the expected slug for this location, redirect
     if (vehicle !== expectedSlug) {
-      redirect(`/${location}/${expectedSlug}`);
+      permanentRedirect(`/${location}/${expectedSlug}`);
     }
 
     // Render the service selector
-    return <ServiceSelector serviceType={serviceType} />;
+    return (
+      <>
+        <JsonLd
+          data={[
+            webPageSchema({
+              name: `${getServiceSeoContent(serviceType).name} in ${formatLocationName(location)}`,
+              description: getServiceSeoContent(serviceType).description,
+              path: `/${location}/${vehicle}`,
+            }),
+            serviceSchema({
+              name: getServiceSeoContent(serviceType).name,
+              description: getServiceSeoContent(serviceType).description,
+              path: `/${location}/${vehicle}`,
+              location,
+            }),
+          ]}
+        />
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
+            <div className="pointer-events-auto">
+              <Breadcrumb
+                items={[
+                  { name: "Home", path: "/" },
+                  { name: formatLocationName(location), path: `/${location}` },
+                  { name: serviceType, path: `/${location}/${vehicle}` },
+                ]}
+              />
+            </div>
+          </div>
+          <ServiceSelector serviceType={serviceType} />
+          <LocalSeoContent location={location} intent="service" serviceType={serviceType} />
+          <ContextualInternalLinks location={location} />
+        </div>
+      </>
+    );
   }
 
   // Fallback - should never reach here

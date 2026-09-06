@@ -139,8 +139,9 @@ export default function GurugramJimCorbettPage() {
                 <div className="relative h-[300px] md:h-[350px] rounded-xl overflow-hidden">
                   <Image
                     src={vehicleImages[selectedImage]}
-                    alt="Jim Corbett"
+                    alt="Vehicle for Jim Corbett travel from Gurugram"
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                   />
                 </div>
@@ -332,7 +333,7 @@ export default function GurugramJimCorbettPage() {
                     {review.name.charAt(0)}
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#0c0c1d]">{review.name}</h4>
+                    <p className="font-semibold text-[#0c0c1d]">{review.name}</p>
                     <div className="flex items-center gap-1 text-yellow-400 text-sm">
                       {[...Array(5)].map((_, i) => (
                         <FaStar key={i} className={i < review.rating ? 'text-yellow-400' : 'text-gray-300'} />

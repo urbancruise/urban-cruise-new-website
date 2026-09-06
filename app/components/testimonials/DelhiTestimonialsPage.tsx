@@ -191,7 +191,7 @@ export default function DelhiTestimonialsPage() {
                 <IoMdArrowForward className="w-4 h-4" />
               </Link>
               <Link
-                href={getLocationUrl("/vehicles")}
+                href={getLocationUrl("/car-rental-delhi")}
                 className="inline-flex items-center gap-2 px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10"
               >
                 View Our Fleet
@@ -316,7 +316,7 @@ export default function DelhiTestimonialsPage() {
                     <img src={testimonial.avatar} alt={testimonial.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-[#1a1a2e]">{testimonial.name}</h4>
+                    <p className="font-semibold text-[#1a1a2e]">{testimonial.name}</p>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <FaMapMarkerAlt className="text-[#e94560] text-xs" />
                       {testimonial.location}
@@ -383,4 +383,3 @@ export default function DelhiTestimonialsPage() {
     </div>
   );
 }
-

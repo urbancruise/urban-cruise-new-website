@@ -140,8 +140,9 @@ export default function GurugramWeddingPage() {
                 <div className="relative h-[300px] md:h-[350px] rounded-xl overflow-hidden">
                   <Image
                     src={vehicleImages[selectedImage]}
-                    alt="Wedding"
+                    alt="Wedding transport vehicle available in Gurugram"
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                   />
                 </div>
@@ -268,7 +269,7 @@ export default function GurugramWeddingPage() {
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-full bg-[#6c5ce7]/10 flex items-center justify-center text-[#6c5ce7] font-bold text-lg">{review.name.charAt(0)}</div>
                   <div>
-                    <h4 className="font-semibold text-[#0c0c1d]">{review.name}</h4>
+                    <p className="font-semibold text-[#0c0c1d]">{review.name}</p>
                     <div className="flex items-center gap-1 text-yellow-400 text-sm">
                       {[...Array(5)].map((_, i) => <FaStar key={i} className={i < review.rating ? 'text-yellow-400' : 'text-gray-300'} />)}
                     </div>
@@ -295,4 +296,3 @@ export default function GurugramWeddingPage() {
     </div>
   );
 }
-

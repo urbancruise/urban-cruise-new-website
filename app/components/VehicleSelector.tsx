@@ -196,6 +196,7 @@ export default function VehicleSelector({ vehicleType }: VehicleSelectorProps) {
   // Get the appropriate vehicle component
   const VehicleComponent = vehicleMap[location]?.[vehicleType] || VehicleComingSoon;
 
-  return <VehicleComponent />;
+  return (
+    <VehicleComponent />
+  );
 }
-
