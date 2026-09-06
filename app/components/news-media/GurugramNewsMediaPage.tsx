@@ -1,8 +1,6 @@
 // app/components/news-media/GurugramNewsMediaPage.tsx
 "use client";
 
-import Link from "next/link";
-import { useLocation } from "@/app/context/LocationContext";
 import { FaNewspaper, FaTrophy, FaUsers, FaStar, FaArrowRight, FaCalendar, FaEye, FaShareAlt, FaBuilding, FaBriefcase } from "react-icons/fa";
 import { useState } from "react";
 
@@ -17,7 +15,6 @@ interface NewsItem {
 }
 
 export default function GurugramNewsMediaPage() {
-  const { getLocationUrl } = useLocation();
   const [activeCategory, setActiveCategory] = useState("all");
 
   const categories = [
@@ -165,13 +162,12 @@ export default function GurugramNewsMediaPage() {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">January 2026</span>
-                    <Link
-                      href="#"
+                    <span
                       className="inline-flex items-center gap-2 text-[#6c5ce7] font-semibold hover:underline"
                     >
-                      Read Full Story
+                      News preview
                       <FaArrowRight className="w-4 h-4" />
-                    </Link>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -238,13 +234,12 @@ export default function GurugramNewsMediaPage() {
                   </h3>
                   <p className="text-gray-600 text-sm mb-4">{item.excerpt}</p>
                   <div className="flex items-center justify-between">
-                    <Link
-                      href="#"
+                    <span
                       className="text-[#6c5ce7] font-medium hover:underline text-sm flex items-center gap-1"
                     >
-                      Read More
+                      News preview
                       <FaArrowRight className="w-3 h-3" />
-                    </Link>
+                    </span>
                     <button className="text-gray-400 hover:text-[#6c5ce7] transition-colors duration-300">
                       <FaShareAlt />
                     </button>

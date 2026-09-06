@@ -195,6 +195,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                       src={imageSrc}
                       alt={formatLocationName(loc)}
                       fill
+                      sizes="20px"
                       className="object-contain"
                     />
                   </div>
@@ -248,6 +249,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                           src={imageSrc}
                           alt={formatLocationName(loc)}
                           fill
+                          sizes="96px"
                           className="object-contain"
                         />
                       </div>

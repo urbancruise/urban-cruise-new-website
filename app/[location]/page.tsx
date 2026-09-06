@@ -2,7 +2,6 @@
 import { notFound } from "next/navigation";
 import {
   isValidLocation,
-  formatLocationName,
 } from "@/app/lib/location";
 
 import HeroSelector from "@/app/components/HeroSelector";
@@ -17,11 +16,22 @@ import FaqsSelector from "@/app/components/Faq'sSelector";
 import VehicleRentalServiceInIndiaSelector from "@/app/components/VehicleRentalServiceInIndiaSelector";
 import OurTrustedPartner from "../components/ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../components/download-app/DownloadApp";
+import LocalSeoContent from "@/app/components/seo/LocalSeoContent";
+import { createLocationMetadata } from "@/lib/seo";
+import JsonLd from "@/app/components/seo/JsonLd";
+import { webPageSchema } from "@/lib/schema";
+import { formatLocationName } from "@/app/lib/location";
+import Breadcrumb from "@/app/components/seo/Breadcrumb";
 
 interface LocationPageProps {
   params: Promise<{
     location: string;
   }>;
+}
+
+export async function generateMetadata({ params }: LocationPageProps) {
+  const { location } = await params;
+  return createLocationMetadata(location, "home", `/${location}`);
 }
 
 export default async function LocationHome({
@@ -34,9 +44,25 @@ export default async function LocationHome({
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)]">
-
-          {/* HERO */}
+    <div className="relative min-h-[calc(100vh-4rem)]">
+      <JsonLd
+        data={webPageSchema({
+          name: `Vehicle Rental in ${formatLocationName(location)}`,
+          description: `Vehicle rental services in ${formatLocationName(location)} from Urban Cruise.`,
+          path: `/${location}`,
+        })}
+      />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
+        <div className="pointer-events-auto">
+          <Breadcrumb
+            items={[
+              { name: "Home", path: "/" },
+              { name: formatLocationName(location), path: `/${location}` },
+            ]}
+          />
+        </div>
+      </div>
+      {/* HERO */}
       <HeroSelector />
 
           {/* ABOUT */}
@@ -71,8 +97,7 @@ export default async function LocationHome({
 
       {/* FEATURES */}
       <DownloadApp />
+      <LocalSeoContent location={location} />
     </div>
   );
 }
-
-

@@ -528,7 +528,6 @@ export default function PuneWhyChooseUrbanCruise() {
           src="/images/whychooseicons/bg.png"
           alt="Why Choose Urban Cruse background"
           fill
-          priority
           sizes="100vw"
           className="
             object-cover

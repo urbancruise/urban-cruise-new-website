@@ -191,7 +191,7 @@ export default function PuneTestimonialsPage() {
                 <IoMdArrowForward className="w-4 h-4" />
               </Link>
               <Link
-                href={getLocationUrl("/vehicles")}
+                href={getLocationUrl("/car-rental-pune")}
                 className="inline-flex items-center gap-2 px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10"
               >
                 View Our Fleet
@@ -316,7 +316,7 @@ export default function PuneTestimonialsPage() {
                     <img src={testimonial.avatar} alt={testimonial.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-[#0a1a0a]">{testimonial.name}</h4>
+                    <p className="font-semibold text-[#0a1a0a]">{testimonial.name}</p>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <FaMapMarkerAlt className="text-[#00b894] text-xs" />
                       {testimonial.location}
@@ -383,4 +383,3 @@ export default function PuneTestimonialsPage() {
     </div>
   );
 }
-

@@ -216,7 +216,6 @@ export default function Footer() {
                     alt="Urban Cruise"
                     width={400}
                     height={96}
-                    priority
                     className={`w-auto object-contain transition-all duration-500 ease-out ${getLogoDimensions().className}`}
                     style={{
                       transform: "scale(1)",

@@ -266,7 +266,7 @@ export default function GurugramPartnerPage() {
                     <FaHandshake />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#0c0c1d]">{story.name}</h4>
+                    <h3 className="font-semibold text-[#0c0c1d]">{story.name}</h3>
                     <p className="text-xs text-gray-500">{story.type}</p>
                   </div>
                 </div>
@@ -404,4 +404,3 @@ export default function GurugramPartnerPage() {
     </div>
   );
 }
-
