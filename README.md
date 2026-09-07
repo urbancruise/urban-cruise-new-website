@@ -16,6 +16,21 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Location redirects
+
+Location detection is disabled by default, so `/` remains the global version of
+the site. To enable location redirects, set both variables to `true`:
+
+```env
+LOCATION_REDIRECT_ENABLED=true
+NEXT_PUBLIC_LOCATION_REDIRECT_ENABLED=true
+```
+
+The server-side proxy uses the deployment's city header when available. If no
+city header is available, the global page requests browser geolocation and
+redirects to a supported city when it can be identified. This fallback works
+on `http://localhost:3000` as well as production HTTPS.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

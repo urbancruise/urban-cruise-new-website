@@ -16,7 +16,6 @@ import FaqsSelector from "@/app/components/Faq'sSelector";
 import VehicleRentalServiceInIndiaSelector from "@/app/components/VehicleRentalServiceInIndiaSelector";
 import OurTrustedPartner from "../components/ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../components/download-app/DownloadApp";
-import LocalSeoContent from "@/app/components/seo/LocalSeoContent";
 import { createLocationMetadata } from "@/lib/seo";
 import JsonLd from "@/app/components/seo/JsonLd";
 import { webPageSchema } from "@/lib/schema";
@@ -97,7 +96,6 @@ export default async function LocationHome({
 
       {/* FEATURES */}
       <DownloadApp />
-      <LocalSeoContent location={location} />
     </div>
   );
 }
