@@ -3,7 +3,6 @@
 
 import BusWithWashroom from "./luxury-buses/pune/BusWithWashroom";
 
-
 export default function PuneBusWithWashroomPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -11,3 +10,4 @@ export default function PuneBusWithWashroomPage() {
     </main>
   );
 }
+

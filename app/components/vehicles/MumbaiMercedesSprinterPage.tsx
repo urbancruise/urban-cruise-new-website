@@ -3,9 +3,6 @@
 
 import MercedesSprinter from "./luxury-cars-suvs-vans/mumbai/MercedesSprinter";
 
-
-
-
 export default function MumbaiMercedesSprinterPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -13,3 +10,4 @@ export default function MumbaiMercedesSprinterPage() {
     </main>
   );
 }
+

@@ -3,8 +3,6 @@
 
 import Hycross from "./cars-suvs/pune/Hycross";
 
-
-
 export default function PuneHycrossPage() {
   return (
     <main className="min-h-screen w-full bg-white">

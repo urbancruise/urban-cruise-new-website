@@ -3,7 +3,6 @@
 
 import Hycross from "./cars-suvs/mumbai/Hycross";
 
-
 export default function MumbaiHycrossPage() {
   return (
     <main className="min-h-screen w-full bg-white">

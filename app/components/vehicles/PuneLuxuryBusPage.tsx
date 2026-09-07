@@ -3,7 +3,6 @@
 
 import LuxuryBus from "./luxury-buses/pune/LuxuryBus";
 
-
 export default function PuneLuxuryBusPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -11,3 +10,4 @@ export default function PuneLuxuryBusPage() {
     </main>
   );
 }
+

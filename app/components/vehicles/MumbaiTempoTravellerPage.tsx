@@ -3,8 +3,6 @@
 
 import TempoTraveller from "./tempo-travellers/mumbai/TempoTraveller";
 
-
-
 export default function MumbaiTempoTravellerPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -12,3 +10,4 @@ export default function MumbaiTempoTravellerPage() {
     </main>
   );
 }
+

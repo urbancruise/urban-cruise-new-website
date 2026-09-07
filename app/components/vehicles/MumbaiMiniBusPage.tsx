@@ -3,8 +3,6 @@
 
 import MiniBus from "./mini-bus/mumbai/MiniBus";
 
-
-
 export default function MumbaiMiniBusPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -12,3 +10,4 @@ export default function MumbaiMiniBusPage() {
     </main>
   );
 }
+

@@ -3,7 +3,6 @@
 
 import VolvoBus from "./luxury-buses/mumbai/VolvoBus";
 
-
 export default function MumbaiVolvoBusPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -11,3 +10,4 @@ export default function MumbaiVolvoBusPage() {
     </main>
   );
 }
+

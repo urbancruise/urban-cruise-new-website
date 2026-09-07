@@ -3,7 +3,6 @@
 
 import BharatBenzBus from "./luxury-buses/pune/BharatBenzBus";
 
-
 export default function PuneBharatBenzBusPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -11,3 +10,4 @@ export default function PuneBharatBenzBusPage() {
     </main>
   );
 }
+

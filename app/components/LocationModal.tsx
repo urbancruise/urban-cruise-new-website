@@ -284,3 +284,5 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
     </div>
   );
 }
+
+

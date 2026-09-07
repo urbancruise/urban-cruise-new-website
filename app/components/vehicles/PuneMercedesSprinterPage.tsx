@@ -3,10 +3,6 @@
 
 import MercedesSprinter from "./luxury-cars-suvs-vans/pune/MercedesSprinter";
 
-
-
-
-
 export default function PuneMercedesSprinterPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -14,3 +10,4 @@ export default function PuneMercedesSprinterPage() {
     </main>
   );
 }
+

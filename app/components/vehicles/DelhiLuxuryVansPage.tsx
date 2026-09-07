@@ -3,7 +3,6 @@
 
 import LuxuryVans from "./luxury-cars-suvs-vans/delhi/LuxuryVans";
 
-
 export default function DelhiLuxuryVansPage() {
   return (
     <main className="min-h-screen w-full bg-white">

@@ -3,8 +3,6 @@
 
 import LuxuryCarsSuvs from "./luxury-cars-suvs-vans/gurugram/LuxuryCarsSuvs";
 
-
-
 export default function GurugramLuxuryCarsSuvsPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -12,3 +10,4 @@ export default function GurugramLuxuryCarsSuvsPage() {
     </main>
   );
 }
+

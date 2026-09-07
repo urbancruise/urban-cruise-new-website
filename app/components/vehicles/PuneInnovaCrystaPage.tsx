@@ -3,7 +3,6 @@
 
 import InnovnaCrysta from "./cars-suvs/pune/InnovaCrysta";
 
-
 export default function PuneInnovaCrystaPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -11,3 +10,4 @@ export default function PuneInnovaCrystaPage() {
     </main>
   );
 }
+

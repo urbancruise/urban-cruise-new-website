@@ -3,7 +3,6 @@
 
 import BharatBenzBus from "./luxury-buses/mumbai/BharatBenzBus";
 
-
 export default function MumbaiBharatBenzBusPage() {
   return (
     <main className="min-h-screen w-full bg-white">
@@ -11,3 +10,4 @@ export default function MumbaiBharatBenzBusPage() {
     </main>
   );
 }
+
