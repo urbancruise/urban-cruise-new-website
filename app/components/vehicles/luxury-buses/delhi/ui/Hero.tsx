@@ -27,7 +27,7 @@ export default function Hero() {
         ================================================== */}
         <img
           src="/images/hero/herobg.webp"
-          alt="Premium car rental in Delhi"
+          alt="Luxury bus rental vehicles in Delhi"
           className="
             absolute
             inset-0
@@ -256,7 +256,7 @@ export default function Hero() {
         >
           <img
             src="/images/hero/3 images.webp"
-            alt="Premium cars and buses available for rental in Delhi"
+            alt="Luxury buses available for group travel in Delhi"
             className="
               w-full
               h-auto
@@ -331,4 +331,3 @@ export default function Hero() {
     </section>
   );
 }
-

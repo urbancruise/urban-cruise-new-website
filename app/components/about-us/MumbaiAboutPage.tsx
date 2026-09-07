@@ -95,7 +95,7 @@ export default function MumbaiAboutPage() {
                 <IoMdArrowForward className="w-4 h-4" />
               </Link>
               <Link
-                href={getLocationUrl("/vehicles")}
+                href={getLocationUrl("/car-rental-mumbai")}
                 className="inline-flex items-center gap-2 px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10"
               >
                 View Our Fleet
@@ -195,4 +195,3 @@ export default function MumbaiAboutPage() {
     </div>
   );
 }
-

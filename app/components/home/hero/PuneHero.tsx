@@ -2,6 +2,7 @@
 "use client";
 
 import QuickCallForm from "../../shared/QuickCallForm";
+import Image from "next/image";
 
 export default function PuneHero() {
   return (
@@ -25,9 +26,12 @@ export default function PuneHero() {
         {/* =================================================
             BACKGROUND IMAGE
         ================================================== */}
-        <img
+        <Image
           src="/images/hero/herobg.webp"
-          alt="Premium car rental in Delhi"
+          alt="Premium car and bus rental service in Pune"
+          fill
+          priority
+          sizes="100vw"
           className="
             absolute
             inset-0
@@ -254,9 +258,12 @@ export default function PuneHero() {
             xl:top-[34%]
           "
         >
-          <img
+          <Image
             src="/images/hero/3 images.webp"
-            alt="Premium cars and buses available for rental in Delhi"
+            alt="Premium cars and buses available for rental in Pune"
+            width={1080}
+            height={520}
+            loading="lazy"
             className="
               w-full
               h-auto
@@ -331,4 +338,3 @@ export default function PuneHero() {
     </section>
   );
 }
-

@@ -5,6 +5,14 @@ import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import gsap from "gsap";
+import type {
+  GeometryCollection,
+  Topology,
+} from "topojson-specification";
+
+type WorldTopology = Topology<{
+  countries: GeometryCollection;
+}>;
 
 const Map = () => {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -58,7 +66,7 @@ const Map = () => {
 
     const initMap = async () => {
       try {
-        const topology = await d3.json(
+        const topology = await d3.json<WorldTopology>(
           "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
         );
 
@@ -142,7 +150,9 @@ const Map = () => {
          * ========================================================
          */
 
-        const worldLayer = d3.select("#worldLayer");
+        const worldLayer = d3.select<SVGGElement, d3.GeoPermissibleObjects>(
+          "#worldLayer",
+        );
         const routeLayer = d3.select("#routeLayer");
         const citiesLayer = d3.select("#citiesLayer");
 
@@ -184,7 +194,7 @@ const Map = () => {
          */
 
         const indiaBaseEl = d3
-          .select("#indiaOutlineBase")
+          .select<SVGPathElement, unknown>("#indiaOutlineBase")
           .attr("d", indiaD);
 
         /*
@@ -192,7 +202,7 @@ const Map = () => {
          */
 
         const indiaOutlineEl = d3
-          .select("#indiaOutline")
+          .select<SVGPathElement, unknown>("#indiaOutline")
           .attr("d", indiaD);
 
         const indiaBaseLength =
@@ -229,8 +239,10 @@ const Map = () => {
          * ========================================================
          */
 
-        const indiaIslandLayer =
-          d3.select("#indiaIslandLayer");
+        const indiaIslandLayer = d3.select<
+          SVGGElement,
+          d3.GeoPermissibleObjects
+        >("#indiaIslandLayer");
 
         indiaIslandLayer.selectAll("*").remove();
 
@@ -389,6 +401,10 @@ const Map = () => {
             city.lat,
           ]);
 
+          if (!point) {
+            throw new Error(`Unable to project ${city.name}`);
+          }
+
           return {
             ...city,
             x: point[0],
@@ -402,7 +418,7 @@ const Map = () => {
          * ========================================================
          */
 
-        const routePts = cityPts.map((city) => [
+        const routePts: [number, number][] = cityPts.map((city) => [
           city.x,
           city.y,
         ]);
@@ -1080,7 +1096,7 @@ const Map = () => {
            */
 
           worldLayer
-            .selectAll("path")
+            .selectAll<SVGPathElement, d3.GeoPermissibleObjects>("path")
             .attr("d", path);
 
           /*
@@ -1088,7 +1104,7 @@ const Map = () => {
            */
 
           indiaIslandLayer
-            .selectAll("path")
+            .selectAll<SVGPathElement, d3.GeoPermissibleObjects>("path")
             .attr("d", path);
 
           /*
@@ -1100,6 +1116,10 @@ const Map = () => {
               city.lon,
               city.lat,
             ]);
+
+            if (!point) {
+              return;
+            }
 
             city.x = point[0];
             city.y = point[1];

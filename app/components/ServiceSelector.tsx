@@ -116,6 +116,7 @@ export default function ServiceSelector({ serviceType }: ServiceSelectorProps) {
   // Get the appropriate service component
   const ServiceComponent = serviceMap[location]?.[serviceType] || ServiceComingSoon;
 
-  return <ServiceComponent />;
+  return (
+    <ServiceComponent />
+  );
 }
-

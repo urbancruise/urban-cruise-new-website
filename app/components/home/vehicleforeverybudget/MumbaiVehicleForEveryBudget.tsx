@@ -5,7 +5,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { FaHandHoldingUsd, FaStar } from "react-icons/fa";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
@@ -83,7 +83,7 @@ function TrustBadge({
     `,
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {
       opacity: 0,
       scale: 0.6,

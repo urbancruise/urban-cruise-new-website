@@ -329,8 +329,9 @@ function CurvedGallery({ images }: { images: string[] }) {
         >
           <Image
             src={displayImages[0]}
-            alt="Gallery previous"
+            alt="Previous vehicle gallery image in Pune"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
         </div>
@@ -345,8 +346,9 @@ function CurvedGallery({ images }: { images: string[] }) {
         >
           <Image
             src={displayImages[1]}
-            alt="Gallery current"
+            alt="Current vehicle gallery image in Pune"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
         </div>
@@ -360,8 +362,9 @@ function CurvedGallery({ images }: { images: string[] }) {
         >
           <Image
             src={displayImages[2]}
-            alt="Gallery next"
+            alt="Next vehicle gallery image in Pune"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
         </div>
@@ -643,5 +646,4 @@ export default function PuneVehicleForEveryGroupSize() {
     </section>
   );
 }
-
 

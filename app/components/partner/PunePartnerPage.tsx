@@ -266,7 +266,7 @@ export default function PunePartnerPage() {
                     <FaHandshake />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#0a1a0a]">{story.name}</h4>
+                    <h3 className="font-semibold text-[#0a1a0a]">{story.name}</h3>
                     <p className="text-xs text-gray-500">{story.type}</p>
                   </div>
                 </div>
@@ -405,4 +405,3 @@ export default function PunePartnerPage() {
     </div>
   );
 }
-

@@ -13,7 +13,7 @@ interface FaqItem {
 }
 
 export default function MumbaiFaqsPage() {
-  const { getLocationUrl, location } = useLocation();
+  const { getLocationUrl } = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [openFaqs, setOpenFaqs] = useState<number[]>([]);
