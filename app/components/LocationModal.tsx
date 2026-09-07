@@ -36,7 +36,7 @@ function getCityImage(loc: string) {
 }
 
 export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
-  const { location, setLocation } = useLocation();
+  const { selectedLocation, setLocation } = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const modalRef = useRef<HTMLDivElement>(null);
@@ -217,7 +217,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
               {filteredLocations.map((loc) => {
-                const isActive = location === loc;
+                const isActive = selectedLocation === loc;
                 const imageSrc = getCityImage(loc);
 
                 return (
@@ -277,7 +277,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
               <FaMapMarkerAlt className="text-[#03C35E] text-xs sm:text-sm" />
               <span className="hidden xs:inline">Current:</span>
               <span className="font-semibold text-[#03C35E] text-[10px] sm:text-xs">
-                {formatLocationName(location)}
+                {selectedLocation ? formatLocationName(selectedLocation) : "Select City"}
               </span>
             </span>
           </div>
@@ -286,5 +286,4 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
     </div>
   );
 }
-
 

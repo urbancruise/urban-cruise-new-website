@@ -30,7 +30,7 @@ export default function DelhiFaqsPage() {
   const faqs: FaqItem[] = [
     // Booking
     {
-      question: "How do I book a vehicle in Delhi?",
+      question: "How do I book a vehicle in India?",
       answer: "You can book a vehicle through our website, mobile app, or by calling our customer service. Simply select your preferred vehicle, choose your date and time, and complete the booking process.",
       category: "booking"
     },
@@ -41,12 +41,12 @@ export default function DelhiFaqsPage() {
     },
     {
       question: "How far in advance should I book?",
-      answer: "We recommend booking at least 24-48 hours in advance for the best availability, especially during peak seasons and for special events in Delhi.",
+      answer: "We recommend booking at least 24-48 hours in advance for the best availability, especially during peak seasons, festivals, and special events across India.",
       category: "booking"
     },
     // Vehicles
     {
-      question: "What types of vehicles are available in Delhi?",
+      question: "What types of vehicles are available in India?",
       answer: "We offer a wide range of vehicles including SUVs, sedans, luxury cars, tempo travellers, mini buses, and luxury buses. Our fleet includes Toyota Innova, Ertiga, Mercedes Sprinter, Volvo buses, and more.",
       category: "vehicles"
     },
@@ -57,13 +57,13 @@ export default function DelhiFaqsPage() {
     },
     // Services
     {
-      question: "Do you offer airport transfers in Delhi?",
-      answer: "Yes, we provide reliable airport transfer services to and from Delhi's Indira Gandhi International Airport. Our drivers track flight schedules to ensure timely pickup.",
+      question: "Do you offer airport transfers across India?",
+      answer: "Yes, we provide reliable airport transfer services in major Indian cities. Our drivers track flight schedules to ensure timely pickup.",
       category: "services"
     },
     {
-      question: "Can I book a vehicle for a heritage tour in Delhi?",
-      answer: "Absolutely! We specialize in heritage tours covering Delhi's iconic landmarks including Red Fort, Qutub Minar, Humayun's Tomb, India Gate, and more. Our knowledgeable drivers double as tour guides.",
+      question: "Can I book a vehicle for a heritage tour in India?",
+      answer: "Absolutely! We support heritage tours across India, from Delhi's Red Fort and Qutub Minar to Mumbai's Gateway of India, Jaipur's forts, and more.",
       category: "services"
     },
     // Payment
@@ -107,7 +107,7 @@ export default function DelhiFaqsPage() {
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-[#e94560]/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-[#e94560]/30">
               <span className="w-2 h-2 bg-[#e94560] rounded-full animate-pulse" />
-              <span className="text-[#e94560] font-medium text-sm">FAQs - Delhi</span>
+              <span className="text-[#e94560] font-medium text-sm">FAQs - India</span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
               Frequently Asked{' '}
@@ -116,7 +116,7 @@ export default function DelhiFaqsPage() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              Find answers to the most common questions about our services in Delhi.
+              Find answers to the most common questions about our vehicle rental and travel services across India.
             </p>
           </div>
         </div>
@@ -210,7 +210,7 @@ export default function DelhiFaqsPage() {
               Still Have Questions?
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-8">
-              Can't find what you're looking for? Our support team is here to help you.
+              Can&apos;t find what you&apos;re looking for? Our support team is here to help you.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -228,8 +228,8 @@ export default function DelhiFaqsPage() {
                   <FaEnvelope />
                 </div>
                 <h3 className="font-semibold text-[#1a1a2e] mb-2">Email Us</h3>
-                <p className="text-gray-500">delhi@urbancruise.in</p>
-                <p className="text-sm text-gray-400">We'll respond within 24 hours</p>
+                <p className="text-gray-500">support@urbancruise.in</p>
+                <p className="text-sm text-gray-400">We&apos;ll respond within 24 hours</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">

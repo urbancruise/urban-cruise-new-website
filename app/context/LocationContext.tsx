@@ -6,9 +6,11 @@ import { usePathname, useRouter } from 'next/navigation';
 import { AVAILABLE_LOCATIONS } from '@/app/lib/location';
 import { getMappedVehiclePath } from '@/app/lib/urlMappings';
 import { getPartnerSlug, isPartnerPath } from '@/app/lib/partnerUrlMappings';
+import { getVehicleSlug } from '@/app/lib/vehicleUrlMappings';
 
 interface LocationContextType {
   location: string;
+  selectedLocation: string | null;
   setLocation: (location: string) => void;
   availableLocations: string[];
   getLocationUrl: (path: string) => string;
@@ -18,23 +20,27 @@ const LocationContext = createContext<LocationContextType | undefined>(undefined
 
 export function LocationProvider({ children }: { children: React.ReactNode }) {
   const [location, setLocationState] = useState<string>('delhi');
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const isSwitchingRef = useRef(false);
 
   // Extract location from URL on initial load
   useEffect(() => {
-    // Skip if we're in the middle of a manual location switch
-    if (isSwitchingRef.current) return;
-
     const pathSegments = pathname?.split('/').filter(Boolean);
     if (pathSegments && pathSegments.length > 0) {
       const firstSegment = pathSegments[0];
       if (AVAILABLE_LOCATIONS.includes(firstSegment)) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setLocationState(firstSegment);
+        setSelectedLocation(firstSegment);
+      } else {
+        setSelectedLocation(null);
       }
+    } else {
+      setSelectedLocation(null);
     }
+    isSwitchingRef.current = false;
   }, [pathname]);
 
   // Reset the switching flag after navigation completes
@@ -51,24 +57,67 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   const getLocationUrl = (path: string) => {
+    const currentPathSegments = pathname?.split("/").filter(Boolean) || [];
+    const isGlobalRoute =
+      currentPathSegments.length === 0 ||
+      !AVAILABLE_LOCATIONS.includes(currentPathSegments[0]);
+
+    if (!selectedLocation || isGlobalRoute) {
+      return path || "/";
+    }
+
+    const locationRouteMap: Record<string, string> = {
+      "/about-urban-cruise": "/about-us",
+      "/contact-urban-cruise": "/contact-us",
+      "/partner-program": "/partner",
+    };
+    const locationPath = locationRouteMap[path] || path;
+
+    const globalVehicleMatch = locationPath.match(/^\/([^/]+)$/);
+    if (globalVehicleMatch) {
+      const vehicleTypeBySlug: Record<string, string> = {
+        "car-suvs": "car-suvs",
+        ertiga: "ertiga",
+        "innova-crysta": "innova-crysta",
+        hycross: "hycross",
+        "luxury-cars-suvs": "luxury-cars-suvs",
+        "mercedes-sprinter": "mercedes-sprinter",
+        "luxury-vans": "luxury-vans",
+        "tempo-traveller": "tempo-traveller",
+        "maharaja-tempo-traveller": "maharaja-tempo-traveller",
+        urbania: "urbania",
+        "mini-bus": "mini-bus",
+        "luxury-bus": "luxury-bus",
+        "volvo-bus": "volvo-bus",
+        "bharat-benz-bus": "bharat-benz-bus",
+        "bus-with-washroom": "bus-with-washroom",
+        "sleeper-bus": "sleeper-bus",
+      };
+      const vehicleType = vehicleTypeBySlug[globalVehicleMatch[1]];
+
+      if (vehicleType) {
+        return `/${selectedLocation}/${getVehicleSlug(selectedLocation, vehicleType)}`;
+      }
+    }
+
     // If path already includes location, return as is
-    if (path.startsWith('/' + location)) {
-      return path;
+    if (locationPath.startsWith('/' + selectedLocation)) {
+      return locationPath;
     }
 
     // If path is empty or just "/", return location home
-    if (!path || path === '/') {
-      return `/${location}`;
+    if (!locationPath || locationPath === '/') {
+      return `/${selectedLocation}`;
     }
 
     // Check if it's a partner path
-    if (path === '/partner' || path === '/partner-program' || path.includes('/partner')) {
-      const partnerSlug = getPartnerSlug(location);
-      return `/${location}/${partnerSlug}`;
+    if (locationPath === '/partner' || locationPath === '/partner-program' || locationPath.includes('/partner')) {
+      const partnerSlug = getPartnerSlug(selectedLocation);
+      return `/${selectedLocation}/${partnerSlug}`;
     }
 
     // Remove leading slash
-    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    const cleanPath = locationPath.startsWith('/') ? locationPath.slice(1) : locationPath;
 
     // Check if it's a service URL (starts with common service patterns)
     const servicePatterns = [
@@ -92,7 +141,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     const isServicePath = servicePatterns.some(pattern => cleanPath.includes(pattern));
     
     if (isServicePath) {
-      return `/${location}/${cleanPath}`;
+      return `/${selectedLocation}/${cleanPath}`;
     }
 
     // Check if it's a vehicle URL
@@ -119,11 +168,11 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
 
     if (isVehiclePath) {
       // Use the vehicle mapping
-      const mappedPath = getMappedVehiclePath(location, '/' + cleanPath);
-      if (mappedPath.startsWith('/' + location)) {
+      const mappedPath = getMappedVehiclePath(selectedLocation, '/' + cleanPath);
+      if (mappedPath.startsWith('/' + selectedLocation)) {
         return mappedPath;
       }
-      return `/${location}${mappedPath}`;
+      return `/${selectedLocation}${mappedPath}`;
     }
 
     // For any other path (about-us, contact-us, careers, testimonials, etc.)
@@ -132,7 +181,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
       return '/' + cleanPath;
     }
 
-    return `/${location}/${cleanPath}`;
+    return `/${selectedLocation}/${cleanPath}`;
   };
 
   const setLocation = (newLocation: string) => {
@@ -141,6 +190,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     // Mark that we're switching locations
     isSwitchingRef.current = true;
     setLocationState(newLocation);
+    setSelectedLocation(newLocation);
     
     const pathSegments = pathname?.split('/').filter(Boolean) || [];
     let remainingPath = '';
@@ -169,6 +219,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     <LocationContext.Provider
       value={{
         location,
+        selectedLocation,
         setLocation,
         availableLocations: AVAILABLE_LOCATIONS,
         getLocationUrl,
@@ -186,4 +237,3 @@ export function useLocation() {
   }
   return context;
 }
-

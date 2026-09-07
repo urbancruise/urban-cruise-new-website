@@ -4,13 +4,7 @@
  * another legacy URL.
  */
 export const legacyRedirects: Record<string, string> = {
-  "/about-urban-cruise": "/delhi/about-us",
-  "/careers-at-urban-cruise": "/delhi/careers-at-urban-cruise",
-  "/partner-program": "/delhi/partner-program",
-  "/testimonials": "/delhi/testimonials",
-  "/contact-urban-cruise": "/delhi/contact-us",
   "/faqs": "/delhi/faqs",
-  "/blog": "/delhi/blog",
   "/news-media": "/delhi/news-media",
   "/get-a-quotation-trip-information": "/delhi/book",
   "/get-a-quotation-route-infomation": "/mumbai/book",
@@ -30,4 +24,3 @@ export const legacyRedirects: Record<string, string> = {
   "/category/delhi-darshan": "/delhi/bus-and-car-rental-for-local-travel",
   "/category/tempo-traveller": "/delhi/tempo-traveller-delhi",
 };
-

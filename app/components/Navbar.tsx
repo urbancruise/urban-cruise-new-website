@@ -4,6 +4,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 import { useLocation } from "@/app/context/LocationContext";
 import { formatLocationName } from "@/app/lib/location";
@@ -21,11 +22,11 @@ import LocationModal from "./LocationModal";
 // ======================================================
 
 const aboutLinks = [
-  { href: "/about-us", label: "About Us" },
+  { href: "/about-urban-cruise", label: "About Us" },
   { href: "/careers-at-urban-cruise", label: "Careers" },
   { href: "/testimonials", label: "Happy Customers" },
-  { href: "/partner", label: "Partner Program" },
-  { href: "/contact-us", label: "Contact Us" },
+  { href: "/partner-program", label: "Partner Program" },
+  { href: "/contact-urban-cruise", label: "Contact Us" },
 ];
 
 // ======================================================
@@ -97,6 +98,10 @@ const infoLinks = [
     href: "/blog",
     label: "Blog",
   },
+  {
+    href: "/our-vehicles",
+    label: "Our Vehicles",
+  },
 ];
 
 // ======================================================
@@ -108,19 +113,19 @@ const vehicleLinks = [
     category: "Car & SUVs",
     items: [
       {
-        href: "/car-rental-delhi",
+        href: "/car-suvs",
         label: "Car & SUVs",
       },
       {
-        href: "/ertiga-on-rent",
+        href: "/ertiga",
         label: "Ertiga",
       },
       {
-        href: "/innova-crysta-on-rent",
+        href: "/innova-crysta",
         label: "Innova Crysta",
       },
       {
-        href: "/innova-hycross-on-rent",
+        href: "/hycross",
         label: "Hycross",
       },
     ],
@@ -130,15 +135,15 @@ const vehicleLinks = [
     category: "Luxury Cars, SUVs, Vans",
     items: [
       {
-        href: "/luxury-car-rental-delhi",
+        href: "/luxury-cars-suvs",
         label: "Luxury Cars & SUVs",
       },
       {
-        href: "/mercedes-sprinter-van-rental",
+        href: "/mercedes-sprinter",
         label: "Mercedes Sprinter",
       },
       {
-        href: "/luxury-van-rental-delhi",
+        href: "/luxury-vans",
         label: "Luxury Vans",
       },
     ],
@@ -148,11 +153,11 @@ const vehicleLinks = [
     category: "Tempo Traveller",
     items: [
       {
-        href: "/tempo-traveller-delhi",
+        href: "/tempo-traveller",
         label: "Tempo Traveller",
       },
       {
-        href: "/maharaja-tempo-traveller-delhi",
+        href: "/maharaja-tempo-traveller",
         label: "Maharaja Tempo Traveller",
       },
     ],
@@ -162,7 +167,7 @@ const vehicleLinks = [
     category: "Urbania",
     items: [
       {
-        href: "/force-urbania-on-rent",
+        href: "/urbania",
         label: "Urbania",
       },
     ],
@@ -172,7 +177,7 @@ const vehicleLinks = [
     category: "Mini Bus",
     items: [
       {
-        href: "/mini-bus-delhi",
+        href: "/mini-bus",
         label: "Mini Bus",
       },
     ],
@@ -182,15 +187,15 @@ const vehicleLinks = [
     category: "Luxury Buses",
     items: [
       {
-        href: "/bus-rental-delhi",
+        href: "/luxury-bus",
         label: "Luxury Bus",
       },
       {
-        href: "/volvo-bus-on-rent",
+        href: "/volvo-bus",
         label: "Volvo Bus",
       },
       {
-        href: "/bharat-benz-bus-on-rent",
+        href: "/bharat-benz-bus",
         label: "Bharat Benz Bus",
       },
       {
@@ -198,7 +203,7 @@ const vehicleLinks = [
         label: "Bus With Washroom",
       },
       {
-        href: "/sleeper-bus-on-rent",
+        href: "/sleeper-bus",
         label: "Sleeper | Semi Sleeper Bus",
       },
     ],
@@ -274,9 +279,16 @@ export default function Navbar() {
   // LOCATION
   // ====================================================
 
-  const { location, getLocationUrl } = useLocation();
+  const { location, selectedLocation, getLocationUrl } = useLocation();
+  const pathname = usePathname();
 
   const locationConfig = getLocationConfig(location);
+  const firstPathSegment = pathname?.split("/").filter(Boolean)[0];
+  const isGlobalNavigation =
+    !firstPathSegment ||
+    !["delhi", "gurugram", "mumbai", "pune"].includes(firstPathSegment);
+  const getAboutLink = (path: string) =>
+    isGlobalNavigation ? path : getLocationUrl(path);
 
   // ====================================================
   // SCROLL EFFECT
@@ -729,7 +741,7 @@ export default function Navbar() {
                   {aboutLinks.map((item) => (
                     <Link
                       key={item.href}
-                      href={getLocationUrl(item.href)}
+                      href={getAboutLink(item.href)}
                       className="
                         block
                         px-4
@@ -1268,7 +1280,7 @@ export default function Navbar() {
                   md:text-sm
                 "
               >
-                {formatLocationName(location)}
+                {selectedLocation ? formatLocationName(selectedLocation) : "Select City"}
               </span>
 
               <FaChevronDown
@@ -1504,7 +1516,7 @@ export default function Navbar() {
                 {aboutLinks.map((item) => (
                   <Link
                     key={item.href}
-                    href={getLocationUrl(item.href)}
+                    href={getAboutLink(item.href)}
                     className="
                       block
                       px-4
@@ -1895,7 +1907,7 @@ export default function Navbar() {
               </span>
 
               <span className="text-white/80 text-xs">
-                {formatLocationName(location)}
+                {selectedLocation ? formatLocationName(selectedLocation) : "Select City"}
               </span>
             </button>
 
@@ -2003,5 +2015,3 @@ export default function Navbar() {
     </div>
   );
 }
-
-

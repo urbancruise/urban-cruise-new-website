@@ -1,5 +1,9 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import {
+  getLocationFromCity,
+  isLocationRedirectEnabled,
+} from "@/app/lib/location-routing";
 import { legacyRedirects } from "@/lib/legacy-redirects";
 
 function normalizePath(pathname: string): string {
@@ -14,17 +18,32 @@ function normalizePath(pathname: string): string {
 export function proxy(request: NextRequest) {
   const destination = legacyRedirects[normalizePath(request.nextUrl.pathname)];
 
-  if (!destination) {
-    return NextResponse.next();
+  if (destination) {
+    const redirectUrl = new URL(destination, request.url);
+    redirectUrl.search = request.nextUrl.search;
+
+    return NextResponse.redirect(redirectUrl, 301);
   }
 
-  const redirectUrl = new URL(destination, request.url);
-  redirectUrl.search = request.nextUrl.search;
+  if (
+    isLocationRedirectEnabled() &&
+    normalizePath(request.nextUrl.pathname) === "/"
+  ) {
+    const location = getLocationFromCity(
+      request.headers.get("x-vercel-ip-city"),
+    );
 
-  return NextResponse.redirect(redirectUrl, 301);
+    if (location) {
+      const redirectUrl = new URL(`/${location}`, request.url);
+      redirectUrl.search = request.nextUrl.search;
+
+      return NextResponse.redirect(redirectUrl, 307);
+    }
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
-

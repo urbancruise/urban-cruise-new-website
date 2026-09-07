@@ -10,10 +10,8 @@ import { serviceSchema, webPageSchema } from '@/lib/schema';
 import { createLocationMetadata, getDynamicPageType } from '@/lib/seo';
 import Breadcrumb from '@/app/components/seo/Breadcrumb';
 import { formatLocationName } from '@/app/lib/location';
-import ContextualInternalLinks from '@/app/components/seo/ContextualInternalLinks';
 import { getServiceSeoContent } from '@/lib/service-seo';
 import { getVehicleSeoContent } from '@/lib/vehicle-seo';
-import LocalSeoContent from '@/app/components/seo/LocalSeoContent';
 
 interface PageProps {
   params: Promise<{
@@ -211,8 +209,6 @@ export default async function DynamicPage({ params }: PageProps) {
             </div>
           </div>
           <VehicleSelector vehicleType={vehicleType} />
-          <LocalSeoContent location={location} intent="vehicle" vehicleType={vehicleType} />
-          <ContextualInternalLinks location={location} />
         </div>
       </>
     );
@@ -259,8 +255,6 @@ export default async function DynamicPage({ params }: PageProps) {
             </div>
           </div>
           <ServiceSelector serviceType={serviceType} />
-          <LocalSeoContent location={location} intent="service" serviceType={serviceType} />
-          <ContextualInternalLinks location={location} />
         </div>
       </>
     );
