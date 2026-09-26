@@ -1,4 +1,34 @@
-// app/components/AboutSelector.tsx
+// // app/components/AboutSelector.tsx
+// "use client";
+
+// import React from "react";
+// import { useLocation } from "@/app/context/LocationContext";
+// import dynamic from "next/dynamic";
+
+// // Lazy load about components for better performance
+// const DelhiAbout = dynamic(() => import("./home/about/DelhiAbout"));
+// const GurugramAbout = dynamic(() => import("./home/about/GurugramAbout"));
+// const MumbaiAbout = dynamic(() => import("./home/about/MumbaiAbout"));
+// const PuneAbout = dynamic(() => import("./home/about/PuneAbout"));
+// const DefaultAbout = dynamic(() => import("./home/about/DefaultAbout"));
+
+// export default function AboutSelector() {
+//   const { location } = useLocation();
+
+//   // Map locations to their respective about components
+//   const aboutMap: Record<string, React.ComponentType> = {
+//     delhi: DelhiAbout,
+//     gurugram: GurugramAbout,
+//     mumbai: MumbaiAbout,
+//     pune: PuneAbout,
+//   };
+
+//   // Get the appropriate about component or use default
+//   const AboutComponent = aboutMap[location] || DefaultAbout;
+
+//   return <AboutComponent />;
+// }
+
 "use client";
 
 import React from "react";
@@ -12,20 +42,38 @@ const MumbaiAbout = dynamic(() => import("./home/about/MumbaiAbout"));
 const PuneAbout = dynamic(() => import("./home/about/PuneAbout"));
 const DefaultAbout = dynamic(() => import("./home/about/DefaultAbout"));
 
-export default function AboutSelector() {
+// ============================================================
+// Types
+// ============================================================
+export interface AboutContent {
+  eyebrow?: string;
+  title?: string;
+  tagline?: string;
+  videoUrl?: string;
+  paragraphs?: string[];
+  videoPoster?: string;
+}
+
+interface AboutSelectorProps {
+  /** Content from CMS (optional — falls back to static defaults) */
+  content?: AboutContent | null;
+}
+
+export default function AboutSelector({ content }: AboutSelectorProps) {
   const { location } = useLocation();
 
   // Map locations to their respective about components
-  const aboutMap: Record<string, React.ComponentType> = {
-    delhi: DelhiAbout,
-    gurugram: GurugramAbout,
-    mumbai: MumbaiAbout,
-    pune: PuneAbout,
+  const aboutMap: Record<
+    string,
+    React.ComponentType<{ content?: AboutContent | null }>
+  > = {
+    delhi: DelhiAbout as any,
+    gurugram: GurugramAbout as any,
+    mumbai: MumbaiAbout as any,
+    pune: PuneAbout as any,
   };
 
-  // Get the appropriate about component or use default
-  const AboutComponent = aboutMap[location] || DefaultAbout;
+  const AboutComponent = aboutMap[location] || (DefaultAbout as any);
 
-  return <AboutComponent />;
+  return <AboutComponent content={content} />;
 }
-
