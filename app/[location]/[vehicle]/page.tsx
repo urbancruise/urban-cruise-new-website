@@ -1,201 +1,344 @@
-// app/[location]/[vehicle]/page.tsx
-import { notFound, permanentRedirect } from 'next/navigation';
-import { isValidLocation } from '@/app/lib/location';
-import VehicleSelector from '@/app/components/VehicleSelector';
-import ServiceSelector from '@/app/components/ServiceSelector';
-import { getVehicleSlug } from '@/app/lib/vehicleUrlMappings';
-import { getServiceSlug } from '@/app/lib/serviceUrlMappings';
-import JsonLd from '@/app/components/seo/JsonLd';
-import { serviceSchema, webPageSchema } from '@/lib/schema';
-import { createLocationMetadata, getDynamicPageType } from '@/lib/seo';
-import Breadcrumb from '@/app/components/seo/Breadcrumb';
-import { formatLocationName } from '@/app/lib/location';
-import { getServiceSeoContent } from '@/lib/service-seo';
-import { getVehicleSeoContent } from '@/lib/vehicle-seo';
+// // app/[location]/[vehicle]/page.tsx
+// import { notFound, permanentRedirect } from 'next/navigation';
+// import { isValidLocation } from '@/app/lib/location';
+// import VehicleSelector from '@/app/components/VehicleSelector';
+// import ServiceSelector from '@/app/components/ServiceSelector';
+// import { getVehicleSlug } from '@/app/lib/vehicleUrlMappings';
+// import { getServiceSlug } from '@/app/lib/serviceUrlMappings';
+// import JsonLd from '@/app/components/seo/JsonLd';
+// import { serviceSchema, webPageSchema } from '@/lib/schema';
+// import { createLocationMetadata, getDynamicPageType } from '@/lib/seo';
+// import Breadcrumb from '@/app/components/seo/Breadcrumb';
+// import { formatLocationName } from '@/app/lib/location';
+// import { getServiceSeoContent } from '@/lib/service-seo';
+// import { getVehicleSeoContent } from '@/lib/vehicle-seo';
+
+// interface PageProps {
+//   params: Promise<{
+//     location: string;
+//     vehicle: string;
+//   }>;
+// }
+
+// export async function generateMetadata({ params }: PageProps) {
+//   const { location, vehicle } = await params;
+//   return createLocationMetadata(
+//     location,
+//     getDynamicPageType(vehicle),
+//     `/${location}/${vehicle}`,
+//   );
+// }
+
+// export default async function DynamicPage({ params }: PageProps) {
+//   const { location, vehicle } = await params;
+
+//   // Check if location is valid
+//   if (!isValidLocation(location)) {
+//     notFound();
+//   }
+
+//   // Map vehicle URL slugs to vehicle types
+//   const vehicleSlugToType: Record<string, string> = {
+//     // Car & SUVs
+//     'car-rental-delhi': 'car-suvs',
+//     'car-rental-gurugram': 'car-suvs',
+//     'car-rental-mumbai': 'car-suvs',
+//     'car-rental-pune': 'car-suvs',
+    
+//     // Ertiga
+//     'ertiga-on-rent': 'ertiga',
+//     'ertiga-on-rent-in-gurugram': 'ertiga',
+//     'hire-ertiga-on-rent-in-mumbai': 'ertiga',
+//     'ertiga-on-rent-in-pune': 'ertiga',
+    
+//     // Innova Crysta
+//     'innova-crysta-on-rent': 'innova-crysta',
+    
+//     // Hycross
+//     'innova-hycross-on-rent': 'hycross',
+    
+//     // Luxury Cars & SUVs
+//     'luxury-car-rental-delhi': 'luxury-cars-suvs',
+//     'luxury-car-rental-gurugram': 'luxury-cars-suvs',
+//     'luxury-car-rental-mumbai': 'luxury-cars-suvs',
+//     'luxury-car-rental-pune': 'luxury-cars-suvs',
+    
+//     // Mercedes Sprinter
+//     'mercedes-sprinter-van-rental': 'mercedes-sprinter',
+    
+//     // Luxury Vans
+//     'luxury-van-rental-delhi': 'luxury-vans',
+//     'luxury-van-on-rent-in-gurugram': 'luxury-vans',
+//     'luxury-van-on-rent-in-mumbai': 'luxury-vans',
+//     'luxury-van-on-rent-in-pune': 'luxury-vans',
+    
+//     // Tempo Traveller
+//     'tempo-traveller-delhi': 'tempo-traveller',
+//     'tempo-traveller-gurugram': 'tempo-traveller',
+//     'tempo-traveller-mumbai': 'tempo-traveller',
+//     'tempo-traveller-pune': 'tempo-traveller',
+    
+//     // Maharaja Tempo Traveller
+//     'maharaja-tempo-traveller-delhi': 'maharaja-tempo-traveller',
+//     'maharaja-tempo-traveller-gurugram': 'maharaja-tempo-traveller',
+//     'maharaja-tempo-traveller-mumbai': 'maharaja-tempo-traveller',
+//     'maharaja-tempo-traveller-pune': 'maharaja-tempo-traveller',
+    
+//     // Urbania
+//     'force-urbania-on-rent': 'urbania',
+//     'force-urbania-gurugram': 'urbania',
+//     'force-urbania-mumbai': 'urbania',
+//     'force-urbania-pune': 'urbania',
+    
+//     // Mini Bus
+//     'mini-bus-delhi': 'mini-bus',
+//     'mini-bus-gurugram': 'mini-bus',
+//     'mini-bus-mumbai': 'mini-bus',
+//     'mini-bus-pune': 'mini-bus',
+    
+//     // Luxury Bus
+//     'bus-rental-delhi': 'luxury-bus',
+//     'bus-rental-gurugram': 'luxury-bus',
+//     'bus-rental-mumbai': 'luxury-bus',
+//     'bus-rental-pune': 'luxury-bus',
+    
+//     // Volvo Bus
+//     'volvo-bus-on-rent': 'volvo-bus',
+//     'volvo-bus-on-rent-in-mumbai': 'volvo-bus',
+//     'volvo-bus-on-rent-in-gurugram': 'volvo-bus',
+//     'volvo-bus-on-rent-in-pune': 'volvo-bus',
+    
+//     // Bharat Benz Bus
+//     'bharat-benz-bus-on-rent': 'bharat-benz-bus',
+    
+//     // Bus With Washroom
+//     'bus-with-washroom': 'bus-with-washroom',
+    
+//     // Sleeper Bus
+//     'sleeper-bus-on-rent': 'sleeper-bus',
+//   };
+
+//   // Map service URL slugs to service types
+//   const serviceSlugToType: Record<string, string> = {
+//     // Jim Corbett
+//     'delhi-to-jim-corbett-vehicle-rental': 'jim-corbett',
+//     'gurugram-to-jim-corbett-vehicle-rental': 'jim-corbett',
+//     'mumbai-to-jim-corbett-vehicle-rental': 'jim-corbett',
+//     'pune-to-jim-corbett-vehicle-rental': 'jim-corbett',
+    
+//     // Do Dham Yatra
+//     'do-dham-yatra-package': 'do-dham',
+    
+//     // Char Dham Yatra
+//     'char-dham-yatra-package': 'char-dham',
+    
+//     // Pilgrimage Travel
+//     'pilgrimage-vehicle-rental': 'pilgrimage',
+//     'pilgrimage-tours-in-mumbai-pilgrimage-bus-rental-in-mumbai': 'pilgrimage',
+    
+//     // Wedding Travel
+//     'wedding-cars-and-bus-rental-delhi': 'wedding',
+//     'wedding-cars-and-bus-rental-gurugram': 'wedding',
+//     'wedding-cars-and-bus-rental-pune': 'wedding',
+//     'wedding-car-rental-in-mumbai-wedding-bus-rental-in-mumbai': 'wedding',
+    
+//     // Corporate Travel
+//     'corporate-travel-rental-service': 'corporate',
+//     'corporate-bus-service-in-mumbai-corporate-travel-in-mumbai': 'corporate',
+    
+//     // Vacations
+//     'vacation-bus-and-car-rentals-in-delhi': 'vacations',
+//     'vacation-bus-and-car-rentals-in-gurugram': 'vacations',
+//     'vacation-bus-and-car-rentals-in-pune': 'vacations',
+//     'vacation-bus-rentals-in-mumbai-holiday-tours-in-mumbai': 'vacations',
+    
+//     // Local Travel
+//     'bus-and-car-rental-for-local-travel': 'local-travel',
+//     'bus-rental-for-local-travel-sightseeing-in-mumbai-mumbai-darshan-airport-transfer': 'local-travel',
+//   };
+
+//   // Check if it's a vehicle page
+//   const vehicleType = vehicleSlugToType[vehicle];
+  
+//   // Check if it's a service page
+//   const serviceType = serviceSlugToType[vehicle];
+
+//   // If it's neither a vehicle nor a service, return 404
+//   if (!vehicleType && !serviceType) {
+//     notFound();
+//   }
+
+//   // Handle vehicle pages
+//   if (vehicleType) {
+//     // Verify the slug matches the location for this vehicle type
+//     const expectedSlug = getVehicleSlug(location, vehicleType);
+    
+//     // If the slug doesn't match the expected slug for this location, redirect
+//     if (vehicle !== expectedSlug) {
+//       permanentRedirect(`/${location}/${expectedSlug}`);
+//     }
+
+//     // Render the vehicle selector
+//     return (
+//       <>
+//         <JsonLd
+//           data={[
+//             webPageSchema({
+//               name: `${getVehicleSeoContent(vehicleType).name} in ${formatLocationName(location)}`,
+//               description: getVehicleSeoContent(vehicleType).description,
+//               path: `/${location}/${vehicle}`,
+//             }),
+//             serviceSchema({
+//               name: getVehicleSeoContent(vehicleType).name,
+//               description: getVehicleSeoContent(vehicleType).description,
+//               path: `/${location}/${vehicle}`,
+//               location,
+//             }),
+//           ]}
+//         />
+//         <div className="relative">
+//           <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
+//             <div className="pointer-events-auto">
+//               <Breadcrumb
+//                 items={[
+//                   { name: "Home", path: "/" },
+//                   { name: formatLocationName(location), path: `/${location}` },
+//                   { name: vehicleType, path: `/${location}/${vehicle}` },
+//                 ]}
+//               />
+//             </div>
+//           </div>
+//           <VehicleSelector vehicleType={vehicleType} />
+//         </div>
+//       </>
+//     );
+//   }
+
+//   // Handle service pages
+//   if (serviceType) {
+//     // Verify the slug matches the location for this service type
+//     const expectedSlug = getServiceSlug(location, serviceType);
+    
+//     // If the slug doesn't match the expected slug for this location, redirect
+//     if (vehicle !== expectedSlug) {
+//       permanentRedirect(`/${location}/${expectedSlug}`);
+//     }
+
+//     // Render the service selector
+//     return (
+//       <>
+//         <JsonLd
+//           data={[
+//             webPageSchema({
+//               name: `${getServiceSeoContent(serviceType).name} in ${formatLocationName(location)}`,
+//               description: getServiceSeoContent(serviceType).description,
+//               path: `/${location}/${vehicle}`,
+//             }),
+//             serviceSchema({
+//               name: getServiceSeoContent(serviceType).name,
+//               description: getServiceSeoContent(serviceType).description,
+//               path: `/${location}/${vehicle}`,
+//               location,
+//             }),
+//           ]}
+//         />
+//         <div className="relative">
+//           <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
+//             <div className="pointer-events-auto">
+//               <Breadcrumb
+//                 items={[
+//                   { name: "Home", path: "/" },
+//                   { name: formatLocationName(location), path: `/${location}` },
+//                   { name: serviceType, path: `/${location}/${vehicle}` },
+//                 ]}
+//               />
+//             </div>
+//           </div>
+//           <ServiceSelector serviceType={serviceType} />
+//         </div>
+//       </>
+//     );
+//   }
+
+//   // Fallback - should never reach here
+//   notFound();
+// }
+
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { getVehicle, getSeoByPath } from "@/lib/cms";
+import { isValidLocation, formatLocationName } from "@/app/lib/location";
+import VehicleSelector from "@/app/components/VehicleSelector";
+import ServiceSelector from "@/app/components/ServiceSelector";
+import JsonLd from "@/app/components/seo/JsonLd";
+import Breadcrumb from "@/app/components/seo/Breadcrumb";
+import { getDynamicPageType } from "@/lib/seo";
+
+export const revalidate = 60;
 
 interface PageProps {
-  params: Promise<{
-    location: string;
-    vehicle: string;
-  }>;
+  params: Promise<{ location: string; vehicle: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
+// ============================================================
+// METADATA from CMS
+// ============================================================
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { location, vehicle } = await params;
-  return createLocationMetadata(
-    location,
-    getDynamicPageType(vehicle),
-    `/${location}/${vehicle}`,
-  );
+  if (!isValidLocation(location)) return {};
+
+  const path = `/${location}/${vehicle}`;
+  const seo = await getSeoByPath(path);
+
+  if (!seo?.seo) return {};
+
+  const s = seo.seo;
+  return {
+    title: s.meta_title || s.title || undefined,
+    description: s.meta_description || undefined,
+    keywords: s.meta_keywords,
+    alternates: { canonical: s.canonical_url || path },
+    robots: s.is_indexable
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
+    openGraph: {
+      title: s.og_title || undefined,
+      description: s.og_description || undefined,
+      images: s.og_image ? [s.og_image] : undefined,
+      url: s.og_url || undefined,
+      type: (s.og_type as any) || "website",
+    },
+    twitter: {
+      card: (s.twitter_card as any) || "summary_large_image",
+      images: s.twitter_image ? [s.twitter_image] : undefined,
+    },
+  };
 }
 
+// ============================================================
+// PAGE
+// ============================================================
 export default async function DynamicPage({ params }: PageProps) {
   const { location, vehicle } = await params;
 
-  // Check if location is valid
-  if (!isValidLocation(location)) {
-    notFound();
-  }
+  if (!isValidLocation(location)) notFound();
 
-  // Map vehicle URL slugs to vehicle types
-  const vehicleSlugToType: Record<string, string> = {
-    // Car & SUVs
-    'car-rental-delhi': 'car-suvs',
-    'car-rental-gurugram': 'car-suvs',
-    'car-rental-mumbai': 'car-suvs',
-    'car-rental-pune': 'car-suvs',
-    
-    // Ertiga
-    'ertiga-on-rent': 'ertiga',
-    'ertiga-on-rent-in-gurugram': 'ertiga',
-    'hire-ertiga-on-rent-in-mumbai': 'ertiga',
-    'ertiga-on-rent-in-pune': 'ertiga',
-    
-    // Innova Crysta
-    'innova-crysta-on-rent': 'innova-crysta',
-    
-    // Hycross
-    'innova-hycross-on-rent': 'hycross',
-    
-    // Luxury Cars & SUVs
-    'luxury-car-rental-delhi': 'luxury-cars-suvs',
-    'luxury-car-rental-gurugram': 'luxury-cars-suvs',
-    'luxury-car-rental-mumbai': 'luxury-cars-suvs',
-    'luxury-car-rental-pune': 'luxury-cars-suvs',
-    
-    // Mercedes Sprinter
-    'mercedes-sprinter-van-rental': 'mercedes-sprinter',
-    
-    // Luxury Vans
-    'luxury-van-rental-delhi': 'luxury-vans',
-    'luxury-van-on-rent-in-gurugram': 'luxury-vans',
-    'luxury-van-on-rent-in-mumbai': 'luxury-vans',
-    'luxury-van-on-rent-in-pune': 'luxury-vans',
-    
-    // Tempo Traveller
-    'tempo-traveller-delhi': 'tempo-traveller',
-    'tempo-traveller-gurugram': 'tempo-traveller',
-    'tempo-traveller-mumbai': 'tempo-traveller',
-    'tempo-traveller-pune': 'tempo-traveller',
-    
-    // Maharaja Tempo Traveller
-    'maharaja-tempo-traveller-delhi': 'maharaja-tempo-traveller',
-    'maharaja-tempo-traveller-gurugram': 'maharaja-tempo-traveller',
-    'maharaja-tempo-traveller-mumbai': 'maharaja-tempo-traveller',
-    'maharaja-tempo-traveller-pune': 'maharaja-tempo-traveller',
-    
-    // Urbania
-    'force-urbania-on-rent': 'urbania',
-    'force-urbania-gurugram': 'urbania',
-    'force-urbania-mumbai': 'urbania',
-    'force-urbania-pune': 'urbania',
-    
-    // Mini Bus
-    'mini-bus-delhi': 'mini-bus',
-    'mini-bus-gurugram': 'mini-bus',
-    'mini-bus-mumbai': 'mini-bus',
-    'mini-bus-pune': 'mini-bus',
-    
-    // Luxury Bus
-    'bus-rental-delhi': 'luxury-bus',
-    'bus-rental-gurugram': 'luxury-bus',
-    'bus-rental-mumbai': 'luxury-bus',
-    'bus-rental-pune': 'luxury-bus',
-    
-    // Volvo Bus
-    'volvo-bus-on-rent': 'volvo-bus',
-    'volvo-bus-on-rent-in-mumbai': 'volvo-bus',
-    'volvo-bus-on-rent-in-gurugram': 'volvo-bus',
-    'volvo-bus-on-rent-in-pune': 'volvo-bus',
-    
-    // Bharat Benz Bus
-    'bharat-benz-bus-on-rent': 'bharat-benz-bus',
-    
-    // Bus With Washroom
-    'bus-with-washroom': 'bus-with-washroom',
-    
-    // Sleeper Bus
-    'sleeper-bus-on-rent': 'sleeper-bus',
-  };
+  // Try to fetch from CMS
+  const [cmsData, seo] = await Promise.all([
+    getVehicle(location, vehicle),
+    getSeoByPath(`/${location}/${vehicle}`),
+  ]);
 
-  // Map service URL slugs to service types
-  const serviceSlugToType: Record<string, string> = {
-    // Jim Corbett
-    'delhi-to-jim-corbett-vehicle-rental': 'jim-corbett',
-    'gurugram-to-jim-corbett-vehicle-rental': 'jim-corbett',
-    'mumbai-to-jim-corbett-vehicle-rental': 'jim-corbett',
-    'pune-to-jim-corbett-vehicle-rental': 'jim-corbett',
-    
-    // Do Dham Yatra
-    'do-dham-yatra-package': 'do-dham',
-    
-    // Char Dham Yatra
-    'char-dham-yatra-package': 'char-dham',
-    
-    // Pilgrimage Travel
-    'pilgrimage-vehicle-rental': 'pilgrimage',
-    'pilgrimage-tours-in-mumbai-pilgrimage-bus-rental-in-mumbai': 'pilgrimage',
-    
-    // Wedding Travel
-    'wedding-cars-and-bus-rental-delhi': 'wedding',
-    'wedding-cars-and-bus-rental-gurugram': 'wedding',
-    'wedding-cars-and-bus-rental-pune': 'wedding',
-    'wedding-car-rental-in-mumbai-wedding-bus-rental-in-mumbai': 'wedding',
-    
-    // Corporate Travel
-    'corporate-travel-rental-service': 'corporate',
-    'corporate-bus-service-in-mumbai-corporate-travel-in-mumbai': 'corporate',
-    
-    // Vacations
-    'vacation-bus-and-car-rentals-in-delhi': 'vacations',
-    'vacation-bus-and-car-rentals-in-gurugram': 'vacations',
-    'vacation-bus-and-car-rentals-in-pune': 'vacations',
-    'vacation-bus-rentals-in-mumbai-holiday-tours-in-mumbai': 'vacations',
-    
-    // Local Travel
-    'bus-and-car-rental-for-local-travel': 'local-travel',
-    'bus-rental-for-local-travel-sightseeing-in-mumbai-mumbai-darshan-airport-transfer': 'local-travel',
-  };
+  // Determine page type from path
+  const pageType = getDynamicPageType(vehicle);
 
-  // Check if it's a vehicle page
-  const vehicleType = vehicleSlugToType[vehicle];
-  
-  // Check if it's a service page
-  const serviceType = serviceSlugToType[vehicle];
+  // Render SEO schemas
+  const schemas = seo?.seo.schemas ?? [];
 
-  // If it's neither a vehicle nor a service, return 404
-  if (!vehicleType && !serviceType) {
-    notFound();
-  }
-
-  // Handle vehicle pages
-  if (vehicleType) {
-    // Verify the slug matches the location for this vehicle type
-    const expectedSlug = getVehicleSlug(location, vehicleType);
-    
-    // If the slug doesn't match the expected slug for this location, redirect
-    if (vehicle !== expectedSlug) {
-      permanentRedirect(`/${location}/${expectedSlug}`);
-    }
-
-    // Render the vehicle selector
+  if (pageType === "vehicle") {
     return (
       <>
-        <JsonLd
-          data={[
-            webPageSchema({
-              name: `${getVehicleSeoContent(vehicleType).name} in ${formatLocationName(location)}`,
-              description: getVehicleSeoContent(vehicleType).description,
-              path: `/${location}/${vehicle}`,
-            }),
-            serviceSchema({
-              name: getVehicleSeoContent(vehicleType).name,
-              description: getVehicleSeoContent(vehicleType).description,
-              path: `/${location}/${vehicle}`,
-              location,
-            }),
-          ]}
-        />
+        {schemas.length > 0 && <JsonLd data={schemas} />}
         <div className="relative">
           <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
             <div className="pointer-events-auto">
@@ -203,63 +346,42 @@ export default async function DynamicPage({ params }: PageProps) {
                 items={[
                   { name: "Home", path: "/" },
                   { name: formatLocationName(location), path: `/${location}` },
-                  { name: vehicleType, path: `/${location}/${vehicle}` },
+                  {
+                    name: cmsData?.vehicle?.meta?.title || vehicle,
+                    path: `/${location}/${vehicle}`,
+                  },
                 ]}
               />
             </div>
           </div>
-          <VehicleSelector vehicleType={vehicleType} />
+          <VehicleSelector
+            vehicleType={vehicle}
+            cmsMeta={cmsData?.vehicle?.meta}
+            cmsSections={cmsData?.vehicle?.sections}
+          />
         </div>
       </>
     );
   }
 
-  // Handle service pages
-  if (serviceType) {
-    // Verify the slug matches the location for this service type
-    const expectedSlug = getServiceSlug(location, serviceType);
-    
-    // If the slug doesn't match the expected slug for this location, redirect
-    if (vehicle !== expectedSlug) {
-      permanentRedirect(`/${location}/${expectedSlug}`);
-    }
-
-    // Render the service selector
-    return (
-      <>
-        <JsonLd
-          data={[
-            webPageSchema({
-              name: `${getServiceSeoContent(serviceType).name} in ${formatLocationName(location)}`,
-              description: getServiceSeoContent(serviceType).description,
-              path: `/${location}/${vehicle}`,
-            }),
-            serviceSchema({
-              name: getServiceSeoContent(serviceType).name,
-              description: getServiceSeoContent(serviceType).description,
-              path: `/${location}/${vehicle}`,
-              location,
-            }),
-          ]}
-        />
-        <div className="relative">
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
-            <div className="pointer-events-auto">
-              <Breadcrumb
-                items={[
-                  { name: "Home", path: "/" },
-                  { name: formatLocationName(location), path: `/${location}` },
-                  { name: serviceType, path: `/${location}/${vehicle}` },
-                ]}
-              />
-            </div>
+  // Service page
+  return (
+    <>
+      {schemas.length > 0 && <JsonLd data={schemas} />}
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
+          <div className="pointer-events-auto">
+            <Breadcrumb
+              items={[
+                { name: "Home", path: "/" },
+                { name: formatLocationName(location), path: `/${location}` },
+                { name: vehicle, path: `/${location}/${vehicle}` },
+              ]}
+            />
           </div>
-          <ServiceSelector serviceType={serviceType} />
         </div>
-      </>
-    );
-  }
-
-  // Fallback - should never reach here
-  notFound();
+        <ServiceSelector serviceType={vehicle} cmsSections={cmsData?.vehicle?.sections} />
+      </div>
+    </>
+  );
 }

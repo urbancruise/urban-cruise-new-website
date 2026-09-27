@@ -1,4 +1,110 @@
-// app/components/VehicleRentalServiceInIndiaSelector.tsx
+// // app/components/VehicleRentalServiceInIndiaSelector.tsx
+// "use client";
+
+// import React from "react";
+// import dynamic from "next/dynamic";
+// import { useLocation } from "@/app/context/LocationContext";
+
+// // ======================================================
+// // DELHI VEHICLE RENTAL SERVICE
+// // ======================================================
+
+// const DelhiVehicleRentalService = dynamic(
+//   () => import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia"),
+//   {
+//     loading: () => (
+//       <div className="min-h-[400px] w-full bg-white" />
+//     ),
+//   }
+// );
+
+// // ======================================================
+// // FUTURE LOCATIONS
+// // ======================================================
+
+// const GurugramVehicleRentalService = dynamic(
+//   () => import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia"),
+//   {
+//     loading: () => (
+//       <div className="min-h-[400px] w-full bg-white" />
+//     ),
+//   }
+// );
+
+// const MumbaiVehicleRentalService = dynamic(
+//   () => import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia"),
+//   {
+//     loading: () => (
+//       <div className="min-h-[400px] w-full bg-white" />
+//     ),
+//   }
+// );
+
+// const PuneVehicleRentalService = dynamic(
+//   () => import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia"),
+//   {
+//     loading: () => (
+//       <div className="min-h-[400px] w-full bg-white" />
+//     ),
+//   }
+// );
+
+// // ======================================================
+// // COMPONENT
+// // ======================================================
+
+// export default function VehicleRentalServiceInIndiaSelector() {
+//   const { location } = useLocation();
+
+//   // ====================================================
+//   // NORMALIZE LOCATION
+//   // ====================================================
+
+//   const currentLocation = String(location || "")
+//     .trim()
+//     .toLowerCase();
+
+//   // ====================================================
+//   // LOCATION → COMPONENT MAP
+//   // ====================================================
+
+//   const componentMap: Record<
+//     string,
+//     React.ComponentType
+//   > = {
+//     delhi: DelhiVehicleRentalService,
+
+//     // Future locations
+//     gurugram: GurugramVehicleRentalService,
+//     mumbai: MumbaiVehicleRentalService,
+//     pune: PuneVehicleRentalService,
+//   };
+
+//   // ====================================================
+//   // GET COMPONENT
+//   // ====================================================
+
+//   const Component = componentMap[currentLocation];
+
+//   // ====================================================
+//   // NO COMPONENT
+//   // ====================================================
+
+//   if (!Component) {
+//     return null;
+//   }
+
+//   // ====================================================
+//   // RENDER
+//   // ====================================================
+
+//   return <Component />;
+// }
+
+// ============================================================
+// Location-aware selector for "Vehicle Rental Service In India"
+// Passes CMS content (optional) to the correct city component.
+// ============================================================
 "use client";
 
 import React from "react";
@@ -6,98 +112,78 @@ import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
 
 // ======================================================
-// DELHI VEHICLE RENTAL SERVICE
+// LAZY LOAD COMPONENTS
 // ======================================================
 
-const DelhiVehicleRentalService = dynamic(
+const DelhiVehicleRentalServiceInIndia = dynamic(
   () => import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia"),
-  {
-    loading: () => (
-      <div className="min-h-[400px] w-full bg-white" />
-    ),
-  }
+  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
 );
 
-// ======================================================
-// FUTURE LOCATIONS
-// ======================================================
-
-const GurugramVehicleRentalService = dynamic(
+const GurugramVehicleRentalServiceInIndia = dynamic(
   () => import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia"),
-  {
-    loading: () => (
-      <div className="min-h-[400px] w-full bg-white" />
-    ),
-  }
+  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
 );
 
-const MumbaiVehicleRentalService = dynamic(
+const MumbaiVehicleRentalServiceInIndia = dynamic(
   () => import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia"),
-  {
-    loading: () => (
-      <div className="min-h-[400px] w-full bg-white" />
-    ),
-  }
+  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
 );
 
-const PuneVehicleRentalService = dynamic(
+const PuneVehicleRentalServiceInIndia = dynamic(
   () => import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia"),
-  {
-    loading: () => (
-      <div className="min-h-[400px] w-full bg-white" />
-    ),
-  }
+  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
 );
+
+// ======================================================
+// TYPES
+// ======================================================
+
+export interface ServiceCityItem {
+  name: string;
+  state: string;
+  image: string;
+}
+
+export interface VehicleRentalServiceContent {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  subtitle?: string;
+  description?: string;
+  cities?: ServiceCityItem[];
+}
+
+export interface VehicleRentalServiceProps {
+  content?: VehicleRentalServiceContent;
+}
 
 // ======================================================
 // COMPONENT
 // ======================================================
 
-export default function VehicleRentalServiceInIndiaSelector() {
+export default function VehicleRentalServiceInIndiaSelector({
+  content,
+}: VehicleRentalServiceProps) {
   const { location } = useLocation();
 
-  // ====================================================
-  // NORMALIZE LOCATION
-  // ====================================================
+  const currentLocation = String(location || "").trim().toLowerCase();
 
-  const currentLocation = String(location || "")
-    .trim()
-    .toLowerCase();
-
-  // ====================================================
-  // LOCATION → COMPONENT MAP
-  // ====================================================
-
-  const componentMap: Record<
+  const map: Record<
     string,
-    React.ComponentType
+    React.ComponentType<VehicleRentalServiceProps>
   > = {
-    delhi: DelhiVehicleRentalService,
-
-    // Future locations
-    gurugram: GurugramVehicleRentalService,
-    mumbai: MumbaiVehicleRentalService,
-    pune: PuneVehicleRentalService,
+    delhi: DelhiVehicleRentalServiceInIndia,
+    gurugram: GurugramVehicleRentalServiceInIndia,
+    mumbai: MumbaiVehicleRentalServiceInIndia,
+    pune: PuneVehicleRentalServiceInIndia,
   };
 
-  // ====================================================
-  // GET COMPONENT
-  // ====================================================
-
-  const Component = componentMap[currentLocation];
-
-  // ====================================================
-  // NO COMPONENT
-  // ====================================================
+  const Component = map[currentLocation];
 
   if (!Component) {
     return null;
   }
 
-  // ====================================================
-  // RENDER
-  // ====================================================
-
-  return <Component />;
+  return <Component content={content} />;
 }
-
