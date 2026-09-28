@@ -2,7 +2,10 @@
 // CMS API client — fetches content from cms-urban-cruise
 // ============================================================
 
-const CMS_URL = (process.env.CMS_API_URL || "http://localhost:5000").replace(/\/$/, "");
+const CMS_URL = (process.env.CMS_API_URL || "http://localhost:5000").replace(
+  /\/$/,
+  ""
+);
 const CMS_API_KEY = process.env.CMS_API_KEY || "";
 
 interface FetchOptions {
@@ -15,6 +18,12 @@ async function cmsFetch<T>(
   path: string,
   { revalidate = 60, tags = [], noStore = false }: FetchOptions = {}
 ): Promise<T | null> {
+  console.log("[cms] fetch:", `${CMS_URL}${path}`, {
+    hasKey: !!CMS_API_KEY,
+    keyLength: CMS_API_KEY.length,
+    keyPrefix: CMS_API_KEY.slice(0, 8),
+  });
+
   if (!CMS_API_KEY) {
     console.error("[cms] CMS_API_KEY not set");
     return null;
@@ -29,6 +38,8 @@ async function cmsFetch<T>(
       next: noStore ? undefined : { revalidate, tags },
       cache: noStore ? "no-store" : undefined,
     });
+
+    console.log("[cms] response:", path, res.status);
 
     if (!res.ok) {
       if (res.status === 404) return null;
@@ -58,24 +69,21 @@ export interface HomeResponse {
 }
 
 export async function getHomeSections(citySlug: string) {
-  return cmsFetch<HomeResponse>(`/api/public/home?city=${encodeURIComponent(citySlug)}`, {
-    revalidate: 60,
-    tags: [`home:${citySlug}`],
-  });
+  return cmsFetch<HomeResponse>(
+    `/api/public/home?city=${encodeURIComponent(citySlug)}`,
+    {
+      revalidate: 60,
+      tags: [`home:${citySlug}`],
+    }
+  );
 }
 
 // ============================================================
 // VEHICLES
 // ============================================================
-export interface VehicleListItem {
-  slug: string;
-  [key: string]: any;
-  updatedAt: string;
-}
-
 export interface VehiclesResponse {
   city: { slug: string; name: string };
-  vehicles: VehicleListItem[];
+  vehicles: Array<{ slug: string; [key: string]: any; updatedAt: string }>;
 }
 
 export async function getVehicles(citySlug: string) {
@@ -97,7 +105,9 @@ export interface VehicleDetailResponse {
 
 export async function getVehicle(citySlug: string, vehicleSlug: string) {
   return cmsFetch<VehicleDetailResponse>(
-    `/api/public/vehicles?city=${encodeURIComponent(citySlug)}&slug=${encodeURIComponent(vehicleSlug)}`,
+    `/api/public/vehicles?city=${encodeURIComponent(
+      citySlug
+    )}&slug=${encodeURIComponent(vehicleSlug)}`,
     {
       revalidate: 60,
       tags: [`vehicle:${citySlug}:${vehicleSlug}`],
@@ -114,34 +124,27 @@ export interface SeoEntry {
   slug: string | null;
   page_type: string;
   city_name: string | null;
-
   title: string | null;
   favicon_url: string | null;
-
   meta_title: string | null;
   meta_description: string | null;
   meta_keywords: string[];
   focus_keyword: string | null;
-
   canonical_url: string | null;
   robots_meta: string;
   is_indexable: boolean;
-
   feature_image: string | null;
-
   og_title: string | null;
   og_description: string | null;
   og_image: string | null;
   og_url: string | null;
   og_type: string;
-
   twitter_card: string;
   twitter_domain: string | null;
   twitter_url: string | null;
   twitter_image: string | null;
   twitter_title: string | null;
   twitter_description: string | null;
-
   schemas: any[];
   updated_at: string;
 }

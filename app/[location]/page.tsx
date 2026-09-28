@@ -1,109 +1,12 @@
-// app/[location]/page.tsx
-// import { notFound } from "next/navigation";
-// import {
-//   isValidLocation,
-// } from "@/app/lib/location";
-
-// import HeroSelector from "@/app/components/HeroSelector";
-// import AboutSelector from "@/app/components/AboutSelector";
-// import HowItWorksSelector from "@/app/components/HowItWorksSelector";
-// import VehicleForEveryBudgetSelector from "@/app/components/VehicleForEveryBudgetSelector";
-// import VehicleForEveryGroupSizeSelector from "../components/VehicleForEveryGroupSizeSelector";
-// import VehicleForEveryOccasionSelector from "../components/VehicleForEveryOccasionSelector";
-// import WhyChooseUrbanCruiseSelector from "../components/WhyChooseUrbanCruiseSelector";
-// import TestimonialSelector from "../components/TestimonialSelector";
-// import FaqsSelector from "@/app/components/Faq'sSelector";
-// import VehicleRentalServiceInIndiaSelector from "@/app/components/VehicleRentalServiceInIndiaSelector";
-// import OurTrustedPartner from "../components/ourtrustedpartner/OurTrustedPartner";
-// import DownloadApp from "../components/download-app/DownloadApp";
-// import { createLocationMetadata } from "@/lib/seo";
-// import JsonLd from "@/app/components/seo/JsonLd";
-// import { webPageSchema } from "@/lib/schema";
-// import { formatLocationName } from "@/app/lib/location";
-// import Breadcrumb from "@/app/components/seo/Breadcrumb";
-
-// interface LocationPageProps {
-//   params: Promise<{
-//     location: string;
-//   }>;
-// }
-
-// export async function generateMetadata({ params }: LocationPageProps) {
-//   const { location } = await params;
-//   return createLocationMetadata(location, "home", `/${location}`);
-// }
-
-// export default async function LocationHome({
-//   params,
-// }: LocationPageProps) {
-//   const { location } = await params;
-
-//   if (!isValidLocation(location)) {
-//     notFound();
-//   }
-
-//   return (
-//     <div className="relative min-h-[calc(100vh-4rem)]">
-//       <JsonLd
-//         data={webPageSchema({
-//           name: `Vehicle Rental in ${formatLocationName(location)}`,
-//           description: `Vehicle rental services in ${formatLocationName(location)} from Urban Cruise.`,
-//           path: `/${location}`,
-//         })}
-//       />
-//       <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
-//         <div className="pointer-events-auto">
-//           <Breadcrumb
-//             items={[
-//               { name: "Home", path: "/" },
-//               { name: formatLocationName(location), path: `/${location}` },
-//             ]}
-//           />
-//         </div>
-//       </div>
-//       {/* HERO */}
-//       <HeroSelector />
-
-//       {/* ABOUT */}
-//       <AboutSelector />
-
-//       {/* HOW IT WORKS */}
-//       <HowItWorksSelector />
-
-//       {/* VEHICLE FOR EVERY BUDGET */}
-//       <VehicleForEveryBudgetSelector />
-
-//       {/* VEHICLE FOR EVERY GROUP SIZE */}
-//       <VehicleForEveryGroupSizeSelector />
-
-//       {/* VEHICLE FOR EVERY OCCASION */}
-//       <VehicleForEveryOccasionSelector />
-
-//       {/* WHY CHOOSE URBAN CRUISE */}
-//       <WhyChooseUrbanCruiseSelector />
-
-//       {/* Testimonial */}
-//       <TestimonialSelector />
-
-//       {/* Faq's */}
-//       <FaqsSelector />
-
-//       {/* VEHICLE RENTAL SERVICE IN INDIA */}
-//       <VehicleRentalServiceInIndiaSelector />
-
-//       {/* Our Trusted Partner */}
-//       <OurTrustedPartner />
-
-//       {/* FEATURES */}
-//       <DownloadApp />
-//     </div>
-//   );
-// }
-
+// ============================================================
+// City home page — fetches CMS content + SEO in parallel
+// and passes them to the location-aware selectors.
+// ============================================================
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getHomeSections, getSeoByPath } from "@/lib/cms";
+
 import { isValidLocation, formatLocationName } from "@/app/lib/location";
+import { getHomeSections, getSeoByPath } from "@/lib/cms";
 
 import HeroSelector from "@/app/components/HeroSelector";
 import AboutSelector from "@/app/components/AboutSelector";
@@ -127,7 +30,7 @@ interface PageProps {
 }
 
 // ============================================================
-// METADATA — pulled from CMS SEO, fallback to defaults
+// METADATA
 // ============================================================
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { location } = await params;
@@ -156,7 +59,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: s.og_title || s.meta_title || undefined,
       description: s.og_description || s.meta_description || undefined,
-      images: s.og_image || s.feature_image ? [s.og_image || s.feature_image!] : undefined,
+      images:
+        s.og_image || s.feature_image
+          ? [s.og_image || s.feature_image!]
+          : undefined,
       url: s.og_url || undefined,
       type: (s.og_type as any) || "website",
     },
@@ -179,7 +85,7 @@ export default async function LocationHome({ params }: PageProps) {
     notFound();
   }
 
-  // Fetch CMS content + SEO in parallel
+  // Parallel fetch
   const [homeData, seo] = await Promise.all([
     getHomeSections(location),
     getSeoByPath(`/${location}`),
@@ -188,10 +94,15 @@ export default async function LocationHome({ params }: PageProps) {
   const sections = homeData?.sections ?? {};
   const city = formatLocationName(location);
 
+  // Debug — remove after verifying
+  if (process.env.NODE_ENV === "development") {
+    console.log(`[${location}] CMS section keys:`, Object.keys(sections));
+    console.log(`[${location}] hero present:`, !!sections.hero);
+  }
+
   return (
     <div className="relative min-h-[calc(100vh-4rem)]">
-      {/* JSON-LD from CMS (fallback to nothing) */}
-      {seo?.seo.schemas && seo.seo.schemas.length > 0 ? (
+      {seo?.seo?.schemas?.length ? (
         <JsonLd data={seo.seo.schemas} />
       ) : (
         <JsonLd
@@ -199,7 +110,7 @@ export default async function LocationHome({ params }: PageProps) {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: `Vehicle Rental in ${city}`,
-            url: `${process.env.WEBSITE_ORIGIN}/${location}`,
+            url: `${process.env.WEBSITE_ORIGIN || "http://localhost:3000"}/${location}`,
           }}
         />
       )}
@@ -215,8 +126,10 @@ export default async function LocationHome({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Render selectors — pass CMS content when available */}
+      {/* Hero — MUST pass content={sections.hero} */}
       <HeroSelector content={sections.hero} />
+
+      {/* Everything else, same pattern */}
       <AboutSelector content={sections.about} />
       <HowItWorksSelector content={sections.howitworks} />
       <VehicleForEveryBudgetSelector content={sections.vehiclebudget} />
