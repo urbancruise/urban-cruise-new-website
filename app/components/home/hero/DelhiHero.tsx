@@ -1,3 +1,4 @@
+
 "use client";
 
 import QuickCallForm from "../../shared/QuickCallForm";
@@ -17,28 +18,14 @@ interface HeroProps {
 }
 
 export default function DelhiHero({ content }: HeroProps) {
-  // Debug — remove after verifying
-  if (process.env.NODE_ENV === "development") {
-    console.log("[DelhiHero] received content:", content);
-  }
-
-  // ---- CMS values with static fallbacks ----
-  const eyebrow =
-    content?.eyebrow?.trim() || "Urban Cruise bus & car rental";
-
-  const title =
-    content?.title?.trim() || "No. 1 Vehicle Rental service";
-
+  const eyebrow = content?.eyebrow?.trim() || "Urban Cruise bus & car rental";
+  const title = content?.title?.trim() || "No. 1 Vehicle Rental service";
   const titleHighlight =
     content?.titleHighlight?.trim() || "Provider company in india";
-
   const description =
     content?.description?.trim() ||
     "Urban Cruise offers reliable car, luxury, tempo traveller, and bus rentals with professional drivers, transparent pricing, and 24/7 support across India.";
-
-  const bgImage =
-    content?.backgroundImage?.trim() || "/images/hero/herobg.webp";
-
+  const bgImage = content?.backgroundImage?.trim() || "/images/hero/herobg.webp";
   const vehiclesImage =
     content?.vehiclesImage?.trim() || "/images/hero/3 images.webp";
 
@@ -60,14 +47,14 @@ export default function DelhiHero({ content }: HeroProps) {
           xl:aspect-[21/10]
         "
       >
-        {/* BACKGROUND IMAGE */}
+        {/* BACKGROUND IMAGE — uses fill (no width/height warnings) */}
         <Image
           src={bgImage}
           alt={`${title} in Delhi`}
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          className="object-cover object-center"
         />
 
         {/* HERO → WHITE FADE */}
@@ -137,7 +124,7 @@ export default function DelhiHero({ content }: HeroProps) {
           </p>
         </div>
 
-        {/* VEHICLES */}
+        {/* VEHICLES IMAGE — wrapped in an aspect-ratio container */}
         <div
           className="
             absolute
@@ -158,14 +145,11 @@ export default function DelhiHero({ content }: HeroProps) {
             xl:top-[34%]
           "
         >
-          <Image
-            src={vehiclesImage}
-            alt={`Premium cars and buses available for rental in Delhi`}
-            width={1080}
-            height={520}
-            loading="lazy"
+          <div
             className="
-              w-full h-auto object-contain mx-auto
+              relative
+              w-full
+              mx-auto
               max-w-[400px]
               xs:max-w-[400px]
               sm:max-w-[560px]
@@ -173,6 +157,7 @@ export default function DelhiHero({ content }: HeroProps) {
               lg:max-w-[820px]
               xl:max-w-[960px]
               2xl:max-w-[1080px]
+              aspect-[1080/520]
               scale-[1.15]
               xs:scale-[1.15]
               sm:scale-[1.12]
@@ -181,7 +166,16 @@ export default function DelhiHero({ content }: HeroProps) {
               xl:scale-[1.1]
               2xl:scale-[1.08]
             "
-          />
+          >
+            <Image
+              src={vehiclesImage}
+              alt="Premium cars and buses available for rental in Delhi"
+              fill
+              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1080px"
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
 

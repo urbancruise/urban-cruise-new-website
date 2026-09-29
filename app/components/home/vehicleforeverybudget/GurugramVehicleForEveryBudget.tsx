@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -11,6 +10,9 @@ import type { BudgetContent } from "@/app/components/VehicleForEveryBudgetSelect
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
 
+// ============================================================
+// DEFAULT (fallback) DATA
+// ============================================================
 const DEFAULT_CATEGORIES = [
   {
     title: "ECONOMY",
@@ -60,6 +62,9 @@ const DEFAULT_TRUST_BADGES = [
   },
 ];
 
+// ============================================================
+// TRUST BADGE
+// ============================================================
 function TrustBadge({
   icon,
   label,
@@ -142,6 +147,9 @@ function TrustBadge({
   );
 }
 
+// ============================================================
+// MAIN COMPONENT
+// ============================================================
 export default function GurugramVehicleForEveryBudget({
   content,
 }: {
@@ -162,7 +170,8 @@ export default function GurugramVehicleForEveryBudget({
     content?.categories && content.categories.length > 0
       ? content.categories.map((c, i) => ({
           title: c.title ?? DEFAULT_CATEGORIES[i]?.title ?? "",
-          description: c.description ?? DEFAULT_CATEGORIES[i]?.description ?? "",
+          description:
+            c.description ?? DEFAULT_CATEGORIES[i]?.description ?? "",
           icon: c.icon ?? DEFAULT_CATEGORIES[i]?.icon ?? "",
           color:
             c.color === "orange" || c.color === ORANGE
@@ -214,7 +223,8 @@ export default function GurugramVehicleForEveryBudget({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              {title} <span className="text-[#188A31]">{titleHighlight}</span>
+              {title}{" "}
+              <span className="text-[#188A31]">{titleHighlight}</span>
             </motion.h2>
 
             <motion.p
@@ -252,7 +262,12 @@ export default function GurugramVehicleForEveryBudget({
               className="relative z-10 w-[340px] max-w-none shrink-0 min-[375px]:w-[360px] min-[430px]:w-[390px] sm:w-[440px] md:w-[500px] lg:w-[540px] xl:w-[620px] 2xl:w-[700px] lg:-mr-[40px] xl:-mr-[55px] 2xl:-mr-[70px]"
               initial={{ scale: 0.7, opacity: 0, x: 50 }}
               animate={{ scale: 1, opacity: 1, x: 0 }}
-              transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.3 }}
+              transition={{
+                type: "spring",
+                damping: 15,
+                stiffness: 100,
+                delay: 0.3,
+              }}
             >
               <motion.div
                 whileHover={{
@@ -260,14 +275,16 @@ export default function GurugramVehicleForEveryBudget({
                   transition: { type: "spring", damping: 10, stiffness: 100 },
                 }}
               >
-                <Image
-                  src={illustration}
-                  alt="Urban Cruise Vehicles"
-                  width={700}
-                  height={475}
-                  priority
-                  className="block h-auto w-full object-contain"
-                />
+                <div className="relative w-full aspect-[700/475]">
+                  <Image
+                    src={illustration}
+                    alt="Urban Cruise Vehicles"
+                    fill
+                    priority
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 700px"
+                    className="object-contain"
+                  />
+                </div>
               </motion.div>
 
               {trustBadges.map((badge, index) => (
@@ -284,6 +301,7 @@ export default function GurugramVehicleForEveryBudget({
           </div>
         </motion.div>
 
+        {/* CATEGORIES GRID */}
         <motion.div
           className="grid w-full grid-cols-1 gap-y-8 min-[375px]:gap-y-9 min-[430px]:gap-y-10 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-9 md:grid-cols-2 md:gap-x-6 md:gap-y-10 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-0 xl:grid-cols-4 xl:gap-x-7 2xl:grid-cols-4 2xl:gap-x-9"
           initial={{ opacity: 0, y: 30 }}

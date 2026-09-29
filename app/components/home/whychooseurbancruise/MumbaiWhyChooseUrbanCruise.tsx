@@ -1,5 +1,3 @@
-
-
 /* eslint-disable react/no-unescaped-entities */
 // ============================================================
 // Mumbai — Why Choose Urban Cruise
@@ -36,7 +34,14 @@ function getBenefitIcon(key: string | undefined, fallbackIndex: number) {
     if (k.includes("clean") || k.includes("broom")) return <FaBroom />;
     if (k.includes("cancel") || k.includes("ban")) return <FaBan />;
   }
-  const icons = [<FaCar key="0" />, <FaUserTie key="1" />, <FaHeadset key="2" />, <FaRupeeSign key="3" />, <FaBroom key="4" />, <FaBan key="5" />];
+  const icons = [
+    <FaCar key="0" />,
+    <FaUserTie key="1" />,
+    <FaHeadset key="2" />,
+    <FaRupeeSign key="3" />,
+    <FaBroom key="4" />,
+    <FaBan key="5" />,
+  ];
   return icons[fallbackIndex % icons.length];
 }
 
@@ -108,6 +113,29 @@ const FALLBACK_BENEFITS: WhyChooseBenefitItem[] = [
   },
 ];
 
+function normalizeBenefit(raw: any, index: number): WhyChooseBenefitItem {
+  const fallback = FALLBACK_BENEFITS[index % FALLBACK_BENEFITS.length];
+
+  const description = Array.isArray(raw?.description)
+    ? raw.description
+    : Array.isArray(raw?.items)
+      ? raw.items
+      : [];
+
+  const cleanedDescription = description
+    .filter((d: any) => typeof d === "string" && d.trim().length > 0)
+    .map((d: string) => d.trim());
+
+  return {
+    number: String(raw?.number ?? fallback.number),
+    title: raw?.title?.trim() || fallback.title,
+    theme: raw?.theme === "orange" ? "orange" : "green",
+    image: raw?.image || fallback.image,
+    description:
+      cleanedDescription.length > 0 ? cleanedDescription : fallback.description,
+  };
+}
+
 function BenefitCard({
   benefit,
   index,
@@ -116,6 +144,10 @@ function BenefitCard({
   index: number;
 }) {
   const isGreen = benefit.theme !== "orange";
+
+  const description = Array.isArray(benefit.description)
+    ? benefit.description
+    : [];
 
   return (
     <motion.div
@@ -156,7 +188,7 @@ function BenefitCard({
                 : "bg-gradient-to-br from-[#F7941E] to-[#E66F00]"
             }`}
           >
-            {getBenefitIcon(benefit.icon, index)}
+            {getBenefitIcon(undefined, index)}
           </div>
         </div>
 
@@ -192,32 +224,36 @@ function BenefitCard({
           }`}
         />
 
-        <ul className="max-w-[160px] space-y-[8px] sm:max-w-[170px] sm:space-y-[9px] md:max-w-[175px] md:space-y-[10px] lg:max-w-[165px] xl:max-w-[175px] 2xl:max-w-[190px]">
-          {benefit.description.map((item, itemIndex) => (
-            <li
-              key={itemIndex}
-              className="flex items-start gap-[7px] text-[10px] leading-[1.4] text-[#303944] sm:text-[10.5px] md:text-[11px] lg:text-[10.5px] xl:text-[11px] 2xl:text-[12px]"
-            >
-              <FaCheckCircle
-                className={`mt-[2px] shrink-0 text-[10px] sm:text-[11px] ${
-                  isGreen ? "text-[#139A45]" : "text-[#F7941E]"
-                }`}
-              />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+        {description.length > 0 && (
+          <ul className="max-w-[160px] space-y-[8px] sm:max-w-[170px] sm:space-y-[9px] md:max-w-[175px] md:space-y-[10px] lg:max-w-[165px] xl:max-w-[175px] 2xl:max-w-[190px]">
+            {description.map((item, itemIndex) => (
+              <li
+                key={itemIndex}
+                className="flex items-start gap-[7px] text-[10px] leading-[1.4] text-[#303944] sm:text-[10.5px] md:text-[11px] lg:text-[10.5px] xl:text-[11px] 2xl:text-[12px]"
+              >
+                <FaCheckCircle
+                  className={`mt-[2px] shrink-0 text-[10px] sm:text-[11px] ${
+                    isGreen ? "text-[#139A45]" : "text-[#F7941E]"
+                  }`}
+                />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      <div className="absolute bottom-0 right-[-4px] z-10 h-[68%] w-[47%] sm:right-0 sm:h-[70%] sm:w-[48%] md:h-[74%] md:w-[48%] lg:h-[76%] lg:w-[49%] xl:h-[78%] xl:w-[49%]">
-        <Image
-          src={benefit.image}
-          alt={benefit.title}
-          fill
-          sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 18vw"
-          className="object-contain object-right-bottom transition-transform duration-500 group-hover:scale-[1.04]"
-        />
-      </div>
+      {benefit.image && (
+        <div className="absolute bottom-0 right-[-4px] z-10 h-[68%] w-[47%] sm:right-0 sm:h-[70%] sm:w-[48%] md:h-[74%] md:w-[48%] lg:h-[76%] lg:w-[49%] xl:h-[78%] xl:w-[49%]">
+          <Image
+            src={benefit.image}
+            alt={benefit.title}
+            fill
+            sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 18vw"
+            className="object-contain object-right-bottom transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -236,7 +272,9 @@ export default function MumbaiWhyChooseUrbanCruise({
     "Choose Urban Cruise for reliable vehicle rentals in Mumbai, with well-maintained vehicles, trained drivers and dependable support for every journey.";
 
   const benefits: WhyChooseBenefitItem[] =
-    cms.benefits && cms.benefits.length > 0 ? cms.benefits : FALLBACK_BENEFITS;
+    Array.isArray(cms.benefits) && cms.benefits.length > 0
+      ? cms.benefits.map((b, i) => normalizeBenefit(b, i))
+      : FALLBACK_BENEFITS;
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16 2xl:py-[70px]">
@@ -289,7 +327,11 @@ export default function MumbaiWhyChooseUrbanCruise({
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-5 xl:gap-6 2xl:gap-6">
           {benefits.map((benefit, index) => (
-            <BenefitCard key={benefit.number || index} benefit={benefit} index={index} />
+            <BenefitCard
+              key={`${benefit.number}-${index}`}
+              benefit={benefit}
+              index={index}
+            />
           ))}
         </div>
       </div>

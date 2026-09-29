@@ -1,7 +1,7 @@
-
 /* eslint-disable react/no-unescaped-entities */
 // ============================================================
 // Mumbai — Vehicles For Every Group Size
+// Fully defensive against missing / partially-populated CMS data.
 // ============================================================
 "use client";
 
@@ -26,6 +26,9 @@ import type {
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
 
+// ============================================================
+// FALLBACK DATA
+// ============================================================
 const FALLBACK_VEHICLES: VehicleGroupSizeItem[] = [
   {
     type: "Sedan",
@@ -121,7 +124,39 @@ const FALLBACK_VEHICLES: VehicleGroupSizeItem[] = [
   },
 ];
 
-// ---------- SHARED SUB-COMPONENTS ----------
+// ============================================================
+// NORMALIZE CMS VEHICLE
+// Defensive against missing / partial fields.
+// ============================================================
+function normalizeVehicle(raw: any, index: number): VehicleGroupSizeItem {
+  const fallback = FALLBACK_VEHICLES[index % FALLBACK_VEHICLES.length];
+
+  return {
+    type: raw?.type ?? fallback.type,
+    name: raw?.name?.trim() || fallback.name,
+    tagline: raw?.tagline?.trim() || fallback.tagline,
+    price: raw?.price != null ? String(raw.price) : fallback.price,
+    description: raw?.description?.trim() || fallback.description,
+    mainImage: raw?.mainImage || fallback.mainImage,
+    gallery:
+      Array.isArray(raw?.gallery) && raw.gallery.length > 0
+        ? raw.gallery
+        : fallback.gallery,
+    features:
+      Array.isArray(raw?.features) && raw.features.length > 0
+        ? raw.features
+            .filter((f: any) => f && (f.label || f.name))
+            .map((f: any) => ({
+              label: String(f.label || f.name || ""),
+              color: f.color || GREEN,
+            }))
+        : fallback.features,
+  };
+}
+
+// ============================================================
+// CURVED LOGO SHAPE
+// ============================================================
 type CurvedShapeLogoProps = {
   width?: number;
   height?: number;
@@ -180,26 +215,37 @@ function CurvedShapeLogo({
   );
 }
 
+// ============================================================
+// GALLERY (defensive against empty arrays)
+// ============================================================
 function CurvedGallery({ images }: { images: string[] }) {
+  const safeImages =
+    Array.isArray(images) && images.length > 0
+      ? images
+      : ["/images/vehicleforeverygroupsize/7.jpeg"];
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    if (safeImages.length <= 1) return;
+
     intervalRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => (prev + 1) % safeImages.length);
     }, 3000);
+
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [images.length]);
+  }, [safeImages.length]);
 
   const getDisplayImages = () => {
-    const total = images.length;
+    const total = safeImages.length;
     return [
-      images[(currentIndex - 1 + total) % total],
-      images[currentIndex],
-      images[(currentIndex + 1) % total],
+      safeImages[(currentIndex - 1 + total) % total],
+      safeImages[currentIndex],
+      safeImages[(currentIndex + 1) % total],
     ];
   };
 
@@ -207,12 +253,12 @@ function CurvedGallery({ images }: { images: string[] }) {
 
   const nextSlide = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % safeImages.length);
   };
 
   const prevSlide = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentIndex((prev) => (prev - 1 + safeImages.length) % safeImages.length);
   };
 
   return (
@@ -262,32 +308,39 @@ function CurvedGallery({ images }: { images: string[] }) {
           />
         </div>
 
-        <button
-          onClick={prevSlide}
-          className={`absolute left-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:left-[-4px] sm:p-1.5 md:left-0 md:p-1 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
-          aria-label="Previous image"
-        >
-          <IoIosArrowBack className="h-3 w-3 sm:h-4 sm:w-4" />
-        </button>
+        {safeImages.length > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              className={`absolute left-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:left-[-4px] sm:p-1.5 md:left-0 md:p-1 ${
+                isHovered ? "opacity-100" : "opacity-0"
+              }`}
+              aria-label="Previous image"
+            >
+              <IoIosArrowBack className="h-3 w-3 sm:h-4 sm:w-4" />
+            </button>
 
-        <button
-          onClick={nextSlide}
-          className={`absolute right-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:right-[-4px] sm:p-1.5 md:right-0 md:p-1 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
-          aria-label="Next image"
-        >
-          <IoIosArrowForward className="h-3 w-3 sm:h-4 sm:w-4" />
-        </button>
+            <button
+              onClick={nextSlide}
+              className={`absolute right-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:right-[-4px] sm:p-1.5 md:right-0 md:p-1 ${
+                isHovered ? "opacity-100" : "opacity-0"
+              }`}
+              aria-label="Next image"
+            >
+              <IoIosArrowForward className="h-3 w-3 sm:h-4 sm:w-4" />
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
+// ============================================================
+// FEATURE ICON MAPPER
+// ============================================================
 function getFeatureIcon(label: string) {
-  const l = label.toLowerCase();
+  const l = (label || "").toLowerCase();
   if (l.includes("seat") || l.includes("passenger")) return <FaUser />;
   if (l.includes("ac") || l.includes("air") || l.includes("cool"))
     return <FaSnowflake />;
@@ -298,6 +351,9 @@ function getFeatureIcon(label: string) {
   return <FaSuitcase />;
 }
 
+// ============================================================
+// VEHICLE CARD
+// ============================================================
 function VehicleCard({
   vehicle,
   index,
@@ -305,13 +361,21 @@ function VehicleCard({
   vehicle: VehicleGroupSizeItem;
   index: number;
 }) {
+  // Defensive: guarantee arrays exist
+  const features = Array.isArray(vehicle.features) ? vehicle.features : [];
+  const gallery = Array.isArray(vehicle.gallery) ? vehicle.gallery : [];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true, margin: "-50px" }}
-      whileHover={{ y: -12, scale: 1.02, transition: { duration: 0.3, ease: "easeOut" } }}
+      whileHover={{
+        y: -12,
+        scale: 1.02,
+        transition: { duration: 0.3, ease: "easeOut" },
+      }}
       className="group relative w-full overflow-hidden rounded-[22px] p-1.5 border border-[#E8E8E8] bg-white shadow-[0_8px_35px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)]"
     >
       <div className="relative w-full aspect-[16/10] overflow-hidden rounded-t-3xl bg-gray-100">
@@ -321,7 +385,7 @@ function VehicleCard({
           transition={{ duration: 0.4 }}
         >
           <Image
-            src={vehicle.mainImage}
+            src={vehicle.mainImage || "/images/vehicleforeverygroupsize/7.jpeg"}
             alt={vehicle.name}
             fill
             className="object-cover"
@@ -350,9 +414,9 @@ function VehicleCard({
         </motion.div>
       </div>
 
-      {vehicle.gallery && vehicle.gallery.length > 0 && (
+      {gallery.length > 0 && (
         <div className="absolute top-[165px] sm:top-[165px] md:top-[182px] xl:top-[210px] 2xl:top-[220px] left-0 right-0 z-20">
-          <CurvedGallery images={vehicle.gallery} />
+          <CurvedGallery images={gallery} />
         </div>
       )}
 
@@ -385,51 +449,55 @@ function VehicleCard({
         </div>
       </div>
 
-      <div className="mx-4 mt-3 grid grid-cols-5 overflow-hidden rounded-[17px] border border-[#E8E8E8] bg-white shadow-[0_5px_20px_rgba(0,0,0,0.06)] sm:mx-5 sm:mt-4">
-        {vehicle.features.map((feature, featureIndex) => {
-          const color = feature.color || GREEN;
-          return (
-            <motion.div
-              key={feature.label}
-              whileHover={{
-                y: -4,
-                backgroundColor: `${color}15`,
-                transition: { duration: 0.2 },
-              }}
-              className={`flex min-w-0 flex-col items-center justify-center gap-1 px-1 py-2.5 sm:gap-0.5 sm:py-1.5 ${
-                featureIndex !== vehicle.features.length - 1
-                  ? "border-r border-[#E5E5E5]"
-                  : ""
-              }`}
-            >
-              <div
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5"
-                style={{ backgroundColor: `${color}18`, color }}
+      {features.length > 0 && (
+        <div className="mx-4 mt-3 grid grid-cols-5 overflow-hidden rounded-[17px] border border-[#E8E8E8] bg-white shadow-[0_5px_20px_rgba(0,0,0,0.06)] sm:mx-5 sm:mt-4">
+          {features.map((feature, featureIndex) => {
+            const color = feature.color || GREEN;
+            return (
+              <motion.div
+                key={`${feature.label}-${featureIndex}`}
+                whileHover={{
+                  y: -4,
+                  backgroundColor: `${color}15`,
+                  transition: { duration: 0.2 },
+                }}
+                className={`flex min-w-0 flex-col items-center justify-center gap-1 px-1 py-2.5 sm:gap-0.5 sm:py-1.5 ${
+                  featureIndex !== features.length - 1
+                    ? "border-r border-[#E5E5E5]"
+                    : ""
+                }`}
               >
-                <span className="text-[14px] sm:text-[12px]">
-                  {getFeatureIcon(feature.label)}
+                <div
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5"
+                  style={{ backgroundColor: `${color}18`, color }}
+                >
+                  <span className="text-[14px] sm:text-[12px]">
+                    {getFeatureIcon(feature.label)}
+                  </span>
+                </div>
+                <span className="min-w-0 max-w-full truncate whitespace-nowrap text-center text-[7px] font-semibold text-[#111827] min-[375px]:text-[8px] sm:text-[9px] md:text-[9px]">
+                  {feature.label}
                 </span>
-              </div>
-              <span className="min-w-0 max-w-full truncate whitespace-nowrap text-center text-[7px] font-semibold text-[#111827] min-[375px]:text-[8px] sm:text-[9px] md:text-[9px]">
-                {feature.label}
-              </span>
-            </motion.div>
-          );
-        })}
-      </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
 
-      <div className="px-4 pt-3 sm:px-5 sm:pt-4">
-        <p
-          className="text-justify text-[10px] font-medium leading-[1.6] text-[#344054] min-[375px]:text-[10.5px] sm:text-[11px] md:text-xs lg:text-[13px] overflow-hidden"
-          style={{
-            display: "-webkit-box",
-            WebkitLineClamp: 4,
-            WebkitBoxOrient: "vertical",
-          }}
-        >
-          {vehicle.description}
-        </p>
-      </div>
+      {vehicle.description && (
+        <div className="px-4 pt-3 sm:px-5 sm:pt-4">
+          <p
+            className="text-justify text-[10px] font-medium leading-[1.6] text-[#344054] min-[375px]:text-[10.5px] sm:text-[11px] md:text-xs lg:text-[13px] overflow-hidden"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 4,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            {vehicle.description}
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-3 px-4 pb-4 pt-4 sm:gap-4 sm:px-5 sm:pb-5 sm:pt-5">
         <motion.button
@@ -475,16 +543,19 @@ export default function MumbaiVehicleForEveryGroupSize({
 }: VehicleForEveryGroupSizeProps) {
   const cms: VehicleGroupSizeContent = content || {};
 
-  const eyebrow = cms.eyebrow || "Perfect For Every Group";
-  const title = cms.title || "VEHICLES FOR";
-  const titleHighlight = cms.titleHighlight || " EVERY GROUP SIZE ";
-  const subtitle = cms.subtitle || "The Right Vehicle For Every Group Size";
+  const eyebrow = cms.eyebrow?.trim() || "Perfect For Every Group";
+  const title = cms.title?.trim() || "VEHICLES FOR";
+  const titleHighlight = cms.titleHighlight?.trim() || " EVERY GROUP SIZE ";
+  const subtitle = cms.subtitle?.trim() || "The Right Vehicle For Every Group Size";
   const description =
-    cms.description ||
+    cms.description?.trim() ||
     "Whether you're traveling solo, with family, or in a large group, Urban Cruise has the perfect vehicle to accommodate your party size with comfort and style.";
 
+  // Defensive: normalize each vehicle entry; fall back to static defaults
   const vehicles: VehicleGroupSizeItem[] =
-    cms.vehicles && cms.vehicles.length > 0 ? cms.vehicles : FALLBACK_VEHICLES;
+    Array.isArray(cms.vehicles) && cms.vehicles.length > 0
+      ? cms.vehicles.map((v, i) => normalizeVehicle(v, i))
+      : FALLBACK_VEHICLES;
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-10 min-[430px]:py-11 sm:py-12 md:py-14 lg:py-16 xl:py-20 2xl:py-24">
@@ -526,7 +597,11 @@ export default function MumbaiVehicleForEveryGroupSize({
 
         <div className="grid w-full grid-cols-1 gap-6 min-[430px]:gap-7 sm:grid-cols-2 sm:gap-6 md:gap-7 lg:grid-cols-2 lg:gap-8 xl:grid-cols-3 xl:gap-9 2xl:grid-cols-3 2xl:gap-10">
           {vehicles.map((vehicle, index) => (
-            <VehicleCard key={vehicle.name} vehicle={vehicle} index={index} />
+            <VehicleCard
+              key={`${vehicle.name}-${index}`}
+              vehicle={vehicle}
+              index={index}
+            />
           ))}
         </div>
       </div>

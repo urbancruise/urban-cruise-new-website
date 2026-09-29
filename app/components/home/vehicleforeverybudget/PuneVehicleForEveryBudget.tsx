@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -12,16 +11,52 @@ const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
 
 const DEFAULT_CATEGORIES = [
-  { title: "ECONOMY", description: "Vehicles with basic Amenities for Budget Travellers", icon: "/images/vehicleforeverybudget/1.webp", color: GREEN },
-  { title: "PREMIUM", description: "Vehicles with Best-in-class Amenities for Superior Passenger...", icon: "/images/vehicleforeverybudget/2.webp", color: ORANGE },
-  { title: "ROYAL", description: "New & Modified Vehicles with Best-in-class Amenities", icon: "/images/vehicleforeverybudget/3.webp", color: GREEN },
-  { title: "ROYAL VIP", description: "Ultra Luxury Vehicles with Custom Designed Amenities...", icon: "/images/vehicleforeverybudget/4.webp", color: ORANGE },
+  {
+    title: "ECONOMY",
+    description: "Vehicles with basic Amenities for Budget Travellers",
+    icon: "/images/vehicleforeverybudget/1.webp",
+    color: GREEN,
+  },
+  {
+    title: "PREMIUM",
+    description:
+      "Vehicles with Best-in-class Amenities for Superior Passenger...",
+    icon: "/images/vehicleforeverybudget/2.webp",
+    color: ORANGE,
+  },
+  {
+    title: "ROYAL",
+    description: "New & Modified Vehicles with Best-in-class Amenities",
+    icon: "/images/vehicleforeverybudget/3.webp",
+    color: GREEN,
+  },
+  {
+    title: "ROYAL VIP",
+    description: "Ultra Luxury Vehicles with Custom Designed Amenities...",
+    icon: "/images/vehicleforeverybudget/4.webp",
+    color: ORANGE,
+  },
 ];
 
 const DEFAULT_TRUST_BADGES = [
-  { label: "Transparent", label2: "Pricing", position: "left" as const, icon: <FaHandHoldingUsd className="text-black text-xl" /> },
-  { label: "Affordable", label2: "pricing", position: "bottom" as const, icon: <FaStar className="text-yellow-500 text-xl" /> },
-  { label: "Trusted &", label2: "Reliable", position: "right" as const, icon: <VscWorkspaceTrusted className="text-black text-xl" /> },
+  {
+    label: "Transparent",
+    label2: "Pricing",
+    position: "left" as const,
+    icon: <FaHandHoldingUsd className="text-black text-xl" />,
+  },
+  {
+    label: "Affordable",
+    label2: "pricing",
+    position: "bottom" as const,
+    icon: <FaStar className="text-yellow-500 text-xl" />,
+  },
+  {
+    label: "Trusted &",
+    label2: "Reliable",
+    position: "right" as const,
+    icon: <VscWorkspaceTrusted className="text-black text-xl" />,
+  },
 ];
 
 function TrustBadge({
@@ -44,11 +79,44 @@ function TrustBadge({
   };
 
   const containerVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.6, y: position === "bottom" ? 40 : position === "left" ? -20 : 20, x: position === "left" ? -30 : position === "right" ? 30 : 0 },
-    visible: { opacity: 1, scale: 1, y: 0, x: 0, transition: { type: "spring", damping: 15, stiffness: 120, delay: delay + 0.3 } },
-    float: { y: [0, -8, 0], transition: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: delay + 0.3 } },
-    hover: { scale: 1.12, y: position === "bottom" ? -12 : -8, x: position === "left" ? -4 : position === "right" ? 4 : 0, boxShadow: "0 12px 40px rgba(0,0,0,0.25)", transition: { type: "spring", damping: 10, stiffness: 200 } },
-    tap: { scale: 0.9, transition: { type: "spring", damping: 20, stiffness: 300 } },
+    hidden: {
+      opacity: 0,
+      scale: 0.6,
+      y: position === "bottom" ? 40 : position === "left" ? -20 : 20,
+      x: position === "left" ? -30 : position === "right" ? 30 : 0,
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        type: "spring",
+        damping: 15,
+        stiffness: 120,
+        delay: delay + 0.3,
+      },
+    },
+    float: {
+      y: [0, -8, 0],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: delay + 0.3,
+      },
+    },
+    hover: {
+      scale: 1.12,
+      y: position === "bottom" ? -12 : -8,
+      x: position === "left" ? -4 : position === "right" ? 4 : 0,
+      boxShadow: "0 12px 40px rgba(0,0,0,0.25)",
+      transition: { type: "spring", damping: 10, stiffness: 200 },
+    },
+    tap: {
+      scale: 0.9,
+      transition: { type: "spring", damping: 20, stiffness: 300 },
+    },
   };
 
   return (
@@ -81,27 +149,39 @@ export default function PuneVehicleForEveryBudget({
   const eyebrow = content?.eyebrow ?? "We Offer Best Services";
   const title = content?.title ?? "A VEHICLE FOR";
   const titleHighlight = content?.titleHighlight ?? "EVERY BUDGET";
-  const subtitle = content?.subtitle ?? "Vehicles For Every Journey, Every Budget";
-  const description = content?.description ?? "From economical rides to premium and luxury vehicles, Urban Cruise offers a wide range of vehicles to match your travel needs, comfort, and budget.";
-  const illustration = content?.illustration ?? "/images/vehicleforeverybudget/5.webp";
+  const subtitle =
+    content?.subtitle ?? "Vehicles For Every Journey, Every Budget";
+  const description =
+    content?.description ??
+    "From economical rides to premium and luxury vehicles, Urban Cruise offers a wide range of vehicles to match your travel needs, comfort, and budget.";
+  const illustration =
+    content?.illustration ?? "/images/vehicleforeverybudget/5.webp";
 
-  const categories = content?.categories && content.categories.length > 0
-    ? content.categories.map((c, i) => ({
-        title: c.title ?? DEFAULT_CATEGORIES[i]?.title ?? "",
-        description: c.description ?? DEFAULT_CATEGORIES[i]?.description ?? "",
-        icon: c.icon ?? DEFAULT_CATEGORIES[i]?.icon ?? "",
-        color: c.color === "orange" || c.color === ORANGE ? ORANGE : c.color === "green" || c.color === GREEN ? GREEN : DEFAULT_CATEGORIES[i]?.color ?? GREEN,
-      }))
-    : DEFAULT_CATEGORIES;
+  const categories =
+    content?.categories && content.categories.length > 0
+      ? content.categories.map((c, i) => ({
+          title: c.title ?? DEFAULT_CATEGORIES[i]?.title ?? "",
+          description:
+            c.description ?? DEFAULT_CATEGORIES[i]?.description ?? "",
+          icon: c.icon ?? DEFAULT_CATEGORIES[i]?.icon ?? "",
+          color:
+            c.color === "orange" || c.color === ORANGE
+              ? ORANGE
+              : c.color === "green" || c.color === GREEN
+                ? GREEN
+                : DEFAULT_CATEGORIES[i]?.color ?? GREEN,
+        }))
+      : DEFAULT_CATEGORIES;
 
-  const trustBadges = content?.trustBadges && content.trustBadges.length > 0
-    ? content.trustBadges.map((b, i) => ({
-        label: b.label ?? DEFAULT_TRUST_BADGES[i]?.label ?? "",
-        label2: b.label2 ?? DEFAULT_TRUST_BADGES[i]?.label2 ?? "",
-        position: DEFAULT_TRUST_BADGES[i]?.position ?? "left",
-        icon: DEFAULT_TRUST_BADGES[i]?.icon ?? <FaStar />,
-      }))
-    : DEFAULT_TRUST_BADGES;
+  const trustBadges =
+    content?.trustBadges && content.trustBadges.length > 0
+      ? content.trustBadges.map((b, i) => ({
+          label: b.label ?? DEFAULT_TRUST_BADGES[i]?.label ?? "",
+          label2: b.label2 ?? DEFAULT_TRUST_BADGES[i]?.label2 ?? "",
+          position: DEFAULT_TRUST_BADGES[i]?.position ?? "left",
+          icon: DEFAULT_TRUST_BADGES[i]?.icon ?? <FaStar />,
+        }))
+      : DEFAULT_TRUST_BADGES;
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-10 min-[430px]:py-11 sm:py-12 md:py-14 lg:py-16 xl:py-20 2xl:py-24">
@@ -115,21 +195,44 @@ export default function PuneVehicleForEveryBudget({
           transition={{ duration: 0.6 }}
         >
           <div className="w-full max-w-[720px] text-left">
-            <motion.div className="mb-3 flex w-full items-center justify-start gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 sm:gap-2.5 md:gap-3 lg:gap-3.5 xl:gap-4" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+            <motion.div
+              className="mb-3 flex w-full items-center justify-start gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 sm:gap-2.5 md:gap-3 lg:gap-3.5 xl:gap-4"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.14em] text-[#03C35E] min-[375px]:text-[8.5px] min-[430px]:text-[9px] min-[430px]:tracking-[0.16em] sm:text-[9.5px] sm:tracking-[0.18em] md:text-[10px] md:tracking-[0.2em] lg:text-[11px] lg:tracking-[0.23em] xl:text-xs">{eyebrow}</span>
+              <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.14em] text-[#03C35E] min-[375px]:text-[8.5px] min-[430px]:text-[9px] min-[430px]:tracking-[0.16em] sm:text-[9.5px] sm:tracking-[0.18em] md:text-[10px] md:tracking-[0.2em] lg:text-[11px] lg:tracking-[0.23em] xl:text-xs">
+                {eyebrow}
+              </span>
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </motion.div>
 
-            <motion.h2 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}>
-              {title} <span className="text-[#188A31]">{titleHighlight}</span>
+            <motion.h2
+              className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              {title}{" "}
+              <span className="text-[#188A31]">{titleHighlight}</span>
             </motion.h2>
 
-            <motion.p className="mt-3 font-serif text-[19px] italic leading-tight text-[#03C35E] min-[375px]:text-[20px] min-[430px]:text-[21px] sm:text-[22px] md:text-[25px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }}>
+            <motion.p
+              className="mt-3 font-serif text-[19px] italic leading-tight text-[#03C35E] min-[375px]:text-[20px] min-[430px]:text-[21px] sm:text-[22px] md:text-[25px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               {subtitle}
             </motion.p>
 
-            <motion.div className="mt-4 max-w-[620px] space-y-3 text-[10px] leading-[1.7] text-[#303944] min-[375px]:text-[10.5px] min-[430px]:text-[11px] sm:mt-5 sm:text-[11px] md:text-xs lg:text-sm xl:text-base" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6 }}>
+            <motion.div
+              className="mt-4 max-w-[620px] space-y-3 text-[10px] leading-[1.7] text-[#303944] min-[375px]:text-[10.5px] min-[430px]:text-[11px] sm:mt-5 sm:text-[11px] md:text-xs lg:text-sm xl:text-base"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
               <p>{description}</p>
             </motion.div>
           </div>
@@ -137,7 +240,10 @@ export default function PuneVehicleForEveryBudget({
           <div className="relative flex w-full items-center justify-center lg:justify-end lg:overflow-visible">
             <motion.div
               className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[270px] w-[270px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl min-[375px]:h-[300px] min-[375px]:w-[300px] min-[430px]:h-[330px] min-[430px]:w-[330px] sm:h-[370px] sm:w-[370px] md:h-[430px] md:w-[430px] lg:h-[450px] lg:w-[450px] xl:h-[520px] xl:w-[520px] 2xl:h-[590px] 2xl:w-[590px]"
-              style={{ background: "radial-gradient(circle, rgba(3,195,94,0.38) 0%, rgba(3,195,94,0.20) 38%, rgba(3,195,94,0.08) 58%, rgba(3,195,94,0) 72%)" }}
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(3,195,94,0.38) 0%, rgba(3,195,94,0.20) 38%, rgba(3,195,94,0.08) 58%, rgba(3,195,94,0) 72%)",
+              }}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -147,14 +253,40 @@ export default function PuneVehicleForEveryBudget({
               className="relative z-10 w-[340px] max-w-none shrink-0 min-[375px]:w-[360px] min-[430px]:w-[390px] sm:w-[440px] md:w-[500px] lg:w-[540px] xl:w-[620px] 2xl:w-[700px] lg:-mr-[40px] xl:-mr-[55px] 2xl:-mr-[70px]"
               initial={{ scale: 0.7, opacity: 0, x: 50 }}
               animate={{ scale: 1, opacity: 1, x: 0 }}
-              transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.3 }}
+              transition={{
+                type: "spring",
+                damping: 15,
+                stiffness: 100,
+                delay: 0.3,
+              }}
             >
-              <motion.div whileHover={{ scale: 1.05, transition: { type: "spring", damping: 10, stiffness: 100 } }}>
-                <Image src={illustration} alt="Urban Cruise Vehicles" width={700} height={475} priority className="block h-auto w-full object-contain" />
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { type: "spring", damping: 10, stiffness: 100 },
+                }}
+              >
+                <div className="relative w-full aspect-[700/475]">
+                  <Image
+                    src={illustration}
+                    alt="Urban Cruise Vehicles"
+                    fill
+                    priority
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 700px"
+                    className="object-contain"
+                  />
+                </div>
               </motion.div>
 
               {trustBadges.map((badge, index) => (
-                <TrustBadge key={`${badge.label}-${index}`} icon={badge.icon} label={badge.label} label2={badge.label2} position={badge.position} delay={index * 0.3} />
+                <TrustBadge
+                  key={`${badge.label}-${index}`}
+                  icon={badge.icon}
+                  label={badge.label}
+                  label2={badge.label2}
+                  position={badge.position}
+                  delay={index * 0.3}
+                />
               ))}
             </motion.div>
           </div>
@@ -173,18 +305,44 @@ export default function PuneVehicleForEveryBudget({
               style={{ borderTop: `4px solid ${category.color}` }}
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ delay: 0.6 + index * 0.1, duration: 0.5, type: "spring", damping: 15, stiffness: 100 }}
-              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", damping: 10, stiffness: 100 } }}
+              transition={{
+                delay: 0.6 + index * 0.1,
+                duration: 0.5,
+                type: "spring",
+                damping: 15,
+                stiffness: 100,
+              }}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                transition: { type: "spring", damping: 10, stiffness: 100 },
+              }}
             >
               <motion.div
                 className="absolute left-1/2 top-0 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] bg-white transition-all duration-300 ease-out group-hover:scale-110 h-[74px] w-[74px] min-[375px]:h-[80px] min-[375px]:w-[80px] min-[430px]:h-[88px] min-[430px]:w-[88px] sm:h-[96px] sm:w-[96px] md:h-[104px] md:w-[104px] md:border-[4px] lg:h-[92px] lg:w-[92px] xl:h-[98px] xl:w-[98px] 2xl:h-[112px] 2xl:w-[112px]"
-                style={{ borderColor: category.color, boxShadow: `0 6px 18px ${category.color}22` }}
-                whileHover={{ scale: 1.15, rotate: [0, -5, 5, -5, 0], transition: { duration: 0.5, ease: "easeInOut" } }}
+                style={{
+                  borderColor: category.color,
+                  boxShadow: `0 6px 18px ${category.color}22`,
+                }}
+                whileHover={{
+                  scale: 1.15,
+                  rotate: [0, -5, 5, -5, 0],
+                  transition: { duration: 0.5, ease: "easeInOut" },
+                }}
               >
-                <Image src={category.icon} alt={`${category.title} vehicle`} width={100} height={100} className="object-contain transition-transform duration-500 ease-out group-hover:scale-110 h-[50px] w-[50px] min-[375px]:h-[56px] min-[375px]:w-[56px] min-[430px]:h-[64px] min-[430px]:w-[64px] sm:h-[72px] sm:w-[72px] md:h-[78px] md:w-[78px] lg:h-[62px] lg:w-[62px] xl:h-[68px] xl:w-[68px] 2xl:h-[90px] 2xl:w-[90px]" />
+                <Image
+                  src={category.icon}
+                  alt={`${category.title} vehicle`}
+                  width={100}
+                  height={100}
+                  className="object-contain transition-transform duration-500 ease-out group-hover:scale-110 h-[50px] w-[50px] min-[375px]:h-[56px] min-[375px]:w-[56px] min-[430px]:h-[64px] min-[430px]:w-[64px] sm:h-[72px] sm:w-[72px] md:h-[78px] md:w-[78px] lg:h-[62px] lg:w-[62px] xl:h-[68px] xl:w-[68px] 2xl:h-[90px] 2xl:w-[90px]"
+                />
               </motion.div>
 
-              <h3 className="mt-5 mb-2 text-[14px] font-black uppercase leading-tight tracking-[-0.02em] min-[430px]:text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] xl:text-[20px] 2xl:text-[22px]" style={{ color: category.color }}>
+              <h3
+                className="mt-5 mb-2 text-[14px] font-black uppercase leading-tight tracking-[-0.02em] min-[430px]:text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] xl:text-[20px] 2xl:text-[22px]"
+                style={{ color: category.color }}
+              >
                 {category.title}
               </h3>
 

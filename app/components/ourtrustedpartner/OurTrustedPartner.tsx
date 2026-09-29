@@ -7,6 +7,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 // ============================================================
 // TYPES
@@ -52,6 +53,8 @@ const FALLBACK_LOGOS: TrustedPartnerLogo[] = [
 // DESKTOP / TABLET COMPANY LOGO
 // ============================================================
 function CompanyLogo({ company }: { company: TrustedPartnerLogo }) {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <div
       className="
@@ -111,19 +114,26 @@ function CompanyLogo({ company }: { company: TrustedPartnerLogo }) {
           2xl:w-[170px]
         "
       >
-        <Image
-          src={company.logo}
-          alt={`${company.name} logo`}
-          fill
-          sizes="
-            (max-width: 640px) 110px,
-            (max-width: 768px) 125px,
-            (max-width: 1024px) 140px,
-            (max-width: 1280px) 150px,
-            170px
-          "
-          className="object-contain p-1 sm:p-1.5 md:p-2"
-        />
+        {imageError ? (
+          <span className="text-sm font-semibold text-slate-500">
+            {company.name}
+          </span>
+        ) : (
+          <Image
+            src={company.logo}
+            alt={`${company.name} logo`}
+            fill
+            sizes="
+              (max-width: 640px) 110px,
+              (max-width: 768px) 125px,
+              (max-width: 1024px) 140px,
+              (max-width: 1280px) 150px,
+              170px
+            "
+            className="object-contain p-1 sm:p-1.5 md:p-2"
+            onError={() => setImageError(true)}
+          />
+        )}
       </div>
     </div>
   );
@@ -133,6 +143,8 @@ function CompanyLogo({ company }: { company: TrustedPartnerLogo }) {
 // MOBILE COMPANY LOGO
 // ============================================================
 function MobileCompanyLogo({ company }: { company: TrustedPartnerLogo }) {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <div
       className="
@@ -170,17 +182,24 @@ function MobileCompanyLogo({ company }: { company: TrustedPartnerLogo }) {
           min-[430px]:w-[112px]
         "
       >
-        <Image
-          src={company.logo}
-          alt={`${company.name} logo`}
-          fill
-          sizes="
-            (max-width: 374px) 92px,
-            (max-width: 429px) 102px,
-            112px
-          "
-          className="object-contain p-1"
-        />
+        {imageError ? (
+          <span className="text-xs font-semibold text-slate-500">
+            {company.name}
+          </span>
+        ) : (
+          <Image
+            src={company.logo}
+            alt={`${company.name} logo`}
+            fill
+            sizes="
+              (max-width: 374px) 92px,
+              (max-width: 429px) 102px,
+              112px
+            "
+            className="object-contain p-1"
+            onError={() => setImageError(true)}
+          />
+        )}
       </div>
     </div>
   );
@@ -196,10 +215,8 @@ function DesktopSliderRow({
   items: TrustedPartnerLogo[];
   reverse?: boolean;
 }) {
-  // Duplicate the logos for a seamless loop
   const sliderItems = [...items, ...items];
 
-  // Guard: empty list would break the loop
   if (sliderItems.length === 0) return null;
 
   return (
@@ -263,12 +280,49 @@ function MobileSliderRow({
 }
 
 // ============================================================
+// SKYLINE BACKGROUND — renders only if the file exists
+// ============================================================
+function SkylineBackground() {
+  const [missing, setMissing] = useState(false);
+
+  if (missing) return null;
+
+  return (
+    <div
+      className="
+        absolute
+        bottom-[190px]
+        left-0
+        h-[90px]
+        w-full
+        bg-contain
+        bg-bottom
+        bg-no-repeat
+        opacity-[0.10]
+
+        sm:bottom-[210px]
+        sm:h-[110px]
+
+        md:bottom-[230px]
+        md:h-[130px]
+
+        lg:bottom-[260px]
+        lg:h-[170px]
+      "
+      // style={{
+      //   backgroundImage: "url('/images/trusted-partners/india-skyline.webp')",
+      // }}
+      onError={() => setMissing(true)}
+    />
+  );
+}
+
+// ============================================================
 // MAIN COMPONENT
 // ============================================================
 export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
   const cms: TrustedPartnerContent = content || {};
 
-  // ----- Text (CMS with fallback) -----
   const eyebrow = cms.eyebrow || "Our Trusted Partners";
   const title = cms.title || "Trusted by";
   const titleHighlight = cms.titleHighlight || "100+ Companies";
@@ -277,11 +331,9 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
     cms.description ||
     "We are proud to be the preferred travel partner for leading businesses across India. Our commitment to excellence and reliability has earned us the trust of over 100 companies nationwide.";
 
-  // ----- Logos (CMS with fallback) -----
   const logos: TrustedPartnerLogo[] =
     cms.logos && cms.logos.length > 0 ? cms.logos : FALLBACK_LOGOS;
 
-  // Split logos into two rows (only if enough for two rows)
   const hasEnoughForTwoRows = logos.length >= 2;
   const mid = Math.ceil(logos.length / 2);
   const rowOne = hasEnoughForTwoRows ? logos.slice(0, mid) : logos;
@@ -310,7 +362,6 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
           BACKGROUND
       ===================================================== */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Soft Green Glow */}
         <div
           className="
             absolute
@@ -335,32 +386,7 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
           "
         />
 
-        {/* Skyline */}
-        <div
-          className="
-            absolute
-            bottom-[190px]
-            left-0
-            h-[90px]
-            w-full
-            bg-contain
-            bg-bottom
-            bg-no-repeat
-            opacity-[0.10]
-
-            sm:bottom-[210px]
-            sm:h-[110px]
-
-            md:bottom-[230px]
-            md:h-[130px]
-
-            lg:bottom-[260px]
-            lg:h-[170px]
-          "
-          style={{
-            backgroundImage: "url('/images/trusted-partners/india-skyline.webp')",
-          }}
-        />
+        <SkylineBackground />
       </div>
 
       {/* =====================================================

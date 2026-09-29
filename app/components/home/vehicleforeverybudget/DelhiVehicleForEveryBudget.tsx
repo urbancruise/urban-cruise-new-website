@@ -135,10 +135,7 @@ function TrustBadge({
       whileHover="hover"
       whileTap="tap"
     >
-      <motion.div
-        className="flex items-center gap-2"
-        style={{ transform: "none" }}
-      >
+      <motion.div className="flex items-center gap-2" style={{ transform: "none" }}>
         <div className="flex h-6 w-6 shrink-0 items-center justify-center min-[430px]:h-7 min-[430px]:w-7 sm:h-8 sm:w-8 lg:h-7 lg:w-7 xl:h-8 xl:w-8 2xl:h-6 2xl:w-6">
           {icon}
         </div>
@@ -159,7 +156,6 @@ export default function DelhiVehicleForEveryBudget({
 }: {
   content?: BudgetContent | null;
 }) {
-  // CMS overrides
   const eyebrow = content?.eyebrow ?? "We Offer Best Services";
   const title = content?.title ?? "A VEHICLE FOR";
   const titleHighlight = content?.titleHighlight ?? "EVERY BUDGET";
@@ -171,7 +167,6 @@ export default function DelhiVehicleForEveryBudget({
   const illustration =
     content?.illustration ?? "/images/vehicleforeverybudget/5.webp";
 
-  // Categories
   const categories =
     content?.categories && content.categories.length > 0
       ? content.categories.map((c, i) => ({
@@ -188,7 +183,6 @@ export default function DelhiVehicleForEveryBudget({
         }))
       : DEFAULT_CATEGORIES;
 
-  // Trust badges (keeps your original icons)
   const trustBadges =
     content?.trustBadges && content.trustBadges.length > 0
       ? content.trustBadges.map((b, i) => ({
@@ -282,14 +276,20 @@ export default function DelhiVehicleForEveryBudget({
                   transition: { type: "spring", damping: 10, stiffness: 100 },
                 }}
               >
-                <Image
-                  src={illustration}
-                  alt="Urban Cruise Vehicles"
-                  width={700}
-                  height={475}
-                  priority
-                  className="block h-auto w-full object-contain"
-                />
+                {/* ============================================================
+                    FIX: wrap in aspect-ratio container + fill so Next.js
+                    does not warn about modified width/height.
+                ============================================================ */}
+                <div className="relative w-full aspect-[700/475]">
+                  <Image
+                    src={illustration}
+                    alt="Urban Cruise Vehicles"
+                    fill
+                    priority
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 700px"
+                    className="object-contain"
+                  />
+                </div>
               </motion.div>
 
               {trustBadges.map((badge, index) => (
@@ -333,7 +333,6 @@ export default function DelhiVehicleForEveryBudget({
                 transition: { type: "spring", damping: 10, stiffness: 100 },
               }}
             >
-              {/* ICON CIRCLE */}
               <motion.div
                 className="absolute left-1/2 top-0 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] bg-white transition-all duration-300 ease-out group-hover:scale-110 h-[74px] w-[74px] min-[375px]:h-[80px] min-[375px]:w-[80px] min-[430px]:h-[88px] min-[430px]:w-[88px] sm:h-[96px] sm:w-[96px] md:h-[104px] md:w-[104px] md:border-[4px] lg:h-[92px] lg:w-[92px] xl:h-[98px] xl:w-[98px] 2xl:h-[112px] 2xl:w-[112px]"
                 style={{

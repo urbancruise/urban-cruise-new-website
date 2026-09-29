@@ -1,4 +1,3 @@
-
 /* eslint-disable react/no-unescaped-entities */
 // ============================================================
 // Pune — Vehicle For Every Occasion
@@ -6,7 +5,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FaBriefcase,
   FaCheck,
@@ -27,6 +26,9 @@ import type {
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
 
+// ============================================================
+// ICON RESOLVER
+// ============================================================
 function resolveIcon(key?: string): React.ReactNode {
   switch (key) {
     case "wedding":
@@ -44,6 +46,9 @@ function resolveIcon(key?: string): React.ReactNode {
   }
 }
 
+// ============================================================
+// FALLBACK DATA
+// ============================================================
 const FALLBACK_TABS: OccasionTab[] = [
   {
     id: "wedding",
@@ -178,6 +183,36 @@ const FALLBACK_TABS: OccasionTab[] = [
   },
 ];
 
+// ============================================================
+// SANITIZE TABS
+// ============================================================
+function sanitizeTabs(source: OccasionTab[]): OccasionTab[] {
+  const seen = new Set<string>();
+  return source.map((tab, i) => {
+    const fallbackLabel =
+      tab.label && tab.label.trim().length > 0
+        ? tab.label
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "")
+        : `tab-${i}`;
+    const base =
+      tab.id && tab.id.trim().length > 0 ? tab.id : fallbackLabel || `tab-${i}`;
+
+    let id = base;
+    let n = 1;
+    while (seen.has(id)) {
+      id = `${base}-${n++}`;
+    }
+    seen.add(id);
+
+    return { ...tab, id };
+  });
+}
+
+// ============================================================
+// CURVED LOGO SHAPE
+// ============================================================
 type CurvedShapeLogoProps = {
   width?: number;
   height?: number;
@@ -236,6 +271,9 @@ function CurvedShapeLogo({
   );
 }
 
+// ============================================================
+// TABS
+// ============================================================
 function OccasionTabs({
   tabs,
   activeIndex,
@@ -361,7 +399,7 @@ function OccasionTabs({
           const active = activeIndex === index;
           return (
             <button
-              key={tab.id}
+              key={`${tab.id}-${index}`}
               type="button"
               onClick={() => onChange(index)}
               className={`group flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-[9px] font-bold transition-all duration-300 sm:px-5 sm:py-3 sm:text-[10px] md:px-6 md:text-[11px] ${
@@ -402,6 +440,9 @@ function OccasionTabs({
   );
 }
 
+// ============================================================
+// SMALL BADGE
+// ============================================================
 function SmallBadge({
   children,
   icon,
@@ -419,6 +460,9 @@ function SmallBadge({
   );
 }
 
+// ============================================================
+// FEATURE ITEM
+// ============================================================
 function FeatureItem({ text }: { text: string }) {
   return (
     <div className="flex items-center gap-1.5 rounded-full border border-[#B9DEBF] bg-white px-2.5 py-1.5 text-[8px] font-semibold text-[#344054] sm:px-3 sm:py-2 sm:text-[9px] md:text-[10px]">
@@ -430,6 +474,9 @@ function FeatureItem({ text }: { text: string }) {
   );
 }
 
+// ============================================================
+// FEATURED CARD
+// ============================================================
 function FeaturedOccasionCard({
   card,
   direction,
@@ -540,6 +587,9 @@ function FeaturedOccasionCard({
   );
 }
 
+// ============================================================
+// MAIN
+// ============================================================
 export default function PuneVehicleForEveryOccasion({
   content,
 }: VehicleForEveryOccasionProps) {
@@ -554,8 +604,10 @@ export default function PuneVehicleForEveryOccasion({
     cms.description ||
     "Hire Tempo Traveller rent in Pune for every occasion—weddings, pilgrimages, trips, corporate events, tours, and Pune Darshan. Comfortable, affordable travel for groups of all sizes.";
 
-  const tabs: OccasionTab[] =
-    cms.tabs && cms.tabs.length > 0 ? cms.tabs : FALLBACK_TABS;
+  const tabs: OccasionTab[] = useMemo(() => {
+    const source = cms.tabs && cms.tabs.length > 0 ? cms.tabs : FALLBACK_TABS;
+    return sanitizeTabs(source);
+  }, [cms.tabs]);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -604,7 +656,9 @@ export default function PuneVehicleForEveryOccasion({
     };
   }, [safeActiveIndex, currentCards.length]);
 
-  if (!currentCard) return null;
+  if (!currentCard) {
+    return null;
+  }
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:py-20">

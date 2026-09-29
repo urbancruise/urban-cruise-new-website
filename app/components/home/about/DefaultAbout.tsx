@@ -1,10 +1,10 @@
-
 "use client";
 
 import { BsFillBusFrontFill } from "react-icons/bs";
-import { FaHeadset, FaCarSide, FaBus, FaCar, FaBusAlt } from "react-icons/fa";
+import { FaHeadset, FaCar, FaBus, FaBusAlt } from "react-icons/fa";
 import { IoCarSport } from "react-icons/io5";
 import type { AboutContent } from "../../AboutSelector";
+import { toYouTubeEmbedUrl } from "@/app/lib/youtube";
 
 const fleet = [
   { icon: IoCarSport, label: "Cars" },
@@ -21,16 +21,21 @@ const DEFAULT_PARAGRAPHS = [
   "Our mission is simple: to deliver the best travel experience at the best price with 24x7 customer support and professional drivers.",
 ];
 
+const FALLBACK_VIDEO = "https://www.youtube.com/embed/yrUUVpiBL_Y";
+
 interface AboutProps {
   content?: AboutContent | null;
 }
 
 export default function DefaultAbout({ content }: AboutProps) {
-  // CMS values with fallbacks
   const eyebrow = content?.eyebrow ?? "About Us";
   const title = content?.title ?? "URBAN CRUISE";
   const tagline = content?.tagline ?? "Your Journey, Our Passion";
-  const videoUrl = content?.videoUrl ?? "https://www.youtube.com/embed/yrUUVpiBL_Y";
+
+  const rawVideoUrl = content?.videoUrl?.trim();
+  const normalizedFromCms = rawVideoUrl ? toYouTubeEmbedUrl(rawVideoUrl) : null;
+  const videoUrl = normalizedFromCms ?? FALLBACK_VIDEO;
+
   const paragraphs = content?.paragraphs?.length
     ? content.paragraphs
     : DEFAULT_PARAGRAPHS;
@@ -39,9 +44,7 @@ export default function DefaultAbout({ content }: AboutProps) {
     <section className="relative w-full overflow-hidden bg-white py-12 xs:py-14 sm:py-16 md:py-20 lg:py-24 xl:py-28">
       <div className="relative mx-auto w-full max-w-[1440px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
         <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 xl:gap-16">
-          {/* LEFT CONTENT */}
           <div className="relative z-10 mx-auto w-full max-w-[650px] lg:mx-0">
-            {/* EYEBROW */}
             <div className="mb-4 flex w-full items-center justify-center gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3 lg:justify-start">
               <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
               <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[9px] sm:text-[9px] sm:tracking-[0.2em] md:text-[10px] lg:text-[11px] lg:tracking-[0.25em] xl:text-xs">
@@ -50,17 +53,14 @@ export default function DefaultAbout({ content }: AboutProps) {
               <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
             </div>
 
-            {/* TITLE */}
             <h2 className="text-[24px] xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
               {title}
             </h2>
 
-            {/* TAGLINE */}
             <p className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
               {tagline}
             </p>
 
-            {/* PARAGRAPHS */}
             <div className="mt-5 max-w-[590px] space-y-3 xs:space-y-4 leading-[1.75] text-[#303944] text-[10px] xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
               {paragraphs.map((text, i) => (
                 <p key={i}>{text}</p>
@@ -68,20 +68,26 @@ export default function DefaultAbout({ content }: AboutProps) {
             </div>
           </div>
 
-          {/* RIGHT VIDEO AREA */}
           <div className="relative z-10 w-full pt-2 sm:pt-3 lg:pt-0">
             <div className="relative z-0 ml-auto aspect-[1.65/1] w-full overflow-hidden rounded-[20px] shadow-[0_18px_50px_rgba(0,0,0,0.12)] sm:rounded-[24px] md:rounded-[26px] lg:w-[96%] xl:w-full">
-              <iframe
-                src={videoUrl}
-                title="Urban Cruise - Bus Rental Services"
-                className="absolute inset-0 h-full w-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+              {videoUrl ? (
+                <iframe
+                  src={videoUrl}
+                  title="Urban Cruise - Bus Rental Services"
+                  className="absolute inset-0 h-full w-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  loading="lazy"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-100 text-slate-400 text-sm">
+                  Video unavailable
+                </div>
+              )}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
             </div>
 
-            {/* 24x7 CARD */}
             <div className="relative z-20 mt-[-38px] ml-3 flex h-[118px] w-[155px] flex-col items-center justify-center rounded-[18px] bg-[#03C35E] px-3 py-4 text-center shadow-[0_14px_35px_rgba(3,195,94,0.28)] xs:h-[125px] xs:w-[160px] sm:absolute sm:bottom-[-5px] sm:left-[-16px] sm:ml-0 sm:mt-0 sm:h-[130px] sm:w-[165px] md:h-[140px] md:w-[175px] lg:left-[-24px] xl:left-[-28px]">
               <div className="mb-1.5 flex h-9 w-9 items-center justify-center text-white sm:mb-2 sm:h-10 sm:w-10">
                 <FaHeadset className="text-[27px] sm:text-[30px]" />
@@ -96,7 +102,6 @@ export default function DefaultAbout({ content }: AboutProps) {
               </p>
             </div>
 
-            {/* FLEET CARD */}
             <div className="relative z-30 mt-4 ml-auto flex w-[94%] max-w-[540px] items-center gap-3 rounded-[18px] border border-gray-100 bg-white px-3 py-3.5 shadow-[0_12px_35px_rgba(0,0,0,0.10)] xs:gap-4 xs:px-4 xs:py-4 sm:absolute sm:bottom-[-48px] sm:right-[3%] sm:mt-0 sm:w-[82%] sm:max-w-[560px] sm:px-5 sm:py-5 md:right-[2%] lg:right-0 lg:w-[80%] xl:w-[78%]">
               <div className="flex shrink-0 items-center -space-x-2 xs:-space-x-2.5 sm:-space-x-2.5">
                 {fleet.map(({ icon: Icon, label }) => (

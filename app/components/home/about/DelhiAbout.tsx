@@ -1,10 +1,10 @@
-
 "use client";
 
 import { BsFillBusFrontFill } from "react-icons/bs";
-import { FaHeadset, FaCarSide, FaBus, FaCar, FaBusAlt } from "react-icons/fa";
+import { FaHeadset, FaCar, FaBus, FaBusAlt } from "react-icons/fa";
 import { IoCarSport } from "react-icons/io5";
 import type { AboutContent } from "../../AboutSelector";
+import { toYouTubeEmbedUrl } from "@/app/lib/youtube";
 
 const fleet = [
   { icon: IoCarSport, label: "Cars" },
@@ -21,6 +21,8 @@ const DEFAULT_PARAGRAPHS = [
   "Our mission is simple: to deliver the best travel experience at the best price with 24x7 customer support and professional drivers.",
 ];
 
+const FALLBACK_VIDEO = "https://www.youtube.com/embed/yrUUVpiBL_Y";
+
 interface AboutProps {
   content?: AboutContent | null;
 }
@@ -29,7 +31,12 @@ export default function DelhiAbout({ content }: AboutProps) {
   const eyebrow = content?.eyebrow ?? "About Us";
   const title = content?.title ?? "URBAN CRUISE";
   const tagline = content?.tagline ?? "Your Journey, Our Passion";
-  const videoUrl = content?.videoUrl ?? "https://www.youtube.com/embed/yrUUVpiBL_Y";
+
+  // Normalize CMS URL into a valid embed URL
+  const rawVideoUrl = content?.videoUrl?.trim();
+  const normalizedFromCms = rawVideoUrl ? toYouTubeEmbedUrl(rawVideoUrl) : null;
+  const videoUrl = normalizedFromCms ?? FALLBACK_VIDEO;
+
   const paragraphs = content?.paragraphs?.length
     ? content.paragraphs
     : DEFAULT_PARAGRAPHS;
@@ -66,13 +73,21 @@ export default function DelhiAbout({ content }: AboutProps) {
           {/* RIGHT VIDEO AREA */}
           <div className="relative z-10 w-full pt-2 sm:pt-3 lg:pt-0">
             <div className="relative z-0 ml-auto aspect-[1.65/1] w-full overflow-hidden rounded-[20px] shadow-[0_18px_50px_rgba(0,0,0,0.12)] sm:rounded-[24px] md:rounded-[26px] lg:w-[96%] xl:w-full">
-              <iframe
-                src={videoUrl}
-                title="Urban Cruise - Bus Rental Services"
-                className="absolute inset-0 h-full w-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+              {videoUrl ? (
+                <iframe
+                  src={videoUrl}
+                  title="Urban Cruise - Bus Rental Services"
+                  className="absolute inset-0 h-full w-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  loading="lazy"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-100 text-slate-400 text-sm">
+                  Video unavailable
+                </div>
+              )}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
             </div>
 
