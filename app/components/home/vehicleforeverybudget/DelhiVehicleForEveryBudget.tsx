@@ -64,6 +64,49 @@ const DEFAULT_TRUST_BADGES = [
 ];
 
 // ============================================================
+// NORMALIZE CATEGORIES
+// Accepts both `content.categories` and `content.items` (legacy).
+// ============================================================
+function normalizeCategories(content: any) {
+  // ✅ Try `categories` first, then `items`
+  const rawList = Array.isArray(content?.categories)
+    ? content.categories
+    : Array.isArray(content?.items)
+      ? content.items
+      : [];
+
+  if (rawList.length === 0) return DEFAULT_CATEGORIES;
+
+  const normalized = rawList
+    .map((c: any, i: number) => {
+      const fallback = DEFAULT_CATEGORIES[i % DEFAULT_CATEGORIES.length];
+      const title = c?.title?.trim() || "";
+      const description = c?.description?.trim() || "";
+      const icon = c?.icon || "";
+      const colorRaw = c?.color;
+      const color =
+        colorRaw === "orange" || colorRaw === ORANGE
+          ? ORANGE
+          : colorRaw === "green" || colorRaw === GREEN
+            ? GREEN
+            : fallback.color;
+
+      // Skip completely empty entries
+      if (!title && !description && !icon) return null;
+
+      return {
+        title: title || fallback.title,
+        description: description || fallback.description,
+        icon: icon || fallback.icon,
+        color,
+      };
+    })
+    .filter(Boolean) as typeof DEFAULT_CATEGORIES;
+
+  return normalized.length > 0 ? normalized : DEFAULT_CATEGORIES;
+}
+
+// ============================================================
 // TRUST BADGE
 // ============================================================
 function TrustBadge({
@@ -167,21 +210,8 @@ export default function DelhiVehicleForEveryBudget({
   const illustration =
     content?.illustration ?? "/images/vehicleforeverybudget/5.webp";
 
-  const categories =
-    content?.categories && content.categories.length > 0
-      ? content.categories.map((c, i) => ({
-          title: c.title ?? DEFAULT_CATEGORIES[i]?.title ?? "",
-          description:
-            c.description ?? DEFAULT_CATEGORIES[i]?.description ?? "",
-          icon: c.icon ?? DEFAULT_CATEGORIES[i]?.icon ?? "",
-          color:
-            c.color === "orange" || c.color === ORANGE
-              ? ORANGE
-              : c.color === "green" || c.color === GREEN
-                ? GREEN
-                : DEFAULT_CATEGORIES[i]?.color ?? GREEN,
-        }))
-      : DEFAULT_CATEGORIES;
+  // ✅ Accept both `categories` and `items`
+  const categories = normalizeCategories(content);
 
   const trustBadges =
     content?.trustBadges && content.trustBadges.length > 0
@@ -276,10 +306,6 @@ export default function DelhiVehicleForEveryBudget({
                   transition: { type: "spring", damping: 10, stiffness: 100 },
                 }}
               >
-                {/* ============================================================
-                    FIX: wrap in aspect-ratio container + fill so Next.js
-                    does not warn about modified width/height.
-                ============================================================ */}
                 <div className="relative w-full aspect-[700/475]">
                   <Image
                     src={illustration}
@@ -306,7 +332,9 @@ export default function DelhiVehicleForEveryBudget({
           </div>
         </motion.div>
 
-        {/* CATEGORIES GRID */}
+        {/* =========================================================
+            CATEGORIES GRID
+        ========================================================= */}
         <motion.div
           className="grid w-full grid-cols-1 gap-y-8 min-[375px]:gap-y-9 min-[430px]:gap-y-10 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-9 md:grid-cols-2 md:gap-x-6 md:gap-y-10 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-0 xl:grid-cols-4 xl:gap-x-7 2xl:grid-cols-4 2xl:gap-x-9"
           initial={{ opacity: 0, y: 30 }}

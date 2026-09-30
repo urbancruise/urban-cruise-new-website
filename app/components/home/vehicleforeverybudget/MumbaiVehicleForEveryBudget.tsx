@@ -59,6 +59,49 @@ const DEFAULT_TRUST_BADGES = [
   },
 ];
 
+// ============================================================
+// NORMALIZE CATEGORIES
+// Accepts both `content.categories` and `content.items` (legacy).
+// ============================================================
+function normalizeCategories(content: any) {
+  // ✅ Try `categories` first, then `items`
+  const rawList = Array.isArray(content?.categories)
+    ? content.categories
+    : Array.isArray(content?.items)
+      ? content.items
+      : [];
+
+  if (rawList.length === 0) return DEFAULT_CATEGORIES;
+
+  const normalized = rawList
+    .map((c: any, i: number) => {
+      const fallback = DEFAULT_CATEGORIES[i % DEFAULT_CATEGORIES.length];
+      const title = c?.title?.trim() || "";
+      const description = c?.description?.trim() || "";
+      const icon = c?.icon || "";
+      const colorRaw = c?.color;
+      const color =
+        colorRaw === "orange" || colorRaw === ORANGE
+          ? ORANGE
+          : colorRaw === "green" || colorRaw === GREEN
+            ? GREEN
+            : fallback.color;
+
+      // Skip completely empty entries
+      if (!title && !description && !icon) return null;
+
+      return {
+        title: title || fallback.title,
+        description: description || fallback.description,
+        icon: icon || fallback.icon,
+        color,
+      };
+    })
+    .filter(Boolean) as typeof DEFAULT_CATEGORIES;
+
+  return normalized.length > 0 ? normalized : DEFAULT_CATEGORIES;
+}
+
 function TrustBadge({
   icon,
   label,
@@ -157,21 +200,7 @@ export default function MumbaiVehicleForEveryBudget({
   const illustration =
     content?.illustration ?? "/images/vehicleforeverybudget/5.webp";
 
-  const categories =
-    content?.categories && content.categories.length > 0
-      ? content.categories.map((c, i) => ({
-          title: c.title ?? DEFAULT_CATEGORIES[i]?.title ?? "",
-          description:
-            c.description ?? DEFAULT_CATEGORIES[i]?.description ?? "",
-          icon: c.icon ?? DEFAULT_CATEGORIES[i]?.icon ?? "",
-          color:
-            c.color === "orange" || c.color === ORANGE
-              ? ORANGE
-              : c.color === "green" || c.color === GREEN
-                ? GREEN
-                : DEFAULT_CATEGORIES[i]?.color ?? GREEN,
-        }))
-      : DEFAULT_CATEGORIES;
+  const categories = normalizeCategories(content);
 
   const trustBadges =
     content?.trustBadges && content.trustBadges.length > 0

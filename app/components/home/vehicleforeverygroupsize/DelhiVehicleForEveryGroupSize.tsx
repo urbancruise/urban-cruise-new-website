@@ -129,22 +129,62 @@ const FALLBACK_VEHICLES: VehicleGroupSizeItem[] = [
 // ============================================================
 function normalizeVehicle(raw: any, index: number): VehicleGroupSizeItem {
   const fallback = FALLBACK_VEHICLES[index % FALLBACK_VEHICLES.length];
+
+  // ✅ Accept `gallery` OR legacy `images` field
+  const gallery = Array.isArray(raw?.gallery) && raw.gallery.length > 0
+    ? raw.gallery
+    : Array.isArray(raw?.images) && raw.images.length > 0
+      ? raw.images
+      : fallback.gallery;
+
+  // ✅ Build features: prefer CMS features, else derive from `seats` field
+  let features: Array<{ label: string; color: string }> = [];
+  if (Array.isArray(raw?.features) && raw.features.length > 0) {
+    features = raw.features
+      .filter((f: any) => f && (f.label || f.name))
+      .map((f: any) => ({
+        label: String(f.label || f.name || "").trim(),
+        color: f.color || "#03C35E",
+      }))
+      .filter((f: any) => f.label.length > 0);
+  }
+
+  // If CMS gave us a `seats` chip but no features, synthesize the
+  // standard 5-chip set from static defaults and inject the seats label
+  if (features.length === 0) {
+    features = fallback.features.map((f) => ({ ...f }));
+    if (raw?.seats && raw.seats.trim()) {
+      features[0] = { ...features[0], label: raw.seats.trim() };
+    }
+  }
+
+  // Resolve main image — accept `mainImage` OR first gallery image
+  const mainImage =
+    raw?.mainImage ||
+    (Array.isArray(gallery) && gallery[0]?.url) ||
+    (typeof gallery?.[0] === "string" ? gallery[0] : null) ||
+    fallback.mainImage;
+
+  // Normalize gallery entries into `{ url, publicId }` shape if they're objects
+  const normalizedGallery = Array.isArray(gallery)
+    ? gallery
+        .map((g: any) =>
+          typeof g === "string"
+            ? { url: g, publicId: "" }
+            : { url: g?.url || "", publicId: g?.publicId || "" }
+        )
+        .filter((g: any) => g.url)
+    : [];
+
   return {
-    type: raw?.type || fallback.type,
+    type: raw?.type ?? fallback.type,
     name: raw?.name?.trim() || fallback.name,
     tagline: raw?.tagline?.trim() || fallback.tagline,
-    price: String(raw?.price ?? fallback.price),
+    price: raw?.price != null ? String(raw.price) : fallback.price,
     description: raw?.description?.trim() || fallback.description,
-    mainImage: raw?.mainImage || fallback.mainImage,
-    gallery: Array.isArray(raw?.gallery) ? raw.gallery : fallback.gallery,
-    features: Array.isArray(raw?.features)
-      ? raw.features
-          .filter((f: any) => f && (f.label || f.name))
-          .map((f: any) => ({
-            label: String(f.label || f.name || ""),
-            color: f.color || GREEN,
-          }))
-      : fallback.features,
+    mainImage,
+    gallery: normalizedGallery.length > 0 ? normalizedGallery.map((g: any) => g.url) : fallback.gallery,
+    features,
   };
 }
 

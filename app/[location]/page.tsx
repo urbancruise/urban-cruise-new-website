@@ -98,6 +98,8 @@ export default async function LocationHome({ params }: PageProps) {
   if (process.env.NODE_ENV === "development") {
     console.log(`[${location}] CMS section keys:`, Object.keys(sections));
     console.log(`[${location}] hero present:`, !!sections.hero);
+    console.log(`[${location}] vehiclebudget value:`, sections.vehiclebudget);
+    console.log(`[${location}] howitworks value:`, sections.howitworks);
   }
 
   return (
