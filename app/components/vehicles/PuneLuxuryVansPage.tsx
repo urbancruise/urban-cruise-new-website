@@ -3,10 +3,15 @@
 
 import LuxuryVans from "./luxury-cars-suvs-vans/pune/LuxuryVans";
 
-export default function PuneLuxuryVansPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function PuneLuxuryVansPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <LuxuryVans />
+      <LuxuryVans cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

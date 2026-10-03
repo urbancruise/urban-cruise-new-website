@@ -3,11 +3,15 @@
 
 import BusWithWashroom from "./luxury-buses/pune/BusWithWashroom";
 
-export default function PuneBusWithWashroomPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function PuneBusWithWashroomPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <BusWithWashroom />
+      <BusWithWashroom cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

@@ -3,10 +3,15 @@
 
 import Hycross from "./cars-suvs/pune/Hycross";
 
-export default function PuneHycrossPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function PuneHycrossPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <Hycross />
+      <Hycross cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

@@ -1,7 +1,5 @@
 // ============================================================
 // VehicleSelector — Location-aware vehicle page dispatcher.
-// Passes CMS content (meta + sections) to the correct city
-// component. Falls back to static components when empty.
 // ============================================================
 "use client";
 
@@ -142,14 +140,12 @@ const PuneSleeperBusPage = dynamic(() => import("./vehicles/PuneSleeperBusPage")
 // ======================================================
 export interface VehicleSelectorProps {
   vehicleType: string;
-  /** Optional CMS overrides for the vehicle hero/meta block */
   cmsMeta?: Record<string, any> | null;
-  /** Optional CMS overrides for content sections */
   cmsSections?: Record<string, any> | null;
 }
 
 // ======================================================
-// FALLBACK COMPONENT
+// FALLBACK
 // ======================================================
 function VehicleComingSoon() {
   return (
@@ -255,8 +251,8 @@ export default function VehicleSelector({
   const VehicleComponent =
     vehicleMap[location]?.[vehicleType] || VehicleComingSoon;
 
-  // Forward CMS props to the underlying page component.
-  // Page components that don't accept them simply ignore them.
+  // ✅ Forward CMS data to the page wrapper, which will
+  //    pass it down to each section.
   return (
     <VehicleComponent
       cmsMeta={cmsMeta ?? null}

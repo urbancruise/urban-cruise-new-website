@@ -3,11 +3,15 @@
 
 import LuxuryCarsSuvs from "./luxury-cars-suvs-vans/gurugram/LuxuryCarsSuvs";
 
-export default function GurugramLuxuryCarsSuvsPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function GurugramLuxuryCarsSuvsPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <LuxuryCarsSuvs />
+      <LuxuryCarsSuvs cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

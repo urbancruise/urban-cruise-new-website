@@ -1,4 +1,4 @@
-// components/vehicles/luxury-cars-suvs-vans/delhi/ui/PricesCharges.tsx
+// app/components/vehicles/tempo-travellers/delhi/ui/PriceBookingCharges.tsx
 
 "use client";
 
@@ -9,35 +9,60 @@ import {
   FaBus,
   FaTag,
   FaCalendarAlt,
-  FaCheckCircle,
-  FaUserTie,
-  FaStar,
-  FaHeadset,
+  FaUsers,
   FaArrowRight,
 } from "react-icons/fa";
 
 /* =========================================================
    COLORS
 ========================================================= */
-
 const GREEN = "#188A31";
 const LIGHT_GREEN = "#03C35E";
 const ORANGE = "#F7941E";
 const DARK = "#142236";
 
 /* =========================================================
-   VEHICLE DATA
+   TYPES
 ========================================================= */
+interface PriceRow {
+  id?: number;
+  seater: string;
+  model?: string;
+  type?: string;
+  price: string;
+  seating?: string;
+  image: string;
+  bookLabel?: string;
+  bookLink?: string;
+}
 
-const vehicles = [
+interface PriceContent {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  illustration?: string;
+  col1Header?: string;
+  col2Header?: string;
+  col3Header?: string;
+  rows?: PriceRow[];
+}
+
+interface Props {
+  content?: PriceContent | null;
+}
+
+/* =========================================================
+   FALLBACK DATA (used when CMS content is empty)
+========================================================= */
+const FALLBACK_ROWS: PriceRow[] = [
   {
     id: 1,
     seater: "9 Seater",
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "21",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
   {
     id: 2,
@@ -45,8 +70,7 @@ const vehicles = [
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "22",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
   {
     id: 3,
@@ -54,8 +78,7 @@ const vehicles = [
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "18",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
   {
     id: 4,
@@ -63,8 +86,7 @@ const vehicles = [
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "22",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
   {
     id: 5,
@@ -72,8 +94,7 @@ const vehicles = [
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "22",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
   {
     id: 6,
@@ -81,8 +102,7 @@ const vehicles = [
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "22",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
   {
     id: 7,
@@ -90,8 +110,7 @@ const vehicles = [
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "27",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
   {
     id: 8,
@@ -99,66 +118,50 @@ const vehicles = [
     model: "Tempo Traveller",
     type: "Tempo Traveller",
     price: "27",
-    image:
-      "/images/downloadapp/forceurbania.png",
+    image: "/images/downloadapp/forceurbania.png",
   },
 ];
 
 /* =========================================================
+   HELPERS — normalize CMS rows into a predictable shape
+========================================================= */
+function normalizeRow(cms: any, index: number): PriceRow {
+  const fallback = FALLBACK_ROWS[index] ?? FALLBACK_ROWS[0];
+  return {
+    id: cms?.id ?? index + 1,
+    seater: cms?.seats || cms?.seater || fallback.seater,
+    model: cms?.subLabel || cms?.model || fallback.model,
+    type: cms?.type || cms?.subLabel || fallback.type,
+    price: String(cms?.price ?? fallback.price).replace(/^₹/, "").trim(),
+    seating: cms?.seating || cms?.subLabel || fallback.seating,
+    image: cms?.image || fallback.image,
+    bookLabel: cms?.bookLabel || "Book Now",
+    bookLink: cms?.bookLink || "",
+  };
+}
+
+/* =========================================================
    BOOK NOW BUTTON
 ========================================================= */
-
-function BookNowButton() {
+function BookNowButton({ label = "Book Now" }: { label?: string }) {
   return (
     <motion.button
       type="button"
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.96 }}
       className="
-        group
-        inline-flex
-        h-[40px]
-        min-w-[126px]
-        items-center
-        justify-between
-        gap-2
-        rounded-full
-        bg-[#188A31]
-        pl-5
-        pr-1.5
-        text-sm
-        font-bold
-        text-white
-        shadow-sm
-        transition-all
-        duration-300
-        hover:bg-[#116d25]
-        hover:shadow-md
-        sm:h-[42px]
-        sm:min-w-[132px]
-        sm:text-[13px]
-        md:h-[44px]
-        md:min-w-[138px]
+        group inline-flex h-[40px] min-w-[126px] items-center justify-between gap-2
+        rounded-full bg-[#188A31] pl-5 pr-1.5 text-sm font-bold text-white shadow-sm
+        transition-all duration-300 hover:bg-[#116d25] hover:shadow-md
+        sm:h-[42px] sm:min-w-[132px] sm:text-[13px] md:h-[44px] md:min-w-[138px]
       "
     >
-      <span>Book Now</span>
-
+      <span>{label}</span>
       <span
         className="
-          flex
-          h-[31px]
-          w-[31px]
-          shrink-0
-          items-center
-          justify-center
-          rounded-full
-          bg-white
-          text-[#188A31]
-          transition-transform
-          duration-300
-          group-hover:translate-x-0.5
-          sm:h-[33px]
-          sm:w-[33px]
+          flex h-[31px] w-[31px] shrink-0 items-center justify-center rounded-full
+          bg-white text-[#188A31] transition-transform duration-300
+          group-hover:translate-x-0.5 sm:h-[33px] sm:w-[33px]
         "
       >
         <FaArrowRight className="text-sm" />
@@ -170,69 +173,32 @@ function BookNowButton() {
 /* =========================================================
    DESKTOP / TABLET PRICING ROW
 ========================================================= */
-
 function PricingRow({
   vehicle,
   index,
 }: {
-  vehicle: (typeof vehicles)[number];
+  vehicle: PriceRow;
   index: number;
 }) {
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        y: 15,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.45,
-        delay: index * 0.08,
-      }}
-      viewport={{
-        once: true,
-      }}
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: index * 0.08 }}
+      viewport={{ once: true }}
       className="
-        hidden
-        min-h-[92px]
-        grid-cols-[1.35fr_0.95fr_0.95fr]
-        items-center
-        border-b
-        border-[#e5eadf]
-        bg-white
-        transition-colors
-        duration-300
-        last:border-b-0
-        hover:bg-[#fbfdf8]
-        sm:grid
+        hidden min-h-[92px] grid-cols-[1.35fr_0.95fr_0.95fr] items-center
+        border-b border-[#e5eadf] bg-white transition-colors duration-300
+        last:border-b-0 hover:bg-[#fbfdf8] sm:grid
       "
     >
-      {/* =====================================================
-          VEHICLE
-      ====================================================== */}
-
+      {/* VEHICLE */}
       <div className="flex h-full items-center gap-4 border-r border-[#e5eadf] px-4 sm:px-5 md:px-6">
         <div
           className="
-            relative
-            flex
-            h-[66px]
-            w-[66px]
-            shrink-0
-            items-center
-            justify-center
-            overflow-hidden
-            rounded-full
-            border-2
-            border-[#d8efb9]
-            bg-[#f7fceb]
-            sm:h-[70px]
-            sm:w-[70px]
-            md:h-[74px]
-            md:w-[74px]
+            relative flex h-[66px] w-[66px] shrink-0 items-center justify-center
+            overflow-hidden rounded-full border-2 border-[#d8efb9] bg-[#f7fceb]
+            sm:h-[70px] sm:w-[70px] md:h-[74px] md:w-[74px]
           "
         >
           <Image
@@ -245,68 +211,32 @@ function PricingRow({
         </div>
 
         <div className="min-w-0">
-          <h3
-            className="
-              text-[15px]
-              font-extrabold
-              leading-tight
-              text-[#171d25]
-              sm:text-[16px]
-              md:text-[17px]
-            "
-          >
+          <h3 className="text-[15px] font-extrabold leading-tight text-[#171d25] sm:text-[16px] md:text-[17px]">
             {vehicle.seater}
           </h3>
-
-          {/* <p className="mt-1 text-[12px] font-medium leading-tight text-[#24282e] sm:text-[13px]">
-            {vehicle.model}
-          </p> */}
-
-          <p className="mt-0.5 text-[11px] leading-tight text-[#24282e] sm:text-[12px]">
-            {vehicle.type}
-          </p>
+          {vehicle.type && (
+            <p className="mt-0.5 text-[11px] leading-tight text-[#24282e] sm:text-[12px]">
+              {vehicle.type}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* =====================================================
-          PRICE - Updated to use #188A31
-      ====================================================== */}
-
+      {/* PRICE */}
       <div className="flex h-full items-center border-r border-[#e5eadf] px-4 sm:px-5 md:px-6">
         <div className="flex items-baseline">
-          <span
-            className="
-              text-[28px]
-              font-extrabold
-              leading-none
-              text-[#188A31]
-              sm:text-[30px]
-              md:text-[32px]
-            "
-          >
+          <span className="text-[28px] font-extrabold leading-none text-[#188A31] sm:text-[30px] md:text-[32px]">
             ₹{vehicle.price}
           </span>
-
-          <span
-            className="
-              ml-1
-              text-[13px]
-              font-semibold
-              text-[#188A31]
-              sm:text-sm
-            "
-          >
+          <span className="ml-1 text-[13px] font-semibold text-[#188A31] sm:text-sm">
             /KM
           </span>
         </div>
       </div>
 
-      {/* =====================================================
-          BOOK
-      ====================================================== */}
-
+      {/* BOOK */}
       <div className="flex h-full items-center justify-center px-3 sm:px-4 md:px-5">
-        <BookNowButton />
+        <BookNowButton label={vehicle.bookLabel} />
       </div>
     </motion.div>
   );
@@ -315,54 +245,29 @@ function PricingRow({
 /* =========================================================
    MOBILE PRICING CARD
 ========================================================= */
-
 function MobilePricingCard({
   vehicle,
   index,
 }: {
-  vehicle: (typeof vehicles)[number];
+  vehicle: PriceRow;
   index: number;
 }) {
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        y: 20,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.4,
-        delay: index * 0.07,
-      }}
-      viewport={{
-        once: true,
-      }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.07 }}
+      viewport={{ once: true }}
       className="
-        overflow-hidden
-        rounded-2xl
-        border
-        border-[#e1e9d8]
-        bg-white
-        shadow-sm
+        overflow-hidden rounded-2xl border border-[#e1e9d8] bg-white shadow-sm
       "
     >
       {/* TOP */}
-
       <div className="flex items-center gap-3 border-b border-[#edf1e9] p-3.5">
         <div
           className="
-            relative
-            h-[64px]
-            w-[64px]
-            shrink-0
-            overflow-hidden
-            rounded-full
-            border-2
-            border-[#d8efb9]
-            bg-[#f7fceb]
+            relative h-[64px] w-[64px] shrink-0 overflow-hidden rounded-full
+            border-2 border-[#d8efb9] bg-[#f7fceb]
           "
         >
           <Image
@@ -378,28 +283,22 @@ function MobilePricingCard({
           <h3 className="text-[16px] font-extrabold text-[#171d25]">
             {vehicle.seater}
           </h3>
-
-          {/* <p className="mt-0.5 text-xs font-medium text-[#24282e]">
-            {vehicle.model}
-          </p> */}
-
-          <p className="text-[11px] text-[#24282e]">{vehicle.type}</p>
+          {vehicle.type && (
+            <p className="text-[11px] text-[#24282e]">{vehicle.type}</p>
+          )}
         </div>
 
         <div className="text-right">
           <p className="text-[25px] font-extrabold leading-none text-[#188A31]">
             ₹{vehicle.price}
           </p>
-          <span className="text-[11px] font-semibold text-[#188A31]">
-            /KM
-          </span>
+          <span className="text-[11px] font-semibold text-[#188A31]">/KM</span>
         </div>
       </div>
 
       {/* BOTTOM */}
-
       <div className="flex items-center justify-between gap-3 p-3.5">
-        <BookNowButton />
+        <BookNowButton label={vehicle.bookLabel} />
       </div>
     </motion.div>
   );
@@ -408,473 +307,183 @@ function MobilePricingCard({
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
+export default function PriceBookingCharges({ content }: Props) {
+  // ---- CMS values with static fallbacks ----
+  const eyebrow = content?.eyebrow || "PRICES & CHARGES";
+  const title = content?.title || "Prices & Charges";
+  const subtitle = content?.subtitle || "Tempo Traveller Price Details!";
+  const description =
+    content?.description ||
+    "Hire Tempo Traveller in Delhi for every occasion – weddings, pilgrimage trips, corporate events, tours, and Delhi Darshan. Comfortable, affordable travel for groups of all sizes.";
+  const illustration =
+    content?.illustration || "/images/ourtrustedpartner/1.png";
 
-export default function PriceBookingCharges() {
+  const col1Header = content?.col1Header || "TEMPO TRAVELLER";
+  const col2Header = content?.col2Header || "START FROM PRICE/KM";
+  const col3Header = content?.col3Header || "BOOK NOW";
+
+  // Rows: prefer CMS, fall back to static
+  const rows: PriceRow[] =
+    Array.isArray(content?.rows) && content.rows.length > 0
+      ? content.rows.map(normalizeRow)
+      : FALLBACK_ROWS;
+
   return (
     <section
       className="
-        relative
-        w-full
-        overflow-hidden
-        bg-white
-        py-8
-        sm:py-10
-        md:py-12
-        lg:py-14
-        xl:py-16
-        2xl:py-20
+        relative w-full overflow-hidden bg-white
+        py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16 2xl:py-20
       "
     >
-      {/* GREEN BACKGROUND GLOW - MATCHING VEHICLEFORVERYGROUPSIZE */}
+      {/* GREEN GLOW */}
       <div className="pointer-events-none absolute left-[8%] top-[20%] h-[300px] w-[300px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[400px] sm:w-[400px] lg:h-[550px] lg:w-[550px]" />
-
       <div className="pointer-events-none absolute bottom-[10%] right-[5%] h-[250px] w-[250px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[350px] sm:w-[350px] lg:h-[500px] lg:w-[500px]" />
 
-      {/* =====================================================
-          MAIN CONTAINER - MATCHING VEHICLEFORVERYGROUPSIZE
-      ====================================================== */}
-
-      <div
-        className="
-          relative z-10 mx-auto w-full max-w-[1440px] px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-0
-        "
-      >
-        {/* ===================================================
-            HEADER - UPDATED WITH OURTRUSTEDPARTNER STYLE
-        ==================================================== */}
-
+      {/* MAIN CONTAINER */}
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-0">
+        {/* HEADER */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 25,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.7,
-          }}
-          viewport={{
-            once: true,
-          }}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
           className="
-            relative
-            grid
-            min-h-[330px]
-            grid-cols-1
-            items-center
-            overflow-hidden
-            px-5
-            pb-4
-            pt-7
-            sm:min-h-[350px]
-            sm:px-8
-            md:min-h-[365px]
-            md:px-10
-            lg:min-h-[390px]
-            lg:grid-cols-[1.05fr_0.95fr]
-            lg:px-12
-            xl:min-h-[410px]
-            xl:px-16
+            relative grid min-h-[330px] grid-cols-1 items-center overflow-hidden
+            px-5 pb-4 pt-7 sm:min-h-[350px] sm:px-8 md:min-h-[365px] md:px-10
+            lg:min-h-[390px] lg:grid-cols-[1.05fr_0.95fr] lg:px-12
+            xl:min-h-[410px] xl:px-16
           "
         >
           {/* BACKGROUND IMAGE */}
-          <div
-            className="
-              absolute
-              inset-0
-              z-0
-            "
-          >
+          <div className="absolute inset-0 z-0">
             <Image
-              src="/images/ourtrustedpartner/1.png"
-              alt="Tempo Traveller Background"
+              src={illustration}
+              alt={`${title} Background`}
               fill
               sizes="100vw"
-              className="
-                object-contain
-                object-right
-                lg:object-right
-              "
+              className="object-contain object-right lg:object-right"
               priority
             />
           </div>
 
-          {/* -----------------------------------------------
-              LEFT HEADER CONTENT - OurTrustedPartner Style
-          ------------------------------------------------ */}
-
-          <div
-            className="
-              relative
-              z-10
-              mx-auto
-              flex
-              w-full
-              max-w-[650px]
-              flex-col
-              items-start
-              text-left
-              lg:mx-0
-              lg:items-start
-              lg:pr-4
-            "
-          >
-            {/* EYEBROW - Updated heading */}
-
-            <div
-              className="
-                mb-2.5
-                flex
-                w-full
-                items-center
-                justify-start
-                gap-1.5
-
-                min-[375px]:mb-3
-                min-[375px]:gap-2
-
-                min-[430px]:mb-3.5
-                min-[430px]:gap-2.5
-
-                sm:mb-4
-                sm:gap-3
-
-                md:gap-3.5
-
-                lg:gap-4
-              "
-            >
-              <span
-                className="
-                  block
-                  h-px
-                  w-4
-                  shrink-0
-                  bg-gray-400/60
-
-                  min-[375px]:w-5
-                  min-[430px]:w-6
-
-                  sm:w-7
-                  md:w-9
-                  lg:w-11
-                  xl:w-12
-                  2xl:w-14
-                "
-              />
-
-              <span
-                className="
-                  whitespace-nowrap
-                  text-[7px]
-                  font-bold
-                  uppercase
-                  tracking-[0.10em]
-                  text-[#03C35E]
-
-                  min-[375px]:text-[8px]
-                  min-[375px]:tracking-[0.12em]
-
-                  min-[430px]:text-[8.5px]
-                  min-[430px]:tracking-[0.14em]
-
-                  sm:text-[9.5px]
-                  sm:tracking-[0.16em]
-
-                  md:text-[10px]
-
-                  lg:text-[11px]
-
-                  xl:text-xs
-                "
-              >
-                PRICES &amp; CHARGES
+          {/* LEFT HEADER CONTENT */}
+          <div className="relative z-10 mx-auto flex w-full max-w-[650px] flex-col items-start text-left lg:mx-0 lg:items-start lg:pr-4">
+            {/* EYEBROW */}
+            <div className="mb-2.5 flex w-full items-center justify-start gap-1.5 min-[375px]:mb-3 min-[375px]:gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 sm:gap-3 md:gap-3.5 lg:gap-4">
+              <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
+              <span className="whitespace-nowrap text-[7px] font-bold uppercase tracking-[0.10em] text-[#03C35E] min-[375px]:text-[8px] min-[375px]:tracking-[0.12em] min-[430px]:text-[8.5px] min-[430px]:tracking-[0.14em] sm:text-[9.5px] sm:tracking-[0.16em] md:text-[10px] lg:text-[11px] xl:text-xs">
+                {eyebrow}
               </span>
-
-              <span
-                className="
-                  block
-                  h-px
-                  w-4
-                  shrink-0
-                  bg-gray-400/60
-
-                  min-[375px]:w-5
-                  min-[430px]:w-6
-
-                  sm:w-7
-                  md:w-9
-                  lg:w-11
-                  xl:w-12
-                  2xl:w-14
-                "
-              />
+              <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
-            {/* MAIN HEADING - Updated */}
-
-            <h1
-              className="
-                max-w-full
-                text-[23px]
-                font-extrabold
-                leading-[1.08]
-                tracking-[-0.035em]
-                text-[#142236]
-
-                min-[375px]:text-[25px]
-
-                min-[430px]:text-[27px]
-
-                sm:text-[29px]
-
-                md:text-[34px]
-
-                lg:text-[40px]
-
-                xl:text-[48px]
-
-                2xl:text-[56px]
-              "
-            >
-              Prices &amp; <span className="text-[#188A31]">Charges</span>
+            {/* MAIN HEADING */}
+            <h1 className="max-w-full text-[23px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[29px] md:text-[34px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
+              {title.includes("&") ? (
+                <>
+                  {title.split("&")[0].trim()}&amp;{" "}
+                  <span className="text-[#188A31]">
+                    {title.split("&")[1].trim()}
+                  </span>
+                </>
+              ) : (
+                title
+              )}
             </h1>
 
-            {/* SUB HEADING - Updated */}
-
-            <p
-              className="
-                mt-2.5
-                font-serif
-                text-[17px]
-                italic
-                leading-tight
-                text-[#03C35E]
-
-                min-[375px]:mt-3
-                min-[375px]:text-[19px]
-
-                min-[430px]:text-[20px]
-
-                sm:mt-4
-                sm:text-[22px]
-
-                md:text-[24px]
-
-                lg:text-[27px]
-
-                xl:text-[30px]
-
-                2xl:text-[32px]
-              "
-            >
-              Tempo Traveller Price Details!
+            {/* SUB HEADING */}
+            <p className="mt-2.5 font-serif text-[17px] italic leading-tight text-[#03C35E] min-[375px]:mt-3 min-[375px]:text-[19px] min-[430px]:text-[20px] sm:mt-4 sm:text-[22px] md:text-[24px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]">
+              {subtitle}
             </p>
 
             {/* DESCRIPTION */}
-
-            <div
-              className="
-                mt-3
-                max-w-[530px]
-                space-y-2
-                text-[9.5px]
-                leading-[1.65]
-                text-[#303944]
-
-                min-[375px]:mt-3.5
-                min-[375px]:text-[10px]
-
-                min-[430px]:text-[10.5px]
-
-                sm:mt-4
-                sm:text-[11px]
-
-                md:mt-5
-                md:text-xs
-
-                lg:text-sm
-
-                xl:text-base
-              "
-            >
-              <p>
-                Hire Tempo Traveller in Delhi for every occasion – weddings,
-                pilgrimage trips, corporate events, tours, and Delhi Darshan.
-                Comfortable, affordable travel for groups of all sizes.
-              </p>
+            <div className="mt-3 max-w-[530px] space-y-2 text-[9.5px] leading-[1.65] text-[#303944] min-[375px]:mt-3.5 min-[375px]:text-[10px] min-[430px]:text-[10.5px] sm:mt-4 sm:text-[11px] md:mt-5 md:text-xs lg:text-sm xl:text-base">
+              <p>{description}</p>
             </div>
           </div>
 
-          {/* -----------------------------------------------
-              RIGHT SIDE - Empty as per OurTrustedPartner
-          ------------------------------------------------ */}
-
-          <div
-            className="
-              relative
-              hidden
-              w-full
-              items-center
-              justify-center
-              lg:flex
-              lg:justify-end
-            "
-          />
+          {/* RIGHT SIDE — empty for grid alignment */}
+          <div className="relative hidden w-full items-center justify-center lg:flex lg:justify-end" />
         </motion.div>
 
-        {/* ===================================================
-            PRICING TABLE
-        ==================================================== */}
-
-        <div
-          className="
-            relative
-            z-20
-            mx-3
-            mb-6
-            overflow-hidden
-            rounded-[17px]
-            border
-            border-[#e1e8da]
-            bg-white
-            shadow-[0_3px_15px_rgba(0,0,0,0.06)]
-            sm:mx-5
-            sm:mb-7
-            md:mx-6
-            lg:mx-7
-            xl:mx-10
-          "
-        >
-          {/* -----------------------------------------------
-              TABLE HEADER - Updated to use #F7941E
-          ------------------------------------------------ */}
-
-          <div
-            className="
-              hidden
-              min-h-[70px]
-              grid-cols-[1.35fr_0.95fr_0.95fr]
-              items-stretch
-              bg-[#F7941E]
-              sm:grid
-            "
-          >
+        {/* PRICING TABLE */}
+        <div className="relative z-20 mx-3 mb-6 overflow-hidden rounded-[17px] border border-[#e1e8da] bg-white shadow-[0_3px_15px_rgba(0,0,0,0.06)] sm:mx-5 sm:mb-7 md:mx-6 lg:mx-7 xl:mx-10">
+          {/* TABLE HEADER */}
+          <div className="hidden min-h-[70px] grid-cols-[1.35fr_0.95fr_0.95fr] items-stretch bg-[#F7941E] sm:grid">
             {/* VEHICLE HEADER */}
-
             <div className="flex items-center gap-3 border-r border-white/20 px-4 sm:px-5 md:px-6">
               <FaBus className="text-[24px] text-white md:text-[26px]" />
-
-              <span
-                className="
-                  text-[11px]
-                  font-extrabold
-                  uppercase
-                  leading-[1.35]
-                  text-white
-                  sm:text-xs
-                  md:text-[13px]
-                "
-              >
-                TEMPO
-                <br />
-                TRAVELLER
+              <span className="text-[11px] font-extrabold uppercase leading-[1.35] text-white sm:text-xs md:text-[13px]">
+                {col1Header.includes(" ") ? (
+                  <>
+                    {col1Header.split(" ")[0]}
+                    <br />
+                    {col1Header.split(" ").slice(1).join(" ")}
+                  </>
+                ) : (
+                  col1Header
+                )}
               </span>
             </div>
 
             {/* PRICE HEADER */}
-
             <div className="flex items-center gap-3 border-r border-white/20 px-4 sm:px-5 md:px-6">
               <FaTag className="text-[23px] text-white md:text-[25px]" />
-
-              <span
-                className="
-                  text-[11px]
-                  font-extrabold
-                  uppercase
-                  leading-[1.35]
-                  text-white
-                  sm:text-xs
-                  md:text-[13px]
-                "
-              >
-                START FROM
-                <br />
-                PRICE/KM
+              <span className="text-[11px] font-extrabold uppercase leading-[1.35] text-white sm:text-xs md:text-[13px]">
+                {col2Header.includes("/") ? (
+                  <>
+                    {col2Header.split("/")[0]}
+                    <br />
+                    {col2Header.split("/")[1]}
+                  </>
+                ) : (
+                  col2Header
+                )}
               </span>
             </div>
 
             {/* BOOK HEADER */}
-
             <div className="flex items-center gap-3 px-4 sm:px-5 md:px-6">
               <FaCalendarAlt className="text-[23px] text-white md:text-[25px]" />
-
-              <span
-                className="
-                  text-[11px]
-                  font-extrabold
-                  uppercase
-                  leading-[1.35]
-                  text-white
-                  sm:text-xs
-                  md:text-[13px]
-                "
-              >
-                BOOK
-                <br />
-                NOW
+              <span className="text-[11px] font-extrabold uppercase leading-[1.35] text-white sm:text-xs md:text-[13px]">
+                {col3Header.includes(" ") ? (
+                  <>
+                    {col3Header.split(" ")[0]}
+                    <br />
+                    {col3Header.split(" ").slice(1).join(" ")}
+                  </>
+                ) : (
+                  col3Header
+                )}
               </span>
             </div>
           </div>
 
-          {/* -----------------------------------------------
-              DESKTOP/TABLET ROWS
-          ------------------------------------------------ */}
-
-          {vehicles.map((vehicle, index) => (
+          {/* DESKTOP / TABLET ROWS */}
+          {rows.map((vehicle, index) => (
             <PricingRow
-              key={vehicle.id}
+              key={vehicle.id ?? index}
               vehicle={vehicle}
               index={index}
             />
           ))}
 
-          {/* -----------------------------------------------
-              MOBILE HEADER - Updated to use #F7941E
-          ------------------------------------------------ */}
-
-          <div
-            className="
-              flex
-              items-center
-              justify-between
-              bg-[#F7941E]
-              px-4
-              py-3
-              sm:hidden
-            "
-          >
+          {/* MOBILE HEADER */}
+          <div className="flex items-center justify-between bg-[#F7941E] px-4 py-3 sm:hidden">
             <div className="flex items-center gap-2">
               <FaBus className="text-xl text-white" />
-
               <span className="text-[12px] font-extrabold uppercase text-white">
-                TEMPO TRAVELLER
+                {col1Header}
               </span>
             </div>
-
             <FaCalendarAlt className="text-lg text-white" />
           </div>
 
-          {/* -----------------------------------------------
-              MOBILE CARDS
-          ------------------------------------------------ */}
-
+          {/* MOBILE CARDS */}
           <div className="space-y-3 bg-[#fafcf8] p-3 sm:hidden">
-            {vehicles.map((vehicle, index) => (
+            {rows.map((vehicle, index) => (
               <MobilePricingCard
-                key={vehicle.id}
+                key={vehicle.id ?? index}
                 vehicle={vehicle}
                 index={index}
               />

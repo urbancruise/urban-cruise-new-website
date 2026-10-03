@@ -3,11 +3,15 @@
 
 import MercedesSprinter from "./luxury-cars-suvs-vans/mumbai/MercedesSprinter";
 
-export default function MumbaiMercedesSprinterPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function MumbaiMercedesSprinterPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <MercedesSprinter />
+      <MercedesSprinter cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

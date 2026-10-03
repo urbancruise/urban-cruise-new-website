@@ -3,11 +3,15 @@
 
 import SleeperSemiSleeperBus from "./luxury-buses/mumbai/SleeperSemiSleeperBus";
 
-export default function MumbaiSleeperBusPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function MumbaiSleeperBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <SleeperSemiSleeperBus />
+      <SleeperSemiSleeperBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

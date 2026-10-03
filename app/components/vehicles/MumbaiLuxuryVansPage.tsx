@@ -3,10 +3,15 @@
 
 import LuxuryVans from "./luxury-cars-suvs-vans/mumbai/LuxuryVans";
 
-export default function MumbaiLuxuryVansPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function MumbaiLuxuryVansPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <LuxuryVans />
+      <LuxuryVans cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

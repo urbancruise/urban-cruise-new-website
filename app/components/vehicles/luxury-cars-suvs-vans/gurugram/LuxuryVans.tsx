@@ -16,38 +16,30 @@ import DownloadApp from "../../../download-app/DownloadApp";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 import PricesCharges from "./ui/PricesCharges";
 
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
 
-export default function LuxuryVans() {
+export default function LuxuryVans({ cmsMeta, cmsSections }: Props) {
+  const s = cmsSections ?? {};
+
   return (
     <section className="min-h-[calc(100vh-4rem)]">
-      {/* Hero */}
-      <Hero/>
-      {/* About */}
-      <About/>
-      {/* HowItWorks */}
-      <HowItWorks />
-      {/* VehicleForEveryBudget */}
-      <VehicleForEveryBudget/>
-      {/* VehicleForEveryGroupSize */}
-      <VehicleForEveryGroupSize/>
-      {/* PricesCharges */}
-      <PricesCharges/>
-      {/* LookingForOtherVehicle */}
-      <LookingForOtherVehicle/>
-      {/* VehicleForEveryOccasion */}
-      <VehicleForEveryOccasion/>
-      {/* WhyChooseUrbanCruise */}
-      <WhyChooseUrbanCruise/>
-      {/* Testimonials */}
-      <Testimonials/>
-      {/* Faq's */}
-      <Faqs/>
-      {/* VehicleRentalServiceInIndia */}
-      <VehicleRentalServiceInIndia/>
-      {/* Our Trusted Partner */}
-      <OurTrustedPartner />
-      {/* FEATURES */}
-      <DownloadApp />
+      <Hero content={s.hero} meta={cmsMeta} />
+      <About content={s.about} />
+      <HowItWorks content={s.howitworks} />
+      <VehicleForEveryBudget content={s.vehiclebudget} />
+      <VehicleForEveryGroupSize content={s.groupsize} />
+      <PricesCharges content={s.prices}/>
+      <LookingForOtherVehicle content={s.lookingvehicle} />
+      <VehicleForEveryOccasion content={s.occasion} />
+      <WhyChooseUrbanCruise content={s.whychoose} />
+      <Testimonials content={s.testimonials} />
+      <Faqs content={s.faq} />
+      <VehicleRentalServiceInIndia content={s.servicelocations} />
+      <OurTrustedPartner content={s.partners} />
+      <DownloadApp content={s.downloadapp} />
     </section>
   );
 }

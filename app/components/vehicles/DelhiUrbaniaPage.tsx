@@ -3,10 +3,15 @@
 
 import Urbania from "./urbania/delhi/Urbania";
 
-export default function DelhiUrbaniaPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function DelhiUrbaniaPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <Urbania />
+      <Urbania cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

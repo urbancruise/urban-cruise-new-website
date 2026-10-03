@@ -3,11 +3,15 @@
 
 import LuxuryBus from "./luxury-buses/pune/LuxuryBus";
 
-export default function PuneLuxuryBusPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function PuneLuxuryBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <LuxuryBus />
+      <LuxuryBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

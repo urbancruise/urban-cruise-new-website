@@ -3,10 +3,15 @@
 
 import MiniBus from "./mini-bus/delhi/MiniBus";
 
-export default function DelhiMiniBusPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function DelhiMiniBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <MiniBus />
+      <MiniBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

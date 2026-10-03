@@ -3,10 +3,15 @@
 
 import VolvoBus from "./luxury-buses/delhi/VolvoBus";
 
-export default function DelhiVolvoBusPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function DelhiVolvoBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <VolvoBus />
+      <VolvoBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

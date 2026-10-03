@@ -1,4 +1,4 @@
-// components/vehicles/cars-suvs/pune/ui/Map.tsx
+// components/vehicles/cars-suvs/delhi/ui/Map.tsx
 "use client";
 
 import { useEffect, useRef } from "react";

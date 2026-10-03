@@ -3,10 +3,15 @@
 
 import CarSuvs from "./cars-suvs/gurugram/CarSuvs";
 
-export default function GurugramCarSuvsPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function GurugramCarSuvsPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <CarSuvs />
+      <CarSuvs cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

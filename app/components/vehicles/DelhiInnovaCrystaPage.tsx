@@ -3,10 +3,15 @@
 
 import InnovnaCrysta from "./cars-suvs/delhi/InnovaCrysta";
 
-export default function DelhiInnovaCrystaPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function DelhiInnovaCrystaPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <InnovnaCrysta />
+      <InnovnaCrysta cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

@@ -3,12 +3,15 @@
 
 import VolvoBus from "./luxury-buses/pune/VolvoBus";
 
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
 
-export default function PuneVolvoBusPage() {
+export default function PuneVolvoBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <VolvoBus />
+      <VolvoBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

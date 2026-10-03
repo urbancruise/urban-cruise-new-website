@@ -1,5 +1,5 @@
+
 /* eslint-disable react/no-unescaped-entities */
-// app/components/vehicles/cars-suvs/delhi/ui/VehicleForEveryGroupSize.tsx
 "use client";
 
 import Image from "next/image";
@@ -10,7 +10,6 @@ import {
   FaSuitcase,
   FaCalendarAlt,
   FaUser,
-  FaLongArrowAltRight,
 } from "react-icons/fa";
 import { MdSettings, MdLuggage } from "react-icons/md";
 import { motion } from "framer-motion";
@@ -19,7 +18,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
 
-const vehicles = [
+const FALLBACK_VEHICLES = [
   {
     type: "Sedan",
     name: "Maruti Suzuki Dzire",
@@ -36,34 +35,13 @@ const vehicles = [
       "/images/vehicleforeverygroupsize/9.jpeg",
     ],
     features: [
-      {
-        label: "4 Seats",
-        icon: <FaUser />,
-        color: ORANGE,
-      },
-      {
-        label: "AC",
-        icon: <FaSnowflake />,
-        color: "#2F80ED",
-      },
-      {
-        label: "GPS",
-        icon: <FaMapMarkerAlt />,
-        color: "#F26B5B",
-      },
-      {
-        label: "Manual",
-        icon: <MdSettings />,
-        color: GREEN,
-      },
-      {
-        label: "Luggage",
-        icon: <FaSuitcase />,
-        color: "#1E293B",
-      },
+      { label: "4 Seats", icon: <FaUser />, color: ORANGE },
+      { label: "AC", icon: <FaSnowflake />, color: "#2F80ED" },
+      { label: "GPS", icon: <FaMapMarkerAlt />, color: "#F26B5B" },
+      { label: "Manual", icon: <MdSettings />, color: GREEN },
+      { label: "Luggage", icon: <FaSuitcase />, color: "#1E293B" },
     ],
   },
-
   {
     type: "SUV",
     name: "Toyota Innova Crysta",
@@ -80,34 +58,13 @@ const vehicles = [
       "/images/vehicleforeverygroupsize/9.jpeg",
     ],
     features: [
-      {
-        label: "7 Seats",
-        icon: <FaUser />,
-        color: ORANGE,
-      },
-      {
-        label: "AC",
-        icon: <FaSnowflake />,
-        color: "#2F80ED",
-      },
-      {
-        label: "GPS",
-        icon: <FaMapMarkerAlt />,
-        color: "#F26B5B",
-      },
-      {
-        label: "Automatic",
-        icon: <MdSettings />,
-        color: GREEN,
-      },
-      {
-        label: "Luggage",
-        icon: <MdLuggage />,
-        color: "#1E293B",
-      },
+      { label: "7 Seats", icon: <FaUser />, color: ORANGE },
+      { label: "AC", icon: <FaSnowflake />, color: "#2F80ED" },
+      { label: "GPS", icon: <FaMapMarkerAlt />, color: "#F26B5B" },
+      { label: "Automatic", icon: <MdSettings />, color: GREEN },
+      { label: "Luggage", icon: <MdLuggage />, color: "#1E293B" },
     ],
   },
-
   {
     type: "Tempo Traveller",
     name: "12 Seater Tempo Traveller",
@@ -124,34 +81,13 @@ const vehicles = [
       "/images/vehicleforeverygroupsize/9.jpeg",
     ],
     features: [
-      {
-        label: "12 Seats",
-        icon: <FaUser />,
-        color: ORANGE,
-      },
-      {
-        label: "AC",
-        icon: <FaSnowflake />,
-        color: "#2F80ED",
-      },
-      {
-        label: "GPS",
-        icon: <FaMapMarkerAlt />,
-        color: "#F26B5B",
-      },
-      {
-        label: "Manual",
-        icon: <MdSettings />,
-        color: GREEN,
-      },
-      {
-        label: "Luggage",
-        icon: <MdLuggage />,
-        color: "#1E293B",
-      },
+      { label: "12 Seats", icon: <FaUser />, color: ORANGE },
+      { label: "AC", icon: <FaSnowflake />, color: "#2F80ED" },
+      { label: "GPS", icon: <FaMapMarkerAlt />, color: "#F26B5B" },
+      { label: "Manual", icon: <MdSettings />, color: GREEN },
+      { label: "Luggage", icon: <MdLuggage />, color: "#1E293B" },
     ],
   },
-
   {
     type: "Luxury",
     name: "Luxury Urbania",
@@ -168,45 +104,18 @@ const vehicles = [
       "/images/vehicleforeverygroupsize/9.jpeg",
     ],
     features: [
-      {
-        label: "16 Seats",
-        icon: <FaUser />,
-        color: ORANGE,
-      },
-      {
-        label: "AC",
-        icon: <FaSnowflake />,
-        color: "#2F80ED",
-      },
-      {
-        label: "GPS",
-        icon: <FaMapMarkerAlt />,
-        color: "#F26B5B",
-      },
-      {
-        label: "Automatic",
-        icon: <MdSettings />,
-        color: GREEN,
-      },
-      {
-        label: "Luggage",
-        icon: <MdLuggage />,
-        color: "#1E293B",
-      },
+      { label: "16 Seats", icon: <FaUser />, color: ORANGE },
+      { label: "AC", icon: <FaSnowflake />, color: "#2F80ED" },
+      { label: "GPS", icon: <FaMapMarkerAlt />, color: "#F26B5B" },
+      { label: "Automatic", icon: <MdSettings />, color: GREEN },
+      { label: "Luggage", icon: <MdLuggage />, color: "#1E293B" },
     ],
   },
 ];
 
-// CURVED LOGO SHAPE
-type CurvedShapeLogoProps = {
-  width?: number;
-  height?: number;
-  color?: string;
-  logoSrc?: string;
-  logoWidth?: number;
-  logoHeight?: number;
-  className?: string;
-};
+interface Props {
+  content?: any;
+}
 
 function CurvedShapeLogo({
   width = 140,
@@ -216,7 +125,15 @@ function CurvedShapeLogo({
   logoWidth = 80,
   logoHeight = 42,
   className = "",
-}: CurvedShapeLogoProps) {
+}: {
+  width?: number;
+  height?: number;
+  color?: string;
+  logoSrc?: string;
+  logoWidth?: number;
+  logoHeight?: number;
+  className?: string;
+}) {
   return (
     <div className={`relative ${className}`} style={{ width, height }}>
       <svg
@@ -225,24 +142,15 @@ function CurvedShapeLogo({
         height={height}
         xmlns="http://www.w3.org/2000/svg"
         className="absolute inset-0 h-full w-full"
-        style={{
-          filter: "drop-shadow(-2px 4px 12px rgba(0,0,0,0.15))",
-        }}
+        style={{ filter: "drop-shadow(-2px 4px 12px rgba(0,0,0,0.15))" }}
       >
         <path
-          d={`
-            M ${width} 0
-            L ${width} ${height}
-            L ${width * 0.22} ${height}
-            C ${width * 0.05} ${height * 0.75}, 
-              ${width * 0.18} ${height * 0.35}, 
-              0 0
-            Z
-          `}
+          d={`M ${width} 0 L ${width} ${height} L ${width * 0.22} ${height} C ${
+            width * 0.05
+          } ${height * 0.75}, ${width * 0.18} ${height * 0.35}, 0 0 Z`}
           fill={color}
         />
       </svg>
-
       {logoSrc && (
         <div className="absolute inset-0 z-10 flex items-center justify-end pr-3 sm:pr-2.5">
           <Image
@@ -259,50 +167,34 @@ function CurvedShapeLogo({
   );
 }
 
-// GALLERY - AUTO-PLAY CAROUSEL WITH NAVIGATION
 function CurvedGallery({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto-play functionality
   useEffect(() => {
+    if (images.length <= 1) return;
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
-
+    }, 3000);
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [images.length]);
 
-  // Get 3 images for display (previous, current, next)
+  if (images.length === 0) return null;
+
   const getDisplayImages = () => {
     const total = images.length;
+    if (total === 1) return [images[0], images[0], images[0]];
     return [
-      images[(currentIndex - 1 + total) % total], // previous
-      images[currentIndex], // current
-      images[(currentIndex + 1) % total], // next
+      images[(currentIndex - 1 + total) % total],
+      images[currentIndex],
+      images[(currentIndex + 1) % total],
     ];
   };
 
   const displayImages = getDisplayImages();
-
-  const nextSlide = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-    // Reset auto-play timer
-    resetAutoPlay();
-  };
-
-  const prevSlide = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-    // Reset auto-play timer
-    resetAutoPlay();
-  };
 
   const resetAutoPlay = () => {
     if (intervalRef.current) {
@@ -313,6 +205,18 @@ function CurvedGallery({ images }: { images: string[] }) {
     }
   };
 
+  const nextSlide = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+    resetAutoPlay();
+  };
+
+  const prevSlide = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    resetAutoPlay();
+  };
+
   return (
     <div
       className="relative w-full px-3 pt-5 pb-0 sm:px-3"
@@ -320,12 +224,9 @@ function CurvedGallery({ images }: { images: string[] }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative flex h-[65px] w-full items-end justify-center sm:h-[85px] md:h-[105px]">
-        {/* Image 1 */}
         <div
           className="absolute left-[1%] top-[-8%] z-10 h-[95px] w-[125px] overflow-hidden border-[4px] border-white rounded-2xl sm:h-[95px] sm:w-[125px] md:h-[95px] md:w-[125px]"
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%)",
-          }}
+          style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%)" }}
         >
           <Image
             src={displayImages[0]}
@@ -336,13 +237,10 @@ function CurvedGallery({ images }: { images: string[] }) {
           />
         </div>
 
-        {/* Image 2 */}
         <div
           className="absolute left-1/2 top-[-8%] z-20 h-[95px] w-[126px] -translate-x-1/2 overflow-hidden border-[4px] rounded-2xl border-white sm:h-[95px] sm:w-[150px] md:h-[95px] md:w-[126px]"
           onClick={nextSlide}
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 90%, 0% 90%)",
-          }}
+          style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 90%, 0% 90%)" }}
         >
           <Image
             src={displayImages[1]}
@@ -353,12 +251,9 @@ function CurvedGallery({ images }: { images: string[] }) {
           />
         </div>
 
-        {/* Image 3 */}
         <div
           className="absolute right-[1%] top-[-8%] z-10 h-[95px] w-[125px] overflow-hidden border-[4px] rounded-2xl border-white sm:h-[95px] sm:w-[125px] md:h-[95px] md:w-[125px]"
-          style={{
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%)",
-          }}
+          style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%)" }}
         >
           <Image
             src={displayImages[2]}
@@ -369,37 +264,39 @@ function CurvedGallery({ images }: { images: string[] }) {
           />
         </div>
 
-        {/* Navigation Arrows - Visible on hover with orange background */}
-        <button
-          onClick={prevSlide}
-          className={`absolute left-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:left-[-4px] sm:p-1.5 md:left-0 md:p-1 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
-          aria-label="Previous image"
-        >
-          <IoIosArrowBack className="h-3 w-3 sm:h-4 sm:w-4" />
-        </button>
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              className={`absolute left-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:left-[-4px] sm:p-1.5 md:left-0 md:p-1 ${
+                isHovered ? "opacity-100" : "opacity-0"
+              }`}
+              aria-label="Previous image"
+            >
+              <IoIosArrowBack className="h-3 w-3 sm:h-4 sm:w-4" />
+            </button>
 
-        <button
-          onClick={nextSlide}
-          className={`absolute right-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:right-[-4px] sm:p-1.5 md:right-0 md:p-1 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
-          aria-label="Next image"
-        >
-          <IoIosArrowForward className="h-3 w-3 sm:h-4 sm:w-4" />
-        </button>
+            <button
+              onClick={nextSlide}
+              className={`absolute right-[-8px] top-10 z-30 -translate-y-1/2 rounded-full bg-[#F7941E] p-1 text-white transition-all duration-300 hover:bg-[#E8840A] hover:scale-110 hover:shadow-lg sm:right-[-4px] sm:p-1.5 md:right-0 md:p-1 ${
+                isHovered ? "opacity-100" : "opacity-0"
+              }`}
+              aria-label="Next image"
+            >
+              <IoIosArrowForward className="h-3 w-3 sm:h-4 sm:w-4" />
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
-// VEHICLE CARD
 function VehicleCard({
   vehicle,
   index,
 }: {
-  vehicle: (typeof vehicles)[number];
+  vehicle: any;
   index: number;
 }) {
   return (
@@ -415,7 +312,6 @@ function VehicleCard({
       }}
       className="group relative w-full overflow-hidden rounded-[22px] p-1.5 border border-[#E8E8E8] bg-white shadow-[0_8px_35px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)]"
     >
-      {/* MAIN IMAGE - INCREASED HEIGHT FURTHER */}
       <div className="relative w-full aspect-[16/10] overflow-hidden rounded-t-3xl bg-gray-100">
         <motion.div
           className="relative h-full w-full"
@@ -427,20 +323,13 @@ function VehicleCard({
             alt={vehicle.name}
             fill
             className="object-cover"
-            sizes="
-              (max-width: 639px) 100vw,
-              (max-width: 1023px) 50vw,
-              (max-width: 1535px) 50vw,
-              33vw
-            "
+            sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
             priority={index < 2}
           />
         </motion.div>
 
-        {/* FADE GRADIENT OVERLAY - from transparent to white/background */}
         <div className="absolute bottom-0 left-0 right-0 z-20 h-[12%] bg-gradient-to-t from-white via-white/70 to-transparent" />
 
-        {/* CURVED LOGO SHAPE - TOP RIGHT */}
         <motion.div
           className="absolute right-0 top-0 z-30 h-[45px] sm:h-[50px] w-[120px]"
           initial={{ x: 20, opacity: 0 }}
@@ -459,14 +348,12 @@ function VehicleCard({
         </motion.div>
       </div>
 
-      {/* GALLERY OVERLAY ON MAIN IMAGE */}
-      <div className="absolute top-[165px] sm:top-[165px] md:top-[182px] xl:top-[210px] 2xl:top-[220px] left-0 right-0 z-20">
-        {vehicle.gallery && vehicle.gallery.length > 0 && (
+      {vehicle.gallery && vehicle.gallery.length > 0 && (
+        <div className="absolute top-[165px] sm:top-[165px] md:top-[182px] xl:top-[210px] 2xl:top-[220px] left-0 right-0 z-20">
           <CurvedGallery images={vehicle.gallery} />
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* TITLE + PRICE */}
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto] sm:items-center px-2.5 pt-[75px] sm:px-2.5 sm:pt-[75px] md:px-2.5 md:pt-[90px] xl:px-2.5 xl:pt-[95px] 2xl:px-2.5 2xl:pt-[80px]">
         <div className="min-w-0">
           <h3 className="truncate text-[20px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] min-[375px]:text-[21px] sm:text-[22px] md:text-[24px]">
@@ -491,7 +378,6 @@ function VehicleCard({
             <span className="text-[24px] font-black leading-none text-[#078B5A] sm:text-[28px] md:text-[32px]">
               ₹{vehicle.price}
             </span>
-
             <span className="text-[10px] font-bold text-[#1D2939] sm:text-xs">
               /day
             </span>
@@ -499,9 +385,8 @@ function VehicleCard({
         </div>
       </div>
 
-      {/* FEATURES */}
       <div className="mx-4 mt-3 grid grid-cols-5 overflow-hidden rounded-[17px] border border-[#E8E8E8] bg-white shadow-[0_5px_20px_rgba(0,0,0,0.06)] sm:mx-5 sm:mt-4">
-        {vehicle.features.map((feature, featureIndex) => (
+        {vehicle.features.map((feature: any, featureIndex: number) => (
           <motion.div
             key={feature.label}
             whileHover={{
@@ -509,13 +394,11 @@ function VehicleCard({
               backgroundColor: `${feature.color}15`,
               transition: { duration: 0.2 },
             }}
-            className={`flex min-w-0 flex-col items-center justify-center gap-1 px-1 py-2.5 sm:gap-0.5 sm:py-1.5
-              ${
-                featureIndex !== vehicle.features.length - 1
-                  ? "border-r border-[#E5E5E5]"
-                  : ""
-              }
-            `}
+            className={`flex min-w-0 flex-col items-center justify-center gap-1 px-1 py-2.5 sm:gap-0.5 sm:py-1.5 ${
+              featureIndex !== vehicle.features.length - 1
+                ? "border-r border-[#E5E5E5]"
+                : ""
+            }`}
           >
             <div
               className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5"
@@ -534,7 +417,6 @@ function VehicleCard({
         ))}
       </div>
 
-      {/* DESCRIPTION */}
       <div className="px-4 pt-3 sm:px-5 sm:pt-4">
         <p
           className="text-justify text-[10px] font-medium leading-[1.6] text-[#344054] min-[375px]:text-[10.5px] sm:text-[11px] md:text-xs lg:text-[13px] overflow-hidden"
@@ -548,7 +430,6 @@ function VehicleCard({
         </p>
       </div>
 
-      {/* BUTTONS */}
       <div className="grid grid-cols-2 gap-3 px-4 pb-4 pt-4 sm:gap-4 sm:px-5 sm:pb-5 sm:pt-5">
         <motion.button
           whileHover={{
@@ -585,17 +466,59 @@ function VehicleCard({
   );
 }
 
-// MAIN COMPONENT
-export default function VehicleForEveryGroupSize() {
+export default function VehicleForEveryGroupSize({ content }: Props) {
+  const eyebrow = content?.eyebrow || "Perfect For Every Group";
+  const title = content?.title || "VEHICLES FOR";
+  const titleHighlight = content?.titleHighlight || "EVERY GROUP SIZE";
+  const subtitle =
+    content?.subtitle || "The Right Vehicle For Every Group Size";
+  const description =
+    content?.description ||
+    "Whether you're traveling solo, with family, or in a large group, Urban Cruise has the perfect vehicle to accommodate your party size with comfort and style.";
+
+  // Map CMS vehicles to the shape this component expects
+  const vehicles =
+    Array.isArray(content?.vehicles) && content.vehicles.length > 0
+      ? content.vehicles.map((v: any, i: number) => {
+          const fallbackFeatureIcons = [
+            <FaUser key="user" />,
+            <FaSnowflake key="ac" />,
+            <FaMapMarkerAlt key="gps" />,
+            <MdSettings key="settings" />,
+            <MdLuggage key="luggage" />,
+          ];
+          return {
+            type: v.type || FALLBACK_VEHICLES[i]?.type || "",
+            name: v.name || "",
+            tagline: v.tagline || "",
+            price: v.price || "0",
+            description: v.description || "",
+            mainImage:
+              v.mainImage ||
+              FALLBACK_VEHICLES[i]?.mainImage ||
+              "/images/vehicleforeverygroupsize/7.jpeg",
+            gallery: Array.isArray(v.gallery)
+              ? v.gallery.map((g: any) =>
+                  typeof g === "string" ? g : g.url
+                )
+              : FALLBACK_VEHICLES[i]?.gallery || [],
+            features: Array.isArray(v.features)
+              ? v.features.map((f: any, fi: number) => ({
+                  label: f.label || "",
+                  color: f.color || GREEN,
+                  icon: fallbackFeatureIcons[fi] || <FaUser />,
+                }))
+              : FALLBACK_VEHICLES[i]?.features || [],
+          };
+        })
+      : FALLBACK_VEHICLES;
+
   return (
     <section className="relative w-full overflow-hidden bg-white py-10 min-[430px]:py-11 sm:py-12 md:py-14 lg:py-16 xl:py-20 2xl:py-24">
-      {/* GREEN BACKGROUND GLOW */}
       <div className="pointer-events-none absolute left-[8%] top-[20%] h-[300px] w-[300px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[400px] sm:w-[400px] lg:h-[550px] lg:w-[550px]" />
-
       <div className="pointer-events-none absolute bottom-[10%] right-[5%] h-[250px] w-[250px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[350px] sm:w-[350px] lg:h-[500px] lg:w-[500px]" />
 
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -603,47 +526,37 @@ export default function VehicleForEveryGroupSize() {
           viewport={{ once: true }}
           className="mb-9 grid w-full items-center gap-7 min-[375px]:mb-10 min-[375px]:gap-8 min-[430px]:mb-10 min-[430px]:gap-8 sm:mb-12 sm:gap-9 md:mb-14 md:gap-10 lg:mb-16 lg:grid-cols-[1fr_1fr] lg:gap-6 xl:mb-[72px] xl:gap-8 2xl:mb-20 2xl:gap-10"
         >
-          {/* LEFT CONTENT */}
           <div className="w-full max-w-[720px] text-left">
             <div className="mb-3 flex w-full items-center justify-start gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 md:gap-3 lg:gap-3.5 xl:gap-4">
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-
               <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.14em] text-[#03C35E] min-[375px]:text-[8.5px] min-[430px]:text-[9px] min-[430px]:tracking-[0.16em] sm:text-[9.5px] sm:tracking-[0.18em] md:text-[10px] md:tracking-[0.2em] lg:text-[11px] xl:text-xs">
-                Perfect For Every Group
+                {eyebrow}
               </span>
-
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
             <h2 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
-              VEHICLES FOR <span className="text-[#188A31]"> EVERY GROUP SIZE </span>
+              {title} <span className="text-[#188A31]">{titleHighlight}</span>
             </h2>
 
             <p className="mt-3 font-serif text-[19px] italic leading-tight text-[#03C35E] min-[375px]:text-[20px] min-[430px]:text-[21px] sm:text-[22px] md:text-[25px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]">
-              The Right Vehicle For Every Group Size
+              {subtitle}
             </p>
 
             <div className="mt-4 max-w-[620px] space-y-3 text-[10px] leading-[1.7] text-[#303944] min-[375px]:text-[10.5px] min-[430px]:text-[11px] sm:mt-5 sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
-              <p>
-                Whether you're traveling solo, with family, or in a large group,
-                Urban Cruise has the perfect vehicle to accommodate your party
-                size with comfort and style.
-              </p>
+              <p>{description}</p>
             </div>
           </div>
 
-          {/* RIGHT CONTENT - Empty */}
           <div className="relative hidden w-full items-center justify-center lg:flex lg:justify-end" />
         </motion.div>
 
-        {/* VEHICLE CATEGORIES / CARDS */}
         <div className="grid w-full grid-cols-1 gap-6 min-[430px]:gap-7 sm:grid-cols-2 sm:gap-6 md:gap-7 lg:grid-cols-2 lg:gap-8 xl:grid-cols-3 xl:gap-9 2xl:grid-cols-3 2xl:gap-10">
-          {vehicles.map((vehicle, index) => (
-            <VehicleCard key={vehicle.name} vehicle={vehicle} index={index} />
+          {vehicles.map((vehicle: any, index: number) => (
+            <VehicleCard key={vehicle.name || index} vehicle={vehicle} index={index} />
           ))}
         </div>
       </div>
     </section>
   );
 }
-

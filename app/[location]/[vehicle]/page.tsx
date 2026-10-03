@@ -2,12 +2,6 @@
 // Dynamic route: /[location]/[vehicle]
 //
 // Serves BOTH vehicle pages AND service pages.
-// - Fetches CMS content (meta + sections) from cms-urban-cruise
-// - Fetches SEO metadata (title, description, OG, schemas)
-// - Dispatches to <VehicleSelector /> or <ServiceSelector />
-// - Validates the slug against the canonical mapping per location
-// - Renders JSON-LD schemas from the CMS
-// - Adds breadcrumb navigation
 // ============================================================
 import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
@@ -44,7 +38,6 @@ interface PageProps {
 
 // ============================================================
 // VEHICLE SLUG → VEHICLE TYPE
-// (Vehicle page URLs mapped to internal vehicle keys.)
 // ============================================================
 const VEHICLE_SLUG_TO_TYPE: Record<string, string> = {
   // Car & SUVs
@@ -128,42 +121,26 @@ const VEHICLE_SLUG_TO_TYPE: Record<string, string> = {
 
 // ============================================================
 // SERVICE SLUG → SERVICE TYPE
-// (Service page URLs mapped to internal service keys.)
 // ============================================================
 const SERVICE_SLUG_TO_TYPE: Record<string, string> = {
-  // Jim Corbett
   "delhi-to-jim-corbett-vehicle-rental": "jim-corbett",
   "gurugram-to-jim-corbett-vehicle-rental": "jim-corbett",
   "mumbai-to-jim-corbett-vehicle-rental": "jim-corbett",
   "pune-to-jim-corbett-vehicle-rental": "jim-corbett",
-
-  // Do Dham Yatra
   "do-dham-yatra-package": "do-dham",
-
-  // Char Dham Yatra
   "char-dham-yatra-package": "char-dham",
-
-  // Pilgrimage Travel
   "pilgrimage-vehicle-rental": "pilgrimage",
   "pilgrimage-tours-in-mumbai-pilgrimage-bus-rental-in-mumbai": "pilgrimage",
-
-  // Wedding Travel
   "wedding-cars-and-bus-rental-delhi": "wedding",
   "wedding-cars-and-bus-rental-gurugram": "wedding",
   "wedding-cars-and-bus-rental-pune": "wedding",
   "wedding-car-rental-in-mumbai-wedding-bus-rental-in-mumbai": "wedding",
-
-  // Corporate Travel
   "corporate-travel-rental-service": "corporate",
   "corporate-bus-service-in-mumbai-corporate-travel-in-mumbai": "corporate",
-
-  // Vacations
   "vacation-bus-and-car-rentals-in-delhi": "vacations",
   "vacation-bus-and-car-rentals-in-gurugram": "vacations",
   "vacation-bus-and-car-rentals-in-pune": "vacations",
   "vacation-bus-rentals-in-mumbai-holiday-tours-in-mumbai": "vacations",
-
-  // Local Travel
   "bus-and-car-rental-for-local-travel": "local-travel",
   "bus-rental-for-local-travel-sightseeing-in-mumbai-mumbai-darshan-airport-transfer":
     "local-travel",
@@ -183,7 +160,6 @@ export async function generateMetadata({
 
   const path = `/${location}/${vehicle}`;
 
-  // Try CMS SEO first
   const cmsSeo = await getSeoByPath(path);
   if (cmsSeo?.seo) {
     const s = cmsSeo.seo;
@@ -214,7 +190,6 @@ export async function generateMetadata({
     };
   }
 
-  // Fallback to static SEO helpers
   return createLocationMetadata(
     location,
     getDynamicPageType(vehicle),
@@ -228,16 +203,11 @@ export async function generateMetadata({
 export default async function DynamicPage({ params }: PageProps) {
   const { location, vehicle } = await params;
 
-  // ----------------------------------------------------------
-  // 1. Validate location
-  // ----------------------------------------------------------
   if (!isValidLocation(location)) {
     notFound();
   }
 
-  // ----------------------------------------------------------
-  // 2. Resolve vehicleType / serviceType from slug
-  // ----------------------------------------------------------
+  // 1. Resolve internal type from the URL slug
   const vehicleType = VEHICLE_SLUG_TO_TYPE[vehicle];
   const serviceType = SERVICE_SLUG_TO_TYPE[vehicle];
 
@@ -245,17 +215,16 @@ export default async function DynamicPage({ params }: PageProps) {
     notFound();
   }
 
-  // ----------------------------------------------------------
-  // 3. Fetch CMS content + SEO in parallel
-  // ----------------------------------------------------------
+  // ⭐ KEY FIX: The CMS saves content under the INTERNAL slug
+  //    (e.g., "car-suvs"), not the URL slug (e.g., "car-rental-delhi").
+  //    So we fetch using vehicleType / serviceType.
+  const internalSlug = vehicleType ?? serviceType ?? vehicle;
+
   const [cmsData, cmsSeo] = await Promise.all([
-    getVehicle(location, vehicle),
+    getVehicle(location, internalSlug),
     getSeoByPath(`/${location}/${vehicle}`),
   ]);
 
-  // ----------------------------------------------------------
-  // 4. Prepare breadcrumb + JSON-LD payloads
-  // ----------------------------------------------------------
   const cityName = formatLocationName(location);
   const seoSchemas = cmsSeo?.seo.schemas ?? [];
 
@@ -263,7 +232,6 @@ export default async function DynamicPage({ params }: PageProps) {
   // VEHICLE PAGE
   // ==========================================================
   if (vehicleType) {
-    // Enforce the canonical slug for this vehicle + city
     const expectedSlug = getVehicleSlug(location, vehicleType);
     if (vehicle !== expectedSlug) {
       permanentRedirect(`/${location}/${expectedSlug}`);
@@ -271,7 +239,6 @@ export default async function DynamicPage({ params }: PageProps) {
 
     const vehicleSeo = getVehicleSeoContent(vehicleType);
 
-    // Build fallback schemas when CMS hasn't provided any
     const fallbackSchemas = [
       webPageSchema({
         name: `${vehicleSeo.name} in ${cityName}`,
@@ -286,8 +253,7 @@ export default async function DynamicPage({ params }: PageProps) {
       }),
     ];
 
-    const schemas =
-      seoSchemas.length > 0 ? seoSchemas : fallbackSchemas;
+    const schemas = seoSchemas.length > 0 ? seoSchemas : fallbackSchemas;
 
     return (
       <>
@@ -323,7 +289,6 @@ export default async function DynamicPage({ params }: PageProps) {
   // SERVICE PAGE
   // ==========================================================
   if (serviceType) {
-    // Enforce the canonical slug for this service + city
     const expectedSlug = getServiceSlug(location, serviceType);
     if (vehicle !== expectedSlug) {
       permanentRedirect(`/${location}/${expectedSlug}`);
@@ -345,8 +310,7 @@ export default async function DynamicPage({ params }: PageProps) {
       }),
     ];
 
-    const schemas =
-      seoSchemas.length > 0 ? seoSchemas : fallbackSchemas;
+    const schemas = seoSchemas.length > 0 ? seoSchemas : fallbackSchemas;
 
     return (
       <>
@@ -377,8 +341,5 @@ export default async function DynamicPage({ params }: PageProps) {
     );
   }
 
-  // ----------------------------------------------------------
-  // Unreachable — every slug resolves above
-  // ----------------------------------------------------------
   notFound();
 }

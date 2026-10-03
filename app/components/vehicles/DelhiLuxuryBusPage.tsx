@@ -3,10 +3,15 @@
 
 import LuxuryBus from "./luxury-buses/delhi/LuxuryBus";
 
-export default function DelhiLuxuryBusPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function DelhiLuxuryBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <LuxuryBus />
+      <LuxuryBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

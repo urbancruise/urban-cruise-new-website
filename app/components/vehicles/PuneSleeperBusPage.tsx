@@ -3,11 +3,15 @@
 
 import SleeperSemiSleeperBus from "./luxury-buses/pune/SleeperSemiSleeperBus";
 
-export default function PuneSleeperBusPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function PuneSleeperBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <SleeperSemiSleeperBus />
+      <SleeperSemiSleeperBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

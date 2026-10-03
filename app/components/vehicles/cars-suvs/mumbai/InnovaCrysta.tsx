@@ -1,4 +1,4 @@
-// app/components/vehicles/cars-suvs/mumbai/InnovaCrysta.tsx
+// app/components/vehicles/cars-suvs/delhi/InnovaCrysta.tsx
 "use client";
 
 import Hero from "./ui/Hero";
@@ -16,38 +16,30 @@ import DownloadApp from "../../../download-app/DownloadApp";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 import CompressionWithVehicle from "./ui/CompressionWithVehicle";
 
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
 
-export default function InnovaCrysta() {
+export default function InnovaCrysta({ cmsMeta, cmsSections }: Props) {
+   const s = cmsSections ?? {};
+
   return (
     <section className="min-h-[calc(100vh-4rem)]">
-      {/* Hero */}
-      <Hero/>
-      {/* About */}
-      <About/>
-      {/* HowItWorks */}
-      <HowItWorks />
-      {/* VehicleForEveryBudget */}
-      <VehicleForEveryBudget/>
-      {/* VehicleForEveryGroupSize */}
-      <VehicleForEveryGroupSize/>
-      {/* CompressionWithVehicle */}
-      <CompressionWithVehicle/>
-      {/* LookingForOtherVehicle */}
-      <LookingForOtherVehicle/>
-      {/* VehicleForEveryOccasion */}
-      <VehicleForEveryOccasion/>
-      {/* WhyChooseUrbanCruise */}
-      <WhyChooseUrbanCruise/>
-      {/* Testimonials */}
-      <Testimonials/>
-      {/* Faq's */}
-      <Faqs/>
-      {/* VehicleRentalServiceInIndia */}
-      <VehicleRentalServiceInIndia/>
-      {/* Our Trusted Partner */}
-      <OurTrustedPartner />
-      {/* FEATURES */}
-      <DownloadApp />
+      <Hero content={s.hero} meta={cmsMeta} />
+      <About content={s.about} />
+      <HowItWorks content={s.howitworks} />
+      <VehicleForEveryBudget content={s.vehiclebudget} />
+      <VehicleForEveryGroupSize content={s.groupsize} />
+      <CompressionWithVehicle content={s.compare} />
+      <LookingForOtherVehicle content={s.lookingvehicle} />
+      <VehicleForEveryOccasion content={s.occasion} />
+      <WhyChooseUrbanCruise content={s.whychoose} />
+      <Testimonials content={s.testimonials} />
+      <Faqs content={s.faq} />
+      <VehicleRentalServiceInIndia content={s.servicelocations} />
+      <OurTrustedPartner content={s.partners} />
+      <DownloadApp content={s.downloadapp} />
     </section>
   );
 }

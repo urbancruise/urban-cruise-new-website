@@ -18,43 +18,32 @@ import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
 import CompressionWithVehicle from "./ui/CompressionWithVehicle";
 import PriceBookingCharges from "./ui/PriceBookingCharges";
 
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
 
+export default function TempoTraveller({ cmsMeta, cmsSections }: Props) {
+  const s = cmsSections ?? {};
 
-export default function TempoTraveller() {
   return (
     <section className="min-h-[calc(100vh-4rem)]">
-      {/* Hero */}
-      <Hero/>
-      {/* About */}
-      <About/>
-      {/* HowItWorks */}
-      <HowItWorks />
-      {/* VehicleForEveryBudget */}
-      <VehicleForEveryBudget/>
-      {/* VehicleForEveryGroupSize */}
-      <VehicleForEveryGroupSize/>
-      {/* CompressionWithVehicle */}
-      <CompressionWithVehicle/>
-      {/* PriceBookingCharges */}
-      <PriceBookingCharges/>
-      {/* LookingForOtherVehicle */}
-      <LookingForOtherVehicle/>
-      {/* VehicleForEveryOccasion */}
-      <VehicleForEveryOccasion/>
-      {/* WhyChooseUrbanCruise */}
-      <WhyChooseUrbanCruise/>
-      {/* Testimonials */}
-      <Testimonials/>
-      {/* PlaceToVisit */}
-      <PlaceToVisit/>
-      {/* Faq's */}
-      <Faqs/>
-      {/* VehicleRentalServiceInIndia */}
-      <VehicleRentalServiceInIndia/>
-      {/* Our Trusted Partner */}
-      <OurTrustedPartner />
-      {/* FEATURES */}
-      <DownloadApp />
+      <Hero content={s.hero} meta={cmsMeta} />
+      <About content={s.about} />
+      <HowItWorks content={s.howitworks} />
+      <VehicleForEveryBudget content={s.vehiclebudget} />
+      <VehicleForEveryGroupSize content={s.groupsize} />
+      <CompressionWithVehicle content={s.compare} />
+      <PriceBookingCharges content={s.prices} />
+      <LookingForOtherVehicle content={s.lookingvehicle} />
+      <VehicleForEveryOccasion content={s.occasion} />
+      <WhyChooseUrbanCruise content={s.whychoose} />
+      <Testimonials content={s.testimonials} />
+      <PlaceToVisit content={s.discover} />
+      <Faqs content={s.faq} />
+      <VehicleRentalServiceInIndia content={s.servicelocations} />
+      <OurTrustedPartner content={s.partners} />
+      <DownloadApp content={s.downloadapp} />
     </section>
   );
 }

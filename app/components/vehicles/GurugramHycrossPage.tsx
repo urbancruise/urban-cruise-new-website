@@ -3,10 +3,15 @@
 
 import Hycross from "./cars-suvs/gurugram/Hycross";
 
-export default function GurugramHycrossPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function GurugramHycrossPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <Hycross />
+      <Hycross cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

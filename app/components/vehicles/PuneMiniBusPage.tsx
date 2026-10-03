@@ -3,10 +3,15 @@
 
 import MiniBus from "./mini-bus/pune/MiniBus";
 
-export default function PuneMiniBusPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function PuneMiniBusPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <MiniBus />
+      <MiniBus cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

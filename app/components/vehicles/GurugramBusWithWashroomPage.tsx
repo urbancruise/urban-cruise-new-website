@@ -3,10 +3,15 @@
 
 import BusWithWashroom from "./luxury-buses/gurugram/BusWithWashroom";
 
-export default function GurugramBusWithWashroomPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function GurugramBusWithWashroomPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <BusWithWashroom />
+      <BusWithWashroom cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

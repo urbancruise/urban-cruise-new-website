@@ -3,11 +3,15 @@
 
 import TempoTraveller from "./tempo-travellers/mumbai/TempoTraveller";
 
-export default function MumbaiTempoTravellerPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function MumbaiTempoTravellerPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <TempoTraveller />
+      <TempoTraveller cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

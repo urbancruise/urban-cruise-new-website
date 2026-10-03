@@ -3,10 +3,15 @@
 
 import CarSuvs from "./cars-suvs/mumbai/CarSuvs";
 
-export default function MumbaiCarSuvsPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function MumbaiCarSuvsPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <CarSuvs />
+      <CarSuvs cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

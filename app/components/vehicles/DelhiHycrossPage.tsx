@@ -3,11 +3,15 @@
 
 import Hycross from "./cars-suvs/delhi/Hycross";
 
-export default function DelhiHycrossPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function DelhiHycrossPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <Hycross />
+      <Hycross cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
-

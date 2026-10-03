@@ -1,5 +1,4 @@
 // app/components/vehicles/tempo-travellers/delhi/ui/PriceBookingCharges.tsx
-
 "use client";
 
 import React from "react";

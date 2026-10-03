@@ -3,10 +3,15 @@
 
 import MaharajaTempoTraveller from "./tempo-travellers/pune/MaharajaTempoTraveller";
 
-export default function PuneMaharajaTempoTravellerPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function PuneMaharajaTempoTravellerPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <MaharajaTempoTraveller />
+      <MaharajaTempoTraveller cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

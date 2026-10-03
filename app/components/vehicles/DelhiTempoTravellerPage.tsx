@@ -3,10 +3,15 @@
 
 import TempoTraveller from "./tempo-travellers/delhi/TempoTraveller";
 
-export default function DelhiTempoTravellerPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function DelhiTempoTravellerPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <TempoTraveller />
+      <TempoTraveller cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }

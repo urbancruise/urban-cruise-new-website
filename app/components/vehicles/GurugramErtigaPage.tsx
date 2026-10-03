@@ -3,10 +3,15 @@
 
 import Ertiga from "./cars-suvs/gurugram/Ertiga";
 
-export default function GurugramErtigaPage() {
+interface Props {
+  cmsMeta?: Record<string, any> | null;
+  cmsSections?: Record<string, any> | null;
+}
+
+export default function GurugramErtigaPage({ cmsMeta, cmsSections }: Props) {
   return (
     <main className="min-h-screen w-full bg-white">
-      <Ertiga />
+      <Ertiga cmsMeta={cmsMeta} cmsSections={cmsSections} />
     </main>
   );
 }
