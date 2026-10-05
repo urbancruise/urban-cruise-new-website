@@ -1,29 +1,27 @@
-
+// app/components/VehicleForEveryBudgetSelector.tsx
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// ============================================================
-// Lazy load VehicleForEveryBudget components
-// ============================================================
-const DelhiVehicleForEveryBudget = dynamic(
-  () => import("./home/vehicleforeverybudget/DelhiVehicleForEveryBudget")
+const DelhiVehicleForEveryBudget = dynamic(() =>
+  import("./home/vehicleforeverybudget/DelhiVehicleForEveryBudget")
 );
-const GurugramVehicleForEveryBudget = dynamic(
-  () => import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget")
+const GurugramVehicleForEveryBudget = dynamic(() =>
+  import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget")
 );
-const MumbaiVehicleForEveryBudget = dynamic(
-  () => import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget")
+const MumbaiVehicleForEveryBudget = dynamic(() =>
+  import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget")
 );
-const PuneVehicleForEveryBudget = dynamic(
-  () => import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget")
+const PuneVehicleForEveryBudget = dynamic(() =>
+  import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget")
+);
+const DefaultVehicleForEveryBudget = dynamic(() =>
+  import("./home/vehicleforeverybudget/DefaultVehicleForEveryBudget")
 );
 
-// ============================================================
-// CMS content shape (all optional — falls back to defaults)
-// ============================================================
 export interface BudgetContent {
   eyebrow?: string;
   title?: string;
@@ -31,6 +29,7 @@ export interface BudgetContent {
   subtitle?: string;
   description?: string;
   illustration?: string;
+  illustrationPublicId?: string;
   categories?: Array<{
     title?: string;
     description?: string;
@@ -48,23 +47,27 @@ interface Props {
   content?: BudgetContent | null;
 }
 
-// ============================================================
-// SELECTOR
-// ============================================================
 export default function VehicleForEveryBudgetSelector({ content }: Props) {
-  const { location } = useLocation();
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
+
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
   const map: Record<
     string,
     React.ComponentType<{ content?: BudgetContent | null }>
   > = {
-    delhi: DelhiVehicleForEveryBudget,
-    gurugram: GurugramVehicleForEveryBudget,
-    mumbai: MumbaiVehicleForEveryBudget,
-    pune: PuneVehicleForEveryBudget,
+    delhi: DelhiVehicleForEveryBudget as any,
+    gurugram: GurugramVehicleForEveryBudget as any,
+    mumbai: MumbaiVehicleForEveryBudget as any,
+    pune: PuneVehicleForEveryBudget as any,
   };
 
-  const Component = map[location];
+  const Component = isGlobalRoute
+    ? (DefaultVehicleForEveryBudget as any)
+    : map[selectedLocation || ""] || (DefaultVehicleForEveryBudget as any);
+
   if (!Component) return null;
 
   return <Component content={content} />;

@@ -1,14 +1,12 @@
 // app/[location]/blog/page.tsx
-import { notFound } from 'next/navigation';
-import { isValidLocation } from '@/app/lib/location';
-import BlogSelector from '@/app/components/BlogSelector';
-import { createLocationMetadata } from '@/lib/seo';
-import PageJsonLd from '@/app/components/seo/PageJsonLd';
+import { notFound } from "next/navigation";
+import { isValidLocationAsync } from "@/app/lib/location";
+import BlogSelector from "@/app/components/BlogSelector";
+import { createLocationMetadata } from "@/lib/seo";
+import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface BlogPageProps {
-  params: Promise<{
-    location: string;
-  }>;
+  params: Promise<{ location: string }>;
 }
 
 export async function generateMetadata({ params }: BlogPageProps) {
@@ -19,13 +17,16 @@ export async function generateMetadata({ params }: BlogPageProps) {
 export default async function BlogPage({ params }: BlogPageProps) {
   const { location } = await params;
 
-  if (!isValidLocation(location)) {
-    notFound();
-  }
+  const valid = await isValidLocationAsync(location);
+  if (!valid) notFound();
 
   return (
     <>
-      <PageJsonLd name={`Vehicle Rental Blog for ${location}`} description={`Travel guides and vehicle rental advice for ${location} from Urban Cruise.`} path={`/${location}/blog`} />
+      <PageJsonLd
+        name={`Vehicle Rental Blog for ${location}`}
+        description={`Travel guides and vehicle rental advice for ${location} from Urban Cruise.`}
+        path={`/${location}/blog`}
+      />
       <BlogSelector />
     </>
   );

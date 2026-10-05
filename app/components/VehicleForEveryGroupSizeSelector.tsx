@@ -1,37 +1,26 @@
-
-// ============================================================
-// Location-aware selector for "Vehicles For Every Group Size"
-// Passes CMS content (optional) to the correct city component.
-// ============================================================
+// app/components/VehicleForEveryGroupSizeSelector.tsx
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// ======================================================
-// LAZY LOAD COMPONENTS
-// ======================================================
-
-const DelhiVehicleForEveryGroupSize = dynamic(
-  () => import("./home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize")
+const DelhiVehicleForEveryGroupSize = dynamic(() =>
+  import("./home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize")
 );
-
-const GurugramVehicleForEveryGroupSize = dynamic(
-  () => import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
+const GurugramVehicleForEveryGroupSize = dynamic(() =>
+  import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
 );
-
-const MumbaiVehicleForEveryGroupSize = dynamic(
-  () => import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
+const MumbaiVehicleForEveryGroupSize = dynamic(() =>
+  import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
 );
-
-const PuneVehicleForEveryGroupSize = dynamic(
-  () => import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
+const PuneVehicleForEveryGroupSize = dynamic(() =>
+  import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
 );
-
-// ======================================================
-// TYPES
-// ======================================================
+const DefaultVehicleForEveryGroupSize = dynamic(() =>
+  import("./home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize")
+);
 
 export interface VehicleGroupSizeItem {
   type?: string;
@@ -53,34 +42,32 @@ export interface VehicleGroupSizeContent {
   vehicles?: VehicleGroupSizeItem[];
 }
 
-export interface VehicleForEveryGroupSizeProps {
+interface Props {
   content?: VehicleGroupSizeContent;
 }
 
-// ======================================================
-// COMPONENT
-// ======================================================
+export default function VehicleForEveryGroupSizeSelector({ content }: Props) {
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
 
-export default function VehicleForEveryGroupSizeSelector({
-  content,
-}: VehicleForEveryGroupSizeProps) {
-  const { location } = useLocation();
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
   const map: Record<
     string,
-    React.ComponentType<VehicleForEveryGroupSizeProps>
+    React.ComponentType<{ content?: VehicleGroupSizeContent }>
   > = {
-    delhi: DelhiVehicleForEveryGroupSize,
-    gurugram: GurugramVehicleForEveryGroupSize,
-    mumbai: MumbaiVehicleForEveryGroupSize,
-    pune: PuneVehicleForEveryGroupSize,
+    delhi: DelhiVehicleForEveryGroupSize as any,
+    gurugram: GurugramVehicleForEveryGroupSize as any,
+    mumbai: MumbaiVehicleForEveryGroupSize as any,
+    pune: PuneVehicleForEveryGroupSize as any,
   };
 
-  const Component = map[location];
+  const Component = isGlobalRoute
+    ? (DefaultVehicleForEveryGroupSize as any)
+    : map[selectedLocation || ""] || (DefaultVehicleForEveryGroupSize as any);
 
-  if (!Component) {
-    return null;
-  }
+  if (!Component) return null;
 
   return <Component content={content} />;
 }

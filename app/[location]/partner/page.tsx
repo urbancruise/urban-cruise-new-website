@@ -1,14 +1,12 @@
 // app/[location]/partner/page.tsx
-import { notFound, permanentRedirect } from 'next/navigation';
-import { isValidLocation } from '@/app/lib/location';
-import PartnerSelector from '@/app/components/PartnerSelector';
-import { createLocationMetadata } from '@/lib/seo';
-import PageJsonLd from '@/app/components/seo/PageJsonLd';
+import { notFound, permanentRedirect } from "next/navigation";
+import { isValidLocationAsync } from "@/app/lib/location";
+import PartnerSelector from "@/app/components/PartnerSelector";
+import { createLocationMetadata } from "@/lib/seo";
+import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface PartnerPageProps {
-  params: Promise<{
-    location: string;
-  }>;
+  params: Promise<{ location: string }>;
 }
 
 export async function generateMetadata({ params }: PartnerPageProps) {
@@ -19,18 +17,21 @@ export async function generateMetadata({ params }: PartnerPageProps) {
 export default async function PartnerPage({ params }: PartnerPageProps) {
   const { location } = await params;
 
-  if (!isValidLocation(location)) {
-    notFound();
-  }
+  const valid = await isValidLocationAsync(location);
+  if (!valid) notFound();
 
-  // Redirect Mumbai from /mumbai/partner to /mumbai/partner-program
-  if (location === 'mumbai') {
+  // Mumbai uses /partner-program instead of /partner
+  if (location === "mumbai") {
     permanentRedirect(`/${location}/partner-program`);
   }
 
   return (
     <>
-      <PageJsonLd name={`Vehicle Rental Partnership in ${location}`} description={`Partner with Urban Cruise to provide dependable transport solutions in ${location}.`} path={`/${location}/partner`} />
+      <PageJsonLd
+        name={`Vehicle Rental Partnership in ${location}`}
+        description={`Partner with Urban Cruise to provide dependable transport solutions in ${location}.`}
+        path={`/${location}/partner`}
+      />
       <PartnerSelector />
     </>
   );

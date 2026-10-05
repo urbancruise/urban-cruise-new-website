@@ -1,7 +1,9 @@
+// app/components/HeroSelector.tsx
 "use client";
 
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
 const DelhiHero = dynamic(() => import("./home/hero/DelhiHero"));
@@ -24,7 +26,11 @@ interface HeroSelectorProps {
 }
 
 export default function HeroSelector({ content }: HeroSelectorProps) {
-  const { location } = useLocation();
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
+
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
   const heroMap: Record<string, React.ComponentType<any>> = {
     delhi: DelhiHero,
@@ -33,8 +39,9 @@ export default function HeroSelector({ content }: HeroSelectorProps) {
     pune: PuneHero,
   };
 
-  const HeroComponent = heroMap[location] || DefaultHero;
+  const HeroComponent = isGlobalRoute
+    ? DefaultHero
+    : heroMap[selectedLocation || ""] || DefaultHero;
 
-  // Forward content to the city component
   return <HeroComponent content={content} />;
 }

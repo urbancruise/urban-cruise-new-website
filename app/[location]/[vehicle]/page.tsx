@@ -1,12 +1,11 @@
-// ============================================================
-// Dynamic route: /[location]/[vehicle]
-//
-// Serves BOTH vehicle pages AND service pages.
-// ============================================================
+// app/[location]/[vehicle]/page.tsx
 import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 
-import { isValidLocation, formatLocationName } from "@/app/lib/location";
+import {
+  isValidLocationAsync,
+  formatLocationName,
+} from "@/app/lib/location";
 import { getVehicleSlug } from "@/app/lib/vehicleUrlMappings";
 import { getServiceSlug } from "@/app/lib/serviceUrlMappings";
 import { createLocationMetadata, getDynamicPageType } from "@/lib/seo";
@@ -127,20 +126,26 @@ const SERVICE_SLUG_TO_TYPE: Record<string, string> = {
   "gurugram-to-jim-corbett-vehicle-rental": "jim-corbett",
   "mumbai-to-jim-corbett-vehicle-rental": "jim-corbett",
   "pune-to-jim-corbett-vehicle-rental": "jim-corbett",
+
   "do-dham-yatra-package": "do-dham",
   "char-dham-yatra-package": "char-dham",
+
   "pilgrimage-vehicle-rental": "pilgrimage",
   "pilgrimage-tours-in-mumbai-pilgrimage-bus-rental-in-mumbai": "pilgrimage",
+
   "wedding-cars-and-bus-rental-delhi": "wedding",
   "wedding-cars-and-bus-rental-gurugram": "wedding",
   "wedding-cars-and-bus-rental-pune": "wedding",
   "wedding-car-rental-in-mumbai-wedding-bus-rental-in-mumbai": "wedding",
+
   "corporate-travel-rental-service": "corporate",
   "corporate-bus-service-in-mumbai-corporate-travel-in-mumbai": "corporate",
+
   "vacation-bus-and-car-rentals-in-delhi": "vacations",
   "vacation-bus-and-car-rentals-in-gurugram": "vacations",
   "vacation-bus-and-car-rentals-in-pune": "vacations",
   "vacation-bus-rentals-in-mumbai-holiday-tours-in-mumbai": "vacations",
+
   "bus-and-car-rental-for-local-travel": "local-travel",
   "bus-rental-for-local-travel-sightseeing-in-mumbai-mumbai-darshan-airport-transfer":
     "local-travel",
@@ -154,12 +159,12 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { location, vehicle } = await params;
 
-  if (!isValidLocation(location)) {
-    return {};
-  }
+  const valid = await isValidLocationAsync(location);
+  if (!valid) return {};
 
   const path = `/${location}/${vehicle}`;
 
+  // CMS SEO first
   const cmsSeo = await getSeoByPath(path);
   if (cmsSeo?.seo) {
     const s = cmsSeo.seo;
@@ -190,6 +195,7 @@ export async function generateMetadata({
     };
   }
 
+  // Fallback
   return createLocationMetadata(
     location,
     getDynamicPageType(vehicle),
@@ -203,11 +209,11 @@ export async function generateMetadata({
 export default async function DynamicPage({ params }: PageProps) {
   const { location, vehicle } = await params;
 
-  if (!isValidLocation(location)) {
-    notFound();
-  }
+  // 1. Validate location (async, CMS-driven)
+  const valid = await isValidLocationAsync(location);
+  if (!valid) notFound();
 
-  // 1. Resolve internal type from the URL slug
+  // 2. Resolve internal type
   const vehicleType = VEHICLE_SLUG_TO_TYPE[vehicle];
   const serviceType = SERVICE_SLUG_TO_TYPE[vehicle];
 
@@ -215,11 +221,10 @@ export default async function DynamicPage({ params }: PageProps) {
     notFound();
   }
 
-  // ⭐ KEY FIX: The CMS saves content under the INTERNAL slug
-  //    (e.g., "car-suvs"), not the URL slug (e.g., "car-rental-delhi").
-  //    So we fetch using vehicleType / serviceType.
+  // ⭐ CMS saves content under the INTERNAL slug (car-suvs, not car-rental-delhi)
   const internalSlug = vehicleType ?? serviceType ?? vehicle;
 
+  // 3. Fetch CMS content + SEO in parallel
   const [cmsData, cmsSeo] = await Promise.all([
     getVehicle(location, internalSlug),
     getSeoByPath(`/${location}/${vehicle}`),

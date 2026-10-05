@@ -1,14 +1,12 @@
 // app/[location]/faqs/page.tsx
-import { notFound } from 'next/navigation';
-import { isValidLocation } from '@/app/lib/location';
-import FaqsSelector from '@/app/components/FaqsSelector';
-import { createLocationMetadata } from '@/lib/seo';
-import PageJsonLd from '@/app/components/seo/PageJsonLd';
+import { notFound } from "next/navigation";
+import { isValidLocationAsync } from "@/app/lib/location";
+import FaqsSelector from "@/app/components/FaqsSelector";
+import { createLocationMetadata } from "@/lib/seo";
+import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface FaqsPageProps {
-  params: Promise<{
-    location: string;
-  }>;
+  params: Promise<{ location: string }>;
 }
 
 export async function generateMetadata({ params }: FaqsPageProps) {
@@ -19,13 +17,16 @@ export async function generateMetadata({ params }: FaqsPageProps) {
 export default async function FaqsPage({ params }: FaqsPageProps) {
   const { location } = await params;
 
-  if (!isValidLocation(location)) {
-    notFound();
-  }
+  const valid = await isValidLocationAsync(location);
+  if (!valid) notFound();
 
   return (
     <>
-      <PageJsonLd name={`Vehicle Rental FAQs in ${location}`} description={`Answers about vehicle rentals, bookings and travel services in ${location}.`} path={`/${location}/faqs`} />
+      <PageJsonLd
+        name={`Vehicle Rental FAQs in ${location}`}
+        description={`Answers about vehicle rentals, bookings and travel services in ${location}.`}
+        path={`/${location}/faqs`}
+      />
       <FaqsSelector />
     </>
   );

@@ -1,62 +1,68 @@
+// app/components/HowItWorksSelector.tsx
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// ============================================================
-// LAZY LOAD HOW IT WORKS COMPONENTS
-// ============================================================
+const DelhiHowItWorks = dynamic(() =>
+  import("./home/howItworks/DelhiHowItWorks")
+);
+const GurugramHowItWorks = dynamic(() =>
+  import("./home/howItworks/GurugramHowItWorks")
+);
+const MumbaiHowItWorks = dynamic(() =>
+  import("./home/howItworks/MumbaiHowItWorks")
+);
+const PuneHowItWorks = dynamic(() =>
+  import("./home/howItworks/PuneHowItWorks")
+);
+const DefaultHowItWorks = dynamic(() =>
+  import("./home/howItworks/DefaultHowItWorks")
+);
 
-const DelhiHowItWorks = dynamic(() => import("./home/howItWorks/DelhiHowItWorks"));
-const GurugramHowItWorks = dynamic(() => import("./home/howItWorks/GurugramHowItWorks"));
-const MumbaiHowItWorks = dynamic(() => import("./home/howItWorks/MumbaiHowItWorks"));
-const PuneHowItWorks = dynamic(() => import("./home/howItWorks/PuneHowItWorks"));
-
-// ============================================================
-// TYPES
-// ============================================================
 export interface HowItWorksStep {
   number: string;
   title: string;
   description: string;
   image: string;
   imagePublicId?: string;
-  color?: string; // optional override
+  color?: string;
 }
 
 export interface HowItWorksContent {
   eyebrow?: string;
   title?: string;
+  titleHighlight?: string;
   subtitle?: string;
   description?: string;
   steps?: HowItWorksStep[];
 }
 
-export interface HowItWorksSelectorProps {
+interface HowItWorksSelectorProps {
   content?: HowItWorksContent;
 }
 
-type HowItWorksComponent = React.ComponentType<HowItWorksSelectorProps>;
+export default function HowItWorksSelector({
+  content,
+}: HowItWorksSelectorProps) {
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
 
-// ============================================================
-// SELECTOR
-// ============================================================
-export default function HowItWorksSelector({ content }: HowItWorksSelectorProps) {
-  const { location } = useLocation();
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
-  const howItWorksMap: Record<string, HowItWorksComponent> = {
-    delhi: DelhiHowItWorks as HowItWorksComponent,
-    gurugram: GurugramHowItWorks as HowItWorksComponent,
-    mumbai: MumbaiHowItWorks as HowItWorksComponent,
-    pune: PuneHowItWorks as HowItWorksComponent,
+  const map: Record<string, React.ComponentType<HowItWorksSelectorProps>> = {
+    delhi: DelhiHowItWorks as any,
+    gurugram: GurugramHowItWorks as any,
+    mumbai: MumbaiHowItWorks as any,
+    pune: PuneHowItWorks as any,
   };
 
-  const HowItWorksComponent = howItWorksMap[location];
+  const Component = isGlobalRoute
+    ? (DefaultHowItWorks as any)
+    : map[selectedLocation || ""] || (DefaultHowItWorks as any);
 
-  if (!HowItWorksComponent) {
-    return null;
-  }
-
-  return <HowItWorksComponent content={content} />;
+  return <Component content={content} />;
 }

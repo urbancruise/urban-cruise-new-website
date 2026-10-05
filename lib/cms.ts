@@ -55,6 +55,30 @@ async function cmsFetch<T>(
 }
 
 // ============================================================
+// CITIES — append to urban-cruise/lib/cms.ts
+// ============================================================
+export interface CityEntry {
+  id: number;
+  name: string;
+  state: string | null;
+  country: string | null;
+  code: string | null;
+  slug: string;
+  image_url?: string | null;
+}
+
+export interface CitiesResponse {
+  cities: CityEntry[];
+}
+
+export async function getCities() {
+  return cmsFetch<CitiesResponse>("/api/public/cities", {
+    revalidate: 300,
+    tags: ["cities"],
+  });
+}
+
+// ============================================================
 // HOME SECTIONS
 // ============================================================
 export interface HomeResponse {

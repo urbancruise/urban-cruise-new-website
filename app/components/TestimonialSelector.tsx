@@ -1,37 +1,26 @@
-
-// ============================================================
-// Location-aware selector for Testimonials section
-// Passes CMS content (optional) to the correct city component.
-// ============================================================
+// app/components/TestimonialSelector.tsx
 "use client";
 
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-// ======================================================
-// LAZY LOAD COMPONENTS
-// ======================================================
-
-const DelhiTestimonials = dynamic(
-  () => import("./home/testimonial/DelhiTestimonial")
+const DelhiTestimonials = dynamic(() =>
+  import("./home/testimonial/DelhiTestimonial")
 );
-
-const GurugramTestimonials = dynamic(
-  () => import("./home/testimonial/GurugramTestimonial")
+const GurugramTestimonials = dynamic(() =>
+  import("./home/testimonial/GurugramTestimonial")
 );
-
-const MumbaiTestimonials = dynamic(
-  () => import("./home/testimonial/MumbaiTestimonial")
+const MumbaiTestimonials = dynamic(() =>
+  import("./home/testimonial/MumbaiTestimonial")
 );
-
-const PuneTestimonials = dynamic(
-  () => import("./home/testimonial/PuneTestimonial")
+const PuneTestimonials = dynamic(() =>
+  import("./home/testimonial/PuneTestimonial")
 );
-
-// ======================================================
-// TYPES
-// ======================================================
+const DefaultTestimonials = dynamic(() =>
+  import("./home/testimonial/DefaultTestimonial")
+);
 
 export interface TestimonialItem {
   id?: number;
@@ -40,6 +29,7 @@ export interface TestimonialItem {
   message: string;
   avatar?: string;
   videoId?: string;
+  youtubeUrl?: string;
   rating: number;
   accent?: "green" | "orange";
 }
@@ -53,31 +43,32 @@ export interface TestimonialsContent {
   items?: TestimonialItem[];
 }
 
-export interface TestimonialsProps {
+interface Props {
   content?: TestimonialsContent;
 }
 
-// ======================================================
-// COMPONENT
-// ======================================================
+export default function TestimonialSelector({ content }: Props) {
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
 
-export default function TestimonialSelector({
-  content,
-}: TestimonialsProps) {
-  const { location } = useLocation();
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
-  const map: Record<string, React.ComponentType<TestimonialsProps>> = {
-    delhi: DelhiTestimonials,
-    gurugram: GurugramTestimonials,
-    mumbai: MumbaiTestimonials,
-    pune: PuneTestimonials,
+  const map: Record<
+    string,
+    React.ComponentType<{ content?: TestimonialsContent }>
+  > = {
+    delhi: DelhiTestimonials as any,
+    gurugram: GurugramTestimonials as any,
+    mumbai: MumbaiTestimonials as any,
+    pune: PuneTestimonials as any,
   };
 
-  const Component = map[location];
+  const Component = isGlobalRoute
+    ? (DefaultTestimonials as any)
+    : map[selectedLocation || ""] || (DefaultTestimonials as any);
 
-  if (!Component) {
-    return null;
-  }
+  if (!Component) return null;
 
   return <Component content={content} />;
 }

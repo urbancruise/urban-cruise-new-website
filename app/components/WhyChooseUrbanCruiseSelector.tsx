@@ -1,36 +1,26 @@
-// ============================================================
-// Location-aware selector for "Why Choose Urban Cruise"
-// Passes CMS content (optional) to the correct city component.
-// ============================================================
+// app/components/WhyChooseUrbanCruiseSelector.tsx
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// ======================================================
-// LAZY LOAD COMPONENTS
-// ======================================================
-
-const DelhiWhyChooseUrbanCruise = dynamic(
-  () => import("./home/whychooseurbancruise/DelhiWhyChooseUrbanCruise")
+const DelhiWhyChoose = dynamic(() =>
+  import("./home/whychooseurbancruise/DelhiWhyChooseUrbanCruise")
 );
-
-const GurugramWhyChooseUrbanCruise = dynamic(
-  () => import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
+const GurugramWhyChoose = dynamic(() =>
+  import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
 );
-
-const MumbaiWhyChooseUrbanCruise = dynamic(
-  () => import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
+const MumbaiWhyChoose = dynamic(() =>
+  import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
 );
-
-const PuneWhyChooseUrbanCruise = dynamic(
-  () => import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
+const PuneWhyChoose = dynamic(() =>
+  import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
 );
-
-// ======================================================
-// TYPES
-// ======================================================
+const DefaultWhyChoose = dynamic(() =>
+  import("./home/whychooseurbancruise/DefaultWhyChooseUrbanCruise")
+);
 
 export interface WhyChooseBenefitItem {
   number: string;
@@ -50,34 +40,32 @@ export interface WhyChooseUrbanCruiseContent {
   benefits?: WhyChooseBenefitItem[];
 }
 
-export interface WhyChooseUrbanCruiseProps {
+interface Props {
   content?: WhyChooseUrbanCruiseContent;
 }
 
-// ======================================================
-// COMPONENT
-// ======================================================
+export default function WhyChooseUrbanCruiseSelector({ content }: Props) {
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
 
-export default function WhyChooseUrbanCruiseSelector({
-  content,
-}: WhyChooseUrbanCruiseProps) {
-  const { location } = useLocation();
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
   const map: Record<
     string,
-    React.ComponentType<WhyChooseUrbanCruiseProps>
+    React.ComponentType<{ content?: WhyChooseUrbanCruiseContent }>
   > = {
-    delhi: DelhiWhyChooseUrbanCruise,
-    gurugram: GurugramWhyChooseUrbanCruise,
-    mumbai: MumbaiWhyChooseUrbanCruise,
-    pune: PuneWhyChooseUrbanCruise,
+    delhi: DelhiWhyChoose as any,
+    gurugram: GurugramWhyChoose as any,
+    mumbai: MumbaiWhyChoose as any,
+    pune: PuneWhyChoose as any,
   };
 
-  const Component = map[location];
+  const Component = isGlobalRoute
+    ? (DefaultWhyChoose as any)
+    : map[selectedLocation || ""] || (DefaultWhyChoose as any);
 
-  if (!Component) {
-    return null;
-  }
+  if (!Component) return null;
 
   return <Component content={content} />;
 }

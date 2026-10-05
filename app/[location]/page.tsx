@@ -1,11 +1,8 @@
-// ============================================================
-// City home page — fetches CMS content + SEO in parallel
-// and passes them to the location-aware selectors.
-// ============================================================
+// app/[location]/page.tsx
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-import { isValidLocation, formatLocationName } from "@/app/lib/location";
+import { isValidLocationAsync, formatLocationName } from "@/app/lib/location";
 import { getHomeSections, getSeoByPath } from "@/lib/cms";
 
 import HeroSelector from "@/app/components/HeroSelector";
@@ -29,12 +26,12 @@ interface PageProps {
   params: Promise<{ location: string }>;
 }
 
-// ============================================================
-// METADATA
-// ============================================================
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { location } = await params;
-  if (!isValidLocation(location)) return {};
+  const valid = await isValidLocationAsync(location);
+  if (!valid) return {};
 
   const path = `/${location}`;
   const seo = await getSeoByPath(path);
@@ -75,17 +72,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// ============================================================
-// PAGE
-// ============================================================
 export default async function LocationHome({ params }: PageProps) {
   const { location } = await params;
 
-  if (!isValidLocation(location)) {
-    notFound();
-  }
+  const valid = await isValidLocationAsync(location);
+  if (!valid) notFound();
 
-  // Parallel fetch
   const [homeData, seo] = await Promise.all([
     getHomeSections(location),
     getSeoByPath(`/${location}`),
@@ -93,14 +85,6 @@ export default async function LocationHome({ params }: PageProps) {
 
   const sections = homeData?.sections ?? {};
   const city = formatLocationName(location);
-
-  // Debug — remove after verifying
-  if (process.env.NODE_ENV === "development") {
-    console.log(`[${location}] CMS section keys:`, Object.keys(sections));
-    console.log(`[${location}] hero present:`, !!sections.hero);
-    console.log(`[${location}] vehiclebudget value:`, sections.vehiclebudget);
-    console.log(`[${location}] howitworks value:`, sections.howitworks);
-  }
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)]">
@@ -112,7 +96,9 @@ export default async function LocationHome({ params }: PageProps) {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: `Vehicle Rental in ${city}`,
-            url: `${process.env.WEBSITE_ORIGIN || "http://localhost:3000"}/${location}`,
+            url: `${
+              process.env.WEBSITE_ORIGIN || "http://localhost:3000"
+            }/${location}`,
           }}
         />
       )}
@@ -128,10 +114,7 @@ export default async function LocationHome({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Hero — MUST pass content={sections.hero} */}
       <HeroSelector content={sections.hero} />
-
-      {/* Everything else, same pattern */}
       <AboutSelector content={sections.about} />
       <HowItWorksSelector content={sections.howitworks} />
       <VehicleForEveryBudgetSelector content={sections.vehiclebudget} />
@@ -140,7 +123,9 @@ export default async function LocationHome({ params }: PageProps) {
       <WhyChooseUrbanCruiseSelector content={sections.whychoose} />
       <TestimonialSelector content={sections.testimonials} />
       <FaqsSelector content={sections.faq} />
-      <VehicleRentalServiceInIndiaSelector content={sections.servicelocations} />
+      <VehicleRentalServiceInIndiaSelector
+        content={sections.servicelocations}
+      />
       <OurTrustedPartner content={sections.partners} />
       <DownloadApp content={sections.downloadapp} />
     </div>

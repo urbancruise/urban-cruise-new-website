@@ -1,5 +1,8 @@
+// app/[location]/book/layout.tsx
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
+import { isValidLocationAsync } from "@/app/lib/location";
 import { createLocationMetadata } from "@/lib/seo";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
@@ -20,6 +23,9 @@ export default async function BookingLayout({
   params: Promise<{ location: string }>;
 }) {
   const { location } = await params;
+
+  const valid = await isValidLocationAsync(location);
+  if (!valid) notFound();
 
   return (
     <>

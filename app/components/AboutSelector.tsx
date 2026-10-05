@@ -1,20 +1,17 @@
-
+// app/components/AboutSelector.tsx
 "use client";
 
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-// Lazy load about components for better performance
 const DelhiAbout = dynamic(() => import("./home/about/DelhiAbout"));
 const GurugramAbout = dynamic(() => import("./home/about/GurugramAbout"));
 const MumbaiAbout = dynamic(() => import("./home/about/MumbaiAbout"));
 const PuneAbout = dynamic(() => import("./home/about/PuneAbout"));
 const DefaultAbout = dynamic(() => import("./home/about/DefaultAbout"));
 
-// ============================================================
-// Types
-// ============================================================
 export interface AboutContent {
   eyebrow?: string;
   title?: string;
@@ -25,14 +22,16 @@ export interface AboutContent {
 }
 
 interface AboutSelectorProps {
-  /** Content from CMS (optional — falls back to static defaults) */
   content?: AboutContent | null;
 }
 
 export default function AboutSelector({ content }: AboutSelectorProps) {
-  const { location } = useLocation();
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
 
-  // Map locations to their respective about components
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
+
   const aboutMap: Record<
     string,
     React.ComponentType<{ content?: AboutContent | null }>
@@ -43,7 +42,9 @@ export default function AboutSelector({ content }: AboutSelectorProps) {
     pune: PuneAbout as any,
   };
 
-  const AboutComponent = aboutMap[location] || (DefaultAbout as any);
+  const AboutComponent = isGlobalRoute
+    ? (DefaultAbout as any)
+    : aboutMap[selectedLocation || ""] || (DefaultAbout as any);
 
   return <AboutComponent content={content} />;
 }

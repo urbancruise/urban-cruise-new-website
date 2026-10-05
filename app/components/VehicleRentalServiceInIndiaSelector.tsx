@@ -1,41 +1,26 @@
-
-// ============================================================
-// Location-aware selector for "Vehicle Rental Service In India"
-// Passes CMS content (optional) to the correct city component.
-// ============================================================
+// app/components/VehicleRentalServiceInIndiaSelector.tsx
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// ======================================================
-// LAZY LOAD COMPONENTS
-// ======================================================
-
-const DelhiVehicleRentalServiceInIndia = dynamic(
-  () => import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia"),
-  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
+const DelhiVehicleRentalServiceInIndia = dynamic(() =>
+  import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia")
 );
-
-const GurugramVehicleRentalServiceInIndia = dynamic(
-  () => import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia"),
-  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
+const GurugramVehicleRentalServiceInIndia = dynamic(() =>
+  import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia")
 );
-
-const MumbaiVehicleRentalServiceInIndia = dynamic(
-  () => import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia"),
-  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
+const MumbaiVehicleRentalServiceInIndia = dynamic(() =>
+  import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia")
 );
-
-const PuneVehicleRentalServiceInIndia = dynamic(
-  () => import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia"),
-  { loading: () => <div className="min-h-[400px] w-full bg-white" /> }
+const PuneVehicleRentalServiceInIndia = dynamic(() =>
+  import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia")
 );
-
-// ======================================================
-// TYPES
-// ======================================================
+const DefaultVehicleRentalServiceInIndia = dynamic(() =>
+  import("./home/vehiclerentalserviceinindia/DefaultVehicleRentalServiceInIndia")
+);
 
 export interface ServiceCityItem {
   name: string;
@@ -52,36 +37,35 @@ export interface VehicleRentalServiceContent {
   cities?: ServiceCityItem[];
 }
 
-export interface VehicleRentalServiceProps {
+interface Props {
   content?: VehicleRentalServiceContent;
 }
 
-// ======================================================
-// COMPONENT
-// ======================================================
-
 export default function VehicleRentalServiceInIndiaSelector({
   content,
-}: VehicleRentalServiceProps) {
-  const { location } = useLocation();
+}: Props) {
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
 
-  const currentLocation = String(location || "").trim().toLowerCase();
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
   const map: Record<
     string,
-    React.ComponentType<VehicleRentalServiceProps>
+    React.ComponentType<{ content?: VehicleRentalServiceContent }>
   > = {
-    delhi: DelhiVehicleRentalServiceInIndia,
-    gurugram: GurugramVehicleRentalServiceInIndia,
-    mumbai: MumbaiVehicleRentalServiceInIndia,
-    pune: PuneVehicleRentalServiceInIndia,
+    delhi: DelhiVehicleRentalServiceInIndia as any,
+    gurugram: GurugramVehicleRentalServiceInIndia as any,
+    mumbai: MumbaiVehicleRentalServiceInIndia as any,
+    pune: PuneVehicleRentalServiceInIndia as any,
   };
 
-  const Component = map[currentLocation];
+  const Component = isGlobalRoute
+    ? (DefaultVehicleRentalServiceInIndia as any)
+    : map[selectedLocation || ""] ||
+      (DefaultVehicleRentalServiceInIndia as any);
 
-  if (!Component) {
-    return null;
-  }
+  if (!Component) return null;
 
   return <Component content={content} />;
 }

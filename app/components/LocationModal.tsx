@@ -3,17 +3,16 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "@/app/context/LocationContext";
-import { formatLocationName, AVAILABLE_LOCATIONS } from "@/app/lib/location";
+import { formatLocationName } from "@/app/lib/location";
+import Image from "next/image";
+import { IoClose, IoSearch } from "react-icons/io5";
 import {
-  FaSearch,
-  FaTimes,
-  FaMapMarkerAlt,
   FaCheck,
   FaCity,
-  FaLocationArrow,
+  FaMapMarkerAlt,
+  FaTimes,
+  FaGlobe,
 } from "react-icons/fa";
-import { IoClose, IoSearch } from "react-icons/io5";
-import Image from "next/image";
 import { TbCurrentLocation } from "react-icons/tb";
 
 interface LocationModalProps {
@@ -21,27 +20,75 @@ interface LocationModalProps {
   onClose: () => void;
 }
 
-// City image mappings
-const CITY_IMAGES: Record<string, string> = {
+// Static images by slug — used when CMS doesn't provide image_url
+const STATIC_CITY_IMAGES: Record<string, string> = {
   delhi: "/images/CitiesIcon/delhi.webp",
   mumbai: "/images/CitiesIcon/mumbai.webp",
   pune: "/images/CitiesIcon/pune.webp",
   gurugram: "/images/CitiesIcon/gurugram.webp",
+  // ⭐ Global icon — served from public folder
+  global: "/images/CitiesIcon/global.webp",
 };
 
 const FALLBACK_IMAGE = "/images/CitiesIcon/fallback.webp";
 
-function getCityImage(loc: string) {
-  return CITY_IMAGES[loc] || FALLBACK_IMAGE;
+function CityIcon({
+  slug,
+  name,
+  imageUrl,
+  size = 40,
+}: {
+  slug: string;
+  name: string;
+  imageUrl?: string | null;
+  size?: number;
+}) {
+  // Global — prefer CMS image_url, then static global.webp, then inline SVG
+  if (slug === "global") {
+    const src = imageUrl || STATIC_CITY_IMAGES.global;
+    if (src) {
+      return (
+        <Image
+          src={src}
+          alt={name}
+          fill
+          sizes={`${size}px`}
+          className="object-contain"
+        />
+      );
+    }
+    return (
+      <FaGlobe
+        className="text-[#03C35E]"
+        style={{ width: size * 0.6, height: size * 0.6 }}
+      />
+    );
+  }
+
+  // Regular cities — CMS image_url first, then static, then generic fallback
+  const src = imageUrl || STATIC_CITY_IMAGES[slug] || FALLBACK_IMAGE;
+
+  return (
+    <Image
+      src={src}
+      alt={name}
+      fill
+      sizes={`${size}px`}
+      className="object-contain"
+    />
+  );
 }
 
-export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
-  const { selectedLocation, setLocation } = useLocation();
+export default function LocationModal({
+  isOpen,
+  onClose,
+}: LocationModalProps) {
+  const { selectedLocation, setLocation, locationOptions } = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close modal when clicking outside
+  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -51,36 +98,26 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         onClose();
       }
     };
-
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
       document.body.style.overflow = "hidden";
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
 
-  // Close modal on ESC key
+  // Close on ESC
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === "Escape") onClose();
     };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleEsc);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEsc);
-    };
+    if (isOpen) document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
 
-  // Reset transient UI state each time the modal opens
+  // Reset UI state on open
   useEffect(() => {
     if (isOpen) {
       setSearchTerm("");
@@ -98,15 +135,26 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
     setSearchTerm("");
   };
 
+  // Deduplicate by slug (safety net)
+  const uniqueLocations = useMemo(() => {
+    const seen = new Set<string>();
+    return locationOptions.filter((loc) => {
+      if (seen.has(loc.slug)) return false;
+      seen.add(loc.slug);
+      return true;
+    });
+  }, [locationOptions]);
+
   const filteredLocations = useMemo(() => {
-    return AVAILABLE_LOCATIONS.filter((loc) => {
-      const matchesSearch = formatLocationName(loc)
+    return uniqueLocations.filter((loc) => {
+      const matchesSearch = loc.name
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-      const matchesFilter = activeFilter === "all" || activeFilter === loc;
+      const matchesFilter =
+        activeFilter === "all" || activeFilter === loc.slug;
       return matchesSearch && matchesFilter;
     });
-  }, [searchTerm, activeFilter]);
+  }, [uniqueLocations, searchTerm, activeFilter]);
 
   if (!isOpen) return null;
 
@@ -116,7 +164,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         ref={modalRef}
         className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 mx-2 sm:mx-4"
       >
-        {/* Close button - adjusted for all screens */}
+        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute right-2 sm:right-3 md:right-4 top-2 sm:top-3 md:top-4 z-10 w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:scale-110"
@@ -126,7 +174,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         </button>
 
         <div className="max-h-[85vh] overflow-y-auto px-3 sm:px-6 md:px-8 lg:px-10 pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6">
-          {/* Header - responsive text sizes */}
+          {/* Header */}
           <div className="text-center mb-3 sm:mb-4 md:mb-5">
             <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1 sm:mb-2">
               <span className="h-px w-4 sm:w-6 md:w-8 bg-[#03C35E]" />
@@ -140,7 +188,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
             </h2>
           </div>
 
-          {/* Search Bar - responsive sizing */}
+          {/* Search */}
           <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-4 sm:mb-5">
             <div className="relative">
               <IoSearch className="absolute text-base sm:text-lg md:text-xl left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -163,7 +211,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
             </div>
           </div>
 
-          {/* Filter Pills - responsive sizing and wrapping */}
+          {/* Filter pills */}
           <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 md:gap-2.5 mb-4 sm:mb-6 md:mb-8 px-1">
             <button
               onClick={() => handlePillClick("all")}
@@ -174,39 +222,36 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
               }`}
             >
               <TbCurrentLocation className="text-base sm:text-lg md:text-xl" />
-              <span className="hidden xs:inline">All</span>
-              <span className="xs:hidden">All</span>
+              <span>All</span>
             </button>
-            {AVAILABLE_LOCATIONS.map((loc) => {
-              const isActive = activeFilter === loc;
-              const imageSrc = getCityImage(loc);
+
+            {uniqueLocations.map((loc) => {
+              const isActive = activeFilter === loc.slug;
               return (
                 <button
-                  key={loc}
-                  onClick={() => handlePillClick(loc)}
-                  className={`flex items-center gap-1 px-2.5 sm:px-3 md:px-3.5 py-1.5 sm:py-2 rounded-full border text-xs sm:text-sm font-semibold transition-all duration-300 ${
+                  key={loc.slug}
+                  onClick={() => handlePillClick(loc.slug)}
+                  className={`flex items-center gap-1.5 px-2.5 sm:px-3 md:px-3.5 py-1.5 sm:py-2 rounded-full border text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     isActive
                       ? "bg-[#03C35E] border-[#03C35E] text-white shadow-sm"
                       : "bg-white border-gray-200 text-gray-700 hover:border-[#03C35E] hover:text-[#03C35E]"
                   }`}
                 >
-                  <div className="relative w-4 h-4 sm:w-5 sm:h-5 overflow-hidden">
-                    <Image
-                      src={imageSrc}
-                      alt={formatLocationName(loc)}
-                      fill
-                      sizes="20px"
-                      className="object-contain"
+                  <span className="relative flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center overflow-hidden">
+                    <CityIcon
+                      slug={loc.slug}
+                      name={loc.name}
+                      imageUrl={loc.imageUrl}
+                      size={20}
                     />
-                  </div>
-                  <span className="hidden xs:inline">{formatLocationName(loc)}</span>
-                  <span className="xs:hidden">{formatLocationName(loc).substring(0, 3)}</span>
+                  </span>
+                  <span>{loc.name}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* City Grid - responsive columns */}
+          {/* City grid */}
           {filteredLocations.length === 0 ? (
             <div className="text-center py-8 sm:py-10 md:py-12">
               <FaCity className="text-3xl sm:text-4xl text-gray-300 mx-auto mb-2 sm:mb-3" />
@@ -217,14 +262,15 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
               {filteredLocations.map((loc) => {
-                const isActive = selectedLocation === loc;
-                const imageSrc = getCityImage(loc);
+                const isActive = loc.isGlobal
+                  ? selectedLocation === null
+                  : selectedLocation === loc.slug;
 
                 return (
                   <button
-                    key={loc}
-                    onClick={() => handleLocationSelect(loc)}
-                    className={`group relative flex flex-col items-center gap-1.5 sm:gap-2 md:gap-3 px-3 sm:px-4 md:px-5 lg:px-6 py-2 sm:py-2.5 md:py-3 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5 ${
+                    key={loc.slug}
+                    onClick={() => handleLocationSelect(loc.slug)}
+                    className={`group relative flex flex-col items-center gap-1.5 sm:gap-2 md:gap-3 px-3 sm:px-4 md:px-5 lg:px-6 py-2 sm:py-2.5 md:py-2.5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5 ${
                       isActive
                         ? "border-[#03C35E] bg-[#F0FFF5] shadow-md shadow-[#03C35E]/10"
                         : "border-gray-100 hover:border-[#03C35E]/40 hover:bg-gray-50"
@@ -236,32 +282,33 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                       </div>
                     )}
 
-                    {/* City Image - responsive sizing */}
                     <div
-                      className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 p-2 sm:p-3 md:p-4 rounded-full overflow-hidden border transition-all duration-300 ${
+                      className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-20 lg:h-20 p-2 sm:p-3 md:p-4 rounded-full overflow-hidden border flex items-center justify-center transition-all duration-300 ${
                         isActive
                           ? "border-[#03C35E]/30 ring ring-[#03C35E]/20"
                           : "border-gray-100 group-hover:border-[#03C35E]/30"
                       }`}
                     >
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={imageSrc}
-                          alt={formatLocationName(loc)}
-                          fill
-                          sizes="96px"
-                          className="object-contain"
-                        />
-                      </div>
+                      <CityIcon
+                        slug={loc.slug}
+                        name={loc.name}
+                        imageUrl={loc.imageUrl}
+                        size={96}
+                      />
                     </div>
 
-                    <h3
-                      className={`font-bold text-xs sm:text-sm md:text-base transition-colors duration-300 ${
-                        isActive ? "text-[#03C35E]" : "text-gray-800"
-                      }`}
-                    >
-                      {formatLocationName(loc)}
-                    </h3>
+                    <div className="flex items-center gap-1 sm:gap-1.5">
+                      {loc.isGlobal && (
+                        <FaGlobe className="text-[#03C35E] text-[10px] sm:text-xs" />
+                      )}
+                      <h3
+                        className={`font-bold text-xs sm:text-sm md:text-normal transition-colors duration-300 ${
+                          isActive ? "text-[#03C35E]" : "text-gray-800"
+                        }`}
+                      >
+                        {loc.name}
+                      </h3>
+                    </div>
                   </button>
                 );
               })}
@@ -269,15 +316,17 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           )}
         </div>
 
-        {/* Footer - responsive */}
+        {/* Footer */}
         <div className="px-3 sm:px-6 md:px-8 lg:px-10 py-2 sm:py-3 md:py-4 bg-gray-50 border-t border-gray-100">
-          <div className="flex flex-row xs:flex-row items-center justify-between text-[10px] sm:text-xs text-gray-500 gap-1 sm:gap-0">
-            <span>{AVAILABLE_LOCATIONS.length} cities available</span>
+          <div className="flex flex-row items-center justify-between text-[10px] sm:text-xs text-gray-500 gap-1 sm:gap-0">
+            <span>{uniqueLocations.length} options available</span>
             <span className="flex items-center gap-1 sm:gap-1.5">
               <FaMapMarkerAlt className="text-[#03C35E] text-xs sm:text-sm" />
               <span className="hidden xs:inline">Current:</span>
               <span className="font-semibold text-[#03C35E] text-[10px] sm:text-xs">
-                {selectedLocation ? formatLocationName(selectedLocation) : "Select City"}
+                {selectedLocation
+                  ? formatLocationName(selectedLocation)
+                  : "Global"}
               </span>
             </span>
           </div>
@@ -286,4 +335,3 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
     </div>
   );
 }
-

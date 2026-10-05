@@ -1,37 +1,26 @@
-
-// ============================================================
-// Location-aware selector for "Vehicle For Every Occasion"
-// Passes CMS content (optional) to the correct city component.
-// ============================================================
+// app/components/VehicleForEveryOccasionSelector.tsx
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
+import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// ======================================================
-// LAZY LOAD COMPONENTS
-// ======================================================
-
-const DelhiVehicleForEveryOccasion = dynamic(
-  () => import("./home/vehicleforeveryoccasion/DelhiVehicleForEveryOccasion")
+const DelhiVehicleForEveryOccasion = dynamic(() =>
+  import("./home/vehicleforeveryoccasion/DelhiVehicleForEveryOccasion")
 );
-
-const GurugramVehicleForEveryOccasion = dynamic(
-  () => import("./home/vehicleforeveryoccasion/GurugramVehicleForEveryOccasion")
+const GurugramVehicleForEveryOccasion = dynamic(() =>
+  import("./home/vehicleforeveryoccasion/GurugramVehicleForEveryOccasion")
 );
-
-const MumbaiVehicleForEveryOccasion = dynamic(
-  () => import("./home/vehicleforeveryoccasion/MumbaiVehicleForEveryOccasion")
+const MumbaiVehicleForEveryOccasion = dynamic(() =>
+  import("./home/vehicleforeveryoccasion/MumbaiVehicleForEveryOccasion")
 );
-
-const PuneVehicleForEveryOccasion = dynamic(
-  () => import("./home/vehicleforeveryoccasion/PuneVehicleForEveryOccasion")
+const PuneVehicleForEveryOccasion = dynamic(() =>
+  import("./home/vehicleforeveryoccasion/PuneVehicleForEveryOccasion")
 );
-
-// ======================================================
-// TYPES
-// ======================================================
+const DefaultVehicleForEveryOccasion = dynamic(() =>
+  import("./home/vehicleforeveryoccasion/DefaultVehicleForEveryOccasion")
+);
 
 export interface OccasionCard {
   title: string;
@@ -47,7 +36,6 @@ export interface OccasionCard {
 export interface OccasionTab {
   id: string;
   label: string;
-  /** Icon key — one of "wedding" | "corporate" | "vacation" | "local" | "pilgrimage" | "custom" */
   iconKey?: string;
   cards: OccasionCard[];
 }
@@ -61,34 +49,32 @@ export interface VehicleEveryOccasionContent {
   tabs?: OccasionTab[];
 }
 
-export interface VehicleForEveryOccasionProps {
+interface Props {
   content?: VehicleEveryOccasionContent;
 }
 
-// ======================================================
-// COMPONENT
-// ======================================================
+export default function VehicleForEveryOccasionSelector({ content }: Props) {
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
 
-export default function VehicleForEveryOccasionSelector({
-  content,
-}: VehicleForEveryOccasionProps) {
-  const { location } = useLocation();
+  const pathSegments = pathname?.split("/").filter(Boolean) ?? [];
+  const isGlobalRoute = pathSegments.length === 0;
 
   const map: Record<
     string,
-    React.ComponentType<VehicleForEveryOccasionProps>
+    React.ComponentType<{ content?: VehicleEveryOccasionContent }>
   > = {
-    delhi: DelhiVehicleForEveryOccasion,
-    gurugram: GurugramVehicleForEveryOccasion,
-    mumbai: MumbaiVehicleForEveryOccasion,
-    pune: PuneVehicleForEveryOccasion,
+    delhi: DelhiVehicleForEveryOccasion as any,
+    gurugram: GurugramVehicleForEveryOccasion as any,
+    mumbai: MumbaiVehicleForEveryOccasion as any,
+    pune: PuneVehicleForEveryOccasion as any,
   };
 
-  const Component = map[location];
+  const Component = isGlobalRoute
+    ? (DefaultVehicleForEveryOccasion as any)
+    : map[selectedLocation || ""] || (DefaultVehicleForEveryOccasion as any);
 
-  if (!Component) {
-    return null;
-  }
+  if (!Component) return null;
 
   return <Component content={content} />;
 }

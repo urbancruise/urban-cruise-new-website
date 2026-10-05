@@ -1,14 +1,12 @@
 // app/[location]/testimonials/page.tsx
-import { notFound } from 'next/navigation';
-import { isValidLocation } from '@/app/lib/location';
-import TestimonialsSelector from '@/app/components/TestimonialsSelector';
-import { createLocationMetadata } from '@/lib/seo';
-import PageJsonLd from '@/app/components/seo/PageJsonLd';
+import { notFound } from "next/navigation";
+import { isValidLocationAsync } from "@/app/lib/location";
+import TestimonialsSelector from "@/app/components/TestimonialsSelector";
+import { createLocationMetadata } from "@/lib/seo";
+import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface TestimonialsPageProps {
-  params: Promise<{
-    location: string;
-  }>;
+  params: Promise<{ location: string }>;
 }
 
 export async function generateMetadata({ params }: TestimonialsPageProps) {
@@ -16,20 +14,25 @@ export async function generateMetadata({ params }: TestimonialsPageProps) {
   return createLocationMetadata(
     location,
     "testimonials",
-    `/${location}/testimonials`,
+    `/${location}/testimonials`
   );
 }
 
-export default async function TestimonialsPage({ params }: TestimonialsPageProps) {
+export default async function TestimonialsPage({
+  params,
+}: TestimonialsPageProps) {
   const { location } = await params;
 
-  if (!isValidLocation(location)) {
-    notFound();
-  }
+  const valid = await isValidLocationAsync(location);
+  if (!valid) notFound();
 
   return (
     <>
-      <PageJsonLd name={`Vehicle Rental Reviews in ${location}`} description={`Read Urban Cruise customer reviews from ${location}.`} path={`/${location}/testimonials`} />
+      <PageJsonLd
+        name={`Vehicle Rental Reviews in ${location}`}
+        description={`Read Urban Cruise customer reviews from ${location}.`}
+        path={`/${location}/testimonials`}
+      />
       <TestimonialsSelector />
     </>
   );
