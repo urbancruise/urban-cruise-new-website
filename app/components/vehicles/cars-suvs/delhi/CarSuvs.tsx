@@ -26,7 +26,13 @@ export default function CarSuvs({ cmsMeta, cmsSections }: Props) {
 
   return (
     <section className="min-h-[calc(100vh-4rem)]">
-      <Hero content={s.hero} meta={cmsMeta} />
+      <Hero
+        content={{
+          ...s.hero,
+          quickcall: s.quickcall ?? s.hero?.quickcall,
+        }}
+        meta={cmsMeta}
+      />
       <About content={s.about} />
       <HowItWorks content={s.howitworks} />
       <VehicleForEveryBudget content={s.vehiclebudget} />

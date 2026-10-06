@@ -29,9 +29,13 @@ export type GlobalVehicleSlug = keyof typeof vehiclePages;
 
 export default function GlobalVehicleSelector({
   vehicle,
+  cmsMeta,
+  cmsSections,
 }: {
   vehicle: GlobalVehicleSlug;
+  cmsMeta?: Record<string, unknown> | null;
+  cmsSections?: Record<string, unknown> | null;
 }) {
   const VehiclePage = vehiclePages[vehicle];
-  return <VehiclePage />;
+  return <VehiclePage cmsMeta={cmsMeta} cmsSections={cmsSections} />;
 }
