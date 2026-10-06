@@ -13,7 +13,6 @@ export default function PageJsonLd({
   path: string;
 }) {
   const segments = path.split("/").filter(Boolean);
-  const location = segments[0];
 
   return (
     <>
@@ -24,11 +23,18 @@ export default function PageJsonLd({
           path,
         })}
       />
-      {location && (
+      {segments.length > 0 && (
         <Breadcrumb
           items={[
             { name: "Home", path: "/" },
-            { name: formatLocationName(location), path: `/${location}` },
+            ...(segments.length > 1
+              ? [
+                  {
+                    name: formatLocationName(segments[0]),
+                    path: `/${segments[0]}`,
+                  },
+                ]
+              : []),
             { name, path },
           ]}
         />
