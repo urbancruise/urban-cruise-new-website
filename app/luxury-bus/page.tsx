@@ -1,3 +1,12 @@
 import { createGlobalVehiclePage } from "@/app/lib/global-vehicle-page";
-export const metadata = { title: "Luxury Bus Rental | Urban Cruise" };
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
+
+export async function generateMetadata() {
+  return (
+    (await getCmsSeoMetadata("/luxury-bus")) ?? {
+      title: "Luxury Bus Rental | Urban Cruise",
+    }
+  );
+}
+
 export default createGlobalVehiclePage("luxury-bus", "Luxury Bus");

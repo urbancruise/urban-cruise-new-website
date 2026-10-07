@@ -1,10 +1,16 @@
 import BlogSelector from "@/app/components/BlogSelector";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
-export const metadata = {
-  title: "Urban Cruise Blog | Travel and Vehicle Rental Guides",
-  description: "Travel inspiration, rental advice, and destination guides from Urban Cruise.",
-};
+export async function generateMetadata() {
+  return (
+    (await getCmsSeoMetadata("/blog")) ?? {
+      title: "Urban Cruise Blog | Travel and Vehicle Rental Guides",
+      description:
+        "Travel inspiration, rental advice, and destination guides from Urban Cruise.",
+    }
+  );
+}
 
 export default function GlobalBlogPage() {
   return (
@@ -18,5 +24,4 @@ export default function GlobalBlogPage() {
     </>
   );
 }
-
 

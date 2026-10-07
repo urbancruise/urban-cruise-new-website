@@ -2,8 +2,9 @@ import JsonLd from "./JsonLd";
 import { webPageSchema } from "@/lib/schema";
 import Breadcrumb from "./Breadcrumb";
 import { formatLocationName } from "@/app/lib/location";
+import { getSeoByPath } from "@/lib/cms";
 
-export default function PageJsonLd({
+export default async function PageJsonLd({
   name,
   description,
   path,
@@ -12,17 +13,22 @@ export default function PageJsonLd({
   description: string;
   path: string;
 }) {
+  const seo = await getSeoByPath(path);
   const segments = path.split("/").filter(Boolean);
 
   return (
     <>
-      <JsonLd
-        data={webPageSchema({
-          name,
-          description,
-          path,
-        })}
-      />
+      {seo?.seo.schemas?.length ? (
+        <JsonLd data={seo.seo.schemas} />
+      ) : (
+        <JsonLd
+          data={webPageSchema({
+            name,
+            description,
+            path,
+          })}
+        />
+      )}
       {segments.length > 0 && (
         <Breadcrumb
           items={[

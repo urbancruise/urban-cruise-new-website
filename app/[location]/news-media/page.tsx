@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import NewsMediaSelector from "@/app/components/NewsMediaSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface NewsMediaPageProps {
@@ -11,10 +12,10 @@ interface NewsMediaPageProps {
 
 export async function generateMetadata({ params }: NewsMediaPageProps) {
   const { location } = await params;
-  return createLocationMetadata(
-    location,
-    "news",
-    `/${location}/news-media`
+  const path = `/${location}/news-media`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "news", path)
   );
 }
 

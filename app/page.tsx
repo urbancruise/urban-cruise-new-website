@@ -1,6 +1,7 @@
 // app/page.tsx
 import type { Metadata } from "next";
 import { getHomeSections, getSeoByPath } from "@/lib/cms";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
 import HeroSelector from "@/app/components/HeroSelector";
 import AboutSelector from "@/app/components/AboutSelector";
@@ -20,7 +21,9 @@ import { createSiteMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = createSiteMetadata();
+export async function generateMetadata(): Promise<Metadata> {
+  return (await getCmsSeoMetadata("/")) ?? createSiteMetadata();
+}
 
 export default async function Home() {
   // ⭐ Fetch Global CMS content

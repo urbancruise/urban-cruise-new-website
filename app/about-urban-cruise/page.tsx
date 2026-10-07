@@ -1,10 +1,16 @@
 import AboutUsSelector from "@/app/components/AboutUsSelector";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
-export const metadata = {
-  title: "About Urban Cruise | Premium Vehicle Rental in India",
-  description: "Learn about Urban Cruise and our nationwide vehicle rental services.",
-};
+export async function generateMetadata() {
+  return (
+    (await getCmsSeoMetadata("/about-urban-cruise")) ?? {
+      title: "About Urban Cruise | Premium Vehicle Rental in India",
+      description:
+        "Learn about Urban Cruise and our nationwide vehicle rental services.",
+    }
+  );
+}
 
 export default function AboutUrbanCruisePage() {
   return (

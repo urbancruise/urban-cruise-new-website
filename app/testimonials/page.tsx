@@ -1,10 +1,15 @@
 import TestimonialsSelector from "@/app/components/TestimonialsSelector";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
-export const metadata = {
-  title: "Urban Cruise Testimonials",
-  description: "Read customer experiences with Urban Cruise vehicle rentals.",
-};
+export async function generateMetadata() {
+  return (
+    (await getCmsSeoMetadata("/testimonials")) ?? {
+      title: "Urban Cruise Testimonials",
+      description: "Read customer experiences with Urban Cruise vehicle rentals.",
+    }
+  );
+}
 
 export default function GlobalTestimonialsPage() {
   return (

@@ -93,6 +93,7 @@ export function createSeoMetadata({
     description,
     keywords: [...DEFAULT_KEYWORDS, ...keywords],
     alternates: { canonical },
+    icons: { icon: "/favicon.ico" },
     openGraph: {
       title,
       description,

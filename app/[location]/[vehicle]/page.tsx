@@ -14,6 +14,7 @@ import { getVehicleSeoContent } from "@/lib/vehicle-seo";
 import { serviceSchema, webPageSchema } from "@/lib/schema";
 
 import { getVehicle, getSeoByPath } from "@/lib/cms";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
 import VehicleSelector from "@/app/components/VehicleSelector";
 import ServiceSelector from "@/app/components/ServiceSelector";
@@ -165,35 +166,8 @@ export async function generateMetadata({
   const path = `/${location}/${vehicle}`;
 
   // CMS SEO first
-  const cmsSeo = await getSeoByPath(path);
-  if (cmsSeo?.seo) {
-    const s = cmsSeo.seo;
-    return {
-      title: s.meta_title || s.title || undefined,
-      description: s.meta_description || undefined,
-      keywords: s.meta_keywords,
-      alternates: { canonical: s.canonical_url || path },
-      robots: s.is_indexable
-        ? { index: true, follow: true }
-        : { index: false, follow: false },
-      openGraph: {
-        title: s.og_title || s.meta_title || undefined,
-        description: s.og_description || s.meta_description || undefined,
-        images:
-          s.og_image || s.feature_image
-            ? [s.og_image || s.feature_image!]
-            : undefined,
-        url: s.og_url || undefined,
-        type: (s.og_type as any) || "website",
-      },
-      twitter: {
-        card: (s.twitter_card as any) || "summary_large_image",
-        title: s.twitter_title || undefined,
-        description: s.twitter_description || undefined,
-        images: s.twitter_image ? [s.twitter_image] : undefined,
-      },
-    };
-  }
+  const cmsMetadata = await getCmsSeoMetadata(path);
+  if (cmsMetadata) return cmsMetadata;
 
   // Fallback
   return createLocationMetadata(

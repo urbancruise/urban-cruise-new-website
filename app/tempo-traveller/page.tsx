@@ -1,5 +1,13 @@
 import { createGlobalVehiclePage } from "@/app/lib/global-vehicle-page";
-export const metadata = { title: "Tempo Traveller Rental | Urban Cruise" };
-export default createGlobalVehiclePage("tempo-traveller", "Tempo Traveller");
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
+export async function generateMetadata() {
+  return (
+    (await getCmsSeoMetadata("/tempo-traveller")) ?? {
+      title: "Tempo Traveller Rental | Urban Cruise",
+    }
+  );
+}
+
+export default createGlobalVehiclePage("tempo-traveller", "Tempo Traveller");
 

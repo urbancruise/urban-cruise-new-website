@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import TestimonialsSelector from "@/app/components/TestimonialsSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface TestimonialsPageProps {
@@ -11,10 +12,10 @@ interface TestimonialsPageProps {
 
 export async function generateMetadata({ params }: TestimonialsPageProps) {
   const { location } = await params;
-  return createLocationMetadata(
-    location,
-    "testimonials",
-    `/${location}/testimonials`
+  const path = `/${location}/testimonials`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "testimonials", path)
   );
 }
 

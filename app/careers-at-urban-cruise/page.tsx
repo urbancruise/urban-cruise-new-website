@@ -1,10 +1,15 @@
 import CareersSelector from "@/app/components/CareersSelector";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
-export const metadata = {
-  title: "Careers at Urban Cruise",
-  description: "Explore careers and join the Urban Cruise travel team.",
-};
+export async function generateMetadata() {
+  return (
+    (await getCmsSeoMetadata("/careers-at-urban-cruise")) ?? {
+      title: "Careers at Urban Cruise",
+      description: "Explore careers and join the Urban Cruise travel team.",
+    }
+  );
+}
 
 export default function GlobalCareersPage() {
   return (
