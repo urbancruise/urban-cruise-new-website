@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import AboutUsSelector from "@/app/components/AboutUsSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface AboutPageProps {
@@ -11,10 +12,10 @@ interface AboutPageProps {
 
 export async function generateMetadata({ params }: AboutPageProps) {
   const { location } = await params;
-  return createLocationMetadata(
-    location,
-    "about",
-    `/${location}/about-us`
+  const path = `/${location}/about-us`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "about", path)
   );
 }
 

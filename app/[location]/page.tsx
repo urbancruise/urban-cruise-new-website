@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 
 import { isValidLocationAsync, formatLocationName } from "@/app/lib/location";
 import { getHomeSections, getSeoByPath } from "@/lib/cms";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
 import HeroSelector from "@/app/components/HeroSelector";
 import AboutSelector from "@/app/components/AboutSelector";
@@ -34,41 +35,14 @@ export async function generateMetadata({
   if (!valid) return {};
 
   const path = `/${location}`;
-  const seo = await getSeoByPath(path);
+  const cmsMetadata = await getCmsSeoMetadata(path);
+  if (cmsMetadata) return cmsMetadata;
+
   const city = formatLocationName(location);
 
-  if (!seo?.seo) {
-    return {
-      title: `Vehicle Rental in ${city} | Urban Cruise`,
-      description: `Book cars, buses, tempo travellers in ${city} with Urban Cruise.`,
-    };
-  }
-
-  const s = seo.seo;
   return {
-    title: s.meta_title || s.title || `Vehicle Rental in ${city} | Urban Cruise`,
-    description: s.meta_description || undefined,
-    keywords: s.meta_keywords,
-    alternates: { canonical: s.canonical_url || path },
-    robots: s.is_indexable
-      ? { index: true, follow: true }
-      : { index: false, follow: false },
-    openGraph: {
-      title: s.og_title || s.meta_title || undefined,
-      description: s.og_description || s.meta_description || undefined,
-      images:
-        s.og_image || s.feature_image
-          ? [s.og_image || s.feature_image!]
-          : undefined,
-      url: s.og_url || undefined,
-      type: (s.og_type as any) || "website",
-    },
-    twitter: {
-      card: (s.twitter_card as any) || "summary_large_image",
-      title: s.twitter_title || undefined,
-      description: s.twitter_description || undefined,
-      images: s.twitter_image ? [s.twitter_image] : undefined,
-    },
+    title: `Vehicle Rental in ${city} | Urban Cruise`,
+    description: `Book cars, buses, tempo travellers in ${city} with Urban Cruise.`,
   };
 }
 

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import CareersSelector from "@/app/components/CareersSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface CareersPageProps {
@@ -11,10 +12,10 @@ interface CareersPageProps {
 
 export async function generateMetadata({ params }: CareersPageProps) {
   const { location } = await params;
-  return createLocationMetadata(
-    location,
-    "careers",
-    `/${location}/careers-at-urban-cruise`
+  const path = `/${location}/careers-at-urban-cruise`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "careers", path)
   );
 }
 

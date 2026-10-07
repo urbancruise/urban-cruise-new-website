@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AVAILABLE_LOCATIONS, formatLocationName } from "@/app/lib/location";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
 const vehicleCategories = [
   ["Cars & SUVs", "car-suvs"],
@@ -12,10 +13,15 @@ const vehicleCategories = [
   ["Volvo Buses", "volvo-bus"],
 ];
 
-export const metadata = {
-  title: "Our Vehicles | Urban Cruise",
-  description: "Explore Urban Cruise cars, SUVs, tempo travellers, vans, and buses across India.",
-};
+export async function generateMetadata() {
+  return (
+    (await getCmsSeoMetadata("/our-vehicles")) ?? {
+      title: "Our Vehicles | Urban Cruise",
+      description:
+        "Explore Urban Cruise cars, SUVs, tempo travellers, vans, and buses across India.",
+    }
+  );
+}
 
 export default function OurVehiclesPage() {
   return (

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import ContactSelector from "@/app/components/ContactSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface ContactPageProps {
@@ -11,10 +12,10 @@ interface ContactPageProps {
 
 export async function generateMetadata({ params }: ContactPageProps) {
   const { location } = await params;
-  return createLocationMetadata(
-    location,
-    "contact",
-    `/${location}/contact-us`
+  const path = `/${location}/contact-us`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "contact", path)
   );
 }
 

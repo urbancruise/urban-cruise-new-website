@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import FaqsSelector from "@/app/components/FaqsSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface FaqsPageProps {
@@ -11,7 +12,11 @@ interface FaqsPageProps {
 
 export async function generateMetadata({ params }: FaqsPageProps) {
   const { location } = await params;
-  return createLocationMetadata(location, "faqs", `/${location}/faqs`);
+  const path = `/${location}/faqs`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "faqs", path)
+  );
 }
 
 export default async function FaqsPage({ params }: FaqsPageProps) {

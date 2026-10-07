@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import BlogSelector from "@/app/components/BlogSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface BlogPageProps {
@@ -11,7 +12,11 @@ interface BlogPageProps {
 
 export async function generateMetadata({ params }: BlogPageProps) {
   const { location } = await params;
-  return createLocationMetadata(location, "blog", `/${location}/blog`);
+  const path = `/${location}/blog`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "blog", path)
+  );
 }
 
 export default async function BlogPage({ params }: BlogPageProps) {

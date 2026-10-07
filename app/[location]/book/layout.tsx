@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 export async function generateMetadata({
@@ -12,7 +13,11 @@ export async function generateMetadata({
   params: Promise<{ location: string }>;
 }): Promise<Metadata> {
   const { location } = await params;
-  return createLocationMetadata(location, "booking", `/${location}/book`);
+  const path = `/${location}/book`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "booking", path)
+  );
 }
 
 export default async function BookingLayout({

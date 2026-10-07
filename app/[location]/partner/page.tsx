@@ -3,6 +3,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { isValidLocationAsync } from "@/app/lib/location";
 import PartnerSelector from "@/app/components/PartnerSelector";
 import { createLocationMetadata } from "@/lib/seo";
+import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 
 interface PartnerPageProps {
@@ -11,7 +12,11 @@ interface PartnerPageProps {
 
 export async function generateMetadata({ params }: PartnerPageProps) {
   const { location } = await params;
-  return createLocationMetadata(location, "partner", `/${location}/partner`);
+  const path = `/${location}/partner`;
+  return (
+    (await getCmsSeoMetadata(path)) ??
+    createLocationMetadata(location, "partner", path)
+  );
 }
 
 export default async function PartnerPage({ params }: PartnerPageProps) {
