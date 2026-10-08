@@ -37,17 +37,14 @@ const Map = () => {
 
     const initMap = async () => {
       try {
-        const topology = await d3.json<WorldTopology>(
+        const topology = (await d3.json<WorldTopology>(
           "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
-        );
+        )) as any;
         if (!isMounted || !topology) return;
 
-        const countries = topojson.feature(
-          topology,
-          topology.objects.countries
-        ).features;
+        const countries = (topojson.feature(topology as any, (topology as any).objects.countries) as any).features;
 
-        const india = countries.find((d) => String(d.id) === "356");
+        const india = countries.find((d: any) => String(d.id) === "356");
         if (!india) throw new Error("India not found");
 
         const projection = d3.geoMercator();
@@ -77,12 +74,12 @@ const Map = () => {
           .selectAll("path")
           .data(countries)
           .join("path")
-          .attr("class", (d) =>
+          .attr("class", (d: any) =>
             String(d.id) === "356"
               ? "world-country india-outline"
               : "world-country dim"
           )
-          .attr("d", path)
+          .attr("d", (d: any) => path(d as any))
           .attr("pathLength", 1)
           .attr("stroke-dasharray", 1)
           .attr("stroke-dashoffset", 1)
@@ -100,8 +97,8 @@ const Map = () => {
           .select<SVGPathElement, unknown>("#indiaOutline")
           .attr("d", indiaD);
 
-        const indiaBaseLength = indiaBaseEl.node()?.getTotalLength() || 0;
-        const indiaOutlineLength = indiaOutlineEl.node()?.getTotalLength() || 0;
+        const indiaBaseLength = (indiaBaseEl.node() as SVGPathElement | null)?.getTotalLength?.() ?? 0;
+        const indiaOutlineLength = (indiaOutlineEl.node() as SVGPathElement | null)?.getTotalLength?.() ?? 0;
 
         indiaBaseEl
           .attr("stroke-dasharray", indiaBaseLength)
@@ -121,7 +118,7 @@ const Map = () => {
         const indiaGeometry = india.geometry;
         if (indiaGeometry.type === "MultiPolygon") {
           const islandFeatures = indiaGeometry.coordinates
-            .filter((poly) => {
+            .filter((poly: any) => {
               const feature = {
                 type: "Feature" as const,
                 properties: {},
@@ -132,7 +129,7 @@ const Map = () => {
               const height = bounds[1][1] - bounds[0][1];
               return width < 55 && height < 90;
             })
-            .map((poly) => ({
+            .map((poly: any) => ({
               type: "Feature" as const,
               properties: {},
               geometry: { type: "Polygon" as const, coordinates: poly },
@@ -143,7 +140,7 @@ const Map = () => {
             .data(islandFeatures)
             .join("path")
             .attr("class", "india-island-highlight")
-            .attr("d", path)
+            .attr("d", (d: any) => path(d as any))
             .attr("opacity", 0);
         }
 
@@ -416,10 +413,10 @@ const Map = () => {
 
           worldLayer
             .selectAll<SVGPathElement, d3.GeoPermissibleObjects>("path")
-            .attr("d", path);
+            .attr("d", (d: any) => path(d as any));
           indiaIslandLayer
             .selectAll<SVGPathElement, d3.GeoPermissibleObjects>("path")
-            .attr("d", path);
+            .attr("d", (d: any) => path(d as any));
 
           cityPts.forEach((city, index) => {
             const point = projection([city.lon, city.lat]);

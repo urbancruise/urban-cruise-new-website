@@ -40,11 +40,13 @@ export interface WhyChooseUrbanCruiseContent {
   benefits?: WhyChooseBenefitItem[];
 }
 
-interface Props {
+export interface WhyChooseUrbanCruiseProps {
   content?: WhyChooseUrbanCruiseContent;
 }
 
-export default function WhyChooseUrbanCruiseSelector({ content }: Props) {
+export default function WhyChooseUrbanCruiseSelector({
+  content,
+}: WhyChooseUrbanCruiseProps) {
   const { selectedLocation } = useLocation();
   const pathname = usePathname();
 

@@ -1082,7 +1082,7 @@ export default function DownloadApp({ content }: DownloadAppProps) {
               sm:py-0
             "
           >
-            {stats.map((stat, index) => {
+            {stats.map((stat: any, index: number) => {
               const Icon = getStatIcon(stat.icon);
               return (
                 <div

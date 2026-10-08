@@ -49,11 +49,13 @@ export interface VehicleEveryOccasionContent {
   tabs?: OccasionTab[];
 }
 
-interface Props {
+export interface VehicleForEveryOccasionProps {
   content?: VehicleEveryOccasionContent;
 }
 
-export default function VehicleForEveryOccasionSelector({ content }: Props) {
+export default function VehicleForEveryOccasionSelector({
+  content,
+}: VehicleForEveryOccasionProps) {
   const { selectedLocation } = useLocation();
   const pathname = usePathname();
 

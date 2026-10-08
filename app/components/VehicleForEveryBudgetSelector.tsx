@@ -43,11 +43,13 @@ export interface BudgetContent {
   }>;
 }
 
-interface Props {
+export interface VehicleForEveryBudgetProps {
   content?: BudgetContent | null;
 }
 
-export default function VehicleForEveryBudgetSelector({ content }: Props) {
+export default function VehicleForEveryBudgetSelector({
+  content,
+}: VehicleForEveryBudgetProps) {
   const { selectedLocation } = useLocation();
   const pathname = usePathname();
 

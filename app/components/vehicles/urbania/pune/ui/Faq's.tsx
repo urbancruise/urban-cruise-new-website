@@ -239,7 +239,7 @@ export default function Faqs({ content }: Props) {
     content?.supportSubtitle || "Our support team is here to help you!";
   const supportButtonLabel = content?.supportButtonLabel || "Contact Us";
 
-  const faqData =
+  const faqData: Array<{ id: number; question: string; answer: string }> =
     Array.isArray(content?.items) && content.items.length > 0
       ? content.items.map((item: any, i: number) => ({
           id: i + 1,
@@ -378,7 +378,7 @@ export default function Faqs({ content }: Props) {
                 onMouseLeave={() => setIsFaqHovered(false)}
                 className="flex flex-col gap-2.5 sm:gap-3 md:gap-3.5 lg:max-h-[405px] lg:gap-2.5 lg:overflow-y-auto lg:pr-0 xl:max-h-[425px] xl:gap-3 2xl:max-h-[440px] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
               >
-                {faqData.map((item, index) => (
+                {faqData.map((item: any, index: number) => (
                   <FAQItem
                     key={item.id}
                     item={item}

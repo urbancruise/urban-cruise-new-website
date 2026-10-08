@@ -337,7 +337,7 @@ export default function GurugramVehicleForEveryBudget({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
         >
-          {categories.map((category, index) => (
+          {categories.map((category: any, index: number) => (
             <motion.div
               key={`${category.title}-${index}`}
               className="group relative flex w-full flex-col items-center overflow-visible rounded-[1.5rem] bg-white px-4 pb-5 pt-14 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] min-h-[210px] min-[430px]:min-h-[220px] min-[430px]:px-5 sm:min-h-[225px] sm:px-5 sm:pb-6 sm:pt-14 md:min-h-[235px] md:px-5 md:pb-6 md:pt-14 lg:min-h-[235px] lg:px-5 lg:pb-6 lg:pt-14 xl:min-h-[240px] xl:px-6 xl:pb-6 2xl:min-h-[250px] 2xl:px-7 2xl:pb-7"

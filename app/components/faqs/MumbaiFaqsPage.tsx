@@ -161,7 +161,7 @@ export default function MumbaiFaqsPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                {filteredFaqs.map((faq, index) => (
+                {filteredFaqs.map((faq: any, index: number) => (
                   <div
                     key={index}
                     className="bg-gray-50 rounded-xl overflow-hidden border border-gray-100 hover:shadow-md transition-all duration-300"

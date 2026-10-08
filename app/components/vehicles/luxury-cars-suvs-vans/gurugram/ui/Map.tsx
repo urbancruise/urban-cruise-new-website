@@ -58,19 +58,15 @@ const Map = () => {
 
     const initMap = async () => {
       try {
-        const topology = await d3.json(
-          "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
+        const topology = (await d3.json(
+          "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json") as any
         );
 
         if (!isMounted || !topology) return;
 
-        const countries = topojson.feature(
-          topology,
-          topology.objects.countries
-        ).features;
+        const countries = (topojson.feature(topology as any, (topology as any).objects.countries) as any).features;
 
-        const india = countries.find(
-          (d) => String(d.id) === "356"
+        const india = countries.find((d: any) => String(d.id) === "356"
         );
 
         if (!india) {
@@ -154,12 +150,12 @@ const Map = () => {
           .selectAll("path")
           .data(countries)
           .join("path")
-          .attr("class", (d) =>
+          .attr("class", (d: any) =>
             String(d.id) === "356"
               ? "world-country india-outline"
               : "world-country dim"
           )
-          .attr("d", path)
+          .attr("d", (d: any) => path(d as any))
           .attr("pathLength", 1)
           .attr("stroke-dasharray", 1)
           .attr("stroke-dashoffset", 1)
@@ -195,11 +191,9 @@ const Map = () => {
           .select("#indiaOutline")
           .attr("d", indiaD);
 
-        const indiaBaseLength =
-          indiaBaseEl.node()?.getTotalLength() || 0;
+        const indiaBaseLength = (indiaBaseEl.node() as SVGPathElement | null)?.getTotalLength?.() ?? 0;
 
-        const indiaOutlineLength =
-          indiaOutlineEl.node()?.getTotalLength() || 0;
+        const indiaOutlineLength = (indiaOutlineEl.node() as SVGPathElement | null)?.getTotalLength?.() ?? 0;
 
         indiaBaseEl
           .attr("stroke-dasharray", indiaBaseLength)
@@ -238,7 +232,7 @@ const Map = () => {
 
         if (indiaGeometry.type === "MultiPolygon") {
           const islandFeatures = indiaGeometry.coordinates
-            .filter((poly) => {
+            .filter((poly: any) => {
               const feature = {
                 type: "Feature" as const,
                 properties: {},
@@ -258,7 +252,7 @@ const Map = () => {
 
               return width < 55 && height < 90;
             })
-            .map((poly) => ({
+            .map((poly: any) => ({
               type: "Feature" as const,
               properties: {},
               geometry: {
@@ -275,7 +269,7 @@ const Map = () => {
               "class",
               "india-island-highlight"
             )
-            .attr("d", path)
+            .attr("d", (d: any) => path(d as any))
             .attr("opacity", 0);
         }
 
@@ -383,18 +377,7 @@ const Map = () => {
           },
         ];
 
-        const cityPts = cities.map((city) => {
-          const point = projection([
-            city.lon,
-            city.lat,
-          ]);
-
-          return {
-            ...city,
-            x: point[0],
-            y: point[1],
-          };
-        });
+        const cityPts = cities.map((city) => { const point = projection([city.lon, city.lat]); if (!point) return null; return { ...city, x: point[0], y: point[1] }; }).filter((city): city is NonNullable<typeof city> => city !== null);
 
         /*
          * ========================================================
@@ -402,7 +385,7 @@ const Map = () => {
          * ========================================================
          */
 
-        const routePts = cityPts.map((city) => [
+        const routePts: [number, number][] = cityPts.map((city): [number, number] => [
           city.x,
           city.y,
         ]);
@@ -1081,7 +1064,7 @@ const Map = () => {
 
           worldLayer
             .selectAll("path")
-            .attr("d", path);
+            .attr("d", (d: any) => path(d as any));
 
           /*
            * Update island paths.
@@ -1089,17 +1072,15 @@ const Map = () => {
 
           indiaIslandLayer
             .selectAll("path")
-            .attr("d", path);
+            .attr("d", (d: any) => path(d as any));
 
           /*
            * Update cities.
            */
 
           cityPts.forEach((city, index) => {
-            const point = projection([
-              city.lon,
-              city.lat,
-            ]);
+            const point = projection([city.lon, city.lat]);
+            if (!point) return;
 
             city.x = point[0];
             city.y = point[1];

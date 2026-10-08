@@ -114,7 +114,7 @@ export default function MumbaiContactPage() {
       <section className="py-12 bg-gradient-to-r from-[#0c0c1e] to-[#1a0a2e]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
+            {stats.map((stat: any, index: number) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-2">
                   <stat.icon className="text-[#ff6b6b] text-2xl" />
@@ -146,7 +146,7 @@ export default function MumbaiContactPage() {
                 </p>
 
                 <div className="space-y-4">
-                  {contactInfo.map((info, index) => (
+                  {contactInfo.map((info: any, index: number) => (
                     <a
                       key={index}
                       href={info.href}
@@ -172,7 +172,7 @@ export default function MumbaiContactPage() {
                     Service Hours
                   </h3>
                   <div className="space-y-2">
-                    {workingHours.map((item, index) => (
+                    {workingHours.map((item: any, index: number) => (
                       <div key={index} className="flex justify-between items-center">
                         <span className="text-gray-600">{item.day}</span>
                         <span className="text-[#0c0c1e] font-medium">{item.hours}</span>

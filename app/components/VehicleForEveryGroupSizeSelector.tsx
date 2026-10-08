@@ -42,11 +42,13 @@ export interface VehicleGroupSizeContent {
   vehicles?: VehicleGroupSizeItem[];
 }
 
-interface Props {
+export interface VehicleForEveryGroupSizeProps {
   content?: VehicleGroupSizeContent;
 }
 
-export default function VehicleForEveryGroupSizeSelector({ content }: Props) {
+export default function VehicleForEveryGroupSizeSelector({
+  content,
+}: VehicleForEveryGroupSizeProps) {
   const { selectedLocation } = useLocation();
   const pathname = usePathname();
 

@@ -138,7 +138,7 @@ function normalizeVehicle(raw: any, index: number): VehicleGroupSizeItem {
       : fallback.gallery;
 
   // ✅ Build features: prefer CMS features, else derive from `seats` field
-  let features: Array<{ label: string; color: string }> = [];
+  let features: Array<{ label: string; color?: string }> = [];
   if (Array.isArray(raw?.features) && raw.features.length > 0) {
     features = raw.features
       .filter((f: any) => f && (f.label || f.name))

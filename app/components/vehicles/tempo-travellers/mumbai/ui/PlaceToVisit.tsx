@@ -488,12 +488,12 @@ export default function PlaceToVisit({ content }: Props) {
         }))
       : FALLBACK_DESTINATIONS;
 
-  const placeFilters =
+  const placeFilters: Array<{ value: string; label: string }> =
     Array.isArray(content?.places) && content.places.length > 0
       ? [
           { value: "all", label: content?.tabsLabel || "All Places" },
           ...Array.from(
-            new Map(
+            new Map<string, { value: string; label: string }>(
               content.places
                 .filter((p: any) => p.tabSlug && p.tabLabel)
                 .map((p: any) => [
