@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   const { tags = [], paths = [] } = body;
 
   try {
-    tags.forEach((tag) => revalidateTag(tag));
+    tags.forEach((tag) => revalidateTag(tag, "default"));
     paths.forEach((path) => revalidatePath(path));
 
     return NextResponse.json({

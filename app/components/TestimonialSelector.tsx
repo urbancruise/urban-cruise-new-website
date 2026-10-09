@@ -43,11 +43,11 @@ export interface TestimonialsContent {
   items?: TestimonialItem[];
 }
 
-interface Props {
+export interface TestimonialsProps {
   content?: TestimonialsContent;
 }
 
-export default function TestimonialSelector({ content }: Props) {
+export default function TestimonialSelector({ content }: TestimonialsProps) {
   const { selectedLocation } = useLocation();
   const pathname = usePathname();
 

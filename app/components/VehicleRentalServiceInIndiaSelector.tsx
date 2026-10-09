@@ -37,13 +37,13 @@ export interface VehicleRentalServiceContent {
   cities?: ServiceCityItem[];
 }
 
-interface Props {
+export interface VehicleRentalServiceProps {
   content?: VehicleRentalServiceContent;
 }
 
 export default function VehicleRentalServiceInIndiaSelector({
   content,
-}: Props) {
+}: VehicleRentalServiceProps) {
   const { selectedLocation } = useLocation();
   const pathname = usePathname();
 

@@ -345,7 +345,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
     }
 
     return cmsItems
-      .map((item, i): Testimonial | null => {
+      .map((item: any, i: number): Testimonial | null => {
         // Resolve YouTube ID from either videoId or youtubeUrl
         const videoId =
           item.videoId ||
@@ -602,7 +602,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
               </button>
 
               <div className="flex items-center gap-1.5">
-                {testimonials.map((item, index) => (
+                {testimonials.map((item: any, index: number) => (
                   <button
                     key={item.id}
                     type="button"

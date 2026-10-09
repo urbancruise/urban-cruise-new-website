@@ -40,7 +40,7 @@ export interface HowItWorksContent {
   steps?: HowItWorksStep[];
 }
 
-interface HowItWorksSelectorProps {
+export interface HowItWorksSelectorProps {
   content?: HowItWorksContent;
 }
 

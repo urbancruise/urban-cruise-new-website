@@ -98,7 +98,7 @@ export default function LookingForOtherVehicle({ content }: Props) {
           viewport={{ once: true }}
           className="grid w-full grid-cols-1 gap-x-5 gap-y-9 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-10 lg:grid-cols-4 lg:gap-x-7 lg:gap-y-10 xl:gap-x-9 xl:gap-y-12 2xl:gap-x-10 2xl:gap-y-14"
         >
-          {visibleVehicles.map((vehicleItem, index) => (
+          {visibleVehicles.map((vehicleItem: any, index: number) => (
             <motion.div
               key={vehicleItem.name || index}
               initial={{ opacity: 0, scale: 0.94 }}

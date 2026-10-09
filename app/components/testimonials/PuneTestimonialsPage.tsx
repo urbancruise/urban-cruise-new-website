@@ -205,7 +205,7 @@ export default function PuneTestimonialsPage() {
       <section className="py-12 bg-gradient-to-r from-[#0a1a0a] to-[#1a2a1a]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
+            {stats.map((stat: any, index: number) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-2">
                   <stat.icon className="text-[#00b894] text-2xl" />

@@ -11,13 +11,7 @@ import { useLocation } from "@/app/context/LocationContext";
 
 const DelhiOurTrustedPartner = dynamic(
   () =>
-    import(
-<<<<<<< HEAD
-      "../components/ourtrustedpartner/OurTrustedPartner"
-=======
-      "./ourtrustedpartner/OurTrustedPartner"
->>>>>>> 2bfebe9b2728b1e105ca4dd19400eac705b35f72
-    ),
+    import("./ourtrustedpartner/OurTrustedPartner"),
   {
     loading: () => (
       <div className="min-h-[400px] w-full bg-white" />

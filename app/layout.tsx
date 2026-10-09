@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { LocationProvider } from "./context/LocationContext";
 import SocialMedia from "./components/social-media/SocialMedia";
-import JsonLd from "./components/seo/JsonLd";
+import JsonLdScript from "./components/seo/JsonLdScript";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { createSiteMetadata } from "@/lib/seo";
 import "./globals.css";
@@ -20,8 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <JsonLdScript data={[organizationSchema(), websiteSchema()]} />
+      </head>
       <body className={`${inter.className} flex flex-col min-h-screen bg-[#F5F2E9]`}>
-        <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <LocationProvider>
           <Navbar />
           {/* <main className="flex-grow pt-28 md:pt-32"> */}

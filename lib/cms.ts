@@ -20,12 +20,10 @@ async function cmsFetch<T>(
 ): Promise<T | null> {
   console.log("[cms] fetch:", `${CMS_URL}${path}`, {
     hasKey: !!CMS_API_KEY,
-    keyLength: CMS_API_KEY.length,
-    keyPrefix: CMS_API_KEY.slice(0, 8),
   });
 
   if (!CMS_API_KEY) {
-    console.error("[cms] CMS_API_KEY not set");
+    console.warn("[cms] CMS_API_KEY not set; using fallback content where available");
     return null;
   }
 
