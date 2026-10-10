@@ -29,11 +29,13 @@ export interface BudgetContent {
   subtitle?: string;
   description?: string;
   illustration?: string;
+  illustrationAlt?: string;
   illustrationPublicId?: string;
   categories?: Array<{
     title?: string;
     description?: string;
     icon?: string;
+    iconAlt?: string;
     color?: string;
   }>;
   trustBadges?: Array<{

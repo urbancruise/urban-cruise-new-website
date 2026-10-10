@@ -28,6 +28,7 @@ export interface WhyChooseBenefitItem {
   icon?: string;
   description: string[];
   image: string;
+  imageAlt?: string;
   theme?: "green" | "orange";
 }
 

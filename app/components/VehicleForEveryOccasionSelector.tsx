@@ -30,6 +30,7 @@ export interface OccasionCard {
   price: string;
   location: string;
   image: string;
+  imageAlt?: string; 
   features: string[];
 }
 

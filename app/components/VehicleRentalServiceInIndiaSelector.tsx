@@ -26,6 +26,7 @@ export interface ServiceCityItem {
   name: string;
   state: string;
   image: string;
+  imageAlt?: string;
 }
 
 export interface VehicleRentalServiceContent {

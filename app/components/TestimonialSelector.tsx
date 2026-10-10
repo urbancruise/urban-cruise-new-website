@@ -28,6 +28,7 @@ export interface TestimonialItem {
   location: string;
   message: string;
   avatar?: string;
+  avatarAlt?: string;
   videoId?: string;
   youtubeUrl?: string;
   rating: number;

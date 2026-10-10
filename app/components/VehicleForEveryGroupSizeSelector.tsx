@@ -29,7 +29,9 @@ export interface VehicleGroupSizeItem {
   price: string;
   description: string;
   mainImage: string;
+  mainImageAlt?: string; 
   gallery: string[];
+  galleryAlts?: string[];
   features: { label: string; icon?: string; color?: string }[];
 }
 
