@@ -67,6 +67,23 @@ function filterOutGlobal<
   );
 }
 
+function getFallbackLocationOptions(): LocationOption[] {
+  return [
+    {
+      slug: GLOBAL_LOCATION.slug,
+      name: GLOBAL_LOCATION.name,
+      isGlobal: true,
+      imageUrl: null,
+    },
+    ...FALLBACK_LOCATIONS.map((slug) => ({
+      slug,
+      name: formatLocationName(slug),
+      isGlobal: false,
+      imageUrl: null,
+    })),
+  ];
+}
+
 // ────────────────────────────────────────────────────────────
 // Server-side fetch
 // ────────────────────────────────────────────────────────────
@@ -147,6 +164,10 @@ export async function fetchAvailableLocationsClient(): Promise<
       imageUrl: c.imageUrl,
     }));
 
+    if (list.length === 0) {
+      return getFallbackLocationOptions();
+    }
+
     return [
       {
         slug: GLOBAL_LOCATION.slug,
@@ -157,19 +178,6 @@ export async function fetchAvailableLocationsClient(): Promise<
       ...list,
     ];
   } catch {
-    return [
-      {
-        slug: GLOBAL_LOCATION.slug,
-        name: GLOBAL_LOCATION.name,
-        isGlobal: true,
-        imageUrl: null,
-      },
-      ...FALLBACK_LOCATIONS.map((slug) => ({
-        slug,
-        name: formatLocationName(slug),
-        isGlobal: false,
-        imageUrl: null,
-      })),
-    ];
+    return getFallbackLocationOptions();
   }
 }
