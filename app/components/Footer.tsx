@@ -5,40 +5,41 @@ import { useLocation } from "@/app/context/LocationContext";
 import { formatLocationName } from "@/app/lib/location";
 import { getLocationConfig } from "@/app/lib/locationConfig";
 import {
+  FaBook,
+  FaBus,
+  FaBusSimple,
+  FaCarSide,
+  FaCircleQuestion,
+  FaEnvelope,
+  FaGraduationCap,
+  FaHouse,
+  FaLocationDot,
+  FaNewspaper,
+  FaPenToSquare,
+  FaPhone,
+  FaPhoneVolume,
+  FaShieldHalved,
   FaFacebook,
   FaTwitter,
   FaLinkedin,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaMapMarkerAlt,
   FaInstagram,
   FaYoutube,
   FaWhatsapp,
-  FaCar,
   FaChevronRight,
   FaUser,
-  FaUserFriends,
+  FaUserGroup,
   FaUsers,
-  FaNewspaper,
-} from "react-icons/fa";
+  FaVanShuttle,
+} from "react-icons/fa6";
 import { useState, type FormEvent } from "react";
 import Image from "next/image";
-import { IoMdMail } from "react-icons/io";
-import { FaBus, FaVanShuttle } from "react-icons/fa6";
-import { BsFillBusFrontFill } from "react-icons/bs";
-import { TbBusFilled, TbCarSuvFilled, TbMessageQuestion } from "react-icons/tb";
-import { IoCarSport, IoHome } from "react-icons/io5";
-import { PiNotePencilBold, PiPhoneCallFill } from "react-icons/pi";
-import { HiAcademicCap } from "react-icons/hi";
-import { MdPrivacyTip, MdWifiCalling3 } from "react-icons/md";
-import { LuNotebookPen } from "react-icons/lu";
 
 const quickLinks = [
-  { label: "Home", icon: IoHome, href: "/" },
+  { label: "Home", icon: FaHouse, href: "/" },
   { label: "About Us", icon: FaUser, href: "/about-us" },
-  { label: "Career", icon: HiAcademicCap, href: "/careers-at-urban-cruise" },
-  { label: "Partner", icon: FaUserFriends, href: "/partner" },
-  { label: "Contact Us", icon: MdWifiCalling3, href: "/contact-us" },
+  { label: "Career", icon: FaGraduationCap, href: "/careers-at-urban-cruise" },
+  { label: "Partner", icon: FaUserGroup, href: "/partner" },
+  { label: "Contact Us", icon: FaPhoneVolume, href: "/contact-us" },
   { label: "Happy Customers", icon: FaUsers, href: "/testimonials" },
 ];
 
@@ -46,7 +47,7 @@ const quickLinks = [
 const vehicleLinks = [
   {
     category: "Car & SUVs",
-    icon: FaCar,
+    icon: FaCarSide,
     items: [
       { href: "/car-rental-delhi", label: "Car & SUVs" },
       { href: "/ertiga-on-rent", label: "Ertiga" },
@@ -56,7 +57,7 @@ const vehicleLinks = [
   },
   {
     category: "Luxury Cars, SUVs, Vans",
-    icon: IoCarSport,
+    icon: FaCarSide,
     items: [
       { href: "/luxury-car-rental-delhi", label: "Luxury Cars & SUVs" },
       { href: "/mercedes-sprinter-van-rental", label: "Mercedes Sprinter" },
@@ -76,7 +77,7 @@ const vehicleLinks = [
   },
   {
     category: "Urbania",
-    icon: TbBusFilled,
+    icon: FaBus,
     items: [{ href: "/force-urbania-on-rent", label: "Urbania" }],
   },
   {
@@ -86,7 +87,7 @@ const vehicleLinks = [
   },
   {
     category: "Luxury Buses",
-    icon: BsFillBusFrontFill,
+    icon: FaBusSimple,
     items: [
       { href: "/bus-rental-delhi", label: "Luxury Bus" },
       { href: "/volvo-bus-on-rent", label: "Volvo Bus" },
@@ -98,11 +99,11 @@ const vehicleLinks = [
 ];
 
 const infoLinks = [
-  { label: "FAQ's", icon: TbMessageQuestion, href: "/faqs" },
-  { label: "Blog", icon: PiNotePencilBold, href: "/blog" },
+  { label: "FAQ's", icon: FaCircleQuestion, href: "/faqs" },
+  { label: "Blog", icon: FaPenToSquare, href: "/blog" },
   { label: "News & Media", icon: FaNewspaper, href: "/news-media" },
-  { label: "Privacy", icon: MdPrivacyTip, href: "/privacy-policy" },
-  { label: "Terms & Conditions", icon: LuNotebookPen, href: "/terms-conditions" },
+  { label: "Privacy", icon: FaShieldHalved, href: "/privacy-policy" },
+  { label: "Terms & Conditions", icon: FaBook, href: "/terms-conditions" },
 ];
 
 // Static social links (without Mail and WhatsApp)
@@ -183,7 +184,7 @@ export default function Footer() {
     ...socials,
     {
       label: "Mail",
-      icon: IoMdMail,
+      icon: FaEnvelope,
       href: `mailto:${locationConfig.email}`,
     },
     {
@@ -353,7 +354,7 @@ export default function Footer() {
                 <ul className="space-y-3 sm:space-y-4">
                   <li className="flex items-center gap-2 sm:gap-3">
                     <span className="w-[30px] sm:w-[38px] md:w-[40px] h-[30px] sm:h-[38px] md:h-[40px] rounded-full border border-[#03C35E]/60 flex items-center justify-center text-[#03C35E] text-[11px] sm:text-[13px] md:text-[14px] shrink-0">
-                      <FaPhoneAlt />
+                      <FaPhone />
                     </span>
                     <a
                       href={`tel:${locationConfig.phone.replace(/\s/g, "")}`}
@@ -375,7 +376,7 @@ export default function Footer() {
                   </li>
                   <li className="flex items-start gap-2 sm:gap-3">
                     <span className="w-[30px] sm:w-[38px] md:w-[40px] h-[30px] sm:h-[38px] md:h-[40px] rounded-full border border-[#03C35E]/60 flex items-center justify-center text-[#03C35E] text-[11px] sm:text-[13px] md:text-[14px] shrink-0 mt-0.5">
-                      <FaMapMarkerAlt />
+                      <FaLocationDot />
                     </span>
                     <span className="text-[13px] sm:text-[15px] lg:text-[16px] text-[#6a7695] leading-snug">
                       {locationConfig.address}

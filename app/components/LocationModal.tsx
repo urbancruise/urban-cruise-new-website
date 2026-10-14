@@ -5,15 +5,15 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { formatLocationName } from "@/app/lib/location";
 import Image from "next/image";
-import { IoClose, IoSearch } from "react-icons/io5";
 import {
   FaCheck,
   FaCity,
-  FaMapMarkerAlt,
-  FaTimes,
   FaGlobe,
-} from "react-icons/fa";
-import { TbCurrentLocation } from "react-icons/tb";
+  FaLocationCrosshairs,
+  FaLocationDot,
+  FaMagnifyingGlass,
+  FaXmark,
+} from "react-icons/fa6";
 
 interface LocationModalProps {
   isOpen: boolean;
@@ -170,7 +170,7 @@ export default function LocationModal({
           className="absolute right-2 sm:right-3 md:right-4 top-2 sm:top-3 md:top-4 z-10 w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition-all duration-300 hover:scale-110"
           aria-label="Close modal"
         >
-          <IoClose className="text-base sm:text-lg md:text-xl" />
+          <FaXmark className="text-base sm:text-lg md:text-xl" />
         </button>
 
         <div className="max-h-[85vh] overflow-y-auto px-3 sm:px-6 md:px-8 lg:px-10 pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6">
@@ -191,7 +191,7 @@ export default function LocationModal({
           {/* Search */}
           <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-4 sm:mb-5">
             <div className="relative">
-              <IoSearch className="absolute text-base sm:text-lg md:text-xl left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <FaMagnifyingGlass className="absolute text-base sm:text-lg md:text-xl left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search your city..."
@@ -205,7 +205,7 @@ export default function LocationModal({
                   onClick={() => setSearchTerm("")}
                   className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  <FaTimes className="text-xs sm:text-sm" />
+                  <FaXmark className="text-xs sm:text-sm" />
                 </button>
               )}
             </div>
@@ -221,7 +221,7 @@ export default function LocationModal({
                   : "bg-white border-gray-200 text-gray-700 hover:border-[#03C35E] hover:text-[#03C35E]"
               }`}
             >
-              <TbCurrentLocation className="text-base sm:text-lg md:text-xl" />
+              <FaLocationCrosshairs className="text-base sm:text-lg md:text-xl" />
               <span>All</span>
             </button>
 
@@ -321,7 +321,7 @@ export default function LocationModal({
           <div className="flex flex-row items-center justify-between text-[10px] sm:text-xs text-gray-500 gap-1 sm:gap-0">
             <span>{uniqueLocations.length} options available</span>
             <span className="flex items-center gap-1 sm:gap-1.5">
-              <FaMapMarkerAlt className="text-[#03C35E] text-xs sm:text-sm" />
+              <FaLocationDot className="text-[#03C35E] text-xs sm:text-sm" />
               <span className="hidden xs:inline">Current:</span>
               <span className="font-semibold text-[#03C35E] text-[10px] sm:text-xs">
                 {selectedLocation

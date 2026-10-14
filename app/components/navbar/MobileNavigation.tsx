@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { aboutLinks, infoLinks, serviceLinks, vehicleLinks } from "./constants";
 import type { NavbarState } from "./useNavbar";
 import { getFullServiceUrl } from "@/app/lib/serviceUrlHelper";

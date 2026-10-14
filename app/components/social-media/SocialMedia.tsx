@@ -2,17 +2,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaWhatsapp, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {
+  FaChevronLeft,
+  FaChevronRight,
+  FaEnvelope,
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
+  FaPenToSquare,
+  FaPhone,
   FaXTwitter,
+  FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa6";
-import { IoIosMail } from "react-icons/io";
-import { MdEditDocument } from "react-icons/md";
-import { TbPhoneCall } from "react-icons/tb";
 import { useLocation } from "@/app/context/LocationContext";
 import { getLocationConfig } from "@/app/lib/locationConfig";
 
@@ -85,7 +87,7 @@ const SocialMedia = () => {
     },
     {
       name: "Get Quote",
-      icon: <MdEditDocument />,
+      icon: <FaPenToSquare />,
       href: "/contact",
       Bg: "bg-[#F7941E]",
       hoverBg: "hover:bg-[#F7941E]",
@@ -94,7 +96,7 @@ const SocialMedia = () => {
     },
     {
       name: "Call",
-      icon: <TbPhoneCall />,
+      icon: <FaPhone />,
       href: `tel:${locationConfig.phone.replace(/\s/g, "")}`,
       Bg: "bg-[#0A66C2]",
       hoverBg: "hover:bg-[#0A66C2]",
@@ -103,7 +105,7 @@ const SocialMedia = () => {
     },
     {
       name: "Email",
-      icon: <IoIosMail />,
+      icon: <FaEnvelope />,
       href: `mailto:${locationConfig.email}`,
       Bg: "bg-[#EA4335]",
       hoverBg: "hover:bg-[#EA4335]",

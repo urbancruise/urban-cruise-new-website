@@ -4,11 +4,11 @@
 import Link from "next/link";
 import { useLocation } from "@/app/context/LocationContext";
 import { 
-  FaCar, FaUsers, FaStar, FaClock, FaShieldAlt, 
+  FaCarSide as FaCar, FaUsers, FaClock, FaShieldHalved as FaShieldAlt,
   FaBuilding, FaBriefcase, FaChartLine, FaGlobe,
   FaHotel, FaPlane, FaCalendarCheck, FaHandshake
-} from "react-icons/fa";
-import { IoMdArrowForward } from "react-icons/io";
+} from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
 export default function GurugramAboutPage() {
   const { getLocationUrl } = useLocation();
@@ -92,7 +92,7 @@ export default function GurugramAboutPage() {
                 className="inline-flex items-center gap-2 px-8 py-3 bg-[#6c5ce7] hover:bg-[#5a4bd1] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#6c5ce7]/30"
               >
                 Book Your Ride
-                <IoMdArrowForward className="w-4 h-4" />
+                <FaArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href={getLocationUrl("/car-rental-gurugram")}
@@ -186,7 +186,7 @@ export default function GurugramAboutPage() {
             className="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#6c5ce7] font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             Get Started
-            <IoMdArrowForward className="w-5 h-5" />
+            <FaArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </section>

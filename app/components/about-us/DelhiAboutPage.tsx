@@ -5,11 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocation } from "@/app/context/LocationContext";
 import { 
-  FaCar, FaUsers, FaStar, FaClock, FaShieldAlt, 
-  FaMapMarkerAlt, FaMonument, FaUtensils, FaShoppingBag,
+  FaCarSide as FaCar, FaUsers, FaClock,
+  FaShieldHalved as FaShieldAlt,
+  FaLocationDot as FaMapMarkerAlt, FaMonument, FaBagShopping as FaShoppingBag,
   FaLandmark, FaChurch, FaTree, FaMosque
-} from "react-icons/fa";
-import { IoMdArrowForward } from "react-icons/io";
+} from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
 export default function DelhiAboutPage() {
   const { getLocationUrl } = useLocation();
@@ -93,7 +94,7 @@ export default function DelhiAboutPage() {
                 className="inline-flex items-center gap-2 px-8 py-3 bg-[#e94560] hover:bg-[#c73652] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#e94560]/30"
               >
                 Book Your Ride
-                <IoMdArrowForward className="w-4 h-4" />
+                <FaArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href={getLocationUrl("/car-rental-delhi")}
@@ -189,7 +190,7 @@ export default function DelhiAboutPage() {
             className="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#e94560] font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             Get Started
-            <IoMdArrowForward className="w-5 h-5" />
+            <FaArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </section>

@@ -4,11 +4,11 @@
 import Link from "next/link";
 import { useLocation } from "@/app/context/LocationContext";
 import { 
-  FaCar, FaUsers, FaStar, FaClock, FaShieldAlt, 
-  FaUniversity, FaBook, FaGraduationCap, FaTree,
+  FaCarSide as FaCar, FaUsers, FaClock, FaShieldHalved as FaShieldAlt,
+  FaBuildingColumns as FaUniversity, FaBook, FaTree,
   FaMountain, FaChurch, FaBuilding, FaLaptop
-} from "react-icons/fa";
-import { IoMdArrowForward } from "react-icons/io";
+} from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
 export default function PuneAboutPage() {
   const { getLocationUrl } = useLocation();
@@ -92,7 +92,7 @@ export default function PuneAboutPage() {
                 className="inline-flex items-center gap-2 px-8 py-3 bg-[#00b894] hover:bg-[#00a381] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#00b894]/30"
               >
                 Book Your Ride
-                <IoMdArrowForward className="w-4 h-4" />
+                <FaArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href={getLocationUrl("/car-rental-pune")}
@@ -188,7 +188,7 @@ export default function PuneAboutPage() {
             className="inline-flex items-center gap-2 px-10 py-4 bg-white text-[#00b894] font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             Get Started
-            <IoMdArrowForward className="w-5 h-5" />
+            <FaArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </section>
