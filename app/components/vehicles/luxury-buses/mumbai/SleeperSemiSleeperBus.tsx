@@ -6,7 +6,6 @@
   import HowItWorks from "./ui/HowItWorks";
   import VehicleForEveryBudget from "./ui/VehicleForEveryBudget";
   import VehicleForEveryGroupSize from "./ui/VehicleForEveryGroupSize";
-  import VehicleForEveryOccasion from "./ui/VehicleForEveryOccasion";
   import WhyChooseUrbanCruise from "./ui/WhyChooseUrbanCruise";
   import Testimonials from "./ui/Testimonials";
   import Faqs from "./ui/Faq's";
@@ -35,7 +34,6 @@
       <CompressionWithVehicle content={s.compare} />
       <PricesCharges content={s.prices} />
       <LookingForOtherVehicle content={s.lookingvehicle} />
-      <VehicleForEveryOccasion content={s.occasion} />
       <WhyChooseUrbanCruise content={s.whychoose} />
       <Testimonials content={s.testimonials} />
       <Faqs content={s.faq} />
@@ -45,4 +43,3 @@
       </section>
     );
   }
-

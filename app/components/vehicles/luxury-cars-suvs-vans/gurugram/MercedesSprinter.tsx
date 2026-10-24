@@ -6,7 +6,6 @@ import About from "./ui/About";
 import HowItWorks from "./ui/HowItWorks";
 import VehicleForEveryBudget from "./ui/VehicleForEveryBudget";
 import VehicleForEveryGroupSize from "./ui/VehicleForEveryGroupSize";
-import VehicleForEveryOccasion from "./ui/VehicleForEveryOccasion";
 import WhyChooseUrbanCruise from "./ui/WhyChooseUrbanCruise";
 import Testimonials from "./ui/Testimonials";
 import Faqs from "./ui/Faq's";
@@ -31,7 +30,6 @@ export default function MercedesSprinter({ cmsMeta, cmsSections }: Props) {
       <VehicleForEveryBudget content={s.vehiclebudget} />
       <VehicleForEveryGroupSize content={s.groupsize} />
       <LookingForOtherVehicle content={s.lookingvehicle} />
-      <VehicleForEveryOccasion content={s.occasion} />
       <WhyChooseUrbanCruise content={s.whychoose} />
       <Testimonials content={s.testimonials} />
       <Faqs content={s.faq} />
@@ -41,4 +39,3 @@ export default function MercedesSprinter({ cmsMeta, cmsSections }: Props) {
     </section>
   );
 }
-
