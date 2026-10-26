@@ -6,6 +6,9 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useLocation } from "@/app/context/LocationContext";
+import {
+  ServicesInCitiesContext,
+} from "@/app/components/vehicles/ServicesInVariousCities";
 
 // ======================================================
 // LAZY LOAD — CARS & SUVs
@@ -140,8 +143,8 @@ const PuneSleeperBusPage = dynamic(() => import("./vehicles/PuneSleeperBusPage")
 // ======================================================
 export interface VehicleSelectorProps {
   vehicleType: string;
-  cmsMeta?: Record<string, any> | null;
-  cmsSections?: Record<string, any> | null;
+  cmsMeta?: Record<string, unknown> | null;
+  cmsSections?: Record<string, unknown> | null;
 }
 
 // ======================================================
@@ -162,7 +165,13 @@ function VehicleComingSoon() {
 // ======================================================
 const vehicleMap: Record<
   string,
-  Record<string, React.ComponentType<any>>
+  Record<
+    string,
+    React.ComponentType<{
+      cmsMeta?: Record<string, unknown> | null;
+      cmsSections?: Record<string, unknown> | null;
+    }>
+  >
 > = {
   delhi: {
     "car-suvs": DelhiCarSuvsPage,
@@ -254,9 +263,16 @@ export default function VehicleSelector({
   // ✅ Forward CMS data to the page wrapper, which will
   //    pass it down to each section.
   return (
-    <VehicleComponent
-      cmsMeta={cmsMeta ?? null}
-      cmsSections={cmsSections ?? null}
-    />
+    <ServicesInCitiesContext.Provider
+      value={{
+        content: cmsSections?.servicesincities,
+        vehicleType,
+      }}
+    >
+      <VehicleComponent
+        cmsMeta={cmsMeta ?? null}
+        cmsSections={cmsSections ?? null}
+      />
+    </ServicesInCitiesContext.Provider>
   );
 }
