@@ -15,6 +15,8 @@ import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
 import PlaceToVisit from "./ui/PlaceToVisit";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
+import CompressionWithVehicle from "./ui/CompressionWithVehicle";
+import PricesCharges from "./ui/PricesCharges";
 
 interface Props {
   cmsMeta?: Record<string, any> | null;
@@ -31,6 +33,8 @@ export default function MiniBus({ cmsMeta, cmsSections }: Props) {
       <HowItWorks content={s.howitworks} />
       <VehicleForEveryBudget content={s.vehiclebudget} />
       <VehicleForEveryGroupSize content={s.groupsize} />
+      <CompressionWithVehicle content={s.compare} />
+      <PricesCharges content={s.prices} />
       <LookingForOtherVehicle content={s.lookingvehicle} />
       <VehicleForEveryOccasion content={s.occasion} />
       <WhyChooseUrbanCruise content={s.whychoose} />
