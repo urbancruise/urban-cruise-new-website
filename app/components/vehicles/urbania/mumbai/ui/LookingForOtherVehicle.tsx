@@ -5,6 +5,7 @@ import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { ServicesInVariousCitiesPlacement } from "@/app/components/vehicles/ServicesInVariousCities";
 
 const FALLBACK_VEHICLES = [
   { name: "Tempo Traveller", size: "9 to 26 Seater", image: "/images/vehiclerentalserviceinindia/IndiaGate.webp" },
@@ -198,6 +199,7 @@ export default function LookingForOtherVehicle({ content }: Props) {
           </motion.div>
         )}
       </div>
+      <ServicesInVariousCitiesPlacement />
     </section>
   );
 }

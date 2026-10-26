@@ -569,7 +569,7 @@ export default function VehicleForEveryGroupSize({ content }: Props) {
 
         <div className="grid w-full grid-cols-1 gap-6 min-[430px]:gap-7 sm:grid-cols-2 sm:gap-6 md:gap-7 lg:grid-cols-2 lg:gap-8 xl:grid-cols-3 xl:gap-9 2xl:grid-cols-3 2xl:gap-10">
           {vehicles.map((vehicle: any, index: number) => (
-            <VehicleCard key={vehicle.name || index} vehicle={vehicle} index={index} />
+            <VehicleCard key={`${vehicle.name || "vehicle"}-${index}`} vehicle={vehicle} index={index} />
           ))}
         </div>
       </div>

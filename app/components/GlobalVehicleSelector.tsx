@@ -1,6 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import {
+  ServicesInCitiesContext,
+} from "@/app/components/vehicles/ServicesInVariousCities";
 
 const vehiclePages = {
   "car-suvs": dynamic(() => import("./vehicles/DelhiCarSuvsPage")),
@@ -37,5 +40,14 @@ export default function GlobalVehicleSelector({
   cmsSections?: Record<string, unknown> | null;
 }) {
   const VehiclePage = vehiclePages[vehicle];
-  return <VehiclePage cmsMeta={cmsMeta} cmsSections={cmsSections} />;
+  return (
+    <ServicesInCitiesContext.Provider
+      value={{
+        content: cmsSections?.servicesincities,
+        vehicleType: vehicle,
+      }}
+    >
+      <VehiclePage cmsMeta={cmsMeta} cmsSections={cmsSections} />
+    </ServicesInCitiesContext.Provider>
+  );
 }
