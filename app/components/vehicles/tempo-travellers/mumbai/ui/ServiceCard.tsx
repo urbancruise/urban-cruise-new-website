@@ -1,6 +1,7 @@
 // // components/vehicles/cars-suvs/delhi/ui/ServiceCard.tsx
 
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -22,6 +23,7 @@ export default function ServiceCard({ content }: { content?: any }) {
           image:
             c.image ||
             "/images/vehiclerentalserviceinindia/IndiaGate.webp",
+          imageAlt: getCmsImageAlt(c, `${c.name || "City"}, ${c.state || ""}`),
         }))
       : FALLBACK_SERVICE_CITIES;
 
@@ -91,7 +93,7 @@ export default function ServiceCard({ content }: { content?: any }) {
                   <div className="relative h-full w-full overflow-hidden rounded-2xl">
                     <Image
                       src={city.image}
-                      alt={`${city.name}, ${city.state}`}
+                      alt={getCmsImageAlt(city, `${city.name}, ${city.state}`)}
                       fill
                       sizes="(max-width: 374px) 88vw, (max-width: 424px) 86vw, (max-width: 767px) 42vw, (max-width: 1023px) 42vw, (max-width: 1279px) 38vw, (max-width: 1535px) 35vw, 30vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"

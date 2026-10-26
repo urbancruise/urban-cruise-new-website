@@ -1,5 +1,6 @@
 // app/components/vehicles/cars-suvs/delhi/ui/VehicleForEveryBudget.tsx
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import Image from "next/image";
 import type { ReactNode } from "react";
@@ -164,6 +165,7 @@ export default function VehicleForEveryBudget({ content }: Props) {
     "From economical rides to premium and luxury vehicles, Urban Cruise offers a wide range of vehicles to match your travel needs, comfort, and budget.";
   const illustration =
     content?.illustration || "/images/vehicleforeverybudget/5.webp";
+  const illustrationAlt = getCmsImageAlt(content, "Urban Cruise Vehicles");
 
   const categories =
     Array.isArray(content?.categories) && content.categories.length > 0
@@ -171,6 +173,7 @@ export default function VehicleForEveryBudget({ content }: Props) {
           title: c.title || "",
           description: c.description || "",
           icon: c.icon || FALLBACK_CATEGORIES[i]?.icon || "",
+          imageAlt: getCmsImageAlt(c, `${c.title || "Vehicle"} vehicle`),
           color: c.color === "orange" ? ORANGE : GREEN,
         }))
       : FALLBACK_CATEGORIES;
@@ -261,7 +264,7 @@ export default function VehicleForEveryBudget({ content }: Props) {
               >
                 <Image
                   src={illustration}
-                  alt="Urban Cruise Vehicles"
+                  alt={illustrationAlt}
                   width={700}
                   height={475}
                   priority
@@ -324,7 +327,7 @@ export default function VehicleForEveryBudget({ content }: Props) {
                 {category.icon && (
                   <Image
                     src={category.icon}
-                    alt={`${category.title} vehicle`}
+                    alt={getCmsImageAlt(category, `${category.title} vehicle`)}
                     width={100}
                     height={100}
                     className="object-contain transition-transform duration-500 ease-out group-hover:scale-110 h-[50px] w-[50px] min-[375px]:h-[56px] min-[375px]:w-[56px] min-[430px]:h-[64px] min-[430px]:w-[64px] sm:h-[72px] sm:w-[72px] md:h-[78px] md:w-[78px] lg:h-[62px] lg:w-[62px] xl:h-[68px] xl:w-[68px] 2xl:h-[90px] 2xl:w-[90px]"

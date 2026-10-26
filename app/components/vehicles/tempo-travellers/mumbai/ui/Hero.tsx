@@ -24,6 +24,11 @@ export default function Hero({ content, meta }: HeroProps) {
     content?.backgroundImage || "/images/hero/herobg.webp";
   const vehiclesImage =
     content?.vehiclesImage || "/images/hero/3 images.webp";
+  const backgroundImageAlt =
+    content?.backgroundImageAlt?.trim() || title || "Urban Cruise vehicles";
+  const vehiclesImageAlt =
+    content?.vehiclesImageAlt?.trim() ||
+    "Urban Cruise vehicles available for rent";
 
   return (
     <section className="relative w-full bg-white">
@@ -37,7 +42,7 @@ export default function Hero({ content, meta }: HeroProps) {
         {/* BACKGROUND */}
         <img
           src={backgroundImage}
-          alt={title || "Urban Cruise vehicles"}
+          alt={backgroundImageAlt}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
 
@@ -103,7 +108,7 @@ export default function Hero({ content, meta }: HeroProps) {
         >
           <img
             src={vehiclesImage}
-            alt="Urban Cruise vehicles available for rent"
+            alt={vehiclesImageAlt}
             className="
               w-full h-auto object-contain mx-auto
               max-w-[400px] xs:max-w-[400px] sm:max-w-[560px] md:max-w-[700px]

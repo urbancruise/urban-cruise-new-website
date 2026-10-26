@@ -1,5 +1,6 @@
 // app/components/vehicles/luxury-buses/delhi/ui/PricesCharges.tsx
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import React from "react";
 import Image from "next/image";
@@ -31,6 +32,7 @@ interface PriceRow {
   type: string;
   price: string;
   image: string;
+  imageAlt?: string;
 }
 
 interface PricesChargesProps {
@@ -226,7 +228,7 @@ function PricingRow({
           {vehicle.image && (
             <Image
               src={vehicle.image}
-              alt={vehicle.seater}
+              alt={vehicle.imageAlt || vehicle.seater}
               fill
               sizes="80px"
               className="object-contain p-1"
@@ -293,7 +295,7 @@ function MobilePricingCard({
           {vehicle.image && (
             <Image
               src={vehicle.image}
-              alt={vehicle.seater}
+              alt={vehicle.imageAlt || vehicle.seater}
               fill
               sizes="70px"
               className="object-contain p-1"
@@ -356,6 +358,7 @@ export default function PriceBookingCharges({ content }: PricesChargesProps) {
           type: r.subLabel || "Tempo Traveller",
           price: String(r.price ?? "").replace(/^₹\s*/, ""),
           image: r.image || "/images/downloadapp/forceurbania.png",
+          imageAlt: getCmsImageAlt(r, r.seats || r.seater || "Vehicle"),
         }))
       : FALLBACK_VEHICLES;
 
@@ -412,7 +415,7 @@ export default function PriceBookingCharges({ content }: PricesChargesProps) {
           <div className="absolute inset-0 z-0">
             <Image
               src={illustration}
-              alt="Prices & Charges background"
+              alt={getCmsImageAlt(content, "Prices & Charges background")}
               fill
               sizes="100vw"
               className="object-contain object-right lg:object-right"

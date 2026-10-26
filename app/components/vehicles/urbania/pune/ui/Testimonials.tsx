@@ -1,5 +1,6 @@
 // app/components/vehicles/cars-suvs/delhi/ui/Testimonials.tsx
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
@@ -29,6 +30,7 @@ type Testimonial = {
   location: string;
   message: string;
   avatar: string;
+  avatarAlt?: string;
   videoId: string;
   rating: number;
   accent: "green" | "orange";
@@ -197,7 +199,7 @@ function Avatar({
       <div className="pointer-events-none absolute inset-0 z-10 bg-black/[0.08]" />
       <Image
         src={testimonial.avatar}
-        alt={testimonial.name}
+        alt={getCmsImageAlt(testimonial, testimonial.name)}
         fill
         sizes={large ? "94px" : "70px"}
         className="relative z-20 object-cover object-center"
@@ -361,6 +363,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
           location: item.location || "",
           message: item.message,
           avatar: item.avatar || `/images/testimonials/${(i % 5) + 1}.jpg`,
+          avatarAlt: getCmsImageAlt(item, item.name || "Customer testimonial"),
           videoId,
           rating: typeof item.rating === "number" ? item.rating : 5,
           accent: item.accent || (i % 2 === 0 ? "green" : "orange"),
