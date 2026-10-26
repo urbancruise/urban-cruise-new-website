@@ -1,5 +1,6 @@
 // // components/vehicles/cars-suvs/delhi/ui/LookingForOtherVehicle.tsx
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
@@ -119,7 +120,7 @@ export default function LookingForOtherVehicle({ content }: Props) {
                 <div className="relative h-full w-full overflow-hidden rounded-2xl">
                   <Image
                     src={vehicleItem.image}
-                    alt={`${vehicleItem.name}, ${vehicleItem.size}`}
+                    alt={getCmsImageAlt(vehicleItem, `${vehicleItem.name}, ${vehicleItem.size}`)}
                     fill
                     sizes="(max-width: 639px) 85vw, (max-width: 767px) 42vw, (max-width: 1023px) 28vw, (max-width: 1279px) 20vw, (max-width: 1535px) 18vw, 16vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"

@@ -1,6 +1,7 @@
 // // app/components/vehicles/cars-suvs/delhi/ui/HowItWorks.tsx
 
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import Image from "next/image";
 
@@ -54,6 +55,7 @@ export default function HowItWorks({ content }: HowItWorksProps) {
           title: s.title || "",
           description: s.description || "",
           image: s.image || FALLBACK_STEPS[i]?.image || "",
+          imageAlt: getCmsImageAlt(s, s.title || "Travel booking step"),
           color: i % 2 === 0 ? GREEN : ORANGE,
         }))
       : FALLBACK_STEPS;
@@ -114,7 +116,7 @@ export default function HowItWorks({ content }: HowItWorksProps) {
                     {step.image && (
                       <Image
                         src={step.image}
-                        alt={step.title}
+                        alt={getCmsImageAlt(step, step.title)}
                         fill
                         sizes="(max-width: 640px) 90vw, (max-width: 768px) 80vw, (max-width: 1024px) 30vw, 400px"
                         className="relative z-10 object-contain transition-transform duration-500 group-hover:scale-105"

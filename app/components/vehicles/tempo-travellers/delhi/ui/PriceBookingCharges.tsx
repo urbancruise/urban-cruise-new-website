@@ -2,6 +2,8 @@
 
 "use client";
 
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
+
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -32,6 +34,7 @@ interface PriceRow {
   price: string;
   seating?: string;
   image: string;
+  imageAlt?: string;
   bookLabel?: string;
   bookLink?: string;
 }
@@ -135,6 +138,7 @@ function normalizeRow(cms: any, index: number): PriceRow {
     price: String(cms?.price ?? fallback.price).replace(/^₹/, "").trim(),
     seating: cms?.seating || cms?.subLabel || fallback.seating,
     image: cms?.image || fallback.image,
+    imageAlt: getCmsImageAlt(cms, cms?.seats || cms?.seater || fallback.seater),
     bookLabel: cms?.bookLabel || "Book Now",
     bookLink: cms?.bookLink || "",
   };
@@ -203,7 +207,7 @@ function PricingRow({
         >
           <Image
             src={vehicle.image}
-            alt={vehicle.seater}
+            alt={getCmsImageAlt(vehicle, vehicle.seater)}
             fill
             sizes="80px"
             className="object-contain p-1"
@@ -272,7 +276,7 @@ function MobilePricingCard({
         >
           <Image
             src={vehicle.image}
-            alt={vehicle.seater}
+            alt={getCmsImageAlt(vehicle, vehicle.seater)}
             fill
             sizes="70px"
             className="object-contain p-1"
@@ -317,6 +321,10 @@ export default function PriceBookingCharges({ content }: Props) {
     "Hire Tempo Traveller in Delhi for every occasion – weddings, pilgrimage trips, corporate events, tours, and Delhi Darshan. Comfortable, affordable travel for groups of all sizes.";
   const illustration =
     content?.illustration || "/images/ourtrustedpartner/1.png";
+  const illustrationAlt = getCmsImageAlt(
+    content,
+    `${title} Background`,
+  );
 
   const col1Header = content?.col1Header || "TEMPO TRAVELLER";
   const col2Header = content?.col2Header || "START FROM PRICE/KM";
@@ -358,7 +366,7 @@ export default function PriceBookingCharges({ content }: Props) {
           <div className="absolute inset-0 z-0">
             <Image
               src={illustration}
-              alt={`${title} Background`}
+              alt={illustrationAlt}
               fill
               sizes="100vw"
               className="object-contain object-right lg:object-right"

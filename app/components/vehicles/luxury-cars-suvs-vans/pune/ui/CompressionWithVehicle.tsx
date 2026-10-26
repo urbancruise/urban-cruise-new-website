@@ -1,5 +1,7 @@
 "use client";
 
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, PanInfo } from "framer-motion";
@@ -35,6 +37,7 @@ type VehicleSide = {
   price: string;
   badge: string;
   image: string;
+  imageAlt?: string;
   background: string;
   footerText: React.ReactNode;
 };
@@ -303,6 +306,7 @@ function normalizePairs(cmsPairs: any[] | undefined): VehiclePair[] {
         price: String(side.price ?? fb.price),
         badge: side.badge || fb.badge,
         image: side.image || fb.image,
+        imageAlt: getCmsImageAlt(side, side.name || fb.title),
         background: side.background || fb.background,
         footerText: side.footerText || fb.footerText,
       };
@@ -608,7 +612,7 @@ function ComparisonCard({ side, vehicle, rows }: ComparisonCardProps) {
         >
           <Image
             src={image}
-            alt={title}
+            alt={vehicle.imageAlt || title}
             fill
             priority
             sizes="(max-width:1024px) 90vw, 45vw"

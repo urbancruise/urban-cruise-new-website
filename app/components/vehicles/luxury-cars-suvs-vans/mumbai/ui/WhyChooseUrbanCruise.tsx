@@ -1,5 +1,6 @@
 // // app/components/vehicles/cars-suvs/delhi/ui/WhyChooseUrbanCruise.tsx
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -24,6 +25,7 @@ type Benefit = {
   icon: React.ReactNode;
   description: string[];
   image: string;
+  imageAlt?: string;
   theme: "green" | "orange";
 };
 
@@ -216,7 +218,7 @@ function BenefitCard({ benefit, index }: { benefit: Benefit; index: number }) {
         {benefit.image && (
           <Image
             src={benefit.image}
-            alt={benefit.title}
+            alt={getCmsImageAlt(benefit, benefit.title)}
             fill
             sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 18vw"
             className="object-contain object-right-bottom transition-transform duration-500 group-hover:scale-[1.04]"
@@ -248,6 +250,7 @@ export default function WhyChooseUrbanCruise({ content }: Props) {
             b.image ||
             FALLBACK_BENEFITS[i]?.image ||
             "/images/whychooseicons/Widest range of vehicles.webp",
+          imageAlt: getCmsImageAlt(b, b.title || "Urban Cruise benefit"),
           description: b.items || b.description || [],
         }))
       : FALLBACK_BENEFITS;

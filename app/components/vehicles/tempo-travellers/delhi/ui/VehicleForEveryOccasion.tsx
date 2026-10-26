@@ -1,5 +1,7 @@
 "use client";
 
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
+
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -405,7 +407,7 @@ function FeaturedOccasionCard({ card, direction }: { card: any; direction: numbe
             <div className="relative min-h-[260px] overflow-hidden sm:min-h-[320px] md:min-h-[350px] lg:min-h-[390px] xl:min-h-[410px]">
               <Image
                 src={card.image}
-                alt={card.title}
+                alt={getCmsImageAlt(card, card.title)}
                 fill
                 priority
                 className="object-cover transition-transform duration-700 hover:scale-[1.03]"
@@ -510,6 +512,7 @@ export default function VehicleForEveryOccasion({ content }: Props) {
                   price: c.price || "",
                   location: c.location || "",
                   image: c.image || "/images/vehicleforeverygroupsize/7.jpeg",
+                  imageAlt: getCmsImageAlt(c, c.title || "Vehicle for every occasion"),
                   features: c.features || [],
                 }))
               : [],

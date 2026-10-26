@@ -1,5 +1,7 @@
 "use client";
 
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
+
 import Image from "next/image";
 import { motion, PanInfo } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -149,26 +151,30 @@ function DestinationCollage({
   images,
   alt,
 }: {
-  images: string[];
+  images: Array<string | { src: string; alt: string }>;
   alt: string;
 }) {
   const [img0 = "/images/vehiclerentalserviceinindia/IndiaGate.webp", img1 = img0, img2 = img0] = images;
+  const imageSrc = (image: (typeof images)[number]) =>
+    typeof image === "string" ? image : image.src;
+  const imageAlt = (image: (typeof images)[number], position: string) =>
+    typeof image === "string" ? `${alt} - ${position}` : image.alt;
   return (
     <div className="relative mx-auto h-[350px] w-full max-w-[560px] min-[375px]:h-[370px] min-[375px]:max-w-[580px] min-[430px]:h-[390px] min-[430px]:max-w-[600px] sm:h-[430px] sm:max-w-[620px] md:h-[470px] md:max-w-[650px] lg:h-[500px] lg:max-w-[620px] xl:h-[540px] xl:max-w-[650px] 2xl:h-[580px] 2xl:max-w-[700px]">
       <DestinationImage
-        src={img0}
-        alt={`${alt} - Main`}
+        src={imageSrc(img0)}
+        alt={imageAlt(img0, "Main")}
         priority
         className="left-0 top-0 z-10 h-[280px] w-[64%] rounded-[30px] min-[375px]:h-[300px] min-[375px]:rounded-[32px] min-[430px]:h-[315px] min-[430px]:w-[63%] sm:h-[350px] sm:w-[64%] sm:rounded-[38px] md:h-[390px] md:w-[63%] lg:h-[420px] lg:w-[63%] lg:rounded-[42px] xl:h-[455px] 2xl:h-[490px]"
       />
       <DestinationImage
-        src={img2}
-        alt={`${alt} - Third`}
+        src={imageSrc(img2)}
+        alt={imageAlt(img2, "Third")}
         className="bottom-0 left-[34%] z-20 h-[170px] w-[53%] rounded-[28px] min-[375px]:h-[185px] min-[375px]:left-[35%] min-[430px]:h-[195px] min-[430px]:w-[52%] sm:h-[220px] sm:w-[52%] sm:rounded-[34px] md:h-[245px] md:w-[51%] lg:h-[270px] lg:w-[50%] lg:rounded-[40px] xl:h-[290px] 2xl:h-[315px]"
       />
       <DestinationImage
-        src={img1}
-        alt={`${alt} - Second`}
+        src={imageSrc(img1)}
+        alt={imageAlt(img1, "Second")}
         className="right-0 top-[45px] z-30 h-[170px] w-[40%] rounded-[28px] min-[375px]:top-[50px] min-[375px]:h-[180px] min-[430px]:top-[55px] min-[430px]:h-[190px] min-[430px]:w-[41%] sm:top-[60px] sm:h-[215px] sm:w-[41%] sm:rounded-[34px] md:top-[65px] md:h-[235px] lg:top-[70px] lg:h-[255px] lg:w-[40%] lg:rounded-[40px] xl:top-[75px] xl:h-[275px] 2xl:top-[80px] 2xl:h-[300px]"
       />
     </div>
@@ -481,10 +487,19 @@ export default function PlaceToVisit({ content }: Props) {
           bestTime: p.bestTime || "",
           bestFor: p.bestFor || "",
           tourHighlights: p.highlights || [],
-          images: (p.images || [])
-            .map((img: any) => (typeof img === "string" ? img : img.url))
-            .filter(Boolean),
-          alt: p.placeName || "Destination",
+          images: (p.images || []).flatMap((img: any, index: number) => {
+            const src = typeof img === "string" ? img : img.url;
+            return src
+              ? [{
+                  src,
+                  alt: getCmsImageAlt(
+                    img,
+                    `${p.placeName || "Destination"} image ${index + 1}`,
+                  ),
+                }]
+              : [];
+          }),
+          alt: getCmsImageAlt(p, p.placeName || "Destination"),
         }))
       : FALLBACK_DESTINATIONS;
 

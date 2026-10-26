@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
+import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
@@ -166,7 +167,9 @@ function CurvedShapeLogo({
   );
 }
 
-function CurvedGallery({ images }: { images: string[] }) {
+type GalleryImage = string | { src: string; alt: string };
+
+function CurvedGallery({ images, alt }: { images: GalleryImage[]; alt: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -194,6 +197,10 @@ function CurvedGallery({ images }: { images: string[] }) {
   };
 
   const displayImages = getDisplayImages();
+  const gallerySource = (image: GalleryImage) =>
+    typeof image === "string" ? image : image.src;
+  const galleryImageAlt = (image: GalleryImage, position: string) =>
+    typeof image === "string" ? `${alt} - ${position} gallery image` : image.alt;
 
   const resetAutoPlay = () => {
     if (intervalRef.current) {
@@ -228,8 +235,8 @@ function CurvedGallery({ images }: { images: string[] }) {
           style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%)" }}
         >
           <Image
-            src={displayImages[0]}
-            alt="Previous vehicle gallery image"
+            src={gallerySource(displayImages[0])}
+            alt={galleryImageAlt(displayImages[0], "Previous")}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
@@ -242,8 +249,8 @@ function CurvedGallery({ images }: { images: string[] }) {
           style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 90%, 0% 90%)" }}
         >
           <Image
-            src={displayImages[1]}
-            alt="Current vehicle gallery image"
+            src={gallerySource(displayImages[1])}
+            alt={galleryImageAlt(displayImages[1], "Current")}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
@@ -255,8 +262,8 @@ function CurvedGallery({ images }: { images: string[] }) {
           style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%)" }}
         >
           <Image
-            src={displayImages[2]}
-            alt="Next vehicle gallery image"
+            src={gallerySource(displayImages[2])}
+            alt={galleryImageAlt(displayImages[2], "Next")}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
@@ -319,7 +326,7 @@ function VehicleCard({
         >
           <Image
             src={vehicle.mainImage}
-            alt={vehicle.name}
+            alt={getCmsImageAlt(vehicle, vehicle.name)}
             fill
             className="object-cover"
             sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
@@ -349,7 +356,7 @@ function VehicleCard({
 
       {vehicle.gallery && vehicle.gallery.length > 0 && (
         <div className="absolute top-[165px] sm:top-[165px] md:top-[182px] xl:top-[210px] 2xl:top-[220px] left-0 right-0 z-20">
-          <CurvedGallery images={vehicle.gallery} />
+          <CurvedGallery images={vehicle.gallery} alt={getCmsImageAlt(vehicle, `${vehicle.name} gallery`)} />
         </div>
       )}
 
@@ -496,9 +503,18 @@ export default function VehicleForEveryGroupSize({ content }: Props) {
               v.mainImage ||
               FALLBACK_VEHICLES[i]?.mainImage ||
               "/images/vehicleforeverygroupsize/7.jpeg",
+            mainImageAlt: getCmsImageAlt(v, v.name || "Vehicle"),
             gallery: Array.isArray(v.gallery)
-              ? v.gallery.map((g: any) =>
-                  typeof g === "string" ? g : g.url
+              ? v.gallery.map((g: any, galleryIndex: number) =>
+                  typeof g === "string"
+                    ? g
+                    : {
+                        src: g.url,
+                        alt: getCmsImageAlt(
+                          g,
+                          `${v.name || "Vehicle"} gallery image ${galleryIndex + 1}`,
+                        ),
+                      },
                 )
               : FALLBACK_VEHICLES[i]?.gallery || [],
             features: Array.isArray(v.features)
