@@ -28,6 +28,7 @@ type ComparisonRow = {
   icon: IconType;
   left: string;
   right: string;
+  third?: string;
 };
 
 type VehicleSide = {
@@ -42,11 +43,13 @@ type VehicleSide = {
 type VehiclePair = {
   left: VehicleSide;
   right: VehicleSide;
+  third?: VehicleSide;
   rows: ComparisonRow[];
 };
 
 type ComparisonCardProps = {
-  side: "left" | "right";
+  side: "left" | "center" | "right";
+  thirdCard?: boolean;
   vehicle: VehicleSide;
   rows: ComparisonRow[];
 };
@@ -308,22 +311,34 @@ function normalizePairs(cmsPairs: any[] | undefined): VehiclePair[] {
       };
     };
 
+    const features = [
+      pair?.cardA?.features,
+      pair?.cardB?.features,
+      pair?.cardC?.features,
+    ].find((items) => Array.isArray(items) && items.length > 0) || [];
     const rows =
-      Array.isArray(pair?.cardA?.features) && pair.cardA.features.length > 0
-        ? pair.cardA.features.map((feat: any, i: number) => ({
-            label: feat.label || fallback.rows[i]?.label || "",
+      Array.isArray(features) && features.length > 0
+        ? features.map((feat: any, i: number) => ({
+            label:
+              feat.label ||
+              pair?.cardB?.features?.[i]?.label ||
+              pair?.cardC?.features?.[i]?.label ||
+              fallback.rows[i]?.label ||
+              "",
             icon: resolveIcon(feat.icon),
-            left: feat.value || "",
+            left: pair?.cardA?.features?.[i]?.value || "",
             right:
               pair?.cardB?.features?.[i]?.value ||
               fallback.rows[i]?.right ||
               "",
+            third: pair?.cardC?.features?.[i]?.value || "",
           }))
         : fallback.rows;
 
     return {
       left: buildSide(pair.cardA, fallback.left),
       right: buildSide(pair.cardB, fallback.right),
+      third: pair.cardC ? buildSide(pair.cardC, fallback.right) : undefined,
       rows,
     };
   });
@@ -505,11 +520,24 @@ export default function CompressionWithVehicle({
           className="cursor-grab active:cursor-grabbing"
         >
           {/* DESKTOP */}
-          <div className="hidden lg:grid lg:grid-cols-[minmax(0,1fr)_280px_minmax(0,1fr)]">
-            <ComparisonCard side="left" vehicle={pair.left} rows={pair.rows} />
-            <ComparisonCenter rows={pair.rows} />
-            <ComparisonCard side="right" vehicle={pair.right} rows={pair.rows} />
-          </div>
+          {pair.third ? (
+            <div className="hidden gap-4 lg:grid lg:grid-cols-3">
+              <ComparisonCard side="left" vehicle={pair.left} rows={pair.rows} />
+              <ComparisonCard side="center" vehicle={pair.right} rows={pair.rows} />
+              <ComparisonCard
+                side="right"
+                thirdCard
+                vehicle={pair.third}
+                rows={pair.rows}
+              />
+            </div>
+          ) : (
+            <div className="hidden lg:grid lg:grid-cols-[minmax(0,1fr)_280px_minmax(0,1fr)]">
+              <ComparisonCard side="left" vehicle={pair.left} rows={pair.rows} />
+              <ComparisonCenter rows={pair.rows} />
+              <ComparisonCard side="center" vehicle={pair.right} rows={pair.rows} />
+            </div>
+          )}
 
           {/* MOBILE / TABLET */}
           <div className="block lg:hidden">
@@ -527,7 +555,22 @@ export default function CompressionWithVehicle({
               </div>
             </div>
 
-            <ComparisonCard side="right" vehicle={pair.right} rows={pair.rows} />
+            <ComparisonCard side="center" vehicle={pair.right} rows={pair.rows} />
+            {pair.third && (
+              <>
+                <div className="my-7 flex justify-center">
+                  <div className="flex h-[62px] w-[62px] items-center justify-center rounded-full bg-[#2563EB] text-xl font-extrabold text-white shadow-lg">
+                    VS
+                  </div>
+                </div>
+                <ComparisonCard
+                  side="right"
+                  thirdCard
+                  vehicle={pair.third}
+                  rows={pair.rows}
+                />
+              </>
+            )}
           </div>
         </motion.div>
 
@@ -548,11 +591,26 @@ export default function CompressionWithVehicle({
 // ============================================================
 // COMPARISON CARD
 // ============================================================
-function ComparisonCard({ side, vehicle, rows }: ComparisonCardProps) {
+function ComparisonCard({
+  side,
+  thirdCard = false,
+  vehicle,
+  rows,
+}: ComparisonCardProps) {
+  const primary =
+    side === "left"
+      ? "#188A31"
+      : thirdCard
+        ? "#2563EB"
+        : "#F7941E";
+  const light =
+    side === "left"
+      ? "#E6F9ED"
+      : thirdCard
+        ? "#EFF6FF"
+        : "#FEF3E4";
+  const footer = primary;
   const isLeft = side === "left";
-  const primary = isLeft ? "#188A31" : "#F7941E";
-  const light = isLeft ? "#E6F9ED" : "#FEF3E4";
-  const footer = isLeft ? "#188A31" : "#F7941E";
   const { title, price, badge, image, background, footerText } = vehicle;
 
   return (
@@ -578,7 +636,9 @@ function ComparisonCard({ side, vehicle, rows }: ComparisonCardProps) {
           style={{
             background: isLeft
               ? "linear-gradient(180deg, rgba(24, 138, 49, 0.65) 0%, rgba(24, 138, 49, 0.30) 50%, rgba(24, 138, 49, 0.05) 100%)"
-              : "linear-gradient(180deg, rgba(247, 148, 30, 0.65) 0%, rgba(247, 148, 30, 0.30) 50%, rgba(247, 148, 30, 0.05) 100%)",
+              : thirdCard
+                ? "linear-gradient(180deg, rgba(37, 99, 235, 0.65) 0%, rgba(37, 99, 235, 0.30) 50%, rgba(37, 99, 235, 0.05) 100%)"
+                : "linear-gradient(180deg, rgba(247, 148, 30, 0.65) 0%, rgba(247, 148, 30, 0.30) 50%, rgba(247, 148, 30, 0.05) 100%)",
           }}
         />
 
@@ -646,7 +706,8 @@ function ComparisonCard({ side, vehicle, rows }: ComparisonCardProps) {
       <div className="relative z-30 bg-white">
         {rows.map((row, index) => {
           const Icon = row.icon;
-          const value = isLeft ? row.left : row.right;
+          const value =
+            thirdCard ? row.third : side === "left" ? row.left : row.right;
           return (
             <div
               key={row.label}
