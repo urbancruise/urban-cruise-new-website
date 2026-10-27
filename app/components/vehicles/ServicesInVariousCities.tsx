@@ -191,13 +191,13 @@ export default function ServicesInVariousCities({
                   aria-label={`${cityLabel}${city.state ? `, ${city.state}` : ""}`}
                   className="absolute inset-0"
                 >
-                  <div className="absolute left-0 top-0 right-5 bottom-5 flex items-start rounded-2xl bg-white px-4 py-3 shadow-sm">
+                  <div className="absolute left-0 top-10 right-12 bottom-0 flex items-end rounded-2xl bg-white px-4 py-3 shadow-sm">
                     <p className="min-w-0 truncate text-left text-[10px] font-bold text-[#142236] sm:text-xs">
                       {cityLabel}
                       {city.state ? `, ${city.state}` : ""}
                     </p>
                   </div>
-                  <div className="absolute left-7 top-8 right-0 bottom-0 overflow-hidden rounded-2xl shadow-md transition-shadow duration-300 group-hover:shadow-xl">
+                  <div className="absolute left-6 top-0 right-0 bottom-10 overflow-hidden rounded-2xl shadow-md transition-shadow duration-300 group-hover:shadow-xl">
                     <div className="relative h-full w-full overflow-hidden rounded-2xl">
                       <Image
                         src={image}
