@@ -31,7 +31,12 @@ export function getLocationFromCity(
 ): string | null {
   if (!city) return null;
 
-  const normalizedCity = decodeURIComponent(city).trim().toLowerCase();
+  let normalizedCity: string;
+  try {
+    normalizedCity = decodeURIComponent(city).trim().toLowerCase();
+  } catch {
+    return null;
+  }
   const location = LOCATION_ALIASES[normalizedCity];
 
   return location && AVAILABLE_LOCATIONS.includes(location)

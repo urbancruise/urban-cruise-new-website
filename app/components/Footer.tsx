@@ -401,29 +401,47 @@ export default function Footer() {
             }}
           />
 
-          {/* Animated car (Gif.gif) */}
+          {/* Animated car */}
           <div
             className="absolute animate-[myfirst_22s_linear_infinite] bg-contain bg-no-repeat"
             style={{
-              backgroundImage: `url("/images/Gif.gif")`,
               width: "clamp(180px, 13.6vw, 350px)",
               height: "clamp(60px, 4.1vw, 105px)",
               left: "30%",
               bottom: "0",
             }}
-          />
+          >
+            <Image
+              src="/images/footer-car.webp"
+              alt=""
+              fill
+              sizes="(max-width: 640px) 180px, 350px"
+              loading="lazy"
+              unoptimized
+              className="object-contain"
+            />
+          </div>
 
-          {/* Animated car (car.gif) */}
+          {/* Animated car */}
           <div
             className="absolute animate-[myfirst_30s_linear_infinite] bg-contain bg-no-repeat"
             style={{
-              backgroundImage: `url("/images/car.gif")`,
               width: "clamp(150px, 6vw, 250px)",
               height: "clamp(60px, 3.9vw, 100px)",
               left: "38%",
               bottom: "-2%",
             }}
-          />
+          >
+            <Image
+              src="/images/footer-car-small.webp"
+              alt=""
+              fill
+              sizes="(max-width: 640px) 150px, 250px"
+              loading="lazy"
+              unoptimized
+              className="object-contain"
+            />
+          </div>
 
           {/* Animated cyclist */}
           <div

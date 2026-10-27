@@ -1,5 +1,5 @@
 // ============================================================
-// Next.js 16 Middleware — Public Website (urban-cruise)
+// Next.js 16 Proxy — Public Website (urban-cruise)
 //
 // Responsibilities:
 //   1. Serve legacy WordPress → Next.js 301 redirects
@@ -51,10 +51,10 @@ function buildRedirect(
 }
 
 // ============================================================
-// MIDDLEWARE
+// PROXY
 // ============================================================
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const normalized = normalizePath(pathname);
 

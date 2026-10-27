@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { isValidLocationAsync, formatLocationName } from "@/app/lib/location";
 import { getHomeSections, getSeoByPath } from "@/lib/cms";
 import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
+import { absoluteUrl } from "@/lib/seo";
 
 import HeroSelector from "@/app/components/HeroSelector";
 import AboutSelector from "@/app/components/AboutSelector";
@@ -70,9 +71,7 @@ export default async function LocationHome({ params }: PageProps) {
             "@context": "https://schema.org",
             "@type": "WebPage",
             name: `Vehicle Rental in ${city}`,
-            url: `${
-              process.env.WEBSITE_ORIGIN || "http://localhost:3000"
-            }/${location}`,
+            url: absoluteUrl(`/${location}`),
           }}
         />
       )}
