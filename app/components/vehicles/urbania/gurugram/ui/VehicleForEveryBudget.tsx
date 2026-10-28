@@ -199,14 +199,14 @@ export default function VehicleForEveryBudget({ content }: Props) {
               transition={{ delay: 0.2, duration: 0.5 }}
             >
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.14em] text-[#03C35E] min-[375px]:text-[8.5px] min-[430px]:text-[9px] min-[430px]:tracking-[0.16em] sm:text-[9.5px] sm:tracking-[0.18em] md:text-[10px] md:tracking-[0.2em] lg:text-[11px] lg:tracking-[0.23em] xl:text-xs">
+              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </motion.div>
 
             <motion.h2
-              className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]"
+              className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
@@ -215,7 +215,7 @@ export default function VehicleForEveryBudget({ content }: Props) {
             </motion.h2>
 
             <motion.p
-              className="mt-3 font-serif text-[19px] italic leading-tight text-[#03C35E] min-[375px]:text-[20px] min-[430px]:text-[21px] sm:text-[22px] md:text-[25px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]"
+              className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
@@ -295,7 +295,7 @@ export default function VehicleForEveryBudget({ content }: Props) {
           {categories.map((category: any, index: number) => (
             <motion.div
               key={index}
-              className="group relative flex w-full flex-col items-center overflow-visible rounded-[1.5rem] bg-white px-4 pb-5 pt-14 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] min-h-[210px] min-[430px]:min-h-[220px] min-[430px]:px-5 sm:min-h-[225px] sm:px-5 sm:pb-6 sm:pt-14 md:min-h-[235px] md:px-5 md:pb-6 md:pt-14 lg:min-h-[235px] lg:px-5 lg:pb-6 lg:pt-14 xl:min-h-[240px] xl:px-6 xl:pb-6 2xl:min-h-[250px] 2xl:px-7 2xl:pb-7"
+              className="group relative flex w-full flex-col items-center overflow-visible rounded-[1.5rem] bg-white px-4 pb-5 pt-14 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] min-h-[180px] min-[430px]:min-h-[190px] min-[430px]:px-5 sm:min-h-[195px] sm:px-5 sm:pb-6 sm:pt-14 md:min-h-[205px] md:px-5 md:pb-6 md:pt-14 lg:min-h-[205px] lg:px-5 lg:pb-6 lg:pt-14 xl:min-h-[210px] xl:px-6 xl:pb-6 2xl:min-h-[220px] 2xl:px-7 2xl:pb-7"
               style={{ borderTop: `4px solid ${category.color}` }}
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}

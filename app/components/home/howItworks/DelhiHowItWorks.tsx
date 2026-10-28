@@ -91,20 +91,20 @@ export default function DelhiHowItWorks({ content }: HowItWorksSelectorProps) {
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
         {/* HEADER */}
         <div className="mb-14 w-full max-w-[650px] text-left sm:mb-16 md:mb-20">
-          <div className="mb-4 flex w-full items-center justify-start gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3">
+          <div className="mb-2 flex w-full items-center justify-start gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3">
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
-            <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[9px] xs:tracking-[0.17em] sm:text-[9px] sm:tracking-[0.2em] md:text-[10px] md:tracking-[0.22em] lg:text-[11px] lg:tracking-[0.25em] xl:text-xs">
+            <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
               {merged.eyebrow}
             </span>
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
 
-          <h2 className="text-[24px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px]">
+          <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
             {merged.title} <span className="text-[#188A31]">{merged.subtitle && ""}{merged.title === "HOW IT" ? "WORKS" : ""}</span>
           </h2>
 
           {merged.subtitle && (
-            <p className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
+            <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
               {merged.subtitle}
             </p>
           )}

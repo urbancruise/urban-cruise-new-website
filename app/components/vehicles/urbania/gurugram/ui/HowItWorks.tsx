@@ -1,5 +1,7 @@
 // app/components/vehicles/cars-suvs/delhi/ui/HowItWorks.tsx
 "use client";
+
+import HowItWorksWave from "@/app/components/home/howItworks/HowItWorksWave";
 import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 
 import Image from "next/image";
@@ -67,13 +69,13 @@ export default function HowItWorks({ content }: HowItWorksProps) {
         <div className="mb-14 w-full max-w-[650px] text-left sm:mb-16 md:mb-20">
           <div className="mb-4 flex w-full items-center justify-start gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3">
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
-            <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[9px] xs:tracking-[0.17em] sm:text-[9px] sm:tracking-[0.2em] md:text-[10px] md:tracking-[0.22em] lg:text-[11px] lg:tracking-[0.25em] xl:text-xs">
+            <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
               {eyebrow}
             </span>
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
 
-          <h2 className="text-[24px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px]">
+          <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
             {title} <span className="text-[#188A31]">{titleHighlight}</span>
           </h2>
 
@@ -87,6 +89,7 @@ export default function HowItWorks({ content }: HowItWorksProps) {
         </div>
 
         <div className="relative pt-10 md:pt-12">
+          <HowItWorksWave />
           <div className="relative z-0 bottom-18 grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-8 lg:gap-9 xl:gap-10">
             {steps.map((step: any) => (
               <div key={step.number} className="group relative flex flex-col items-center">

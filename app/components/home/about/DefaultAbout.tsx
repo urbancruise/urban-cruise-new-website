@@ -1,10 +1,11 @@
 // app/components/home/about/DefaultAbout.tsx
 "use client";
 
-import { FaHeadset, FaCar, FaBus, FaBusAlt } from "react-icons/fa";
+import { FaCar, FaBus, FaBusAlt } from "react-icons/fa";
 import { IoCarSport } from "react-icons/io5";
 import { BsFillBusFrontFill } from "react-icons/bs";
 import { toYouTubeEmbedUrl } from "@/app/lib/youtube";
+import AboutParagraphs from "./AboutParagraphs";
 
 const fleet = [
   { icon: IoCarSport, label: "Cars" },
@@ -50,26 +51,24 @@ export default function DefaultAbout({ content }: Props) {
       <div className="relative mx-auto w-full max-w-[1440px] px-4 sm:px-8 md:px-10 lg:px-12 xl:px-16">
         <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 xl:gap-16">
           <div className="relative z-10 mx-auto w-full max-w-[650px] lg:mx-0">
-            <div className="mb-4 flex w-full items-center justify-center gap-2 md:gap-3 lg:justify-start">
+            <div className="mb-2 flex w-full items-center justify-center gap-2 md:gap-3 lg:justify-start">
               <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
-              <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.15em] text-[#03C35E] sm:text-[9px] md:text-[10px] lg:text-[11px] xl:text-xs">
+              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] sm:text-[10px] md:text-[11px] lg:text-[12px] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
             </div>
 
-            <h2 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
+            <h2 className="text-[21px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
               {title}
             </h2>
 
-            <p className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] sm:text-[27px] md:text-[29px]">
+            <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] sm:text-[27px] md:text-[29px]">
               {tagline}
             </p>
 
             <div className="mt-5 max-w-[590px] space-y-3 leading-[1.75] text-[#303944] text-[10px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
-              {paragraphs.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+              <AboutParagraphs paragraphs={paragraphs} wordLimit={116} />
             </div>
           </div>
 
@@ -85,21 +84,7 @@ export default function DefaultAbout({ content }: Props) {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
             </div>
 
-            <div className="relative z-20 mt-[-38px] ml-3 flex h-[118px] w-[155px] flex-col items-center justify-center rounded-[18px] bg-[#03C35E] px-3 py-4 text-center shadow-[0_14px_35px_rgba(3,195,94,0.28)] sm:absolute sm:bottom-[-5px] sm:left-[-16px] sm:ml-0 sm:mt-0 sm:h-[130px] sm:w-[165px] md:h-[140px] md:w-[175px] lg:left-[-24px] xl:left-[-28px]">
-              <div className="mb-1.5 flex h-9 w-9 items-center justify-center text-white sm:mb-2 sm:h-10 sm:w-10">
-                <FaHeadset className="text-[27px] sm:text-[30px]" />
-              </div>
-              <h3 className="text-[19px] font-extrabold leading-none text-white sm:text-[22px]">
-                24x7
-              </h3>
-              <p className="mt-1.5 text-[12px] font-medium leading-4 text-white/95 sm:mt-2 sm:text-sm sm:leading-5">
-                Customer
-                <br />
-                Support
-              </p>
-            </div>
-
-            <div className="relative z-30 mt-4 ml-auto flex w-[94%] max-w-[540px] items-center gap-3 rounded-[18px] border border-gray-100 bg-white px-3 py-3.5 shadow-[0_12px_35px_rgba(0,0,0,0.10)] sm:absolute sm:bottom-[-48px] sm:right-[3%] sm:mt-0 sm:w-[82%] sm:max-w-[560px] sm:px-5 sm:py-5 md:right-[2%] lg:right-0 lg:w-[80%] xl:w-[78%]">
+            <div className="relative z-30 mt-4 ml-auto flex w-full items-center gap-3 rounded-[18px] border border-gray-100 bg-white px-3 py-3.5 shadow-[0_12px_35px_rgba(0,0,0,0.10)] sm:absolute sm:bottom-[-48px] sm:right-0 sm:mt-0 sm:w-full sm:max-w-none sm:px-5 sm:py-5 lg:w-[96%] xl:w-full">
               <div className="flex shrink-0 items-center -space-x-2.5">
                 {fleet.map(({ icon: Icon, label }) => (
                   <div
@@ -118,7 +103,6 @@ export default function DefaultAbout({ content }: Props) {
                 </h3>
                 <p className="mt-0.5 text-[8px] leading-4 text-[#4B5563] sm:mt-1 sm:text-xs md:text-[13px]">
                   Cars, Tempo Travellers,
-                  <br />
                   Mini Buses &amp; Luxury Buses
                 </p>
               </div>
