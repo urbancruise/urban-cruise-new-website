@@ -1,4 +1,4 @@
-// app/[location]/book/layout.tsx
+// app/[location]/get-a-quotation-route-infomation/layout.tsx
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
@@ -6,6 +6,7 @@ import { isValidLocationAsync } from "@/app/lib/location";
 import { createLocationMetadata } from "@/lib/seo";
 import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
+import { formatLocationName } from "@/app/lib/location";
 
 export async function generateMetadata({
   params,
@@ -13,14 +14,23 @@ export async function generateMetadata({
   params: Promise<{ location: string }>;
 }): Promise<Metadata> {
   const { location } = await params;
-  const path = `/${location}/book`;
-  return (
+  const path = `/${location}/get-a-quotation-route-infomation`;
+  const metadata =
     (await getCmsSeoMetadata(path)) ??
-    createLocationMetadata(location, "booking", path)
-  );
+    createLocationMetadata(location, "booking", path);
+  const title = `Get a Quote in ${formatLocationName(location)} | Urban Cruise`;
+
+  return {
+    ...metadata,
+    title,
+    openGraph: metadata.openGraph
+      ? { ...metadata.openGraph, title }
+      : undefined,
+    twitter: metadata.twitter ? { ...metadata.twitter, title } : undefined,
+  };
 }
 
-export default async function BookingLayout({
+export default async function QuoteLayout({
   children,
   params,
 }: {
@@ -35,9 +45,9 @@ export default async function BookingLayout({
   return (
     <>
       <PageJsonLd
-        name={`Book Vehicle Rental in ${location}`}
-        description="Request a quote and book a premium rental vehicle with Urban Cruise."
-        path={`/${location}/book`}
+        name={`Get a Quote in ${location}`}
+        description="Request a quote for a premium rental vehicle with Urban Cruise."
+        path={`/${location}/get-a-quotation-route-infomation`}
       />
       {children}
     </>

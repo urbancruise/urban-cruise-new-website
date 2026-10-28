@@ -103,6 +103,9 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
 
     // Global OR no location selected → return path as-is
     if (!selectedLocation || selectedLocation === GLOBAL_LOCATION.slug) {
+      if (path === "/book") {
+        return "/delhi/get-a-quotation-route-infomation";
+      }
       return path || "/";
     }
 
@@ -110,6 +113,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
       "/about-urban-cruise": "/about-us",
       "/contact-urban-cruise": "/contact-us",
       "/partner-program": "/partner",
+      "/book": "/get-a-quotation-route-infomation",
     };
     const locationPath = locationRouteMap[path] || path;
 

@@ -6,8 +6,10 @@
 export const legacyRedirects: Record<string, string> = {
   "/faqs": "/delhi/faqs",
   "/news-media": "/delhi/news-media",
-  "/get-a-quotation-trip-information": "/delhi/book",
-  "/get-a-quotation-route-infomation": "/mumbai/book",
+  "/get-a-quotation-trip-information":
+    "/delhi/get-a-quotation-route-infomation",
+  "/get-a-quotation-route-infomation":
+    "/mumbai/get-a-quotation-route-infomation",
   "/hire-car-on-rent-suv-on-rent": "/delhi/car-rental-delhi",
   "/hire-hycross-rent": "/delhi/innova-hycross-on-rent",
   "/hire-luxury-cars-luxury-suvs-luxury-vans-on-rent":

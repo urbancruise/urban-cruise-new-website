@@ -25,7 +25,10 @@ export default function NotFound() {
           { href: "/mumbai", label: "Vehicle rental in Mumbai" },
           { href: "/gurugram", label: "Vehicle rental in Gurugram" },
           { href: "/pune", label: "Vehicle rental in Pune" },
-          { href: "/delhi/book", label: "Request a quotation" },
+          {
+            href: "/delhi/get-a-quotation-route-infomation",
+            label: "Get a Quote",
+          },
         ].map((link, index) => (
           <Link
             key={link.href}

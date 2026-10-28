@@ -17,12 +17,14 @@ import {
 } from "react-icons/fa6";
 import { useLocation } from "@/app/context/LocationContext";
 import { getLocationConfig } from "@/app/lib/locationConfig";
+import { usePathname } from "next/navigation";
 
 const SocialMedia = () => {
   const [isLeftVisible, setIsLeftVisible] = useState(true);
   const [isRightVisible, setIsRightVisible] = useState(true);
 
   const { location } = useLocation();
+  const pathname = usePathname();
   const locationConfig = getLocationConfig(location);
 
   // LEFT SIDE - SOCIAL MEDIA ICONS
@@ -122,6 +124,10 @@ const SocialMedia = () => {
   const toggleRight = () => {
     setIsRightVisible(!isRightVisible);
   };
+
+  if (pathname?.split("/").includes("get-a-quotation-route-infomation")) {
+    return null;
+  }
 
   return (
     <>

@@ -152,9 +152,9 @@ const PAGE_COPY: Record<
       "Travel advice, vehicle rental guides and destination ideas from Urban Cruise.",
   },
   booking: {
-    title: "Book Vehicle Rental | Urban Cruise",
+    title: "Get a Quote for Vehicle Rental | Urban Cruise",
     description:
-      "Request a quote and book a premium rental vehicle with Urban Cruise.",
+      "Request a quote for a premium rental vehicle with Urban Cruise.",
   },
   careers: {
     title: "Careers at Urban Cruise",
@@ -282,7 +282,7 @@ function getLocationPageTitle(
     case "blog":
       return `Vehicle Rental Blog for ${city} | Urban Cruise`;
     case "booking":
-      return `Book Vehicle Rental in ${city} | Urban Cruise`;
+      return `Get a Quote in ${city} | Urban Cruise`;
     case "careers":
       return `Urban Cruise Careers in ${city}`;
     case "contact":
