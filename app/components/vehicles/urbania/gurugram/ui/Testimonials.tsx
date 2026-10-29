@@ -29,6 +29,7 @@ type Testimonial = {
   name: string;
   location: string;
   message: string;
+  link?: string;
   avatar: string;
   avatarAlt?: string;
   videoId: string;
@@ -48,6 +49,7 @@ interface TestimonialsProps {
       name: string;
       location: string;
       message: string;
+      link?: string;
       avatar?: string;
       videoId?: string;
       youtubeUrl?: string;
@@ -253,7 +255,7 @@ function SideTestimonialCard({
         <StarRating rating={testimonial.rating} size={14} />
       </div>
 
-      <p className="relative z-10 mx-auto mt-3 max-w-[250px] px-4 text-center text-[10.5px] font-medium leading-[1.55] text-[#303944] sm:text-[11px] sm:leading-[1.6] lg:text-[10.5px] xl:text-[11px]">
+      <p className="relative z-10 mx-auto mt-3 line-clamp-5 max-w-[250px] break-words px-4 text-center text-[10.5px] font-medium leading-[1.55] text-[#303944] sm:text-[11px] sm:leading-[1.6] lg:text-[10.5px] xl:text-[11px]">
         {testimonial.message}
       </p>
 
@@ -283,6 +285,8 @@ function SideTestimonialCard({
 // CENTER CARD
 // ============================================================
 function CenterTestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  const [isMessageExpanded, setIsMessageExpanded] = useState(false);
+
   return (
     <motion.div
       key={testimonial.id}
@@ -290,9 +294,9 @@ function CenterTestimonialCard({ testimonial }: { testimonial: Testimonial }) {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.45 }}
       className="
-        relative z-30 mt-0 h-[285px] w-full overflow-visible rounded-[18px]
+        relative z-30 mt-0 h-auto min-h-[285px] w-full overflow-visible rounded-[18px]
         border border-[#e7e7e7] bg-white shadow-[0_10px_35px_rgba(0,0,0,0.14)]
-        sm:h-[305px] lg:h-[285px] xl:h-[290px]
+        sm:min-h-[305px] lg:min-h-[285px] xl:min-h-[290px]
       "
     >
       <div className="absolute inset-0 overflow-hidden rounded-[18px]">
@@ -310,20 +314,47 @@ function CenterTestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         </span>
       </div>
 
+      <h3
+        className="absolute left-[76px] top-[28px] z-20 break-words text-[13px] font-extrabold leading-tight text-[#087F35] sm:text-[14px]"
+        style={{ maxWidth: "calc(50% - 123px)" }}
+      >
+        {testimonial.name}
+      </h3>
+
       <div className="absolute left-1/2 top-0 z-50 -translate-x-1/2 -translate-y-1/2">
         <Avatar testimonial={testimonial} large />
       </div>
 
-      <div className="relative z-20 flex h-full flex-col items-center px-8 pt-[72px] sm:pt-[78px]">
-        <p className="max-w-[315px] text-center text-[11px] font-medium leading-[1.55] text-[#303944] sm:text-[11.5px] sm:leading-[1.6]">
+      <div className="relative z-20 flex min-h-[285px] flex-col items-center px-8 pt-[72px] sm:min-h-[305px] sm:pt-[78px] lg:min-h-[285px] xl:min-h-[290px]">
+        <p
+          className={`max-w-[315px] text-center text-[11px] font-medium leading-[1.55] text-[#303944] sm:text-[11.5px] sm:leading-[1.6] ${
+            isMessageExpanded ? "" : "line-clamp-4"
+          }`}
+        >
           {testimonial.message}
         </p>
+        {(testimonial.link || testimonial.message.length > 120) &&
+          (testimonial.link ? (
+            <a
+              href={testimonial.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 text-[11px] font-bold text-[#087F35] underline underline-offset-2 hover:text-[#03C35E]"
+            >
+              Read more
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setIsMessageExpanded((expanded) => !expanded)}
+              aria-expanded={isMessageExpanded}
+              className="mt-1 text-[11px] font-bold text-[#087F35] underline underline-offset-2 hover:text-[#03C35E]"
+            >
+              {isMessageExpanded ? "Read less" : "Read more"}
+            </button>
+          ))}
 
         <div className="mt-3 h-[2px] w-[32px] bg-[#087F35]" />
-
-        <h3 className="mt-2 text-[14px] font-extrabold text-[#087F35] sm:text-[15px]">
-          {testimonial.name}
-        </h3>
 
         <div className="mt-1 flex items-center gap-1 text-[10px] text-[#303944] sm:text-[11px]">
           <FaMapMarkerAlt className="text-[#087F35]" />
@@ -362,6 +393,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
           name: item.name,
           location: item.location || "",
           message: item.message,
+          link: item.link || undefined,
           avatar: item.avatar || `/images/testimonials/${(i % 5) + 1}.jpg`,
           avatarAlt: getCmsImageAlt(item, item.name || "Customer testimonial"),
           videoId,
