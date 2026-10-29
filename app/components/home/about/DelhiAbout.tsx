@@ -43,7 +43,7 @@ export default function DelhiAbout({ content }: AboutProps) {
     : DEFAULT_PARAGRAPHS;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-12 xs:py-14 sm:py-16 md:py-20 lg:py-24 xl:py-28">
+    <section className="relative w-full overflow-hidden bg-white py-1 xs:py-1 sm:py-3 md:py-7 lg:py-11 xl:py-15">
       <div className="relative mx-auto w-full max-w-[1440px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
         <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 xl:gap-16">
           {/* LEFT CONTENT */}

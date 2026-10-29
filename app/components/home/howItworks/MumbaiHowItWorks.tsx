@@ -63,7 +63,7 @@ export default function MumbaiHowItWorks({ content }: HowItWorksSelectorProps) {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-12 xs:py-14 sm:py-16 md:py-20 lg:py-24 xl:py-28">
+    <section className="relative w-full overflow-hidden bg-white py-1 xs:py-1 sm:py-3 md:py-7 lg:py-11 xl:py-15">
       <div
         className="
           pointer-events-none absolute inset-x-0 top-0 z-[1]
