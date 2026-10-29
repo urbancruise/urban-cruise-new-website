@@ -24,7 +24,7 @@ const SocialMedia = () => {
   const [isRightVisible, setIsRightVisible] = useState(true);
 
   const { location } = useLocation();
-  const pathname = usePathname();
+    const pathname = usePathname();
   const locationConfig = getLocationConfig(location);
 
   // LEFT SIDE - SOCIAL MEDIA ICONS
