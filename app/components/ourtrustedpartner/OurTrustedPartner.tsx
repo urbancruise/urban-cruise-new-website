@@ -958,13 +958,13 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
           <div className="w-full max-w-[720px] min-w-0 text-left">
             <div className="mb-2.5 flex w-full items-center justify-start gap-1.5 min-[375px]:mb-3 min-[375px]:gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 sm:gap-3 md:gap-3.5 lg:gap-4">
               <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[7px] font-bold uppercase tracking-[0.10em] text-[#03C35E] min-[375px]:text-[8px] min-[375px]:tracking-[0.12em] min-[430px]:text-[8.5px] min-[430px]:tracking-[0.14em] sm:text-[9.5px] sm:tracking-[0.16em] md:text-[10px] lg:text-[11px] xl:text-xs">
+              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] sm:text-[10px] md:text-[11px] lg:text-[12px] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
-            <h2 className="max-w-full text-[23px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[29px] md:text-[34px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
+            <h2 className="max-w-full text-[21px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] sm:text-[27px] md:text-[29px]">
               {title}{" "}
               <span className="text-[#188A31]">
                 <br />
@@ -972,7 +972,7 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
               </span>
             </h2>
 
-            <p className="mt-2.5 font-serif text-[17px] italic leading-tight text-[#03C35E] min-[375px]:mt-3 min-[375px]:text-[19px] min-[430px]:text-[20px] sm:mt-4 sm:text-[22px] md:text-[24px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]">
+            <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] sm:text-[27px] md:text-[29px]">
               {subtitle}
             </p>
 

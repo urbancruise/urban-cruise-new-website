@@ -668,7 +668,7 @@ function SideTestimonialCard({
       <div className="relative z-10 mt-2">
         <StarRating rating={testimonial.rating} size={14} />
       </div>
-      <p className="relative z-10 mx-auto mt-3 max-w-[250px] px-4 text-center text-[10.5px] font-medium leading-[1.55] text-[#303944] sm:text-[11px] sm:leading-[1.6] lg:text-[10.5px] xl:text-[11px]">
+      <p className="relative z-10 mx-auto mt-3 line-clamp-5 max-w-[250px] break-words px-4 text-center text-[10.5px] font-medium leading-[1.55] text-[#303944] sm:text-[11px] sm:leading-[1.6] lg:text-[10.5px] xl:text-[11px]">
         {testimonial.message}
       </p>
       <div
@@ -698,13 +698,15 @@ function CenterTestimonialCard({
 }: {
   testimonial: TestimonialItem;
 }) {
+  const [isMessageExpanded, setIsMessageExpanded] = useState(false);
+
   return (
     <motion.div
       key={testimonial.id ?? testimonial.name}
       initial={{ opacity: 0, scale: 0.94 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.45 }}
-      className="relative z-30 mt-0 h-[285px] w-full overflow-visible rounded-[18px] border border-[#e7e7e7] bg-white shadow-[0_10px_35px_rgba(0,0,0,0.14)] sm:h-[305px] lg:h-[285px] xl:h-[290px]"
+      className="relative z-30 mt-0 h-auto min-h-[285px] w-full overflow-visible rounded-[18px] border border-[#e7e7e7] bg-white shadow-[0_10px_35px_rgba(0,0,0,0.14)] sm:min-h-[305px] lg:min-h-[285px] xl:min-h-[290px]"
     >
       <div className="absolute inset-0 overflow-hidden rounded-[18px]">
         {testimonial.videoId && (
@@ -720,18 +722,46 @@ function CenterTestimonialCard({
           &ldquo;
         </span>
       </div>
+      <h3
+        className="absolute left-[76px] top-[28px] z-20 break-words text-[13px] font-extrabold leading-tight text-[#087F35] sm:text-[14px]"
+        style={{ maxWidth: "calc(50% - 123px)" }}
+      >
+        {testimonial.name}
+      </h3>
       <div className="absolute left-1/2 top-0 z-50 -translate-x-1/2 -translate-y-1/2">
         <Avatar testimonial={testimonial} large />
       </div>
-      <div className="relative z-20 flex h-full flex-col items-center px-8 pt-[72px] sm:pt-[78px]">
-        <p className="max-w-[315px] text-center text-[11px] font-medium leading-[1.55] text-[#303944] sm:text-[11.5px] sm:leading-[1.6]">
+      <div className="relative z-20 flex min-h-[285px] flex-col items-center px-8 pt-[72px] sm:min-h-[305px] sm:pt-[78px] lg:min-h-[285px] xl:min-h-[290px]">
+        <p
+          className={`max-w-[315px] text-center text-[11px] font-medium leading-[1.55] text-[#303944] sm:text-[11.5px] sm:leading-[1.6] ${
+            isMessageExpanded ? "" : "line-clamp-4"
+          }`}
+        >
           {testimonial.message}
         </p>
+        {(testimonial.link || testimonial.message.length > 120) && (
+          testimonial.link ? (
+            <a
+              href={testimonial.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 text-[11px] font-bold text-[#087F35] underline underline-offset-2 hover:text-[#03C35E]"
+            >
+              Read more
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setIsMessageExpanded((expanded) => !expanded)}
+              aria-expanded={isMessageExpanded}
+              className="mt-1 text-[11px] font-bold text-[#087F35] underline underline-offset-2 hover:text-[#03C35E]"
+            >
+              {isMessageExpanded ? "Read less" : "Read more"}
+            </button>
+          )
+        )}
         <div className="mt-3 h-[2px] w-[32px] bg-[#087F35]" />
-        <h3 className="mt-2 text-[14px] font-extrabold text-[#087F35] sm:text-[15px]">
-          {testimonial.name}
-        </h3>
-        <div className="mt-1 flex items-center gap-1 text-[10px] text-[#303944] sm:text-[11px]">
+        <div className="mt-2 flex items-center gap-1 text-[10px] text-[#303944] sm:text-[11px]">
           <FaMapMarkerAlt className="text-[#087F35]" />
           <span>{testimonial.location}</span>
         </div>
@@ -832,20 +862,20 @@ export default function GurugramTestimonials({ content }: TestimonialsProps) {
           <div className="w-full max-w-[720px] text-left">
             <div className="mb-3 flex w-full items-center justify-start gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 md:gap-3 lg:gap-3.5 xl:gap-4">
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.14em] text-[#03C35E] min-[375px]:text-[8.5px] min-[430px]:text-[9px] min-[430px]:tracking-[0.16em] sm:text-[9.5px] sm:tracking-[0.18em] md:text-[10px] lg:text-[11px] xl:text-xs">
+              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] sm:text-[10px] md:text-[11px] lg:text-[12px] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
-            <h2 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
+            <h2 className="text-[21px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] sm:text-[27px] md:text-[29px]">
               {title}{" "}
               <span className="text-[#188A31]">
                 <br /> {titleLine2}
               </span>
             </h2>
 
-            <p className="mt-3 font-serif text-[19px] italic leading-tight text-[#03C35E] min-[375px]:text-[20px] min-[430px]:text-[21px] sm:text-[22px] md:text-[25px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]">
+            <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] sm:text-[27px] md:text-[29px]">
               {subtitle}
             </p>
 

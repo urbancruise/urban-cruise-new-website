@@ -27,6 +27,7 @@ export interface TestimonialItem {
   name: string;
   location: string;
   message: string;
+  link?: string;
   avatar?: string;
   avatarAlt?: string;
   videoId?: string;

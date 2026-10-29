@@ -229,13 +229,13 @@ export default function DelhiServiceCard({ content }: Props) {
           >
             <div className="mb-3 flex w-full items-center justify-start gap-2 min-[375px]:mb-3.5 min-[375px]:gap-2.5 min-[425px]:mb-4 min-[425px]:gap-3 sm:gap-3.5 md:gap-4 lg:gap-3 xl:gap-4">
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 min-[375px]:w-6 min-[425px]:w-7 sm:w-8 md:w-10 lg:w-9 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.14em] text-[#03C35E] min-[375px]:text-[8.5px] min-[425px]:text-[9px] min-[425px]:tracking-[0.16em] sm:text-[9.5px] sm:tracking-[0.18em] md:text-[10px] lg:text-[10px] xl:text-xs">
+              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] sm:text-[10px] md:text-[11px] lg:text-[12px] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 min-[375px]:w-6 min-[425px]:w-7 sm:w-8 md:w-10 lg:w-9 xl:w-12 2xl:w-14" />
             </div>
 
-            <h2 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[425px]:text-[27px] sm:text-[30px] md:text-[34px] lg:text-[38px] xl:text-[46px] 2xl:text-[54px]">
+            <h2 className="text-[21px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] sm:text-[27px] md:text-[29px]">
               {title}{" "}
               <span className="text-[#188A31]">
                 <br />
@@ -243,7 +243,7 @@ export default function DelhiServiceCard({ content }: Props) {
               </span>
             </h2>
 
-            <p className="mt-3 max-w-[600px] font-serif text-[18px] italic leading-tight text-[#03C35E] min-[375px]:text-[19px] min-[425px]:text-[20px] sm:mt-4 sm:text-[22px] md:text-[24px] lg:mt-4 lg:text-[26px] xl:text-[30px] 2xl:text-[32px]">
+            <p className="mt-2 max-w-[600px] font-serif text-[21px] italic leading-tight text-[#03C35E] sm:text-[27px] md:text-[29px]">
               {subtitle}
             </p>
 
