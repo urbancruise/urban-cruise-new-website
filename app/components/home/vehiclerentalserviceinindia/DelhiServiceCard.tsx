@@ -165,7 +165,7 @@
 // }
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import type {
@@ -218,12 +218,24 @@ export default function DelhiServiceCard({ content }: Props) {
   const cities: ServiceCityItem[] =
     cms.cities && cms.cities.length > 0 ? cms.cities : FALLBACK_CITIES;
   const [slideIndex, setSlideIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const totalSlides = Math.ceil(cities.length / CITIES_PER_SLIDE);
   const currentSlide = Math.min(slideIndex, totalSlides - 1);
   const visibleCities = cities.slice(
     currentSlide * CITIES_PER_SLIDE,
     (currentSlide + 1) * CITIES_PER_SLIDE,
   );
+
+  useEffect(() => {
+    if (totalSlides <= 1 || isHovered || isFocused) return;
+
+    const intervalId = window.setInterval(() => {
+      setSlideIndex((index) => (index + 1) % totalSlides);
+    }, 5000);
+
+    return () => window.clearInterval(intervalId);
+  }, [isFocused, isHovered, totalSlides]);
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-10 min-[375px]:py-11 min-[425px]:py-12 sm:py-14 md:py-16 lg:py-[70px] xl:py-[80px] 2xl:py-[90px]">
@@ -270,6 +282,17 @@ export default function DelhiServiceCard({ content }: Props) {
             role="region"
             aria-label="Service locations"
             aria-roledescription="carousel"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onFocusCapture={() => setIsFocused(true)}
+            onBlurCapture={(event) => {
+              if (
+                !(event.relatedTarget instanceof Node) ||
+                !event.currentTarget.contains(event.relatedTarget)
+              ) {
+                setIsFocused(false);
+              }
+            }}
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -326,7 +349,7 @@ export default function DelhiServiceCard({ content }: Props) {
                     )
                   }
                   aria-label="Show previous service locations"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#03C35E]/20 text-[#142236] transition-colors hover:border-[#03C35E] hover:text-[#03C35E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#03C35E]"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d6e8d2] bg-[#e8f4e4] text-[#188A31] shadow-[0_4px_14px_rgba(20,34,54,0.12)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#03C35E]"
                 >
                   <svg
                     className="h-4 w-4"
@@ -338,8 +361,8 @@ export default function DelhiServiceCard({ content }: Props) {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                      strokeWidth={3}
+                      d="M15 19l-7-7 7-7"
                     />
                   </svg>
                 </button>
@@ -365,7 +388,7 @@ export default function DelhiServiceCard({ content }: Props) {
                   type="button"
                   onClick={() => setSlideIndex((currentSlide + 1) % totalSlides)}
                   aria-label="Show next service locations"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#03C35E]/20 text-[#142236] transition-colors hover:border-[#03C35E] hover:text-[#03C35E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#03C35E]"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#ff9417] text-white shadow-[0_4px_14px_rgba(255,148,23,0.35)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff9417]"
                 >
                   <svg
                     className="h-4 w-4"
@@ -377,8 +400,8 @@ export default function DelhiServiceCard({ content }: Props) {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      strokeWidth={3}
+                      d="M9 5l7 7-7 7"
                     />
                   </svg>
                 </button>
