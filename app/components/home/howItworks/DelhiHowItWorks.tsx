@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -100,7 +99,11 @@ export default function DelhiHowItWorks({ content }: HowItWorksSelectorProps) {
           </div>
 
           <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
-            {merged.title} <span className="text-[#188A31]">{merged.subtitle && ""}{merged.title === "HOW IT" ? "WORKS" : ""}</span>
+            {merged.title}{" "}
+            <span className="text-[#188A31]">
+              {merged.subtitle && ""}
+              {merged.title === "HOW IT" ? "WORKS" : ""}
+            </span>
           </h2>
 
           {merged.subtitle && (
@@ -117,7 +120,7 @@ export default function DelhiHowItWorks({ content }: HowItWorksSelectorProps) {
         </div>
 
         {/* STEPS WRAPPER */}
-        <div className="relative pt-10 md:pt-12">
+        <div className="relative pt-10 md:pt-12 h-full md:h-[29.5rem]">
           {/* WAVE CONNECTOR */}
           <svg
             className="pointer-events-none absolute left-0 right-0 top-0 z-10 hidden h-[70px] w-full md:block"
@@ -183,7 +186,7 @@ export default function DelhiHowItWorks({ content }: HowItWorksSelectorProps) {
 
                 {/* CARD */}
                 <div
-                  className="relative flex min-h-[440px] w-full flex-col items-center overflow-visible rounded-[3rem] bg-white px-5 pb-7 pt-12 text-center shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.10)] sm:px-6 md:min-h-[430px] lg:min-h-[450px] xl:min-h-[460px]"
+                  className="relative flex w-full flex-col items-center overflow-visible rounded-[3rem] bg-white px-5 pb-7 pt-12 text-center shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.10)] sm:px-6"
                   style={{ borderBottom: `4px solid ${step.color}` }}
                 >
                   <h3
@@ -212,8 +215,6 @@ export default function DelhiHowItWorks({ content }: HowItWorksSelectorProps) {
             ))}
           </div>
         </div>
-
-        <div className="h-2 sm:h-10 lg:h-16 xl:h-20" />
       </div>
     </section>
   );

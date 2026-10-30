@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -64,18 +63,30 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-1 xs:py-1 sm:py-3 md:py-7 lg:py-11 xl:py-15">
+      {/* TOP FADE */}
       <div
         className="
-          pointer-events-none absolute inset-x-0 top-0 z-[1]
-          h-10 xs:h-12 sm:h-14 md:h-16 lg:h-20
-          bg-gradient-to-b from-white via-white/60 to-transparent
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-0
+          z-[1]
+          h-10
+          xs:h-12
+          sm:h-14
+          md:h-16
+          lg:h-20
+          bg-gradient-to-b
+          from-white
+          via-white/60
+          to-transparent
         "
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
         {/* HEADER */}
         <div className="mb-14 w-full max-w-[650px] text-left sm:mb-16 md:mb-20">
-        <div className="mb-2 flex w-full items-center justify-start gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3">
+          <div className="mb-2 flex w-full items-center justify-start gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3">
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
             <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
               {merged.eyebrow}
@@ -84,7 +95,11 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
           </div>
 
           <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
-            {merged.title} <span className="text-[#188A31]">WORKS</span>
+            {merged.title}{" "}
+            <span className="text-[#188A31]">
+              {merged.subtitle && ""}
+              {merged.title === "HOW IT" ? "WORKS" : ""}
+            </span>
           </h2>
 
           {merged.subtitle && (
@@ -100,8 +115,9 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
           )}
         </div>
 
-        {/* STEPS */}
+        {/* STEPS WRAPPER */}
         <div className="relative pt-10 md:pt-12">
+          {/* WAVE CONNECTOR */}
           <svg
             className="pointer-events-none absolute left-0 right-0 top-0 z-10 hidden h-[70px] w-full md:block"
             viewBox="0 0 1320 70"
@@ -111,7 +127,10 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
             <defs>
               <linearGradient
                 id="wavyConnectorGradientGurugram"
-                x1="0" y1="0" x2="1320" y2="0"
+                x1="0"
+                y1="0"
+                x2="1320"
+                y2="0"
                 gradientUnits="userSpaceOnUse"
               >
                 <stop offset="0" stopColor={GREEN} />
@@ -125,7 +144,15 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
               </linearGradient>
             </defs>
             <path
-              d="M 0 70 C 75 50, 125 4, 220 4 C 315 4, 350 44, 440 44 C 530 44, 565 4, 660 4 C 755 4, 790 44, 880 44 C 970 44, 1005 4, 1100 4 C 1195 4, 1245 50, 1320 70"
+              d="
+                M 0 70
+                C 75 50, 125 4, 220 4
+                C 315 4, 350 44, 440 44
+                C 530 44, 565 4, 660 4
+                C 755 4, 790 44, 880 44
+                C 970 44, 1005 4, 1100 4
+                C 1195 4, 1245 50, 1320 70
+              "
               fill="none"
               stroke="url(#wavyConnectorGradientGurugram)"
               strokeWidth="2"
@@ -135,12 +162,14 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
             />
           </svg>
 
+          {/* CARDS */}
           <div className="relative z-0 bottom-18 grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-8 lg:gap-9 xl:gap-10">
             {merged.steps.map((step, index) => (
               <div
                 key={`${step.number}-${index}`}
                 className="group relative flex flex-col items-center"
               >
+                {/* NUMBER BADGE */}
                 <div
                   className="relative z-30 mb-[-28px] flex h-[60px] w-[60px] items-center justify-center rounded-full border-[5px] border-white text-[20px] font-black text-white shadow-md transition-transform duration-300 group-hover:scale-105 sm:h-[80px] sm:w-[80px] sm:text-[22px]"
                   style={{
@@ -151,8 +180,9 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
                   {step.number}
                 </div>
 
+                {/* CARD */}
                 <div
-                  className="relative flex min-h-[440px] w-full flex-col items-center overflow-visible rounded-[3rem] bg-white px-5 pb-7 pt-12 text-center shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.10)] sm:px-6 md:min-h-[430px] lg:min-h-[450px] xl:min-h-[460px]"
+                  className="relative flex w-full flex-col items-center overflow-visible rounded-[3rem] bg-white px-5 pb-7 pt-12 text-center shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.10)] sm:px-6"
                   style={{ borderBottom: `4px solid ${step.color}` }}
                 >
                   <h3
@@ -181,8 +211,6 @@ export default function GurugramHowItWorks({ content }: HowItWorksSelectorProps)
             ))}
           </div>
         </div>
-
-        <div className="h-2 sm:h-10 lg:h-16 xl:h-20" />
       </div>
     </section>
   );

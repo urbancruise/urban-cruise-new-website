@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  // ⭐ Fetch Global CMS content
+  // Fetch Global CMS content
   const [homeData, seo] = await Promise.all([
     getHomeSections("global"),
     getSeoByPath("/"),

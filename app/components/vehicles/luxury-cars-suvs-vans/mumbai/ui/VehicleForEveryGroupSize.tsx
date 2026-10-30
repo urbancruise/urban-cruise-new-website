@@ -524,7 +524,7 @@ export default function VehicleForEveryGroupSize({ content }: Props) {
       : FALLBACK_VEHICLES;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-10 min-[430px]:py-11 sm:py-12 md:py-14 lg:py-16 xl:py-20 2xl:py-24">
+    <section className="relative w-full overflow-hidden bg-white ">
       <div className="pointer-events-none absolute left-[8%] top-[20%] h-[300px] w-[300px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[400px] sm:w-[400px] lg:h-[550px] lg:w-[550px]" />
       <div className="pointer-events-none absolute bottom-[10%] right-[5%] h-[250px] w-[250px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[350px] sm:w-[350px] lg:h-[500px] lg:w-[500px]" />
 
