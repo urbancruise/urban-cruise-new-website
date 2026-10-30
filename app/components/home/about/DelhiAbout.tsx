@@ -114,8 +114,6 @@ export default function DelhiAbout({ content }: AboutProps) {
             </div>
           </div>
         </div>
-
-        <div className="h-2 sm:h-10 lg:h-16 xl:h-20" />
       </div>
     </section>
   );

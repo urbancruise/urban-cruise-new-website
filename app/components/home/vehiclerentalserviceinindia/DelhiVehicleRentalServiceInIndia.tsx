@@ -1,4 +1,3 @@
-
 // ============================================================
 // Delhi — Vehicle Rental Service In India (Map section + Card)
 // ============================================================
@@ -16,7 +15,7 @@ export default function DelhiVehicleRentalServiceInIndia({
   const cms = content || {};
   const eyebrow = cms.eyebrow || "Our Network";
   const title = cms.title || "INDIA";
-  const titleHighlight = cms.titleHighlight || "COVERAGE MAP.";
+  const titleHighlight = cms.titleHighlight || " ";
   const subtitle = cms.subtitle || "Explore our presence across India";
   const description =
     cms.description ||
@@ -24,7 +23,7 @@ export default function DelhiVehicleRentalServiceInIndia({
 
   return (
     <>
-      <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:py-[70px]">
+      <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:pt-20 xl:pb-10">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[15%] bg-gradient-to-b from-transparent via-white/70 to-white sm:h-[12%] md:h-[10%] lg:h-[8%]" />
 
         <div className="relative z-10 mx-auto w-full max-w-[1440px] px-3 min-[375px]:px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-9 xl:px-10 2xl:px-12">

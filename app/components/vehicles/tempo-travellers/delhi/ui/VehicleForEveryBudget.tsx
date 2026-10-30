@@ -181,7 +181,7 @@ export default function VehicleForEveryBudget({ content }: Props) {
   const trustBadges = FALLBACK_TRUST_BADGES;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-10 min-[430px]:py-11 sm:py-12 md:py-14 lg:py-16 xl:py-20 2xl:py-24">
+    <section className="relative w-full overflow-hidden bg-white ">
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[20] hidden lg:block lg:h-[12%] xl:h-[11%] 2xl:h-[10%] bg-gradient-to-b from-white via-white/60 to-transparent" />
 
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
