@@ -6,12 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiAbout = dynamic(() => import("./home/about/DelhiAbout"));
-const GurugramAbout = dynamic(() => import("./home/about/GurugramAbout"));
-const MumbaiAbout = dynamic(() => import("./home/about/MumbaiAbout"));
-const PuneAbout = dynamic(() => import("./home/about/PuneAbout"));
-const DefaultAbout = dynamic(() => import("./home/about/DefaultAbout"));
-
 export interface AboutContent {
   eyebrow?: string;
   title?: string;
@@ -20,6 +14,13 @@ export interface AboutContent {
   paragraphs?: string[];
   videoPoster?: string;
 }
+
+const DelhiAbout = dynamic<{ content?: AboutContent | null }>(
+  () => import("./home/about/DelhiAbout")
+);
+const DefaultAbout = dynamic<{ content?: AboutContent | null }>(
+  () => import("./home/about/DefaultAbout")
+);
 
 interface AboutSelectorProps {
   content?: AboutContent | null;
@@ -36,15 +37,15 @@ export default function AboutSelector({ content }: AboutSelectorProps) {
     string,
     React.ComponentType<{ content?: AboutContent | null }>
   > = {
-    delhi: DelhiAbout as any,
-    gurugram: GurugramAbout as any,
-    mumbai: MumbaiAbout as any,
-    pune: PuneAbout as any,
+    delhi: DelhiAbout,
+    gurugram: DelhiAbout,
+    mumbai: DelhiAbout,
+    pune: DelhiAbout,
   };
 
   const AboutComponent = isGlobalRoute
-    ? (DefaultAbout as any)
-    : aboutMap[selectedLocation || ""] || (DefaultAbout as any);
+    ? DefaultAbout
+    : aboutMap[selectedLocation || ""] || DefaultAbout;
 
   return <AboutComponent content={content} />;
 }

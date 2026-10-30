@@ -6,22 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiTestimonials = dynamic(() =>
-  import("./home/testimonial/DelhiTestimonial")
-);
-const GurugramTestimonials = dynamic(() =>
-  import("./home/testimonial/GurugramTestimonial")
-);
-const MumbaiTestimonials = dynamic(() =>
-  import("./home/testimonial/MumbaiTestimonial")
-);
-const PuneTestimonials = dynamic(() =>
-  import("./home/testimonial/PuneTestimonial")
-);
-const DefaultTestimonials = dynamic(() =>
-  import("./home/testimonial/DefaultTestimonial")
-);
-
 export interface TestimonialItem {
   id?: number;
   name: string;
@@ -49,6 +33,13 @@ export interface TestimonialsProps {
   content?: TestimonialsContent;
 }
 
+const DelhiTestimonials = dynamic<TestimonialsProps>(() =>
+  import("./home/testimonial/DelhiTestimonial")
+);
+const DefaultTestimonials = dynamic<TestimonialsProps>(() =>
+  import("./home/testimonial/DefaultTestimonial")
+);
+
 export default function TestimonialSelector({ content }: TestimonialsProps) {
   const { selectedLocation } = useLocation();
   const pathname = usePathname();
@@ -58,17 +49,17 @@ export default function TestimonialSelector({ content }: TestimonialsProps) {
 
   const map: Record<
     string,
-    React.ComponentType<{ content?: TestimonialsContent }>
+    React.ComponentType<TestimonialsProps>
   > = {
-    delhi: DelhiTestimonials as any,
-    gurugram: GurugramTestimonials as any,
-    mumbai: MumbaiTestimonials as any,
-    pune: PuneTestimonials as any,
+    delhi: DelhiTestimonials,
+    gurugram: DelhiTestimonials,
+    mumbai: DelhiTestimonials,
+    pune: DelhiTestimonials,
   };
 
   const Component = isGlobalRoute
-    ? (DefaultTestimonials as any)
-    : map[selectedLocation || ""] || (DefaultTestimonials as any);
+    ? DefaultTestimonials
+    : map[selectedLocation || ""] || DefaultTestimonials;
 
   if (!Component) return null;
 

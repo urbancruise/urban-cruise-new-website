@@ -6,22 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiVehicleRentalServiceInIndia = dynamic(() =>
-  import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia")
-);
-const GurugramVehicleRentalServiceInIndia = dynamic(() =>
-  import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia")
-);
-const MumbaiVehicleRentalServiceInIndia = dynamic(() =>
-  import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia")
-);
-const PuneVehicleRentalServiceInIndia = dynamic(() =>
-  import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia")
-);
-const DefaultVehicleRentalServiceInIndia = dynamic(() =>
-  import("./home/vehiclerentalserviceinindia/DefaultVehicleRentalServiceInIndia")
-);
-
 export interface ServiceCityItem {
   name: string;
   state: string;
@@ -42,6 +26,15 @@ export interface VehicleRentalServiceProps {
   content?: VehicleRentalServiceContent;
 }
 
+const DelhiVehicleRentalServiceInIndia =
+  dynamic<VehicleRentalServiceProps>(() =>
+    import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia")
+  );
+const DefaultVehicleRentalServiceInIndia =
+  dynamic<VehicleRentalServiceProps>(() =>
+    import("./home/vehiclerentalserviceinindia/DefaultVehicleRentalServiceInIndia")
+  );
+
 export default function VehicleRentalServiceInIndiaSelector({
   content,
 }: VehicleRentalServiceProps) {
@@ -53,18 +46,18 @@ export default function VehicleRentalServiceInIndiaSelector({
 
   const map: Record<
     string,
-    React.ComponentType<{ content?: VehicleRentalServiceContent }>
+    React.ComponentType<VehicleRentalServiceProps>
   > = {
-    delhi: DelhiVehicleRentalServiceInIndia as any,
-    gurugram: GurugramVehicleRentalServiceInIndia as any,
-    mumbai: MumbaiVehicleRentalServiceInIndia as any,
-    pune: PuneVehicleRentalServiceInIndia as any,
+    delhi: DelhiVehicleRentalServiceInIndia,
+    gurugram: DelhiVehicleRentalServiceInIndia,
+    mumbai: DelhiVehicleRentalServiceInIndia,
+    pune: DelhiVehicleRentalServiceInIndia,
   };
 
   const Component = isGlobalRoute
-    ? (DefaultVehicleRentalServiceInIndia as any)
+    ? DefaultVehicleRentalServiceInIndia
     : map[selectedLocation || ""] ||
-      (DefaultVehicleRentalServiceInIndia as any);
+      DefaultVehicleRentalServiceInIndia;
 
   if (!Component) return null;
 
