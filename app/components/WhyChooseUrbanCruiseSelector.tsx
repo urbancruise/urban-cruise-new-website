@@ -32,6 +32,15 @@ export interface WhyChooseUrbanCruiseProps {
 const DelhiWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
   import("./home/whychooseurbancruise/DelhiWhyChooseUrbanCruise")
 );
+const GurugramWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
+);
+const MumbaiWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
+);
+const PuneWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
+);
 const DefaultWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
   import("./home/whychooseurbancruise/DefaultWhyChooseUrbanCruise")
 );
@@ -50,14 +59,16 @@ export default function WhyChooseUrbanCruiseSelector({
     React.ComponentType<WhyChooseUrbanCruiseProps>
   > = {
     delhi: DelhiWhyChoose,
-    gurugram: DelhiWhyChoose,
-    mumbai: DelhiWhyChoose,
-    pune: DelhiWhyChoose,
+    gurugram: GurugramWhyChoose,
+    mumbai: MumbaiWhyChoose,
+    pune: PuneWhyChoose,
   };
 
   const Component = isGlobalRoute
     ? DefaultWhyChoose
-    : map[selectedLocation || ""] || DefaultWhyChoose;
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultWhyChoose;
 
   if (!Component) return null;
 

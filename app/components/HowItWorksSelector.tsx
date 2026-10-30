@@ -31,6 +31,15 @@ export interface HowItWorksSelectorProps {
 const DelhiHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
   import("./home/howItworks/DelhiHowItWorks")
 );
+const GurugramHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/GurugramHowItWorks")
+);
+const MumbaiHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/MumbaiHowItWorks")
+);
+const PuneHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/PuneHowItWorks")
+);
 const DefaultHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
   import("./home/howItworks/DefaultHowItWorks")
 );
@@ -46,14 +55,16 @@ export default function HowItWorksSelector({
 
   const map: Record<string, React.ComponentType<HowItWorksSelectorProps>> = {
     delhi: DelhiHowItWorks,
-    gurugram: DelhiHowItWorks,
-    mumbai: DelhiHowItWorks,
-    pune: DelhiHowItWorks,
+    gurugram: GurugramHowItWorks,
+    mumbai: MumbaiHowItWorks,
+    pune: PuneHowItWorks,
   };
 
   const Component = isGlobalRoute
     ? DefaultHowItWorks
-    : map[selectedLocation || ""] || DefaultHowItWorks;
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultHowItWorks;
 
   return <Component content={content} />;
 }

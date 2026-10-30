@@ -45,7 +45,7 @@ export default function PuneServiceCard({ content }: Props) {
   const cms = content || {};
   const eyebrow = cms.eyebrow || "Service Area";
   const title = cms.title || "TOP PLACES";
-  const titleHighlight = cms.titleHighlight || "WE SERVE.";
+  const titleHighlight = cms.titleHighlight || " ";
   const subtitle = cms.subtitle || "Explore our top service locations";
   const description =
     cms.description ||
@@ -73,7 +73,7 @@ export default function PuneServiceCard({ content }: Props) {
   }, [isFocused, isHovered, totalSlides]);
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-10 min-[375px]:py-11 min-[425px]:py-12 sm:py-14 md:py-16 lg:py-[70px] xl:py-[80px] 2xl:py-[90px]">
+    <section className="relative w-full overflow-hidden bg-white py-10 min-[375px]:py-11 min-[425px]:py-12 sm:py-14 md:py-16 lg:py-10">
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-3 min-[375px]:px-4 min-[425px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="grid w-full items-start gap-9 min-[375px]:gap-10 min-[425px]:gap-11 sm:gap-12 md:gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10 xl:grid-cols-[0.9fr_1.1fr] xl:gap-12 2xl:gap-16">
           <motion.div

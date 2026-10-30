@@ -36,6 +36,18 @@ const DelhiVehicleForEveryGroupSize =
   dynamic<VehicleForEveryGroupSizeProps>(() =>
     import("./home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize")
   );
+const GurugramVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
+  );
+const MumbaiVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
+  );
+const PuneVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
+  );
 const DefaultVehicleForEveryGroupSize =
   dynamic<VehicleForEveryGroupSizeProps>(() =>
     import("./home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize")
@@ -55,14 +67,16 @@ export default function VehicleForEveryGroupSizeSelector({
     React.ComponentType<VehicleForEveryGroupSizeProps>
   > = {
     delhi: DelhiVehicleForEveryGroupSize,
-    gurugram: DelhiVehicleForEveryGroupSize,
-    mumbai: DelhiVehicleForEveryGroupSize,
-    pune: DelhiVehicleForEveryGroupSize,
+    gurugram: GurugramVehicleForEveryGroupSize,
+    mumbai: MumbaiVehicleForEveryGroupSize,
+    pune: PuneVehicleForEveryGroupSize,
   };
 
   const Component = isGlobalRoute
     ? DefaultVehicleForEveryGroupSize
-    : map[selectedLocation || ""] || DefaultVehicleForEveryGroupSize;
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultVehicleForEveryGroupSize;
 
   if (!Component) return null;
 

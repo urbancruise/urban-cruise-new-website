@@ -630,7 +630,7 @@ export default function PuneVehicleForEveryGroupSize({
 
   const eyebrow = cms.eyebrow?.trim() || "Perfect For Every Group";
   const title = cms.title?.trim() || "VEHICLES FOR";
-  const titleHighlight = cms.titleHighlight?.trim() || " EVERY GROUP SIZE ";
+  const titleHighlight = cms.titleHighlight?.trim() || " ";
   const subtitle =
     cms.subtitle?.trim() || "The Right Vehicle For Every Group Size";
   const description =
@@ -643,7 +643,7 @@ export default function PuneVehicleForEveryGroupSize({
       : FALLBACK_VEHICLES;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white ">
+    <section className="relative w-full overflow-hidden bg-white p-10">
       <div className="pointer-events-none absolute left-[8%] top-[20%] h-[300px] w-[300px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[400px] sm:w-[400px] lg:h-[550px] lg:w-[550px]" />
       <div className="pointer-events-none absolute bottom-[10%] right-[5%] h-[250px] w-[250px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[350px] sm:w-[350px] lg:h-[500px] lg:w-[500px]" />
 

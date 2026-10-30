@@ -552,7 +552,7 @@ export default function GurugramVehicleForEveryOccasion({
 
   const eyebrow = cms.eyebrow || "Tempo Traveller For Every Occasion";
   const title = cms.title || "FOR EVERY";
-  const titleHighlight = cms.titleHighlight || "OCCASION";
+  const titleHighlight = cms.titleHighlight || " ";
   const subtitle = cms.subtitle || "The Right Tempo Traveller For Every Occasion";
   const description =
     cms.description ||
@@ -615,7 +615,7 @@ export default function GurugramVehicleForEveryOccasion({
   }
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:py-20">
+    <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:pt-20 xl:pb-10">
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

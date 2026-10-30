@@ -30,6 +30,18 @@ const DelhiVehicleRentalServiceInIndia =
   dynamic<VehicleRentalServiceProps>(() =>
     import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia")
   );
+const GurugramVehicleRentalServiceInIndia =
+  dynamic<VehicleRentalServiceProps>(() =>
+    import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia")
+  );
+const MumbaiVehicleRentalServiceInIndia =
+  dynamic<VehicleRentalServiceProps>(() =>
+    import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia")
+  );
+const PuneVehicleRentalServiceInIndia =
+  dynamic<VehicleRentalServiceProps>(() =>
+    import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia")
+  );
 const DefaultVehicleRentalServiceInIndia =
   dynamic<VehicleRentalServiceProps>(() =>
     import("./home/vehiclerentalserviceinindia/DefaultVehicleRentalServiceInIndia")
@@ -49,14 +61,15 @@ export default function VehicleRentalServiceInIndiaSelector({
     React.ComponentType<VehicleRentalServiceProps>
   > = {
     delhi: DelhiVehicleRentalServiceInIndia,
-    gurugram: DelhiVehicleRentalServiceInIndia,
-    mumbai: DelhiVehicleRentalServiceInIndia,
-    pune: DelhiVehicleRentalServiceInIndia,
+    gurugram: GurugramVehicleRentalServiceInIndia,
+    mumbai: MumbaiVehicleRentalServiceInIndia,
+    pune: PuneVehicleRentalServiceInIndia,
   };
 
   const Component = isGlobalRoute
     ? DefaultVehicleRentalServiceInIndia
-    : map[selectedLocation || ""] ||
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
       DefaultVehicleRentalServiceInIndia;
 
   if (!Component) return null;

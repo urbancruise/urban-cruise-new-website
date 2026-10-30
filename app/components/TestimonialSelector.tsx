@@ -36,6 +36,15 @@ export interface TestimonialsProps {
 const DelhiTestimonials = dynamic<TestimonialsProps>(() =>
   import("./home/testimonial/DelhiTestimonial")
 );
+const GurugramTestimonials = dynamic<TestimonialsProps>(() =>
+  import("./home/testimonial/GurugramTestimonial")
+);
+const MumbaiTestimonials = dynamic<TestimonialsProps>(() =>
+  import("./home/testimonial/MumbaiTestimonial")
+);
+const PuneTestimonials = dynamic<TestimonialsProps>(() =>
+  import("./home/testimonial/PuneTestimonial")
+);
 const DefaultTestimonials = dynamic<TestimonialsProps>(() =>
   import("./home/testimonial/DefaultTestimonial")
 );
@@ -52,14 +61,16 @@ export default function TestimonialSelector({ content }: TestimonialsProps) {
     React.ComponentType<TestimonialsProps>
   > = {
     delhi: DelhiTestimonials,
-    gurugram: DelhiTestimonials,
-    mumbai: DelhiTestimonials,
-    pune: DelhiTestimonials,
+    gurugram: GurugramTestimonials,
+    mumbai: MumbaiTestimonials,
+    pune: PuneTestimonials,
   };
 
   const Component = isGlobalRoute
     ? DefaultTestimonials
-    : map[selectedLocation || ""] || DefaultTestimonials;
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultTestimonials;
 
   if (!Component) return null;
 
