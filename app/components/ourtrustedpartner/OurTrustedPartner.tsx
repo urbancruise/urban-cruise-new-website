@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import Image from "next/image";
@@ -79,16 +78,18 @@ function MobileCompanyLogo({ company }: { company: TrustedPartnerLogo }) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div className="flex h-[68px] w-[125px] min-w-[125px] shrink-0 items-center justify-center px-2 min-[375px]:h-[72px] min-[375px]:w-[135px] min-[375px]:min-w-[135px] min-[430px]:h-[76px] min-[430px]:w-[145px] min-[430px]:min-w-[145px]">
-      <div className="relative flex h-[34px] w-[92px] items-center justify-center min-[375px]:h-[37px] min-[375px]:w-[102px] min-[430px]:h-[40px] min-[430px]:w-[112px]">
+    <div className="flex h-[64px] w-[100px] min-w-[100px] shrink-0 items-center justify-center px-1 min-[375px]:h-[68px] min-[375px]:w-[112px] min-[375px]:min-w-[112px] min-[375px]:px-1.5 min-[430px]:h-[72px] min-[430px]:w-[122px] min-[430px]:min-w-[122px] min-[430px]:px-2">
+      <div className="relative flex h-[30px] w-[80px] items-center justify-center min-[375px]:h-[34px] min-[375px]:w-[88px] min-[430px]:h-[38px] min-[430px]:w-[98px]">
         {imageError ? (
-          <span className="text-xs font-semibold text-slate-500">{company.name}</span>
+          <span className="break-words text-center text-[10px] font-semibold text-slate-500 min-[375px]:text-[11px]">
+            {company.name}
+          </span>
         ) : (
           <Image
             src={company.logo}
             alt={company.logoAlt || `${company.name} logo`}
             fill
-            sizes="(max-width: 374px) 92px, (max-width: 429px) 102px, 112px"
+            sizes="(max-width: 374px) 80px, (max-width: 429px) 88px, 98px"
             className="object-contain p-1"
             onError={() => setImageError(true)}
           />
@@ -195,7 +196,7 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
   const rowTwo = hasEnoughForTwoRows ? logos.slice(mid) : [];
 
   return (
-    <section className="relative w-full max-w-full overflow-hidden bg-white py-8 min-[375px]:py-9 min-[430px]:py-10 sm:py-12 md:py-14 lg:py-16 xl:py-10">
+    <section className="relative w-full max-w-full overflow-hidden bg-white py-8 min-[375px]:py-9 min-[430px]:py-10 sm:py-12 md:py-14 lg:py-16 xl:py-16 2xl:py-20">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/2 top-16 h-[180px] w-[320px] -translate-x-1/2 rounded-full bg-[#087F35]/[0.025] blur-3xl sm:top-20 sm:h-[220px] sm:w-[420px] md:h-[260px] md:w-[520px] lg:h-[300px] lg:w-[600px]" />
         <SkylineBackground />
@@ -207,13 +208,22 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-7 grid w-full items-center gap-5 overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat p-5 min-[375px]:mb-8 min-[375px]:gap-6 min-[375px]:p-6 min-[430px]:mb-9 min-[430px]:gap-7 min-[430px]:p-7 sm:mb-10 sm:gap-8 sm:p-8 md:mb-12 md:gap-9 lg:mb-14 lg:grid-cols-[1fr_1fr] lg:gap-10 xl:mb-16 xl:p-10 2xl:mb-20 2xl:p-12"
-          style={{ backgroundImage: "url('/images/ourtrustedpartner/1.png')" }}
+          className="relative mb-6 grid w-full items-center gap-4 overflow-hidden rounded-lg bg-white p-4 min-[375px]:mb-7 min-[375px]:gap-5 min-[375px]:p-5 min-[430px]:mb-8 min-[430px]:gap-6 min-[430px]:p-6 sm:mb-10 sm:gap-8 sm:p-8 md:mb-12 md:gap-9 lg:mb-14 lg:grid-cols-[1fr_1fr] lg:gap-10 lg:bg-cover lg:bg-center lg:bg-no-repeat xl:mb-16 xl:p-10 2xl:mb-20 2xl:p-12"
         >
-          <div className="w-full max-w-[720px] min-w-0 text-left">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-0 right-0 h-16 w-1/2 bg-contain bg-right-bottom bg-no-repeat opacity-[0.12] min-[375px]:h-[72px] min-[430px]:h-20 sm:hidden"
+            style={{ backgroundImage: "url('/images/ourtrustedpartner/1.png')" }}
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 hidden bg-cover bg-center bg-no-repeat lg:block"
+            style={{ backgroundImage: "url('/images/ourtrustedpartner/1.png')" }}
+          />
+          <div className="relative z-10 w-full max-w-[720px] min-w-0 text-left">
             <div className="mb-2.5 flex w-full items-center justify-start gap-1.5 min-[375px]:mb-3 min-[375px]:gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 sm:gap-3 md:gap-3.5 lg:gap-4">
               <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] sm:text-[10px] md:text-[11px] lg:text-[12px] xl:text-[13px]">
+              <span className="max-w-[calc(100%-2rem)] text-center text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] sm:max-w-none sm:whitespace-nowrap sm:text-[10px] md:text-[11px] lg:text-[12px] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
@@ -231,7 +241,7 @@ export default function OurTrustedPartner({ content }: OurTrustedPartnerProps) {
               {subtitle}
             </p>
 
-            <div className="mt-3 max-w-[530px] space-y-2 text-[9.5px] leading-[1.65] text-[#303944] min-[375px]:mt-3.5 min-[375px]:text-[10px] min-[430px]:text-[10.5px] sm:mt-4 sm:text-[11px] md:mt-5 md:text-xs lg:text-sm xl:text-base">
+            <div className="relative z-10 mt-3 max-w-[530px] space-y-2 text-[10.5px] leading-[1.65] text-[#303944] min-[375px]:mt-3.5 min-[375px]:text-[11px] min-[430px]:text-[11.5px] sm:mt-4 sm:text-[11px] md:mt-5 md:text-xs lg:text-sm xl:text-base">
               <p>{description}</p>
             </div>
           </div>
