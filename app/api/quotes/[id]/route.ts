@@ -35,13 +35,27 @@ export async function PUT(
     );
   }
 
-  const { quote_token, ...quote } = body;
+  const { quote_token, city_name, ...quote } = body;
+  if (
+    city_name !== undefined &&
+    (typeof city_name !== "string" ||
+      city_name.trim().length === 0 ||
+      city_name.length > 100)
+  ) {
+    return NextResponse.json(
+      { error: "City name must be valid when provided" },
+      { status: 400 }
+    );
+  }
 
   try {
     const response = await fetchCmsQuoteApi(`/${id}`, {
       method: "PUT",
       headers: { "x-quote-token": quote_token },
-      body: JSON.stringify(quote),
+      body: JSON.stringify({
+        ...quote,
+        ...(typeof city_name === "string" ? { city: city_name.trim() } : {}),
+      }),
     });
     const result: unknown = await response.json();
     return NextResponse.json(result, { status: response.status });

@@ -1,8 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import Image from "next/image";
 import { useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
   FaBus,
   FaCalendarAlt,
@@ -26,49 +27,49 @@ import type { IconType } from "react-icons";
 const vehicleOptions = [
   {
     name: "Tempo Traveller",
-    category: "Economy",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/hero/Hero image section tempo traveller.webp",
     icon: FaBus,
   },
   {
     name: "Urbania",
-    category: "Premium",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/hero/Hero image section  urbania.webp",
     icon: FaBus,
   },
   {
     name: "Mini Bus",
-    category: "Premium",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/hero/Hero image section bus.webp",
     icon: FaBus,
   },
   {
     name: "Luxury Bus",
-    category: "Royal",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/hero/3 images.webp",
     icon: FaBus,
   },
   {
     name: "Sleeper / Semi Sleeper",
-    category: "Royal",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/hero/Hero image section bus.webp",
     icon: FaBus,
   },
   {
     name: "Sedan",
-    category: "Economy",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/hero/vehicleImage.webp",
     icon: FaCarSide,
   },
   {
     name: "SUV",
-    category: "Premium",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/vehicleforeverybudget/2.webp",
     icon: FaCarSide,
   },
   {
     name: "Car",
-    category: "Economy",
+    category: ["Economy", "Premium", "Royal", "Royal VIP"],
     image: "/images/vehicleforeverygroupsize/7.jpeg",
     icon: FaCarSide,
   },
@@ -199,7 +200,132 @@ function SectionHeading({
   );
 }
 
+function ThankYouModal({
+  onClose,
+  onHome,
+}: {
+  onClose: () => void;
+  onHome: () => void;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center 
+      bg-[#12233F]/60 backdrop-blur-md px-4 py-6"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="thank-you-title"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-[440px] overflow-hidden
+        rounded-[28px] bg-white p-7 text-center shadow-2xl
+        sm:p-9 animate-in fade-in zoom-in-95 duration-300"
+        onClick={(event) => event.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close modal"
+          className="absolute right-5 top-5 flex h-9 w-9
+          items-center justify-center rounded-full
+          bg-gray-100 text-gray-500 transition
+          hover:bg-gray-200 hover:text-black"
+        >
+          <span className="text-xl">×</span>
+        </button>
+
+        {/* Success Icon */}
+        <div className="mx-auto mb-6 flex h-28 w-28
+          items-center justify-center rounded-full
+          bg-[#E8F9EF]">
+          <div className="flex h-20 w-20 items-center
+            justify-center rounded-full bg-[#03C35E]
+            shadow-[0_8px_25px_rgba(3,195,94,0.3)]">
+            <FaCheck
+              aria-hidden="true"
+              className="text-4xl text-white"
+            />
+          </div>
+        </div>
+
+        {/* Heading */}
+        <h2
+          id="thank-you-title"
+          className="text-3xl font-extrabold tracking-tight
+          text-[#12233F] sm:text-4xl"
+        >
+          Thank You!
+        </h2>
+
+        <p className="mt-3 text-xl font-bold leading-snug
+          text-[#03A94F] sm:text-2xl">
+          Your Quote Request is Submitted!
+        </p>
+
+        <p className="mx-auto mt-4 max-w-sm text-sm
+          leading-7 text-gray-500 sm:text-base">
+          Your journey with Urban Cruise starts here.
+          Our Travel Advisor will connect with you shortly.
+        </p>
+
+        {/* What's Next Section */}
+        <div className="mt-7 rounded-2xl border
+          border-[#DDF3E5] bg-[#F4FBF6] p-5 text-left">
+
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0
+              items-center justify-center rounded-xl
+              bg-[#DDF5E6] text-[#03A94F]">
+              <span className="text-xl">☎</span>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold
+                text-[#12233F]">
+                What's Next?
+              </h3>
+              <p className="mt-1 text-xs text-gray-500">
+                We are here to help you!
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-3 text-sm leading-6 text-gray-600">
+            Our team will contact you to understand your
+            travel requirements and provide the best quotation.
+          </p>
+        </div>
+
+        {/* Home Button */}
+        <button
+          type="button"
+          onClick={onHome}
+          className="mt-7 flex w-full items-center
+          justify-center gap-2 rounded-full
+          bg-[#03C35E] px-6 py-4 text-base
+          font-bold text-white shadow-lg
+          shadow-green-200 transition-all duration-300
+          hover:-translate-y-1 hover:bg-[#02A94F]
+          hover:shadow-xl active:translate-y-0"
+        >
+          Back to Homepage
+          <span className="text-lg">→</span>
+        </button>
+
+        {/* Footer */}
+        <p className="mt-5 text-xs font-medium
+          tracking-wide text-gray-400">
+          Thank you for choosing Urban Cruise!
+        </p>
+
+      </div>
+    </div>
+  );
+}
+
 export default function GetAQuotePage() {
+  const router = useRouter();
   const { location } = useParams<{ location: string }>();
   const searchParams = useSearchParams();
   const cityName = location
@@ -229,6 +355,7 @@ export default function GetAQuotePage() {
   const [isSavingContact, setIsSavingContact] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
   const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");
 
@@ -289,7 +416,7 @@ export default function GetAQuotePage() {
     try {
       const draft = await saveContactDetails();
       setQuoteDraft(draft);
-      setFormSuccess("Contact details saved. Continue with your trip details.");
+      setFormSuccess("Verify Your Contact Details. Continue with your trip details.");
     } catch (error) {
       setFormError(
         error instanceof Error
@@ -342,9 +469,7 @@ export default function GetAQuotePage() {
       });
       await readApiResponse<unknown>(response);
       setHasSubmitted(true);
-      setFormSuccess(
-        "Quote request submitted successfully. We will contact you shortly.",
-      );
+      setShowThankYou(true); // open the Thank You popup
     } catch (error) {
       setFormError(
         error instanceof Error
@@ -356,20 +481,14 @@ export default function GetAQuotePage() {
     }
   };
 
-  // ✅ FIXED: Filter strictly by selected category.
-  // "Royal VIP" has no dedicated vehicles, so it intentionally shows ALL vehicles.
-  const vehiclesToRender =
-    selectedCategory === "Royal VIP"
-      ? vehicleOptions
-      : vehicleOptions.filter(
-          (vehicle) => vehicle.category === selectedCategory,
-        );
+  // Show ALL vehicles in every category.
+  const vehiclesToRender = vehicleOptions;
 
   return (
     <div className="relative w-full bg-white">
       <section className="relative h-[50vh] w-full overflow-hidden">
         <Image
-          src="/images/Get A Quote.jpg"
+          src="/images/get a quote.webp"
           alt="Urban Cruise Hero Background"
           fill
           priority
@@ -434,14 +553,14 @@ export default function GetAQuotePage() {
                     <FaShieldAlt className="shrink-0 text-sm" />
                     <span>
                       <strong className="block text-[10px]">
-                        Save your contact details
+                        Verify Your Contact Details
                       </strong>
                     </span>
                   </span>
 
                   <button
                     type="button"
-                    title="Save your contact details"
+                    title="Verify Your Contact Details"
                     onClick={handleSaveContact}
                     disabled={
                       isSavingContact ||
@@ -452,7 +571,7 @@ export default function GetAQuotePage() {
                     className="flex shrink-0 items-center gap-1 rounded-md bg-[#08ad65] px-2.5 py-2 text-[9px] font-bold text-white transition hover:bg-[#009e58] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <FaCheck />{" "}
-                    {isSavingContact ? "Saving..." : quoteDraft ? "Saved" : "Save"}
+                    {isSavingContact ? "Saving..." : quoteDraft ? "Verified" : "Verify"}
                   </button>
                 </div>
               </div>
@@ -620,16 +739,13 @@ export default function GetAQuotePage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-2.5">
-              {vehiclesToRender.map(({ name, image, category, icon: Icon }) => {
+              {vehiclesToRender.map(({ name, image, icon: Icon }) => {
                 const isSelected = selectedVehicle === name;
                 return (
                   <button
                     key={name}
                     type="button"
-                    onClick={() => {
-                      setSelectedVehicle(name);
-                      setSelectedCategory(category);
-                    }}
+                    onClick={() => setSelectedVehicle(name)}
                     aria-pressed={isSelected}
                     className={`relative flex min-h-[100px] flex-col items-center justify-center overflow-hidden rounded-lg border bg-white px-2 py-2 text-center transition hover:-translate-y-0.5 hover:shadow-md sm:min-h-[112px] ${
                       isSelected
@@ -712,6 +828,17 @@ export default function GetAQuotePage() {
           </p>
         )}
       </main>
+
+      {showThankYou && (
+        <ThankYouModal
+          onClose={() => setShowThankYou(false)}
+          onHome={() => {
+            setShowThankYou(false);
+            router.push("/");
+          }}
+        />
+      )}
     </div>
   );
 }
+

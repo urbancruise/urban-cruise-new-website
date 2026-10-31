@@ -45,7 +45,7 @@ export async function POST(request: Request) {
         full_name: body.full_name,
         phone_number: body.phone_number,
         ...(typeof body.city_name === "string"
-          ? { city_name: body.city_name.trim() }
+          ? { city: body.city_name.trim() }
           : {}),
       }),
     });
