@@ -8,6 +8,26 @@ const CMS_URL = (process.env.CMS_API_URL || "http://localhost:5000").replace(
 );
 const CMS_API_KEY = process.env.CMS_API_KEY || "";
 
+export async function fetchCmsQuoteApi(
+  path: string,
+  init: RequestInit
+): Promise<Response> {
+  if (!CMS_API_KEY) {
+    throw new Error("CMS_API_KEY is not configured");
+  }
+
+  const headers = new Headers(init.headers);
+  headers.set("x-api-key", CMS_API_KEY);
+  headers.set("Accept", "application/json");
+  headers.set("Content-Type", "application/json");
+
+  return fetch(`${CMS_URL}/api/public/quotes${path}`, {
+    ...init,
+    headers,
+    cache: "no-store",
+  });
+}
+
 interface FetchOptions {
   revalidate?: number;
   tags?: string[];

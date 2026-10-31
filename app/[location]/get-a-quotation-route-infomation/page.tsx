@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   FaBus,
   FaCalendarAlt,
@@ -95,6 +95,29 @@ type FormData = {
   luggage: string;
 };
 
+type QuoteDraft = {
+  quote_id: number;
+  quote_token: string;
+  full_name: string;
+  phone_number: string;
+};
+
+async function readApiResponse<T>(response: Response): Promise<T> {
+  const result: unknown = await response.json();
+  if (!response.ok) {
+    const message =
+      typeof result === "object" &&
+      result !== null &&
+      "error" in result &&
+      typeof result.error === "string"
+        ? result.error
+        : "Unable to submit your quote right now";
+    throw new Error(message);
+  }
+
+  return result as T;
+}
+
 const inputClassName =
   "h-11 w-full rounded-md border border-[#d6e4f2] bg-white pl-10 pr-3 text-sm text-[#17365f] outline-none transition placeholder:text-[#91a5bd] focus:border-[#06a85f] focus:ring-2 focus:ring-[#06a85f]/15";
 
@@ -105,6 +128,8 @@ function QuoteField({
   placeholder,
   type = "text",
   required = false,
+  min,
+  max,
   value,
   onChange,
 }: {
@@ -114,6 +139,8 @@ function QuoteField({
   placeholder: string;
   type?: string;
   required?: boolean;
+  min?: number;
+  max?: number;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
@@ -134,6 +161,8 @@ function QuoteField({
           name={name}
           type={type}
           required={required}
+          min={min}
+          max={max}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
@@ -171,16 +200,8 @@ function SectionHeading({
 }
 
 export default function GetAQuotePage() {
-  const params = useParams();
   const searchParams = useSearchParams();
 
-  // Safely normalize route param (may be string | string[] | undefined)
-  const rawLocation = params?.location;
-  const location = Array.isArray(rawLocation)
-    ? rawLocation[0]
-    : (rawLocation ?? "");
-
-  // Null-safe service id
   const serviceId = searchParams?.get("service") ?? "";
   const formattedService = serviceId ? serviceId.replace(/-/g, " ") : "";
 
@@ -199,27 +220,133 @@ export default function GetAQuotePage() {
     passengers: "",
     luggage: "",
   });
+  const [quoteDraft, setQuoteDraft] = useState<QuoteDraft | null>(null);
+  const [isSavingContact, setIsSavingContact] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [formSuccess, setFormSuccess] = useState("");
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target;
+    if (name === "name" || name === "phone") {
+      setQuoteDraft(null);
+      setFormSuccess("");
+    }
+    if (hasSubmitted) {
+      setQuoteDraft(null);
+      setHasSubmitted(false);
+      setFormSuccess("");
+    }
+    setFormError("");
     setFormData((previous) => ({
       ...previous,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("Quote requested:", {
-      ...formData,
-      location,
-      serviceId,
-      selectedCategory,
-      selectedVehicle,
+  const saveContactDetails = async (): Promise<QuoteDraft> => {
+    if (!formData.name.trim() || !/^\d{10}$/.test(formData.phone.trim())) {
+      throw new Error("Enter your full name and a valid 10 digit phone number.");
+    }
+
+    const response = await fetch("/api/quotes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        full_name: formData.name,
+        phone_number: `+91 ${formData.phone}`,
+      }),
     });
-    alert("Quote request submitted successfully! We will contact you shortly.");
+    const draft = await readApiResponse<{
+      quote_id: number;
+      quote_token: string;
+    }>(response);
+    return {
+      ...draft,
+      full_name: formData.name.trim(),
+      phone_number: `+91 ${formData.phone}`.trim(),
+    };
+  };
+
+  const handleSaveContact = async () => {
+    if (!formData.name.trim() || !/^\d{10}$/.test(formData.phone.trim())) {
+      setFormError("Enter your full name and a valid 10 digit phone number.");
+      return;
+    }
+
+    setIsSavingContact(true);
+    setFormError("");
+    setFormSuccess("");
+    try {
+      const draft = await saveContactDetails();
+      setQuoteDraft(draft);
+      setFormSuccess("Contact details saved. Continue with your trip details.");
+    } catch (error) {
+      setFormError(
+        error instanceof Error
+          ? error.message
+          : "Unable to save contact details right now",
+      );
+    } finally {
+      setIsSavingContact(false);
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setFormError("");
+    setFormSuccess("");
+
+    try {
+      const phoneNumber = `+91 ${formData.phone}`.trim();
+      let draft = quoteDraft;
+      if (
+        !draft ||
+        draft.full_name !== formData.name.trim() ||
+        draft.phone_number !== phoneNumber
+      ) {
+        draft = await saveContactDetails();
+        setQuoteDraft(draft);
+      }
+
+      const response = await fetch(`/api/quotes/${draft.quote_id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quote_token: draft.quote_token,
+          full_name: formData.name,
+          phone_number: phoneNumber,
+          email: formData.email,
+          message: formData.message,
+          pickup_address: formData.pickup,
+          pickup_date: formData.pickupDate,
+          drop_address: formData.drop,
+          drop_date: formData.dropDate,
+          travel_itinerary: formData.itinerary,
+          passenger_count: Number(formData.passengers),
+          luggage_count: Number(formData.luggage),
+          vehicle_category: selectedCategory,
+          vehicle_name: selectedVehicle,
+        }),
+      });
+      await readApiResponse<unknown>(response);
+      setHasSubmitted(true);
+      setFormSuccess(
+        "Quote request submitted successfully. We will contact you shortly.",
+      );
+    } catch (error) {
+      setFormError(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit your quote right now",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // ✅ FIXED: Filter strictly by selected category.
@@ -285,6 +412,9 @@ export default function GetAQuotePage() {
                     type="tel"
                     inputMode="tel"
                     autoComplete="tel-national"
+                    minLength={10}
+                    maxLength={10}
+                    pattern="[0-9]{10}"
                     required
                     value={formData.phone}
                     onChange={handleChange}
@@ -297,17 +427,25 @@ export default function GetAQuotePage() {
                     <FaShieldAlt className="shrink-0 text-sm" />
                     <span>
                       <strong className="block text-[10px]">
-                        Verify your phone number
+                        Save your contact details
                       </strong>
                     </span>
                   </span>
 
                   <button
                     type="button"
-                    title="Verify your phone number"
-                    className="flex shrink-0 items-center gap-1 rounded-md bg-[#08ad65] px-2.5 py-2 text-[9px] font-bold text-white transition hover:bg-[#009e58]"
+                    title="Save your contact details"
+                    onClick={handleSaveContact}
+                    disabled={
+                      isSavingContact ||
+                      isSubmitting ||
+                      hasSubmitted ||
+                      !!quoteDraft
+                    }
+                    className="flex shrink-0 items-center gap-1 rounded-md bg-[#08ad65] px-2.5 py-2 text-[9px] font-bold text-white transition hover:bg-[#009e58] disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    <FaCheck /> Verify
+                    <FaCheck />{" "}
+                    {isSavingContact ? "Saving..." : quoteDraft ? "Saved" : "Save"}
                   </button>
                 </div>
               </div>
@@ -423,7 +561,10 @@ export default function GetAQuotePage() {
                 label="No. of Passengers"
                 name="passengers"
                 icon={FaUserFriends}
-                placeholder="e.g. 2 Adults, 1 Child"
+                type="number"
+                min={1}
+                max={500}
+                placeholder="e.g. 3"
                 required
                 value={formData.passengers}
                 onChange={handleChange}
@@ -432,7 +573,10 @@ export default function GetAQuotePage() {
                 label="No. of Luggage"
                 name="luggage"
                 icon={MdOutlineLuggage}
-                placeholder="e.g. 2 Bags"
+                type="number"
+                min={0}
+                max={500}
+                placeholder="e.g. 2"
                 required
                 value={formData.luggage}
                 onChange={handleChange}
@@ -529,15 +673,30 @@ export default function GetAQuotePage() {
             </div>
             <button
               type="submit"
-              className="flex min-h-11 w-full items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-[#ff8c00] to-[#ff7800] px-6 text-xs font-extrabold text-white shadow-md transition hover:brightness-105 hover:shadow-lg sm:w-[min(100%,360px)]"
+              disabled={isSavingContact || isSubmitting || hasSubmitted}
+              className="flex min-h-11 w-full items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-[#ff8c00] to-[#ff7800] px-6 text-xs font-extrabold text-white shadow-md transition hover:brightness-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:w-[min(100%,360px)]"
             >
               <FaRoute className="text-sm" />
-              SUBMIT ENQUIRY
+              {isSubmitting
+                ? "SUBMITTING..."
+                : hasSubmitted
+                  ? "ENQUIRY SUBMITTED"
+                  : "SUBMIT ENQUIRY"}
               <span aria-hidden="true" className="text-base">
                 ›
               </span>
             </button>
           </div>
+          {(formError || formSuccess) && (
+            <p
+              role={formError ? "alert" : "status"}
+              className={`mt-3 text-center text-sm font-medium ${
+                formError ? "text-red-600" : "text-[#009e58]"
+              }`}
+            >
+              {formError || formSuccess}
+            </p>
+          )}
         </form>
 
         {formattedService && (
