@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import {
   FaBus,
   FaCalendarAlt,
@@ -200,7 +200,12 @@ function SectionHeading({
 }
 
 export default function GetAQuotePage() {
+  const { location } = useParams<{ location: string }>();
   const searchParams = useSearchParams();
+  const cityName = location
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
   const serviceId = searchParams?.get("service") ?? "";
   const formattedService = serviceId ? serviceId.replace(/-/g, " ") : "";
@@ -258,6 +263,7 @@ export default function GetAQuotePage() {
       body: JSON.stringify({
         full_name: formData.name,
         phone_number: `+91 ${formData.phone}`,
+        city_name: cityName,
       }),
     });
     const draft = await readApiResponse<{
@@ -320,6 +326,7 @@ export default function GetAQuotePage() {
           quote_token: draft.quote_token,
           full_name: formData.name,
           phone_number: phoneNumber,
+          city_name: cityName,
           email: formData.email,
           message: formData.message,
           pickup_address: formData.pickup,

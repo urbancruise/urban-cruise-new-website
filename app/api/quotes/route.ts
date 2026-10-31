@@ -23,12 +23,19 @@ export async function POST(request: Request) {
   if (
     !isRecord(body) ||
     typeof body.full_name !== "string" ||
-    typeof body.phone_number !== "string"
+    typeof body.phone_number !== "string" ||
+    (body.city_name !== undefined &&
+      (typeof body.city_name !== "string" ||
+        body.city_name.trim().length === 0 ||
+        body.city_name.length > 100))
   ) {
     return NextResponse.json(
-      { error: "Full name and phone number are required" },
-      { status: 400 }
-    );
+          {
+            error:
+              "Full name and phone number are required; city name must be valid when provided",
+          },
+          { status: 400 }
+        );
   }
 
   try {
@@ -37,6 +44,9 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         full_name: body.full_name,
         phone_number: body.phone_number,
+        ...(typeof body.city_name === "string"
+          ? { city_name: body.city_name.trim() }
+          : {}),
       }),
     });
     const result: unknown = await response.json();
