@@ -6,22 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiVehicleForEveryGroupSize = dynamic(() =>
-  import("./home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize")
-);
-const GurugramVehicleForEveryGroupSize = dynamic(() =>
-  import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
-);
-const MumbaiVehicleForEveryGroupSize = dynamic(() =>
-  import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
-);
-const PuneVehicleForEveryGroupSize = dynamic(() =>
-  import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
-);
-const DefaultVehicleForEveryGroupSize = dynamic(() =>
-  import("./home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize")
-);
-
 export interface VehicleGroupSizeItem {
   type?: string;
   name: string;
@@ -48,6 +32,27 @@ export interface VehicleForEveryGroupSizeProps {
   content?: VehicleGroupSizeContent;
 }
 
+const DelhiVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize")
+  );
+const GurugramVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
+  );
+const MumbaiVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
+  );
+const PuneVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
+  );
+const DefaultVehicleForEveryGroupSize =
+  dynamic<VehicleForEveryGroupSizeProps>(() =>
+    import("./home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize")
+  );
+
 export default function VehicleForEveryGroupSizeSelector({
   content,
 }: VehicleForEveryGroupSizeProps) {
@@ -59,17 +64,19 @@ export default function VehicleForEveryGroupSizeSelector({
 
   const map: Record<
     string,
-    React.ComponentType<{ content?: VehicleGroupSizeContent }>
+    React.ComponentType<VehicleForEveryGroupSizeProps>
   > = {
-    delhi: DelhiVehicleForEveryGroupSize as any,
-    gurugram: GurugramVehicleForEveryGroupSize as any,
-    mumbai: MumbaiVehicleForEveryGroupSize as any,
-    pune: PuneVehicleForEveryGroupSize as any,
+    delhi: DelhiVehicleForEveryGroupSize,
+    gurugram: GurugramVehicleForEveryGroupSize,
+    mumbai: MumbaiVehicleForEveryGroupSize,
+    pune: PuneVehicleForEveryGroupSize,
   };
 
   const Component = isGlobalRoute
-    ? (DefaultVehicleForEveryGroupSize as any)
-    : map[selectedLocation || ""] || (DefaultVehicleForEveryGroupSize as any);
+    ? DefaultVehicleForEveryGroupSize
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultVehicleForEveryGroupSize;
 
   if (!Component) return null;
 

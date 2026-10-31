@@ -6,22 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiHowItWorks = dynamic(() =>
-  import("./home/howItworks/DelhiHowItWorks")
-);
-const GurugramHowItWorks = dynamic(() =>
-  import("./home/howItworks/GurugramHowItWorks")
-);
-const MumbaiHowItWorks = dynamic(() =>
-  import("./home/howItworks/MumbaiHowItWorks")
-);
-const PuneHowItWorks = dynamic(() =>
-  import("./home/howItworks/PuneHowItWorks")
-);
-const DefaultHowItWorks = dynamic(() =>
-  import("./home/howItworks/DefaultHowItWorks")
-);
-
 export interface HowItWorksStep {
   number: string;
   title: string;
@@ -44,6 +28,22 @@ export interface HowItWorksSelectorProps {
   content?: HowItWorksContent;
 }
 
+const DelhiHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/DelhiHowItWorks")
+);
+const GurugramHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/GurugramHowItWorks")
+);
+const MumbaiHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/MumbaiHowItWorks")
+);
+const PuneHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/PuneHowItWorks")
+);
+const DefaultHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
+  import("./home/howItworks/DefaultHowItWorks")
+);
+
 export default function HowItWorksSelector({
   content,
 }: HowItWorksSelectorProps) {
@@ -54,15 +54,17 @@ export default function HowItWorksSelector({
   const isGlobalRoute = pathSegments.length === 0;
 
   const map: Record<string, React.ComponentType<HowItWorksSelectorProps>> = {
-    delhi: DelhiHowItWorks as any,
-    gurugram: GurugramHowItWorks as any,
-    mumbai: MumbaiHowItWorks as any,
-    pune: PuneHowItWorks as any,
+    delhi: DelhiHowItWorks,
+    gurugram: GurugramHowItWorks,
+    mumbai: MumbaiHowItWorks,
+    pune: PuneHowItWorks,
   };
 
   const Component = isGlobalRoute
-    ? (DefaultHowItWorks as any)
-    : map[selectedLocation || ""] || (DefaultHowItWorks as any);
+    ? DefaultHowItWorks
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultHowItWorks;
 
   return <Component content={content} />;
 }

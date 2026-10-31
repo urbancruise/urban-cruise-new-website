@@ -17,7 +17,7 @@ export default function PuneVehicleRentalServiceInIndia({
   const cms = content || {};
   const eyebrow = cms.eyebrow || "Our Network";
   const title = cms.title || "INDIA";
-  const titleHighlight = cms.titleHighlight || "COVERAGE MAP.";
+  const titleHighlight = cms.titleHighlight || " ";
   const subtitle = cms.subtitle || "Explore our presence across India";
   const description =
     cms.description ||
@@ -25,7 +25,7 @@ export default function PuneVehicleRentalServiceInIndia({
 
   return (
     <>
-      <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:py-[70px]">
+      <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:pt-20 xl:pb-10">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[15%] bg-gradient-to-b from-transparent via-white/70 to-white sm:h-[12%] md:h-[10%] lg:h-[8%]" />
 
         <div className="relative z-10 mx-auto w-full max-w-[1440px] px-3 min-[375px]:px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-9 xl:px-10 2xl:px-12">
@@ -46,7 +46,10 @@ export default function PuneVehicleRentalServiceInIndia({
               </div>
 
               <h2 className="text-[21px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] sm:text-[27px] md:text-[29px]">
-                {title} <span className="text-[#188A31]"><br /> {titleHighlight}</span>
+                {title}{" "}
+                <span className="text-[#188A31]">
+                  <br /> {titleHighlight}
+                </span>
               </h2>
 
               <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] sm:text-[27px] md:text-[29px]">

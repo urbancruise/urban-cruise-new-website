@@ -257,7 +257,7 @@ export default function PuneWhyChooseUrbanCruise({ content }: WhyChooseProps) {
 
   const eyebrow = cms.eyebrow?.trim() || "Why Choose Urban Cruise";
   const title = cms.title?.trim() || "WHY CHOOSE";
-  const titleHighlight = "URBAN CRUISE";
+  const titleHighlight = " ";
   const subtitle =
     cms.subtitle?.trim() || "Reliable, Comfortable & Hassle-Free Travel";
   const description =
@@ -270,7 +270,7 @@ export default function PuneWhyChooseUrbanCruise({ content }: WhyChooseProps) {
       : FALLBACK_BENEFITS;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16 2xl:py-[70px]">
+    <section className="relative w-full overflow-hidden bg-white py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16 2xl:pt-20 2xl:pb-10">
       <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[300px] overflow-hidden sm:h-[360px] md:h-[420px] lg:h-[460px] xl:h-[500px] 2xl:h-[540px]">
         <Image
           src="/images/whychooseicons/bg.png"

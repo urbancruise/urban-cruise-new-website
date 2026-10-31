@@ -8,15 +8,21 @@ import { VscWorkspaceTrusted } from "react-icons/vsc";
 import { motion, type Variants } from "framer-motion";
 import type { BudgetContent } from "@/app/components/VehicleForEveryBudgetSelector";
 
-const GREEN = "#03C35E";
-const ORANGE = "#F7941E";
+const GREEN = "#28d628";
+const YELLOW = "#d5d628";
+const PINK = "#d6286d";
+const LIGHTPINK = "#c47ee7";
 
 const DEFAULT_CATEGORIES = [
-  { title: "ECONOMY", description: "Vehicles with basic Amenities for Budget Travellers", icon: "/images/vehicleforeverybudget/1.webp", color: GREEN },
-  { title: "PREMIUM", description: "Vehicles with Best-in-class Amenities for Superior Passenger...", icon: "/images/vehicleforeverybudget/2.webp", color: ORANGE },
-  { title: "ROYAL", description: "New & Modified Vehicles with Best-in-class Amenities", icon: "/images/vehicleforeverybudget/3.webp", color: GREEN },
-  { title: "ROYAL VIP", description: "Ultra Luxury Vehicles with Custom Designed Amenities...", icon: "/images/vehicleforeverybudget/4.webp", color: ORANGE },
+  { title: "ECONOMY", description: "Vehicles with basic Amenities for Budget Travellers", icon: "/images/vehicleforeverybudget/Economy.webp", color: YELLOW },
+  { title: "PREMIUM", description: "Vehicles with Best-in-class Amenities for Superior Passenger...", icon: "/images/vehicleforeverybudget/premium.webp", color: GREEN },
+  { title: "ROYAL", description: "New & Modified Vehicles with Best-in-class Amenities", icon: "/images/vehicleforeverybudget/Royal.webp", color: PINK },
+  { title: "ROYAL VIP", description: "Ultra Luxury Vehicles with Custom Designed Amenities...", icon: "/images/vehicleforeverybudget/royal vip.webp", color: LIGHTPINK },
 ];
+
+type BudgetCategory = (typeof DEFAULT_CATEGORIES)[number] & {
+  iconAlt?: string;
+};
 
 const DEFAULT_TRUST_BADGES = [
   { label: "Transparent", label2: "Pricing", position: "left" as const, icon: <FaHandHoldingUsd className="text-black text-xl" /> },
@@ -24,7 +30,12 @@ const DEFAULT_TRUST_BADGES = [
   { label: "Trusted &", label2: "Reliable", position: "right" as const, icon: <VscWorkspaceTrusted className="text-black text-xl" /> },
 ];
 
-function normalizeCategories(content: any) {
+function normalizeCategories(
+  content:
+    | (BudgetContent & { items?: BudgetContent["categories"] })
+    | null
+    | undefined
+): BudgetCategory[] {
   const rawList = Array.isArray(content?.categories)
     ? content.categories
     : Array.isArray(content?.items)
@@ -33,32 +44,40 @@ function normalizeCategories(content: any) {
 
   if (rawList.length === 0) return DEFAULT_CATEGORIES;
 
-  const normalized = rawList
-    .map((c: any, i: number) => {
+  const normalized = rawList.flatMap((c, i) => {
       const fallback = DEFAULT_CATEGORIES[i % DEFAULT_CATEGORIES.length];
       const title = c?.title?.trim() || "";
       const description = c?.description?.trim() || "";
       const icon = c?.icon || "";
       const iconAlt = c?.iconAlt?.trim() || "";   // ✅ ADD
       const colorRaw = c?.color;
+      const colorMap: Record<string, string> = {
+        green: GREEN,
+        yellow: YELLOW,
+        pink: PINK,
+        lightpink: LIGHTPINK,
+        "light pink": LIGHTPINK,
+        "light-pink": LIGHTPINK,
+      };
+
       const color =
-        colorRaw === "orange" || colorRaw === ORANGE
-          ? ORANGE
-          : colorRaw === "green" || colorRaw === GREEN
-            ? GREEN
-            : fallback.color;
+        (typeof colorRaw === "string" && colorMap[colorRaw.toLowerCase()]) ||
+        (typeof colorRaw === "string" &&
+        [GREEN, YELLOW, PINK, LIGHTPINK].includes(colorRaw)
+          ? colorRaw
+          : null) ||
+        fallback.color;
 
-      if (!title && !description && !icon) return null;
+      if (!title && !description && !icon) return [];
 
-      return {
+      return [{
         title: title || fallback.title,
         description: description || fallback.description,
         icon: icon || fallback.icon,
         iconAlt: iconAlt || `${title || fallback.title} category icon`,   // ✅ ADD
         color,
-      };
-    })
-    .filter(Boolean) as typeof DEFAULT_CATEGORIES;
+      }];
+    });
 
   return normalized.length > 0 ? normalized : DEFAULT_CATEGORIES;
 }
@@ -118,8 +137,8 @@ export default function PuneVehicleForEveryBudget({
   content?: BudgetContent | null;
 }) {
   const eyebrow = content?.eyebrow ?? "We Offer Best Services";
-  const title = content?.title ?? "A VEHICLE FOR";
-  const titleHighlight = content?.titleHighlight ?? "EVERY BUDGET";
+  const title = content?.title ?? "A VEHICLE FOR EVERY BUDGET";
+  const titleHighlight = content?.titleHighlight ?? " ";
   const subtitle = content?.subtitle ?? "Vehicles For Every Journey, Every Budget";
   const description =
     content?.description ??
@@ -145,7 +164,7 @@ export default function PuneVehicleForEveryBudget({
       : DEFAULT_TRUST_BADGES;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white ">
+    <section className="relative w-full overflow-hidden bg-white">
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[20] hidden lg:block lg:h-[12%] xl:h-[11%] 2xl:h-[10%] bg-gradient-to-b from-white via-white/60 to-transparent" />
 
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
@@ -250,15 +269,20 @@ export default function PuneVehicleForEveryBudget({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
         >
-          {categories.map((category: any, index: number) => (
+          {categories.map((category, index) => (
             <motion.div
               key={`${category.title}-${index}`}
-              className="group relative flex w-full flex-col items-center overflow-visible rounded-[1.5rem] bg-white px-4 pb-5 pt-14 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] min-h-[180px] min-[430px]:min-h-[190px] min-[430px]:px-5 sm:min-h-[195px] sm:px-5 sm:pb-6 sm:pt-14 md:min-h-[205px] md:px-5 md:pb-6 md:pt-14 lg:min-h-[205px] lg:px-5 lg:pb-6 lg:pt-14 xl:min-h-[210px] xl:px-6 xl:pb-6 2xl:min-h-[220px] 2xl:px-7 2xl:pb-7"
+              className="group relative flex w-full flex-col items-center overflow-visible rounded-[1.5rem] bg-white px-4 pb-5 pt-14 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-2 min-h-[180px] min-[430px]:min-h-[190px] min-[430px]:px-5 sm:min-h-[195px] sm:px-5 sm:pb-6 sm:pt-14 md:min-h-[205px] md:px-5 md:pb-6 md:pt-14 lg:min-h-[205px] lg:px-5 lg:pb-6 lg:pt-14 xl:min-h-[210px] xl:px-6 xl:pb-6 2xl:min-h-[220px] 2xl:px-7 2xl:pb-7"
               style={{ borderTop: `4px solid ${category.color}` }}
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ delay: 0.6 + index * 0.1, duration: 0.5, type: "spring", damping: 15, stiffness: 100 }}
-              whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", damping: 10, stiffness: 100 } }}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                boxShadow: `0 18px 45px ${category.color}66`,
+                transition: { type: "spring", damping: 10, stiffness: 100 },
+              }}
             >
               <motion.div
                 className="absolute left-1/2 top-0 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] bg-white transition-all duration-300 ease-out group-hover:scale-110 h-[74px] w-[74px] min-[375px]:h-[80px] min-[375px]:w-[80px] min-[430px]:h-[88px] min-[430px]:w-[88px] sm:h-[96px] sm:w-[96px] md:h-[104px] md:w-[104px] md:border-[4px] lg:h-[92px] lg:w-[92px] xl:h-[98px] xl:w-[98px] 2xl:h-[112px] 2xl:w-[112px]"

@@ -299,7 +299,7 @@ export default function PuneTestimonials({ content }: TestimonialsProps) {
 
   const eyebrow = cms.eyebrow || "What Our Customers Say";
   const title = cms.title || "REAL PEOPLE.";
-  const titleLine2 = cms.titleLine2 || "REAL EXPERIENCES.";
+  const titleLine2 = cms.titleLine2 || " ";
   const subtitle = cms.subtitle || "Hear from our happy customers";
   const description =
     cms.description ||
@@ -361,7 +361,7 @@ export default function PuneTestimonials({ content }: TestimonialsProps) {
   const nextTestimonial = testimonials[getNextIndex()];
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:py-[70px]">
+    <section className="relative w-full overflow-hidden bg-white py-10 sm:py-12 md:py-14 lg:py-16 xl:pt-20 xl:pb-10">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-[7%] top-[60px] select-none font-serif text-[170px] font-black leading-none text-[#087F35]/[0.055]">
           &ldquo;

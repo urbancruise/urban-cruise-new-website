@@ -6,22 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiVehicleForEveryBudget = dynamic(() =>
-  import("./home/vehicleforeverybudget/DelhiVehicleForEveryBudget")
-);
-const GurugramVehicleForEveryBudget = dynamic(() =>
-  import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget")
-);
-const MumbaiVehicleForEveryBudget = dynamic(() =>
-  import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget")
-);
-const PuneVehicleForEveryBudget = dynamic(() =>
-  import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget")
-);
-const DefaultVehicleForEveryBudget = dynamic(() =>
-  import("./home/vehicleforeverybudget/DefaultVehicleForEveryBudget")
-);
-
 export interface BudgetContent {
   eyebrow?: string;
   title?: string;
@@ -49,6 +33,22 @@ export interface VehicleForEveryBudgetProps {
   content?: BudgetContent | null;
 }
 
+const DelhiVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
+  import("./home/vehicleforeverybudget/DelhiVehicleForEveryBudget")
+);
+const GurugramVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
+  import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget")
+);
+const MumbaiVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
+  import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget")
+);
+const PuneVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
+  import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget")
+);
+const DefaultVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
+  import("./home/vehicleforeverybudget/DefaultVehicleForEveryBudget")
+);
+
 export default function VehicleForEveryBudgetSelector({
   content,
 }: VehicleForEveryBudgetProps) {
@@ -60,17 +60,19 @@ export default function VehicleForEveryBudgetSelector({
 
   const map: Record<
     string,
-    React.ComponentType<{ content?: BudgetContent | null }>
+    React.ComponentType<VehicleForEveryBudgetProps>
   > = {
-    delhi: DelhiVehicleForEveryBudget as any,
-    gurugram: GurugramVehicleForEveryBudget as any,
-    mumbai: MumbaiVehicleForEveryBudget as any,
-    pune: PuneVehicleForEveryBudget as any,
+    delhi: DelhiVehicleForEveryBudget,
+    gurugram: GurugramVehicleForEveryBudget,
+    mumbai: MumbaiVehicleForEveryBudget,
+    pune: PuneVehicleForEveryBudget,
   };
 
   const Component = isGlobalRoute
-    ? (DefaultVehicleForEveryBudget as any)
-    : map[selectedLocation || ""] || (DefaultVehicleForEveryBudget as any);
+    ? DefaultVehicleForEveryBudget
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultVehicleForEveryBudget;
 
   if (!Component) return null;
 

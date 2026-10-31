@@ -6,11 +6,21 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiAbout = dynamic(() => import("./home/about/DelhiAbout"));
-const GurugramAbout = dynamic(() => import("./home/about/GurugramAbout"));
-const MumbaiAbout = dynamic(() => import("./home/about/MumbaiAbout"));
-const PuneAbout = dynamic(() => import("./home/about/PuneAbout"));
-const DefaultAbout = dynamic(() => import("./home/about/DefaultAbout"));
+const DelhiAbout = dynamic<{ content?: AboutContent | null }>(
+  () => import("./home/about/DelhiAbout")
+);
+const GurugramAbout = dynamic<{ content?: AboutContent | null }>(
+  () => import("./home/about/GurugramAbout")
+);
+const MumbaiAbout = dynamic<{ content?: AboutContent | null }>(
+  () => import("./home/about/MumbaiAbout")
+);
+const PuneAbout = dynamic<{ content?: AboutContent | null }>(
+  () => import("./home/about/PuneAbout")
+);
+const DefaultAbout = dynamic<{ content?: AboutContent | null }>(
+  () => import("./home/about/DefaultAbout")
+);
 
 export interface AboutContent {
   eyebrow?: string;
@@ -36,15 +46,17 @@ export default function AboutSelector({ content }: AboutSelectorProps) {
     string,
     React.ComponentType<{ content?: AboutContent | null }>
   > = {
-    delhi: DelhiAbout as any,
-    gurugram: GurugramAbout as any,
-    mumbai: MumbaiAbout as any,
-    pune: PuneAbout as any,
+    delhi: DelhiAbout,
+    gurugram: GurugramAbout,
+    mumbai: MumbaiAbout,
+    pune: PuneAbout,
   };
 
   const AboutComponent = isGlobalRoute
-    ? (DefaultAbout as any)
-    : aboutMap[selectedLocation || ""] || (DefaultAbout as any);
+    ? DefaultAbout
+    : aboutMap[pathSegments[0]] ||
+      aboutMap[selectedLocation || ""] ||
+      DefaultAbout;
 
   return <AboutComponent content={content} />;
 }

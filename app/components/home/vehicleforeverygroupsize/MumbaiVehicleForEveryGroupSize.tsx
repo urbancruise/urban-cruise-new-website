@@ -503,7 +503,7 @@ function VehicleCard({
       </div>
 
       {gallery.length > 0 && (
-        <div className="absolute top-[165px] sm:top-[165px] md:top-[182px] xl:top-[210px] 2xl:top-[220px] left-0 right-0 z-20">
+        <div className="relative z-20 -mt-5 px-0 pb-3">
           <CurvedGallery
             images={gallery}
             alts={vehicle.galleryAlts}
@@ -512,7 +512,7 @@ function VehicleCard({
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto] sm:items-center px-2.5 pt-[75px] sm:px-2.5 sm:pt-[75px] md:px-2.5 md:pt-[90px] xl:px-2.5 xl:pt-[95px] 2xl:px-2.5 2xl:pt-[80px]">
+      <div className="grid grid-cols-1 gap-2 px-2.5 pt-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-2.5 sm:pt-4 md:px-2.5 md:pt-4 xl:px-2.5 xl:pt-4 2xl:px-2.5 2xl:pt-4">
         <div className="min-w-0">
           <h3 className="truncate text-[20px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] min-[375px]:text-[21px] sm:text-[22px] md:text-[24px]">
             {vehicle.name}
@@ -630,7 +630,7 @@ export default function MumbaiVehicleForEveryGroupSize({
 
   const eyebrow = cms.eyebrow?.trim() || "Perfect For Every Group";
   const title = cms.title?.trim() || "VEHICLES FOR";
-  const titleHighlight = cms.titleHighlight?.trim() || " EVERY GROUP SIZE ";
+  const titleHighlight = cms.titleHighlight?.trim() || " ";
   const subtitle =
     cms.subtitle?.trim() || "The Right Vehicle For Every Group Size";
   const description =
@@ -643,11 +643,11 @@ export default function MumbaiVehicleForEveryGroupSize({
       : FALLBACK_VEHICLES;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white ">
-      <div className="pointer-events-none absolute left-[8%] top-[20%] h-[300px] w-[300px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[400px] sm:w-[400px] lg:h-[550px] lg:w-[550px]" />
+    <section className="relative w-full overflow-hidden bg-white px-0 py-8 sm:py-12 md:py-14 lg:py-16">
+      <div className="pointer-events-none absolute left-[8%] top-[20%] h-[250px] w-[250px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[400px] sm:w-[400px] lg:h-[550px] lg:w-[550px]" />
       <div className="pointer-events-none absolute bottom-[10%] right-[5%] h-[250px] w-[250px] rounded-full bg-[#03C35E]/5 blur-3xl sm:h-[350px] sm:w-[350px] lg:h-[500px] lg:w-[500px]" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 min-[430px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -664,7 +664,7 @@ export default function MumbaiVehicleForEveryGroupSize({
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
-            <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
+            <h2 className="text-[21px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] sm:text-[27px] md:text-[29px]">
               {title} <span className="text-[#188A31]">{titleHighlight}</span>
             </h2>
 

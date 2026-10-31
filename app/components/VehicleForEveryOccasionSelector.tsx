@@ -6,22 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiVehicleForEveryOccasion = dynamic(() =>
-  import("./home/vehicleforeveryoccasion/DelhiVehicleForEveryOccasion")
-);
-const GurugramVehicleForEveryOccasion = dynamic(() =>
-  import("./home/vehicleforeveryoccasion/GurugramVehicleForEveryOccasion")
-);
-const MumbaiVehicleForEveryOccasion = dynamic(() =>
-  import("./home/vehicleforeveryoccasion/MumbaiVehicleForEveryOccasion")
-);
-const PuneVehicleForEveryOccasion = dynamic(() =>
-  import("./home/vehicleforeveryoccasion/PuneVehicleForEveryOccasion")
-);
-const DefaultVehicleForEveryOccasion = dynamic(() =>
-  import("./home/vehicleforeveryoccasion/DefaultVehicleForEveryOccasion")
-);
-
 export interface OccasionCard {
   title: string;
   highlight: string;
@@ -54,6 +38,27 @@ export interface VehicleForEveryOccasionProps {
   content?: VehicleEveryOccasionContent;
 }
 
+const DelhiVehicleForEveryOccasion =
+  dynamic<VehicleForEveryOccasionProps>(() =>
+    import("./home/vehicleforeveryoccasion/DelhiVehicleForEveryOccasion")
+  );
+const GurugramVehicleForEveryOccasion =
+  dynamic<VehicleForEveryOccasionProps>(() =>
+    import("./home/vehicleforeveryoccasion/GurugramVehicleForEveryOccasion")
+  );
+const MumbaiVehicleForEveryOccasion =
+  dynamic<VehicleForEveryOccasionProps>(() =>
+    import("./home/vehicleforeveryoccasion/MumbaiVehicleForEveryOccasion")
+  );
+const PuneVehicleForEveryOccasion =
+  dynamic<VehicleForEveryOccasionProps>(() =>
+    import("./home/vehicleforeveryoccasion/PuneVehicleForEveryOccasion")
+  );
+const DefaultVehicleForEveryOccasion =
+  dynamic<VehicleForEveryOccasionProps>(() =>
+    import("./home/vehicleforeveryoccasion/DefaultVehicleForEveryOccasion")
+  );
+
 export default function VehicleForEveryOccasionSelector({
   content,
 }: VehicleForEveryOccasionProps) {
@@ -65,17 +70,19 @@ export default function VehicleForEveryOccasionSelector({
 
   const map: Record<
     string,
-    React.ComponentType<{ content?: VehicleEveryOccasionContent }>
+    React.ComponentType<VehicleForEveryOccasionProps>
   > = {
-    delhi: DelhiVehicleForEveryOccasion as any,
-    gurugram: GurugramVehicleForEveryOccasion as any,
-    mumbai: MumbaiVehicleForEveryOccasion as any,
-    pune: PuneVehicleForEveryOccasion as any,
+    delhi: DelhiVehicleForEveryOccasion,
+    gurugram: GurugramVehicleForEveryOccasion,
+    mumbai: MumbaiVehicleForEveryOccasion,
+    pune: PuneVehicleForEveryOccasion,
   };
 
   const Component = isGlobalRoute
-    ? (DefaultVehicleForEveryOccasion as any)
-    : map[selectedLocation || ""] || (DefaultVehicleForEveryOccasion as any);
+    ? DefaultVehicleForEveryOccasion
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultVehicleForEveryOccasion;
 
   if (!Component) return null;
 

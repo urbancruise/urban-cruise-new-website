@@ -6,22 +6,6 @@ import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const DelhiWhyChoose = dynamic(() =>
-  import("./home/whychooseurbancruise/DelhiWhyChooseUrbanCruise")
-);
-const GurugramWhyChoose = dynamic(() =>
-  import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
-);
-const MumbaiWhyChoose = dynamic(() =>
-  import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
-);
-const PuneWhyChoose = dynamic(() =>
-  import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
-);
-const DefaultWhyChoose = dynamic(() =>
-  import("./home/whychooseurbancruise/DefaultWhyChooseUrbanCruise")
-);
-
 export interface WhyChooseBenefitItem {
   number: string;
   title: string;
@@ -45,6 +29,22 @@ export interface WhyChooseUrbanCruiseProps {
   content?: WhyChooseUrbanCruiseContent;
 }
 
+const DelhiWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/DelhiWhyChooseUrbanCruise")
+);
+const GurugramWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
+);
+const MumbaiWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
+);
+const PuneWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
+);
+const DefaultWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
+  import("./home/whychooseurbancruise/DefaultWhyChooseUrbanCruise")
+);
+
 export default function WhyChooseUrbanCruiseSelector({
   content,
 }: WhyChooseUrbanCruiseProps) {
@@ -56,17 +56,19 @@ export default function WhyChooseUrbanCruiseSelector({
 
   const map: Record<
     string,
-    React.ComponentType<{ content?: WhyChooseUrbanCruiseContent }>
+    React.ComponentType<WhyChooseUrbanCruiseProps>
   > = {
-    delhi: DelhiWhyChoose as any,
-    gurugram: GurugramWhyChoose as any,
-    mumbai: MumbaiWhyChoose as any,
-    pune: PuneWhyChoose as any,
+    delhi: DelhiWhyChoose,
+    gurugram: GurugramWhyChoose,
+    mumbai: MumbaiWhyChoose,
+    pune: PuneWhyChoose,
   };
 
   const Component = isGlobalRoute
-    ? (DefaultWhyChoose as any)
-    : map[selectedLocation || ""] || (DefaultWhyChoose as any);
+    ? DefaultWhyChoose
+    : map[pathSegments[0]] ||
+      map[selectedLocation || ""] ||
+      DefaultWhyChoose;
 
   if (!Component) return null;
 

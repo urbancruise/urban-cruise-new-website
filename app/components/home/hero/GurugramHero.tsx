@@ -58,7 +58,7 @@ export default function GurugramHero({ content }: HeroProps) {
             <span className="hidden sm:block w-6 md:w-8 lg:w-10 h-px bg-gray-400/60" />
           </div>
 
-          <h1 className="max-w-4xl xs:max-w-4xl sm:max-w-5xl md:max-w-5xl lg:max-w-6xl xl:max-w-6xl text-center text-[24px] xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px] leading-[1.06] font-extrabold tracking-[-0.02em] text-[#142236] px-2">
+          <h1 className="max-w-4xl xs:max-w-4xl sm:max-w-5xl md:max-w-5xl lg:max-w-6xl xl:max-w-6xl text-center text-[24px] xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px] leading-[1.06] xs:leading-[1.04] sm:leading-[1.02] md:leading-[1] lg:leading-[0.98] font-extrabold tracking-[-0.02em] xs:tracking-[-0.025em] sm:tracking-[-0.03em] md:tracking-[-0.035em] text-[#142236] px-2">
             {title}
             <br />
             <span className="text-[#03C35E]">{titleHighlight}</span>
