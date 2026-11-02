@@ -28,6 +28,23 @@ export async function fetchCmsQuoteApi(
   });
 }
 
+export async function fetchCmsQuickCallApi(init: RequestInit): Promise<Response> {
+  if (!CMS_API_KEY) {
+    throw new Error("CMS_API_KEY is not configured");
+  }
+
+  const headers = new Headers(init.headers);
+  headers.set("x-api-key", CMS_API_KEY);
+  headers.set("Accept", "application/json");
+  headers.set("Content-Type", "application/json");
+
+  return fetch(`${CMS_URL}/api/public/quick-calls`, {
+    ...init,
+    headers,
+    cache: "no-store",
+  });
+}
+
 interface FetchOptions {
   revalidate?: number;
   tags?: string[];
