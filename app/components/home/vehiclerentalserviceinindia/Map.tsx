@@ -168,10 +168,10 @@ const Map = () => {
         };
 
         const cities = [
-          { name: "Gurugram", lon: 77.1025, lat: 28.7041, dx: 8, dy: -6 },
-          { name: "Delhi", lon: 77.0266, lat: 28.4595, dx: 8, dy: 8 },
-          { name: "Mumbai", lon: 72.8777, lat: 19.076, dx: 8, dy: -5 },
-          { name: "Pune", lon: 73.8567, lat: 18.5204, dx: 8, dy: 9 },
+          { name: "Gurugram", slug: "gurugram", lon: 77.1025, lat: 28.7041, dx: 8, dy: -6 },
+          { name: "Delhi", slug: "delhi", lon: 77.0266, lat: 28.4595, dx: 8, dy: 8 },
+          { name: "Mumbai", slug: "mumbai", lon: 72.8777, lat: 19.076, dx: 8, dy: -5 },
+          { name: "Pune", slug: "pune", lon: 73.8567, lat: 18.5204, dx: 8, dy: 9 },
         ];
 
         const cityPts = cities.map((city) => {
@@ -211,7 +211,19 @@ const Map = () => {
             .attr("class", "pin-group")
             .attr("transform", `translate(${city.x}, ${city.y})`)
             .attr("opacity", 0)
-            .attr("scale", 0);
+            .attr("scale", 0)
+            .attr("role", "link")
+            .attr("tabindex", 0)
+            .attr("aria-label", `Go to ${city.name} page`)
+            .on("click", () => {
+              window.location.assign(`/${city.slug}`);
+            })
+            .on("keydown", (event: KeyboardEvent) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                window.location.assign(`/${city.slug}`);
+              }
+            });
 
           group.append("circle").attr("class", "pin-halo").attr("r", 5);
           group.append("circle").attr("class", "pin-pulse p1").attr("r", 2.5);
@@ -478,7 +490,8 @@ const Map = () => {
           id="map"
           viewBox="0 0 1000 550"
           preserveAspectRatio="xMidYMid meet"
-          role="img"
+          role="group"
+          aria-label="Clickable city locations"
         >
           <defs>
             <filter id="greenGlow" x="-300%" y="-300%" width="600%" height="600%">

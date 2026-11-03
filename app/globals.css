@@ -183,6 +183,10 @@ body {
   cursor: pointer;
 }
 
+.pin-group:focus {
+  outline: none;
+}
+
 .pin-halo {
   fill: #087F35;
   opacity: 0;
@@ -470,4 +474,3 @@ body {
     animation: none !important;
   }
 }
-

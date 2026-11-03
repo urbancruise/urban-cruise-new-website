@@ -1,26 +1,103 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   FaBriefcase,
   FaCheck,
   FaMapMarkerAlt,
+  FaTimes,
   FaUsers,
 } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { MdOutlineBeachAccess } from "react-icons/md";
 import { GiPrayer } from "react-icons/gi";
 import { motion, AnimatePresence } from "framer-motion";
+import { getLocationConfig } from "@/app/lib/locationConfig";
+import { getServiceUrl } from "@/app/lib/serviceUrlMappings";
+import { getVehicleUrl } from "@/app/lib/vehicleUrlMappings";
 import type {
   OccasionCard,
   OccasionTab,
   VehicleEveryOccasionContent,
   VehicleForEveryOccasionProps,
 } from "@/app/components/VehicleForEveryOccasionSelector";
+import QuickCallForm from "../../shared/QuickCallForm";
 
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
+const MotionLink = motion.create(Link);
+
+function QuickCallDialog({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Get a Quick Call"
+        className="relative w-full max-w-[700px] rounded-[24px] bg-white p-4 pt-8 shadow-2xl sm:p-8"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close quick call form"
+          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
+        >
+          <FaTimes />
+        </button>
+        <QuickCallForm />
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function getReadMoreUrl(tabId: string, card: OccasionCard): string {
+  const serviceTypeByTab: Record<string, string> = {
+    wedding: "wedding",
+    corporate: "corporate",
+    vacation: "vacations",
+    vacations: "vacations",
+    local: "local-travel",
+    "local-travel": "local-travel",
+    pilgrimage: "pilgrimage",
+  };
+  const serviceType = serviceTypeByTab[tabId.toLowerCase()];
+
+  if (serviceType) return getServiceUrl("gurugram", serviceType);
+
+  const title = card.title.toLowerCase();
+  const vehicleType = title.includes("tempo")
+    ? "tempo-traveller"
+    : title.includes("mini bus")
+      ? "mini-bus"
+      : title.includes("coach") || title.includes("bus")
+        ? "luxury-bus"
+        : "car-suvs";
+
+  return getVehicleUrl("gurugram", vehicleType);
+}
 
 function resolveIcon(key?: string): React.ReactNode {
   switch (key) {
@@ -439,9 +516,15 @@ function FeatureItem({ text }: { text: string }) {
 function FeaturedOccasionCard({
   card,
   direction,
+  readMoreHref,
+  callPhone,
+  onBookNow,
 }: {
   card: OccasionCard;
   direction: number;
+  readMoreHref: string;
+  callPhone: string;
+  onBookNow: () => void;
 }) {
   return (
     <AnimatePresence mode="wait">
@@ -521,21 +604,35 @@ function FeaturedOccasionCard({
                   }}
                   whileTap={{ scale: 0.97 }}
                   type="button"
-                  className="flex min-h-[39px] items-center justify-center gap-2 rounded-full bg-[#F7941E] px-5 text-[9px] font-bold text-white shadow-[0_6px_18px_rgba(247,148,30,0.22)] sm:min-h-[42px] sm:px-6 sm:text-[10px]"
+                  onClick={onBookNow}
+                  className="hidden min-h-[39px] items-center justify-center gap-2 rounded-full bg-[#F7941E] px-5 text-[9px] font-bold text-white shadow-[0_6px_18px_rgba(247,148,30,0.22)] sm:min-h-[42px] sm:px-6 sm:text-[10px] lg:flex"
                 >
                   BOOK NOW
                   <IoIosArrowForward className="text-[15px]" />
                 </motion.button>
 
-                <motion.button
+                <motion.a
+                  whileHover={{
+                    scale: 1.03,
+                    boxShadow: "0 10px 25px rgba(247,148,30,0.30)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  href={`tel:${callPhone}`}
+                  className="flex min-h-[39px] items-center justify-center gap-2 rounded-full bg-[#F7941E] px-5 text-[9px] font-bold text-white shadow-[0_6px_18px_rgba(247,148,30,0.22)] sm:min-h-[42px] sm:px-6 sm:text-[10px] lg:hidden"
+                >
+                  BOOK NOW
+                  <IoIosArrowForward className="text-[15px]" />
+                </motion.a>
+
+                <MotionLink
                   whileHover={{ scale: 1.03, backgroundColor: "#F5FFF8" }}
                   whileTap={{ scale: 0.97 }}
-                  type="button"
+                  href={readMoreHref}
                   className="flex min-h-[39px] items-center justify-center gap-2 rounded-full border border-[#03C35E] bg-white px-5 text-[9px] font-bold text-[#188A31] transition-all sm:min-h-[42px] sm:px-6 sm:text-[10px]"
                 >
                   READ MORE
                   <IoIosArrowForward className="text-[15px]" />
-                </motion.button>
+                </MotionLink>
               </div>
             </div>
           </div>
@@ -566,7 +663,9 @@ export default function GurugramVehicleForEveryOccasion({
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [isQuickCallOpen, setIsQuickCallOpen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const callPhone = getLocationConfig("gurugram").phone.replace(/\s/g, "");
 
   const safeActiveIndex = Math.min(activeTabIndex, tabs.length - 1);
   const currentCards = tabs[safeActiveIndex]?.cards || [];
@@ -692,10 +791,22 @@ export default function GurugramVehicleForEveryOccasion({
             }}
             onMouseLeave={startAutoPlay}
           >
-            <FeaturedOccasionCard card={currentCard} direction={direction} />
+            <FeaturedOccasionCard
+              card={currentCard}
+              direction={direction}
+              readMoreHref={getReadMoreUrl(
+                tabs[safeActiveIndex]?.id || "",
+                currentCard
+              )}
+              callPhone={callPhone}
+              onBookNow={() => setIsQuickCallOpen(true)}
+            />
           </div>
         </div>
       </div>
+      {isQuickCallOpen && (
+        <QuickCallDialog onClose={() => setIsQuickCallOpen(false)} />
+      )}
     </section>
   );
 }

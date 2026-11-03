@@ -2,26 +2,91 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import {
   FaSnowflake,
   FaMapMarkerAlt,
   FaSuitcase,
   FaCalendarAlt,
   FaUser,
+  FaTimes,
 } from "react-icons/fa";
 import { MdSettings, MdLuggage } from "react-icons/md";
 import { motion } from "framer-motion";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useLocation } from "@/app/context/LocationContext";
+import { getLocationConfig, locationConfigs } from "@/app/lib/locationConfig";
+import { usePathname } from "next/navigation";
 import type {
   VehicleGroupSizeContent,
   VehicleForEveryGroupSizeProps,
   VehicleGroupSizeItem,
 } from "@/app/components/VehicleForEveryGroupSizeSelector";
+import { getVehicleUrl } from "@/app/lib/vehicleUrlMappings";
 import AboutParagraphs from "../about/AboutParagraphs";
+import QuickCallForm from "../../shared/QuickCallForm";
 
 const GREEN = "#03C35E";
 const ORANGE = "#F7941E";
+const MotionLink = motion.create(Link);
+
+function QuickCallDialog({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Get a Quick Call"
+        className="relative w-full max-w-[700px] rounded-[24px] bg-white p-4 pt-8 shadow-2xl sm:p-8"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close quick call form"
+          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
+        >
+          <FaTimes />
+        </button>
+        <QuickCallForm />
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function getVehicleDetailsUrl(vehicle: VehicleGroupSizeItem): string {
+  const name = vehicle.name.toLowerCase();
+  const vehicleType = name.includes("innova")
+    ? "innova-crysta"
+    : name.includes("tempo")
+      ? "tempo-traveller"
+      : name.includes("urbania")
+        ? "urbania"
+        : "car-suvs";
+
+  return getVehicleUrl("delhi", vehicleType);
+}
 
 // ============================================================
 // FALLBACK DATA
@@ -449,8 +514,17 @@ function VehicleCard({
   vehicle: VehicleGroupSizeItem;
   index: number;
 }) {
+  const [isQuickCallOpen, setIsQuickCallOpen] = useState(false);
+  const { selectedLocation } = useLocation();
+  const pathname = usePathname();
   const features = Array.isArray(vehicle.features) ? vehicle.features : [];
   const gallery = Array.isArray(vehicle.gallery) ? vehicle.gallery : [];
+  const pathLocation = pathname?.split("/").filter(Boolean)[0];
+  const location =
+    pathLocation && locationConfigs[pathLocation]
+      ? pathLocation
+      : selectedLocation || "delhi";
+  const callPhone = getLocationConfig(location).phone.replace(/\s/g, "");
 
   return (
     <motion.div
@@ -511,7 +585,7 @@ function VehicleCard({
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-2 px-2.5 pt-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-2.5 sm:pt-4 md:px-2.5 md:pt-4 xl:px-2.5 xl:pt-4 2xl:px-2.5 2xl:pt-4">
+      <div className="grid grid-cols-1 gap-2 px-2.5 pt-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-2.5 sm:pt-4 md:px-2.5 md:pt-4 lg:-mt-6 xl:px-2.5 xl:pt-4 2xl:px-2.5 2xl:pt-4">
         <div className="min-w-0">
           <h3 className="truncate text-[20px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] min-[375px]:text-[21px] sm:text-[22px] md:text-[24px]">
             {vehicle.name}
@@ -584,7 +658,7 @@ function VehicleCard({
       )}
 
       <div className="mt-auto grid grid-cols-2 gap-3 px-4 pb-2 pt-4 sm:gap-4 sm:px-5 sm:pb-2 sm:pt-5">
-        <motion.button
+        <MotionLink
           whileHover={{
             scale: 1.03,
             backgroundColor: "#F3F4F6",
@@ -592,14 +666,14 @@ function VehicleCard({
             boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
           }}
           whileTap={{ scale: 0.97 }}
-          type="button"
+          href={getVehicleDetailsUrl(vehicle)}
           className="flex min-h-[36px] items-center justify-center gap-2 rounded-[13px] border border-[#078B5A] bg-white px-3 text-[11px] font-bold text-[#078B5A] shadow-[0_4px_14px_rgba(0,0,0,0.04)] transition-all duration-200 sm:min-h-[40px] sm:text-xs"
         >
           <span>View Details</span>
           <span className="text-[16px] leading-none transition-transform duration-300 group-hover:translate-x-1 sm:text-[18px]">
             <IoIosArrowForward />
           </span>
-        </motion.button>
+        </MotionLink>
 
         <motion.button
           whileHover={{
@@ -609,12 +683,30 @@ function VehicleCard({
           }}
           whileTap={{ scale: 0.97 }}
           type="button"
-          className="flex min-h-[36px] items-center justify-center gap-2 rounded-[13px] bg-[#F7941E] px-3 text-[11px] font-bold text-white shadow-[0_7px_20px_rgba(247,148,30,0.28)] transition-all duration-200 sm:min-h-[40px] sm:text-xs"
+          onClick={() => setIsQuickCallOpen(true)}
+          className="hidden min-h-[36px] items-center justify-center gap-2 rounded-[13px] bg-[#F7941E] px-3 text-[11px] font-bold text-white shadow-[0_7px_20px_rgba(247,148,30,0.28)] transition-all duration-200 sm:min-h-[40px] sm:text-xs lg:flex"
         >
           <FaCalendarAlt className="text-[13px] transition-transform duration-300 group-hover:rotate-12 sm:text-[15px]" />
           <span>Book Now</span>
         </motion.button>
+
+        <motion.a
+          whileHover={{
+            scale: 1.03,
+            backgroundColor: "#E8840A",
+            boxShadow: "0 10px 30px rgba(247,148,30,0.4)",
+          }}
+          whileTap={{ scale: 0.97 }}
+          href={`tel:${callPhone}`}
+          className="flex min-h-[36px] items-center justify-center gap-2 rounded-[13px] bg-[#F7941E] px-3 text-[11px] font-bold text-white shadow-[0_7px_20px_rgba(247,148,30,0.28)] transition-all duration-200 sm:min-h-[40px] sm:text-xs lg:hidden"
+        >
+          <FaCalendarAlt className="text-[13px] transition-transform duration-300 group-hover:rotate-12 sm:text-[15px]" />
+          <span>Book Now</span>
+        </motion.a>
       </div>
+      {isQuickCallOpen && (
+        <QuickCallDialog onClose={() => setIsQuickCallOpen(false)} />
+      )}
     </motion.div>
   );
 }
