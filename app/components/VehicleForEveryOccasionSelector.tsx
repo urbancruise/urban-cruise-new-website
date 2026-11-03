@@ -10,6 +10,7 @@ export interface OccasionCard {
   title: string;
   highlight: string;
   description: string;
+  readMoreLink?: string;
   seats: string;
   price: string;
   location: string;

@@ -432,7 +432,8 @@ function VehicleCard({
       </div>
 
       <div className="mt-auto grid grid-cols-2 gap-3 px-4 pb-2 pt-4 sm:gap-4 sm:px-5 sm:pb-2 sm:pt-5">
-        <motion.button
+        <motion.a
+          href={vehicle.detailsUrl || undefined}
           whileHover={{
             scale: 1.03,
             backgroundColor: "#F3F4F6",
@@ -440,14 +441,13 @@ function VehicleCard({
             boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
           }}
           whileTap={{ scale: 0.97 }}
-          type="button"
           className="flex min-h-[36px] items-center justify-center gap-2 rounded-[13px] border border-[#078B5A] bg-white px-3 text-[11px] font-bold text-[#078B5A] shadow-[0_4px_14px_rgba(0,0,0,0.04)] transition-all duration-200 sm:min-h-[40px] sm:text-xs"
         >
           <span>View Details</span>
           <span className="text-[16px] leading-none transition-transform duration-300 group-hover:translate-x-1 sm:text-[18px]">
             <IoIosArrowForward />
           </span>
-        </motion.button>
+        </motion.a>
 
         <motion.button
           whileHover={{
@@ -491,6 +491,7 @@ export default function VehicleForEveryGroupSize({ content }: Props) {
           return {
             type: v.type || FALLBACK_VEHICLES[i]?.type || "",
             name: v.name || "",
+            detailsUrl: v.detailsUrl || "",
             tagline: v.tagline || "",
             price: v.price || "0",
             description: v.description || "",

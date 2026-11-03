@@ -75,6 +75,8 @@ function QuickCallDialog({ onClose }: { onClose: () => void }) {
 }
 
 function getReadMoreUrl(tabId: string, card: OccasionCard): string {
+  if (card.readMoreLink?.trim()) return card.readMoreLink.trim();
+
   const serviceTypeByTab: Record<string, string> = {
     wedding: "wedding",
     corporate: "corporate",

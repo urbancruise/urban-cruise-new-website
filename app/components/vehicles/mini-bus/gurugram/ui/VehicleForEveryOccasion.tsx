@@ -461,15 +461,15 @@ function FeaturedOccasionCard({ card, direction }: { card: any; direction: numbe
                   BOOK NOW
                   <IoIosArrowForward className="text-[15px]" />
                 </motion.button>
-                <motion.button
+                <motion.a
+                  href={card.readMoreLink || undefined}
                   whileHover={{ scale: 1.03, backgroundColor: "#F5FFF8" }}
                   whileTap={{ scale: 0.97 }}
-                  type="button"
                   className="flex min-h-[39px] items-center justify-center gap-2 rounded-full border border-[#03C35E] bg-white px-5 text-[9px] font-bold text-[#188A31] transition-all sm:min-h-[42px] sm:px-6 sm:text-[10px]"
                 >
                   READ MORE
                   <IoIosArrowForward className="text-[15px]" />
-                </motion.button>
+                </motion.a>
               </div>
             </div>
           </div>
@@ -509,6 +509,7 @@ export default function VehicleForEveryOccasion({ content }: Props) {
                   title: c.title || "",
                   highlight: c.highlight || "",
                   description: c.description || "",
+                  readMoreLink: c.readMoreLink || "",
                   seats: c.seats || "",
                   price: c.price || "",
                   location: c.location || "",
