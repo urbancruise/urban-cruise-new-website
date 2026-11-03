@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 export interface VehicleGroupSizeItem {
   type?: string;
   name: string;
+  detailsUrl?: string;
   tagline: string;
   price: string;
   description: string;

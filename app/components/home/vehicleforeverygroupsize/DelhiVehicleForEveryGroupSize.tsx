@@ -76,6 +76,8 @@ function QuickCallDialog({ onClose }: { onClose: () => void }) {
 }
 
 function getVehicleDetailsUrl(vehicle: VehicleGroupSizeItem): string {
+  if (vehicle.detailsUrl?.trim()) return vehicle.detailsUrl.trim();
+
   const name = vehicle.name.toLowerCase();
   const vehicleType = name.includes("innova")
     ? "innova-crysta"
@@ -274,6 +276,10 @@ function normalizeVehicle(raw: any, index: number): VehicleGroupSizeItem {
   return {
     type: raw?.type ?? fallback.type,
     name: raw?.name?.trim() || fallback.name,
+    detailsUrl:
+      typeof raw?.detailsUrl === "string"
+        ? raw.detailsUrl.trim() || undefined
+        : undefined,
     tagline: raw?.tagline?.trim() || fallback.tagline,
     price: raw?.price != null ? String(raw.price) : fallback.price,
     description: raw?.description?.trim() || fallback.description,

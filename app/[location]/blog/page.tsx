@@ -32,7 +32,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         description={`Travel guides and vehicle rental advice for ${location} from Urban Cruise.`}
         path={`/${location}/blog`}
       />
-      <BlogSelector />
+      <BlogSelector citySlug={location} />
     </>
   );
 }
