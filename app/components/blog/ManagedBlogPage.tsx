@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowRight, FaCalendar } from "react-icons/fa";
+import HeroSelector from "@/app/components/HeroSelector";
 import { getBlogSlug } from "@/app/lib/blogSlug";
 
 interface WebsiteBlog {
@@ -19,7 +20,19 @@ interface WebsiteBlog {
 }
 
 interface WebsiteBlogsResponse {
+  hero: BlogHeroContent | null;
   blogs: WebsiteBlog[];
+}
+
+interface BlogHeroContent {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  description?: string;
+  backgroundImage?: string;
+  backgroundImageAlt?: string;
+  vehiclesImage?: string;
+  vehiclesImageAlt?: string;
 }
 
 const POSTS_PER_PAGE = 8;
@@ -32,6 +45,7 @@ export default function ManagedBlogPage({
   citySlug?: string;
 }) {
   const [data, setData] = useState<WebsiteBlogsResponse>({
+    hero: null,
     blogs: [],
   });
   const [loading, setLoading] = useState(true);
@@ -61,6 +75,7 @@ export default function ManagedBlogPage({
           throw new Error(result.error || "Could not load blog posts.");
         }
         setData({
+          hero: result.hero || null,
           blogs: result.blogs || [],
         });
       } catch (loadError) {
@@ -94,36 +109,16 @@ export default function ManagedBlogPage({
     citySlug
       ? `/${citySlug}/${getBlogSlug(post)}`
       : `/blog/${getBlogSlug(post)}`;
+  const heroContent = data.hero ?? {
+    eyebrow: `Urban Cruise Blog${location ? ` · ${location}` : ""}`,
+    title: "Stories, tips &",
+    titleHighlight: "vehicle guides",
+    description: "Explore travel ideas and practical guides from Urban Cruise.",
+  };
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative isolate flex min-h-[300px] items-center overflow-hidden bg-[#142236] py-16 sm:min-h-[340px] md:min-h-[420px] md:py-20">
-        <Image
-          src="/images/hero/herobg.webp"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="absolute inset-0 z-0 object-cover object-center"
-        />
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#10192c]/75 via-[#10192c]/50 to-[#10192c]/20" />
-        <div className="absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-[#10192c]/35 to-transparent" />
-        <div className="relative z-20 mx-auto w-full max-w-[1440px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
-          <div className="max-w-3xl">
-            <p className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#80e8a9] sm:text-sm">
-              <span className="h-0.5 w-8 bg-[#03C35E]" />
-              Urban Cruise Blog{location ? ` · ${location}` : ""}
-            </p>
-            <h1 className="mb-4 text-3xl font-extrabold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-              Stories, tips &amp;
-              <span className="block text-[#54d982]">vehicle guides</span>
-            </h1>
-            <p className="max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base md:text-lg">
-              Explore travel ideas and practical guides from Urban Cruise.
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroSelector content={heroContent} />
 
       <section className="bg-white py-16 md:py-20">
         <div className="mx-auto w-full max-w-[1440px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
