@@ -3,8 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { FaArrowRight, FaCalendar } from "react-icons/fa";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  FaArrowRight,
+  FaCalendar,
+  FaChevronDown,
+  FaChevronUp,
+  FaListOl,
+} from "react-icons/fa";
 import {
   getBlogSlug,
   getBlogSlugFromTitle,
@@ -26,6 +32,89 @@ interface BlogResponse {
   blogs: WebsiteBlog[];
 }
 
+interface TableOfContentsItem {
+  id: string;
+  title: string;
+  level: number;
+  children: TableOfContentsItem[];
+}
+
+function buildTableOfContentsTree(
+  headings: Omit<TableOfContentsItem, "children">[]
+) {
+  const tree: TableOfContentsItem[] = [];
+  const parents: TableOfContentsItem[] = [];
+
+  headings.forEach((heading) => {
+    while (parents.length > 0 && parents[parents.length - 1].level >= heading.level) {
+      parents.pop();
+    }
+
+    const item: TableOfContentsItem = { ...heading, children: [] };
+    const siblings = parents.length
+      ? parents[parents.length - 1].children
+      : tree;
+    siblings.push(item);
+    parents.push(item);
+  });
+
+  return tree;
+}
+
+function renderTableOfContentsItems(
+  items: TableOfContentsItem[],
+  prefix = ""
+): React.ReactNode {
+  return (
+    <ol className="space-y-1.5">
+      {items.map((item, index) => {
+        const number = `${prefix}${index + 1}`;
+        return (
+          <li key={item.id}>
+            <a
+              href={`#${item.id}`}
+              onClick={(event) => {
+                event.preventDefault();
+                document.getElementById(item.id)?.scrollIntoView({
+                  behavior: window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                  ).matches
+                    ? "auto"
+                    : "smooth",
+                  block: "start",
+                });
+              }}
+              className="inline-flex items-start gap-1.5 rounded-sm text-sm leading-6 text-gray-700 hover:text-[#188A31] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#188A31]"
+            >
+              <span className="shrink-0 font-medium text-[#03C35E]">
+                {number}.
+              </span>
+              <span>{item.title}</span>
+            </a>
+            {item.children.length > 0 && (
+              <div className="pl-4">
+                {renderTableOfContentsItems(
+                  item.children,
+                  `${number}.`
+                )}
+              </div>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+function flattenTableOfContents(
+  items: TableOfContentsItem[]
+): TableOfContentsItem[] {
+  return items.flatMap((item) => [
+    item,
+    ...flattenTableOfContents(item.children),
+  ]);
+}
+
 export default function ManagedBlogDetailPage({
   blogIdentifier,
   citySlug,
@@ -36,6 +125,9 @@ export default function ManagedBlogDetailPage({
   const [blogs, setBlogs] = useState<WebsiteBlog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
+  const [isTableOfContentsOpen, setIsTableOfContentsOpen] = useState(true);
+  const blogContentRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -88,6 +180,8 @@ export default function ManagedBlogDetailPage({
       `blog-${post.id}` === blogIdentifier ||
       String(post.id) === blogIdentifier
   );
+  const blogId = blog?.id;
+  const blogParagraph = blog?.paragraph;
   const relatedPosts = useMemo(
     () =>
       blog
@@ -108,6 +202,56 @@ export default function ManagedBlogDetailPage({
     citySlug
       ? `/${citySlug}/${getBlogSlug(post)}`
       : `/blog/${getBlogSlug(post)}`;
+
+  useEffect(() => {
+    const content = blogContentRef.current;
+    if (!content || !blogParagraph) {
+      setTableOfContents([]);
+      return;
+    }
+
+    const usedIds = new Set<string>();
+    const headings = Array.from(
+      content.querySelectorAll<HTMLElement>("h2, h3, h4")
+    ).flatMap((heading) => {
+      const title = heading.textContent?.trim();
+      if (!title) return [];
+
+      const baseId =
+        heading.id ||
+        title
+          .toLowerCase()
+          .normalize("NFKD")
+          .replace(/[^\w\s-]/g, "")
+          .trim()
+          .replace(/\s+/g, "-") ||
+        "section";
+      let id = baseId;
+      let suffix = 2;
+      while (usedIds.has(id)) {
+        id = `${baseId}-${suffix}`;
+        suffix += 1;
+      }
+      usedIds.add(id);
+
+      return [{ id, title, level: Number(heading.tagName.slice(1)) }];
+    });
+
+    setTableOfContents(buildTableOfContentsTree(headings));
+    setIsTableOfContentsOpen(true);
+  }, [blogId, blogParagraph]);
+
+  useLayoutEffect(() => {
+    const headings = blogContentRef.current?.querySelectorAll<HTMLElement>(
+      "h2, h3, h4"
+    );
+    if (!headings) return;
+
+    flattenTableOfContents(tableOfContents).forEach((item, index) => {
+      const heading = headings[index];
+      if (heading) heading.id = item.id;
+    });
+  }, [tableOfContents]);
 
   useEffect(() => {
     if (!blog) return;
@@ -216,7 +360,45 @@ export default function ManagedBlogDetailPage({
                   <h1 className="mb-6 text-2xl font-bold leading-tight tracking-tight text-[#172b24] sm:text-3xl md:text-4xl">
                     {blog.title}
                   </h1>
+                  {tableOfContents.length > 0 && (
+                    <section className="mb-6 rounded-lg border border-gray-300 bg-gray-50 p-4 sm:p-5">
+                      <div className="mb-3 flex items-center justify-between gap-3">
+                        <h2 className="text-lg font-medium text-[#172b24] sm:text-xl">
+                          Table of Contents
+                        </h2>
+                        <button
+                          type="button"
+                          aria-label={
+                            isTableOfContentsOpen
+                              ? "Collapse table of contents"
+                              : "Expand table of contents"
+                          }
+                          aria-expanded={isTableOfContentsOpen}
+                          aria-controls="blog-table-of-contents"
+                          onClick={() =>
+                            setIsTableOfContentsOpen((isOpen) => !isOpen)
+                          }
+                          className="inline-flex h-9 w-9 shrink-0 items-center justify-center gap-1 rounded-md border border-gray-300 text-gray-600 transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#188A31]"
+                        >
+                          <FaListOl aria-hidden="true" className="h-3.5 w-3.5" />
+                          {isTableOfContentsOpen ? (
+                            <FaChevronUp aria-hidden="true" className="h-2 w-2" />
+                          ) : (
+                            <FaChevronDown aria-hidden="true" className="h-2 w-2" />
+                          )}
+                        </button>
+                      </div>
+                      <nav
+                        id="blog-table-of-contents"
+                        aria-label="Table of contents"
+                        hidden={!isTableOfContentsOpen}
+                      >
+                        {renderTableOfContentsItems(tableOfContents)}
+                      </nav>
+                    </section>
+                  )}
                   <div
+                    ref={blogContentRef}
                     className="blog-rich-content max-w-none text-sm leading-7 text-gray-700 sm:text-base sm:leading-8"
                     dangerouslySetInnerHTML={{ __html: blog.paragraph }}
                   />
