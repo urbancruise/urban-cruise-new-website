@@ -93,9 +93,38 @@ export default function ManagedBlogDetailPage({
       <div className="mx-auto grid w-full max-w-[1440px] items-start gap-8 px-4 xs:px-5 sm:px-8 md:px-10 lg:grid-cols-[minmax(0,2fr)_minmax(260px,1fr)] lg:gap-10 lg:px-12 xl:gap-16 xl:px-16">
         <section className="min-w-0">
           {loading && (
-            <p className="py-12 text-center text-sm text-gray-500">
-              Loading blog post...
-            </p>
+            <>
+              <p role="status" className="sr-only">
+                Loading blog post...
+              </p>
+              <article
+                aria-hidden="true"
+                className="animate-pulse overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm sm:rounded-3xl"
+              >
+                <div className="aspect-[16/9] max-h-[520px] bg-gray-200 sm:aspect-[16/8]" />
+                <div className="space-y-5 p-5 sm:p-7 md:p-9 lg:p-10">
+                  <div className="h-4 w-2/5 rounded bg-gray-200" />
+                  <div className="flex gap-2">
+                    <div className="h-6 w-20 rounded-full bg-gray-200" />
+                    <div className="h-6 w-24 rounded-full bg-gray-200" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-8 w-4/5 rounded bg-gray-200" />
+                    <div className="h-8 w-3/5 rounded bg-gray-200" />
+                  </div>
+                  <div className="space-y-3 pt-2">
+                    {Array.from({ length: 8 }, (_, index) => (
+                      <div
+                        key={`paragraph-skeleton-${index}`}
+                        className={`h-4 rounded bg-gray-200 ${
+                          index % 3 === 2 ? "w-3/4" : "w-full"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </>
           )}
           {error && (
             <p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">
@@ -113,7 +142,7 @@ export default function ManagedBlogDetailPage({
               </Link>
             </div>
           )}
-          {blog && (
+          {!loading && blog && (
             <article className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm sm:rounded-3xl">
                 <div className="relative aspect-[16/9] max-h-[520px] overflow-hidden bg-gray-100 sm:aspect-[16/8]">
                   <Image
@@ -174,7 +203,22 @@ export default function ManagedBlogDetailPage({
             <span className="h-1 w-8 rounded-full bg-[#03C35E]" />
           </div>
           <div className="flex flex-col gap-4">
-            {relatedPosts.map((post) => (
+            {loading
+              ? Array.from({ length: 3 }, (_, index) => (
+                  <div
+                    key={`related-skeleton-${index}`}
+                    aria-hidden="true"
+                    className="flex animate-pulse items-start gap-3 border-b border-gray-100 pb-4 last:border-0 last:pb-0"
+                  >
+                    <div className="h-[72px] w-24 shrink-0 rounded-xl bg-gray-200" />
+                    <div className="flex min-w-0 flex-1 flex-col gap-2 py-1">
+                      <div className="h-4 w-full rounded bg-gray-200" />
+                      <div className="h-4 w-4/5 rounded bg-gray-200" />
+                      <div className="mt-1 h-3 w-3/5 rounded bg-gray-200" />
+                    </div>
+                  </div>
+                ))
+              : relatedPosts.map((post) => (
               <article
                 key={post.id}
                 className="group flex items-start gap-3 border-b border-gray-100 pb-4 last:border-0 last:pb-0"
@@ -201,7 +245,7 @@ export default function ManagedBlogDetailPage({
                   </p>
                 </div>
               </article>
-            ))}
+                ))}
             {!loading && blog && relatedPosts.length === 0 && (
               <div className="rounded-xl bg-gray-50 p-4">
                 <p className="text-sm leading-relaxed text-gray-600">
