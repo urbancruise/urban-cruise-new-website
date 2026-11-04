@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowRight, FaCalendar } from "react-icons/fa";
+import { getBlogSlug } from "@/app/lib/blogSlug";
 
 interface WebsiteBlog {
   id: number;
+  slug?: string | null;
   title: string;
   authorName: string;
   paragraph: string;
@@ -39,10 +41,12 @@ export default function ManagedBlogPage({
   useEffect(() => {
     const controller = new AbortController();
 
-    async function loadBlogs() {
-      setLoading(true);
+    async function loadBlogs(showLoading = true) {
+      if (showLoading) {
+        setLoading(true);
+        setCurrentPage(1);
+      }
       setError("");
-      setCurrentPage(1);
       try {
         const query = citySlug
           ? `?${new URLSearchParams({ city: citySlug }).toString()}`
@@ -72,7 +76,12 @@ export default function ManagedBlogPage({
     }
 
     void loadBlogs();
-    return () => controller.abort();
+    const refreshOnFocus = () => void loadBlogs(false);
+    window.addEventListener("focus", refreshOnFocus);
+    return () => {
+      controller.abort();
+      window.removeEventListener("focus", refreshOnFocus);
+    };
   }, [citySlug]);
 
   const recentPosts = data.blogs.slice(0, 5);
@@ -81,8 +90,10 @@ export default function ManagedBlogPage({
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE
   );
-  const blogDetailHref = (id: number) =>
-    `/blog/${id}${citySlug ? `?${new URLSearchParams({ city: citySlug }).toString()}` : ""}`;
+  const blogDetailHref = (post: WebsiteBlog) =>
+    citySlug
+      ? `/${citySlug}/${getBlogSlug(post)}`
+      : `/blog/${getBlogSlug(post)}`;
 
   return (
     <div className="min-h-screen bg-white">
@@ -242,7 +253,7 @@ export default function ManagedBlogPage({
                     />
                     <div className="mt-auto flex justify-end">
                       <Link
-                        href={blogDetailHref(post.id)}
+                        href={blogDetailHref(post)}
                         className="inline-flex items-center gap-2 rounded-full border border-[#03C35E] px-4 py-2.5 text-xs font-semibold uppercase text-[#188A31] transition-colors hover:bg-[#03C35E] hover:text-white sm:px-6 sm:py-3"
                       >
                         Read More <FaArrowRight className="h-3 w-3" />
@@ -274,32 +285,37 @@ export default function ManagedBlogPage({
                       </div>
                     ))
                   : recentPosts.map((post) => (
-                  <article key={post.id} className="flex items-start gap-3">
-                    <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-gray-200">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        sizes="80px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="line-clamp-2 text-sm font-semibold text-[#1a1a2e]">
-                        {post.title}
-                      </h3>
-                      <time
-                        dateTime={post.createdAt}
-                        className="mt-1 block text-xs text-gray-500"
-                      >
-                        {new Date(post.createdAt).toLocaleDateString("en-IN", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </time>
-                    </div>
-                  </article>
+                    <Link
+                      key={post.id}
+                      href={blogDetailHref(post)}
+                      aria-label={`Read ${post.title}`}
+                      className="group flex items-start gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#03C35E]"
+                    >
+                      <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-gray-200">
+                        <Image
+                          src={post.image}
+                          alt=""
+                          fill
+                          sizes="80px"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="line-clamp-2 text-sm font-semibold text-[#1a1a2e] transition-colors group-hover:text-[#188A31]">
+                          {post.title}
+                        </h3>
+                        <time
+                          dateTime={post.createdAt}
+                          className="mt-1 block text-xs text-gray-500"
+                        >
+                          {new Date(post.createdAt).toLocaleDateString("en-IN", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </time>
+                      </div>
+                    </Link>
                     ))}
                 {!loading && recentPosts.length === 0 && (
                   <p className="text-sm text-gray-500">No recent posts.</p>

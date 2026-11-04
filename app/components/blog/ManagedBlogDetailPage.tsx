@@ -2,11 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { FaArrowRight, FaCalendar } from "react-icons/fa";
+import {
+  getBlogSlug,
+  getBlogSlugFromTitle,
+} from "@/app/lib/blogSlug";
 
 interface WebsiteBlog {
   id: number;
+  slug?: string | null;
   title: string;
   authorName: string;
   paragraph: string;
@@ -21,21 +27,23 @@ interface BlogResponse {
 }
 
 export default function ManagedBlogDetailPage({
-  blogId,
+  blogIdentifier,
   citySlug,
 }: {
-  blogId: string;
+  blogIdentifier: string;
   citySlug?: string;
 }) {
   const [blogs, setBlogs] = useState<WebsiteBlog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const controller = new AbortController();
 
-    async function loadBlogs() {
-      setLoading(true);
+    async function loadBlogs(showLoading = true) {
+      if (showLoading) setLoading(true);
       setError("");
 
       try {
@@ -65,10 +73,21 @@ export default function ManagedBlogDetailPage({
     }
 
     void loadBlogs();
-    return () => controller.abort();
+    const refreshOnFocus = () => void loadBlogs(false);
+    window.addEventListener("focus", refreshOnFocus);
+    return () => {
+      controller.abort();
+      window.removeEventListener("focus", refreshOnFocus);
+    };
   }, [citySlug]);
 
-  const blog = blogs.find((post) => String(post.id) === blogId);
+  const blog = blogs.find(
+    (post) =>
+      getBlogSlug(post) === blogIdentifier ||
+      getBlogSlugFromTitle(post.title) === blogIdentifier ||
+      `blog-${post.id}` === blogIdentifier ||
+      String(post.id) === blogIdentifier
+  );
   const relatedPosts = useMemo(
     () =>
       blog
@@ -85,8 +104,19 @@ export default function ManagedBlogDetailPage({
     [blog, blogs]
   );
   const blogListHref = `${citySlug ? `/${citySlug}` : ""}/blog`;
-  const blogHref = (id: number) =>
-    `/blog/${id}${citySlug ? `?${new URLSearchParams({ city: citySlug }).toString()}` : ""}`;
+  const blogHref = (post: WebsiteBlog) =>
+    citySlug
+      ? `/${citySlug}/${getBlogSlug(post)}`
+      : `/blog/${getBlogSlug(post)}`;
+
+  useEffect(() => {
+    if (!blog) return;
+
+    const canonicalPath = citySlug
+      ? `/${citySlug}/${getBlogSlug(blog)}`
+      : `/blog/${getBlogSlug(blog)}`;
+    if (pathname !== canonicalPath) router.replace(canonicalPath);
+  }, [blog, citySlug, pathname, router]);
 
   return (
     <main className="min-h-screen bg-[#f6f8f7] pb-10 pt-24 sm:pb-12 sm:pt-28 md:pb-16 md:pt-32">
@@ -224,7 +254,7 @@ export default function ManagedBlogDetailPage({
                 className="group flex items-start gap-3 border-b border-gray-100 pb-4 last:border-0 last:pb-0"
               >
                 <Link
-                  href={blogHref(post.id)}
+                  href={blogHref(post)}
                   aria-label={`Read ${post.title}`}
                   className="relative h-[72px] w-24 shrink-0 overflow-hidden rounded-xl bg-gray-100"
                 >
@@ -238,7 +268,7 @@ export default function ManagedBlogDetailPage({
                 </Link>
                 <div className="min-w-0 py-0.5">
                   <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-[#1a1a2e] group-hover:text-[#188A31]">
-                    <Link href={blogHref(post.id)}>{post.title}</Link>
+                    <Link href={blogHref(post)}>{post.title}</Link>
                   </h3>
                   <p className="mt-2 line-clamp-1 text-xs text-gray-500">
                     {post.categories.join(", ")}

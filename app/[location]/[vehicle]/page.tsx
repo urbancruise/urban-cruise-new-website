@@ -18,6 +18,7 @@ import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
 import VehicleSelector from "@/app/components/VehicleSelector";
 import ServiceSelector from "@/app/components/ServiceSelector";
+import ManagedBlogDetailPage from "@/app/components/blog/ManagedBlogDetailPage";
 import JsonLd from "@/app/components/seo/JsonLd";
 import Breadcrumb from "@/app/components/seo/Breadcrumb";
 
@@ -169,6 +170,18 @@ export async function generateMetadata({
   const cmsMetadata = await getCmsSeoMetadata(path);
   if (cmsMetadata) return cmsMetadata;
 
+  if (!VEHICLE_SLUG_TO_TYPE[vehicle] && !SERVICE_SLUG_TO_TYPE[vehicle]) {
+    const title = vehicle
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+    return {
+      title: `${title} | Urban Cruise Blog`,
+      description: `Read ${title} and more travel and vehicle rental guides from Urban Cruise.`,
+    };
+  }
+
   // Fallback
   return createLocationMetadata(
     location,
@@ -192,7 +205,12 @@ export default async function DynamicPage({ params }: PageProps) {
   const serviceType = SERVICE_SLUG_TO_TYPE[vehicle];
 
   if (!vehicleType && !serviceType) {
-    notFound();
+    return (
+      <ManagedBlogDetailPage
+        blogIdentifier={vehicle}
+        citySlug={location}
+      />
+    );
   }
 
   // ⭐ CMS saves content under the INTERNAL slug (car-suvs, not car-rental-delhi)

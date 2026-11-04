@@ -10,5 +10,5 @@ export default async function BlogDetailPage({
   searchParams,
 }: BlogDetailPageProps) {
   const [{ id }, { city }] = await Promise.all([params, searchParams]);
-  return <ManagedBlogDetailPage blogId={id} citySlug={city} />;
+  return <ManagedBlogDetailPage blogIdentifier={id} citySlug={city} />;
 }
