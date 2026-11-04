@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { FaArrowRight, FaCalendar, FaSearch } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaArrowRight, FaCalendar } from "react-icons/fa";
 
 interface WebsiteBlog {
   id: number;
@@ -18,8 +18,9 @@ interface WebsiteBlog {
 
 interface WebsiteBlogsResponse {
   blogs: WebsiteBlog[];
-  categories: string[];
 }
+
+const POSTS_PER_PAGE = 8;
 
 export default function ManagedBlogPage({
   location,
@@ -30,12 +31,10 @@ export default function ManagedBlogPage({
 }) {
   const [data, setData] = useState<WebsiteBlogsResponse>({
     blogs: [],
-    categories: [],
   });
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -43,6 +42,7 @@ export default function ManagedBlogPage({
     async function loadBlogs() {
       setLoading(true);
       setError("");
+      setCurrentPage(1);
       try {
         const query = citySlug
           ? `?${new URLSearchParams({ city: citySlug }).toString()}`
@@ -58,7 +58,6 @@ export default function ManagedBlogPage({
         }
         setData({
           blogs: result.blogs || [],
-          categories: result.categories || [],
         });
       } catch (loadError) {
         if (loadError instanceof Error && loadError.name === "AbortError") return;
@@ -76,24 +75,12 @@ export default function ManagedBlogPage({
     return () => controller.abort();
   }, [citySlug]);
 
-  const categories = useMemo(
-    () => [{ id: "all", label: "All Posts" }, ...data.categories.map((label) => ({ id: label, label }))],
-    [data.categories]
-  );
-  const filteredPosts = data.blogs.filter((post) => {
-    const term = searchTerm.toLowerCase();
-    const paragraphText = post.paragraph
-      .replace(/<[^>]*>/g, " ")
-      .replace(/&nbsp;|&#160;/gi, " ")
-      .toLowerCase();
-    const matchesSearch =
-      post.title.toLowerCase().includes(term) ||
-      paragraphText.includes(term);
-    const matchesCategory =
-      activeCategory === "all" || post.categories.includes(activeCategory);
-    return matchesSearch && matchesCategory;
-  });
   const recentPosts = data.blogs.slice(0, 5);
+  const pageCount = Math.ceil(data.blogs.length / POSTS_PER_PAGE);
+  const pagePosts = data.blogs.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  );
   const blogDetailHref = (id: number) =>
     `/blog/${id}${citySlug ? `?${new URLSearchParams({ city: citySlug }).toString()}` : ""}`;
 
@@ -127,39 +114,6 @@ export default function ManagedBlogPage({
         </div>
       </section>
 
-      <section className="border-b border-gray-200 bg-gray-50 py-8">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <div className="relative">
-              <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="search"
-                placeholder="Search blog posts..."
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                className="w-full rounded-full border border-gray-300 py-3 pl-12 pr-4 transition-all focus:border-transparent focus:ring-2 focus:ring-[#03C35E]"
-              />
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                    activeCategory === category.id
-                      ? "bg-[#03C35E] text-white shadow-lg shadow-[#03C35E]/30"
-                      : "bg-white text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="bg-white py-16 md:py-20">
         <div className="mx-auto w-full max-w-[1440px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
           {error && (
@@ -168,18 +122,38 @@ export default function ManagedBlogPage({
             </p>
           )}
           {loading && (
-            <p className="py-12 text-center text-sm text-gray-500">Loading blog posts...</p>
-          )}
-          {!loading && !error && filteredPosts.length === 0 && (
-            <p className="py-12 text-center text-gray-500">
-              {data.blogs.length === 0
-                ? "No published blog posts yet."
-                : "No blog posts match your search."}
+            <p role="status" className="sr-only">
+              Loading blog posts...
             </p>
+          )}
+          {!loading && !error && data.blogs.length === 0 && (
+            <p className="py-12 text-center text-gray-500">No published blog posts yet.</p>
           )}
           <div className="mx-auto grid items-start gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[minmax(0,2fr)_minmax(260px,1fr)] lg:gap-10 xl:gap-16">
             <div className="flex min-w-0 flex-col gap-6">
-              {filteredPosts.map((post) => (
+              {loading
+                ? Array.from({ length: POSTS_PER_PAGE }, (_, index) => (
+                    <article
+                      key={`blog-skeleton-${index}`}
+                      aria-hidden="true"
+                      className="flex animate-pulse flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white md:min-h-[300px] md:flex-row"
+                    >
+                      <div className="h-40 shrink-0 bg-gray-200 sm:h-48 md:h-auto md:w-[44%]" />
+                      <div className="flex flex-1 flex-col gap-4 p-4 sm:p-5 md:p-6">
+                        <div className="h-4 w-2/5 rounded bg-gray-200" />
+                        <div className="h-6 w-4/5 rounded bg-gray-200" />
+                        <div className="space-y-2">
+                          <div className="h-4 rounded bg-gray-200" />
+                          <div className="h-4 w-5/6 rounded bg-gray-200" />
+                          <div className="h-4 w-2/3 rounded bg-gray-200" />
+                        </div>
+                        <div className="mt-auto flex justify-end">
+                          <div className="h-10 w-32 rounded-full bg-gray-200" />
+                        </div>
+                      </div>
+                    </article>
+                  ))
+                : pagePosts.map((post) => (
                 <article
                   key={post.id}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white transition-shadow duration-300 hover:shadow-lg md:min-h-[300px] md:flex-row"
@@ -216,6 +190,48 @@ export default function ManagedBlogPage({
                           {category}
                         </span>
                       ))}
+                      {!loading && !error && pageCount > 1 && (
+                        <nav
+                      aria-label="Blog pagination"
+                      className="flex flex-wrap items-center justify-center gap-2 pt-4"
+                        >
+                      <button
+                        type="button"
+                        onClick={() => setCurrentPage((page) => page - 1)}
+                        disabled={currentPage === 1}
+                        className="rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-[#03C35E] hover:text-[#188A31] disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        Previous
+                      </button>
+                      {Array.from({ length: pageCount }, (_, index) => {
+                        const page = index + 1;
+                        return (
+                          <button
+                            key={page}
+                            type="button"
+                            onClick={() => setCurrentPage(page)}
+                            aria-label={`Go to page ${page}`}
+                            aria-current={currentPage === page ? "page" : undefined}
+                            className={`h-10 min-w-10 rounded-full px-3 text-sm font-medium transition-colors ${
+                              currentPage === page
+                                ? "bg-[#03C35E] text-white"
+                                : "border border-gray-200 text-gray-700 hover:border-[#03C35E] hover:text-[#188A31]"
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        );
+                      })}
+                      <button
+                        type="button"
+                        onClick={() => setCurrentPage((page) => page + 1)}
+                        disabled={currentPage === pageCount}
+                        className="rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-[#03C35E] hover:text-[#188A31] disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        Next
+                      </button>
+                        </nav>
+                      )}
                     </div>
                     <h2 className="mb-2 text-base font-bold leading-tight text-[#188A31] transition-colors sm:text-lg md:text-xl">
                       {post.title}
@@ -234,7 +250,7 @@ export default function ManagedBlogPage({
                     </div>
                   </div>
                 </article>
-              ))}
+                  ))}
             </div>
 
             <aside className="rounded-2xl border border-gray-100 bg-gray-50 p-5 md:p-6">
@@ -242,7 +258,22 @@ export default function ManagedBlogPage({
                 Recent Uploads
               </h2>
               <div className="flex flex-col gap-4">
-                {recentPosts.map((post) => (
+                {loading
+                  ? Array.from({ length: 3 }, (_, index) => (
+                      <div
+                        key={`recent-skeleton-${index}`}
+                        aria-hidden="true"
+                        className="flex animate-pulse items-start gap-3"
+                      >
+                        <div className="h-16 w-20 shrink-0 rounded-lg bg-gray-200" />
+                        <div className="flex min-w-0 flex-1 flex-col gap-2 pt-1">
+                          <div className="h-4 w-full rounded bg-gray-200" />
+                          <div className="h-4 w-4/5 rounded bg-gray-200" />
+                          <div className="mt-1 h-3 w-2/5 rounded bg-gray-200" />
+                        </div>
+                      </div>
+                    ))
+                  : recentPosts.map((post) => (
                   <article key={post.id} className="flex items-start gap-3">
                     <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-gray-200">
                       <Image
@@ -269,7 +300,7 @@ export default function ManagedBlogPage({
                       </time>
                     </div>
                   </article>
-                ))}
+                    ))}
                 {!loading && recentPosts.length === 0 && (
                   <p className="text-sm text-gray-500">No recent posts.</p>
                 )}
