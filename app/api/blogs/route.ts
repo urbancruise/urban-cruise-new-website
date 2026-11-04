@@ -1,5 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
+interface BlogHeroContent {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  description?: string;
+  backgroundImage?: string;
+  backgroundImageAlt?: string;
+  backgroundImagePublicId?: string;
+  vehiclesImage?: string;
+  vehiclesImageAlt?: string;
+  vehiclesImagePublicId?: string;
+}
+
 const CMS_URL = (process.env.CMS_API_URL || "http://localhost:5000").replace(
   /\/$/,
   ""
@@ -32,12 +45,14 @@ export async function GET(request: NextRequest) {
     }
 
     const data = (await response.json()) as {
+      hero?: BlogHeroContent | null;
       blogs?: unknown[];
       categories?: string[];
     };
 
     return NextResponse.json(
       {
+        hero: data.hero || null,
         blogs: data.blogs || [],
         categories: data.categories || [],
       },
