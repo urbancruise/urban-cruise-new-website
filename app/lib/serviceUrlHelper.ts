@@ -96,6 +96,14 @@ export function isVehiclePath(path: string): boolean {
 
 export function getFullServiceUrl(location: string, path: string): string {
   const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+
+  if (
+    location === 'global' &&
+    (cleanPath === 'jim-corbett' ||
+      cleanPath === 'delhi-to-jim-corbett-vehicle-rental')
+  ) {
+    return '/jim-corbett';
+  }
   
   // If path already has location, return as is
   if (AVAILABLE_LOCATIONS.includes(cleanPath.split('/')[0])) {
@@ -110,4 +118,3 @@ export function getFullServiceUrl(location: string, path: string): string {
   // For other paths, add location
   return `/${location}/${cleanPath}`;
 }
-

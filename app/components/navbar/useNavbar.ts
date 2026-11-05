@@ -89,6 +89,7 @@ export function useNavbar() {
     mobileVehiclesOpen, setMobileVehiclesOpen, mobileServicesOpen, setMobileServicesOpen,
     mobileInfoOpen, setMobileInfoOpen, expandedMobileCategory, setExpandedMobileCategory,
     vehiclesRef, location, selectedLocation, locationConfig, getLocationUrl,
+    isGlobalNavigation,
     getAboutLink, openMenu, closeMenu, openCategory, closeCategory, closeMobileMenu,
     navHeight: isScrolled ? "h-14 xs:h-16 sm:h-18 md:h-20" : "h-12 xs:h-14 sm:h-16 md:h-[68px] lg:h-[72px] xl:h-20",
     logoHeight: isScrolled ? "h-8 xs:h-9 sm:h-10 md:h-14" : "h-8 xs:h-9 sm:h-10 md:h-11 lg:h-12 xl:h-14 2xl:h-16",

@@ -124,6 +124,7 @@ const VEHICLE_SLUG_TO_TYPE: Record<string, string> = {
 // SERVICE SLUG → SERVICE TYPE
 // ============================================================
 const SERVICE_SLUG_TO_TYPE: Record<string, string> = {
+  "jim-corbett": "jim-corbett",
   "delhi-to-jim-corbett-vehicle-rental": "jim-corbett",
   "gurugram-to-jim-corbett-vehicle-rental": "jim-corbett",
   "mumbai-to-jim-corbett-vehicle-rental": "jim-corbett",
@@ -195,6 +196,10 @@ export async function generateMetadata({
 // ============================================================
 export default async function DynamicPage({ params }: PageProps) {
   const { location, vehicle } = await params;
+
+  if (location === "global" && vehicle === "jim-corbett") {
+    permanentRedirect("/jim-corbett");
+  }
 
   // 1. Validate location (async, CMS-driven)
   const valid = await isValidLocationAsync(location);

@@ -2,10 +2,19 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useLocation } from "@/app/context/LocationContext";
+import Hero from "./ui/Hero";
+import About from "./ui/About";
+import HowItWorks from "./ui/HowItWorks";
+import VehicleForEveryGroupSize from "./ui/VehicleForEveryGroupSize";
+import VehicleForEveryOccasion from "./ui/VehicleForEveryOccasion";
+import WhyChooseUrbanCruise from "./ui/WhyChooseUrbanCruise";
+import Testimonial from "./ui/Testimonial";
+import Faqs from "./ui/Faqs";
+import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
+import OurTrustedPartner from "./ui/OurTrustedPartner";
 import { 
-  FaCar, FaUsers, FaStar, FaClock, FaShieldAlt, 
+  FaCar, FaUsers, FaClock, FaShieldAlt,
   FaArrowRight, FaCheck, FaMapMarkerAlt, FaWhatsapp,
   FaPhone, FaEnvelope, FaCalendarCheck, FaRoad,
   FaTrophy, FaBus, FaWifi, FaMountain,
@@ -14,18 +23,9 @@ import {
   FaUniversity, FaBook, FaMountain as FaMountainIcon
 } from "react-icons/fa";
 import { IoMdArrowForward } from "react-icons/io";
-import { useState } from "react";
 
 export default function PuneJimCorbettPage() {
-  const { getLocationUrl, location } = useLocation();
-  const [selectedImage, setSelectedImage] = useState(0);
-
-  const vehicleImages = [
-    "/images/services/jim-corbett-main.jpg",
-    "/images/services/jim-corbett-1.jpg",
-    "/images/services/jim-corbett-2.jpg",
-    "/images/services/jim-corbett-3.jpg",
-  ];
+  const { getLocationUrl } = useLocation();
 
   const features = [
     { icon: FaUsers, label: "Group Size", value: "Flexible" },
@@ -71,105 +71,21 @@ export default function PuneJimCorbettPage() {
     { day: "Day 3", title: "Nature Walk & Return", desc: "Enjoy a nature walk, visit local attractions, and return to Pune." },
   ];
 
-  const reviews = [
-    {
-      name: "Dr. Meera Joshi",
-      rating: 5,
-      text: "Amazing experience! The Jim Corbett trip from Pune was well-organized and the vehicle was comfortable.",
-      date: "2 days ago"
-    },
-    {
-      name: "Prof. Rajesh Kumar",
-      rating: 5,
-      text: "Perfect weekend getaway from Pune. The safari was thrilling and the accommodation was excellent.",
-      date: "5 days ago"
-    },
-    {
-      name: "Mr. Ananya Patel",
-      rating: 4,
-      text: "Great service! The driver was knowledgeable and the trip was very enjoyable.",
-      date: "1 week ago"
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1a0a] via-[#1a2a1a] to-[#0a2a1a] py-16 md:py-24">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#00b894] rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#55efc4] rounded-full blur-3xl" />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-[#00b894]/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4 border border-[#00b894]/30">
-                <span className="w-2 h-2 bg-[#00b894] rounded-full animate-pulse" />
-                <span className="text-[#55efc4] font-medium text-sm">Pune - Jim Corbett</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
-                Pune to{' '}
-                <span className="bg-gradient-to-r from-[#00b894] to-[#55efc4] bg-clip-text text-transparent">
-                  Jim Corbett
-                </span>
-                <br />
-                Vehicle Rental
-              </h1>
-              <p className="text-lg text-gray-300 mb-6">
-                Explore the wilderness of Jim Corbett National Park with our premium vehicle rental service. 
-                Comfortable travel from Pune to the tiger reserve.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href={getLocationUrl("/book")}
-                  className="inline-flex items-center gap-2 px-8 py-3 bg-[#00b894] hover:bg-[#00a381] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#00b894]/30"
-                >
-                  Book Now
-                  <IoMdArrowForward className="w-4 h-4" />
-                </Link>
-                <a
-                  href="#packages"
-                  className="inline-flex items-center gap-2 px-8 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/10"
-                >
-                  View Packages
-                </a>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
-                <div className="relative h-[300px] md:h-[350px] rounded-xl overflow-hidden">
-                  <Image
-                    src={vehicleImages[selectedImage]}
-                    alt="Vehicle for Jim Corbett travel from Pune"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex gap-2 mt-4">
-                  {vehicleImages.map((img, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImage(index)}
-                      className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                        selectedImage === index ? 'border-[#00b894]' : 'border-transparent'
-                      }`}
-                    >
-                      <Image
-                        src={img}
-                        alt={`View ${index + 1}`}
-                        width={64}
-                        height={64}
-                        className="object-cover w-full h-full"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero
+        location="pune"
+        content={{
+          eyebrow: "Jim Corbett Vehicle Rental",
+          title: "Pune to Jim Corbett",
+          titleHighlight: "Vehicle Rental",
+          description:
+            "Travel from Pune to Jim Corbett National Park in a comfortable car, tempo traveller, or bus with a professional driver.",
+          backgroundImageAlt: "Jim Corbett travel service from Pune",
+          vehiclesImageAlt: "Cars and buses for Pune to Jim Corbett trips",
+        }}
+      />
 
       {/* Features Section */}
       <section className="py-12 bg-gradient-to-r from-[#00b894]/10 to-[#55efc4]/10">
@@ -189,65 +105,19 @@ export default function PuneJimCorbettPage() {
       </section>
 
       {/* About Section */}
-      <section className="py-16 md:py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#0a1a0a] mb-4">
-                Pune to Jim Corbett
-              </h2>
-              <p className="text-gray-600 mb-4">
-                Experience the thrill of the jungle with our Pune to Jim Corbett vehicle rental service. 
-                We provide comfortable and safe transportation to one of India's most famous national parks.
-              </p>
-              <p className="text-gray-600 mb-6">
-                Our package includes comfortable vehicles, experienced drivers, and flexible itineraries 
-                to make your trip memorable. Choose from our range of vehicles including SUVs, tempo 
-                travellers, and luxury buses.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <span className="px-3 py-1 bg-[#00b894]/10 text-[#00b894] text-sm rounded-full">Tiger Reserve</span>
-                <span className="px-3 py-1 bg-[#00b894]/10 text-[#00b894] text-sm rounded-full">Wildlife Safari</span>
-                <span className="px-3 py-1 bg-[#00b894]/10 text-[#00b894] text-sm rounded-full">Nature Walk</span>
-                <span className="px-3 py-1 bg-[#00b894]/10 text-[#00b894] text-sm rounded-full">Bird Watching</span>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-[#0a1a0a] mb-4">Why Choose Us?</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <FaCheck className="text-[#00b894] mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-[#0a1a0a]">Comfortable Vehicles</h4>
-                    <p className="text-gray-600 text-sm">Well-maintained vehicles for a comfortable journey.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <FaCheck className="text-[#00b894] mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-[#0a1a0a]">Experienced Drivers</h4>
-                    <p className="text-gray-600 text-sm">Professional drivers familiar with the route.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <FaCheck className="text-[#00b894] mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-[#0a1a0a]">Flexible Packages</h4>
-                    <p className="text-gray-600 text-sm">Customizable itineraries to suit your needs.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <FaCheck className="text-[#00b894] mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-[#0a1a0a]">Affordable Rates</h4>
-                    <p className="text-gray-600 text-sm">Competitive pricing without compromising quality.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <About location="pune" />
+
+      {/* How It Works Section */}
+      <HowItWorks location="pune" />
+
+      {/* Vehicle For Every Group Size Section */}
+      <VehicleForEveryGroupSize location="pune" />
+
+      {/* Discover Our Premium Vehicle Rentals Section */}
+      <VehicleForEveryOccasion location="pune" />
+
+      {/* Why Choose Urban Cruise Section */}
+      <WhyChooseUrbanCruise location="pune" />
 
       {/* Itinerary Section */}
       <section className="py-16 md:py-20 bg-white">
@@ -316,39 +186,13 @@ export default function PuneJimCorbettPage() {
       </section>
 
       {/* Reviews */}
-      <section className="py-16 md:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0a1a0a] mb-4">
-              Customer Reviews
-            </h2>
-            <p className="text-gray-600 text-lg">
-              What our customers say about the Jim Corbett trip.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {reviews.map((review, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-[#00b894]/10 flex items-center justify-center text-[#00b894] font-bold text-lg">
-                    {review.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-[#0a1a0a]">{review.name}</p>
-                    <div className="flex items-center gap-1 text-yellow-400 text-sm">
-                      {[...Array(5)].map((_, i) => (
-                        <FaStar key={i} className={i < review.rating ? 'text-yellow-400' : 'text-gray-300'} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-600 text-sm mb-2">{review.text}</p>
-                <p className="text-xs text-gray-400">{review.date}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Testimonial location="pune" />
+
+      {/* FAQs Section */}
+      <Faqs location="pune" />
+
+      <VehicleRentalServiceInIndia location="pune" />
+      <OurTrustedPartner />
 
       {/* CTA Section */}
       <section className="py-16 md:py-20 bg-gradient-to-r from-[#00b894] to-[#55efc4]">
