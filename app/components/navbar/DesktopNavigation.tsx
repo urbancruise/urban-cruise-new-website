@@ -20,7 +20,7 @@ function MenuButton({ label, open }: { label: string; open: boolean }) {
 }
 
 export default function DesktopNavigation({ state }: DesktopNavigationProps) {
-  const { desktopMenu, activeCategory, getAboutLink, getLocationUrl, location, openMenu, closeMenu, openCategory, closeCategory, vehiclesRef } = state;
+  const { desktopMenu, activeCategory, getAboutLink, getLocationUrl, location, isGlobalNavigation, openMenu, closeMenu, openCategory, closeCategory, vehiclesRef } = state;
   const renderLinks = (links: { href: string; label: string }[], getHref: (href: string) => string, close: () => void) =>
     links.map((item) => <Link key={item.href} href={getHref(item.href)} className={linkClassName} onClick={close}>{item.label}</Link>);
 
@@ -43,7 +43,7 @@ export default function DesktopNavigation({ state }: DesktopNavigationProps) {
       </div>
       <div className="relative" onMouseEnter={() => openMenu("services")} onMouseLeave={() => closeMenu("services")}>
         <MenuButton label="Our Services" open={desktopMenu === "services"} />
-        {desktopMenu === "services" && <div className={`${dropdownClassName} w-64`} onMouseEnter={() => openMenu("services")} onMouseLeave={() => closeMenu("services")}>{renderLinks(serviceLinks, (href) => getFullServiceUrl(location, href), () => closeMenu("services"))}</div>}
+        {desktopMenu === "services" && <div className={`${dropdownClassName} w-64`} onMouseEnter={() => openMenu("services")} onMouseLeave={() => closeMenu("services")}>{renderLinks(serviceLinks, (href) => getFullServiceUrl(isGlobalNavigation ? "global" : location, href), () => closeMenu("services"))}</div>}
       </div>
       <div className="relative" onMouseEnter={() => openMenu("info")} onMouseLeave={() => closeMenu("info")}>
         <MenuButton label="Info" open={desktopMenu === "info"} />

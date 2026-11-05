@@ -1,5 +1,8 @@
 // app/lib/serviceUrlMappings.ts
 export const serviceUrlMappings: Record<string, Record<string, string>> = {
+  'global': {
+    'jim-corbett': 'jim-corbett',
+  },
   'delhi': {
     'jim-corbett': 'delhi-to-jim-corbett-vehicle-rental',
     'do-dham': 'do-dham-yatra-package',
@@ -48,5 +51,6 @@ export function getServiceSlug(location: string, serviceType: string): string {
 
 export function getServiceUrl(location: string, serviceType: string): string {
   const slug = getServiceSlug(location, serviceType);
+  if (location === "global") return `/${slug}`;
   return `/${location}/${slug}`;
 }
