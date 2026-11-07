@@ -13,6 +13,13 @@ import Testimonial from "./ui/Testimonial";
 import Faqs from "./ui/Faqs";
 import VehicleRentalServiceInIndia from "./ui/VehicleRentalServiceInIndia";
 import OurTrustedPartner from "./ui/OurTrustedPartner";
+import AboutService from "./ui/AboutService";
+import Wildlife from "./ui/Wildlife";
+import SafariZones from "./ui/SafariZones";
+import SafariTypes from "./ui/SafariTypes";
+import SafariPlatforms from "./ui/SafariPlatforms";
+import ResortGuide from "./ui/ResortGuide";
+import TouristAttractions from "./ui/TouristAttractions";
 import { 
   FaCar, FaUsers, FaClock, FaShieldAlt,
   FaArrowRight, FaCheck, FaMapMarkerAlt, FaWhatsapp,
@@ -115,6 +122,15 @@ export default function PuneJimCorbettPage() {
 
       {/* Discover Our Premium Vehicle Rentals Section */}
       <VehicleForEveryOccasion location="pune" />
+
+      {/* Jim Corbett destination and safari sections */}
+      <AboutService />
+      <Wildlife />
+      <SafariZones />
+      <SafariTypes />
+      <SafariPlatforms />
+      <ResortGuide />
+      <TouristAttractions />
 
       {/* Why Choose Urban Cruise Section */}
       <WhyChooseUrbanCruise location="pune" />
