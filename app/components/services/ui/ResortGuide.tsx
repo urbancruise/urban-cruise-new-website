@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import type { MouseEvent } from "react";
 
 const stats = [
   { id: 1, value: '10', label: 'Handpicked resorts' },
@@ -70,13 +71,101 @@ const resorts = [
   },
 ];
 
-export default function ModernResortGuide() {
+interface ResortContent {
+  id: number | string;
+  name: string;
+  type: string;
+  distance: string;
+  images: string[];
+  tags: string[];
+  price: string;
+  category: string;
+}
+
+interface ResortStatsContent {
+  id?: number;
+  value: string;
+  label: string;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function readText(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+function normalizeStats(value: unknown): ResortStatsContent[] {
+  if (!Array.isArray(value)) return stats;
+  const result = value.flatMap((item, index): ResortStatsContent[] => {
+    if (!isRecord(item) || typeof item.value !== "string") return [];
+    return [{
+      id: typeof item.id === "number" ? item.id : index,
+      value: item.value,
+      label: readText(item.label, ""),
+    }];
+  });
+  return result.length ? result : stats;
+}
+
+function normalizeFilters(value: unknown): string[] {
+  if (!Array.isArray(value)) return filters;
+  const result = value.filter(
+    (filter): filter is string =>
+      typeof filter === "string" && filter.trim().length > 0,
+  );
+  return result.length ? result : filters;
+}
+
+function normalizeResorts(value: unknown): ResortContent[] {
+  if (!Array.isArray(value)) return resorts;
+  const result = value.flatMap((item, index): ResortContent[] => {
+    if (!isRecord(item) || typeof item.name !== "string") return [];
+    const fallback = resorts[index % resorts.length];
+    const images = Array.isArray(item.images)
+      ? item.images.filter(
+          (image): image is string =>
+            typeof image === "string" && image.trim().length > 0,
+        )
+      : [];
+    const tags = Array.isArray(item.tags)
+      ? item.tags.filter(
+          (tag): tag is string =>
+            typeof tag === "string" && tag.trim().length > 0,
+        )
+      : [];
+    return [{
+      id: typeof item.id === "number" || typeof item.id === "string"
+        ? item.id
+        : index,
+      name: item.name,
+      type: readText(item.type, fallback.type),
+      distance: readText(item.distance, fallback.distance),
+      images: images.length ? images : fallback.images,
+      tags,
+      price: readText(item.price, fallback.price),
+      category: readText(item.category, fallback.category),
+    }];
+  });
+  return result.length ? result : resorts;
+}
+
+export default function ModernResortGuide({
+  content,
+}: {
+  content?: unknown;
+}) {
+  const section = isRecord(content) ? content : {};
+  const sectionStats = normalizeStats(section.stats);
+  const sectionFilters = normalizeFilters(section.filters);
+  const sectionResorts = normalizeResorts(section.resorts);
   const [activeFilter, setActiveFilter] = useState('All');
 
   const filteredResorts =
     activeFilter === 'All'
-      ? resorts
-      : resorts.filter(
+      ? sectionResorts
+      : sectionResorts.filter(
           (resort) =>
             resort.category === activeFilter ||
             resort.tags.some((tag) =>
@@ -93,31 +182,32 @@ export default function ModernResortGuide() {
           <div className="mb-2 flex w-full items-center justify-start gap-1.5">
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
             <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
-              RESORT GUIDE
+              {readText(section.eyebrow, "RESORT GUIDE")}
             </span>
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
 
           <h2 className="text-[21px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] xs:text-[23px] sm:text-[27px] md:text-[29px]">
-            Top 10 Resorts Near Jim Corbett National Park
+            {readText(section.title, "Top 10 Resorts Near Jim Corbett National Park")}
           </h2>
 
           <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
-            Find Your Perfect Stay in the Wild
+            {readText(section.subtitle, "Find Your Perfect Stay in the Wild")}
           </p>
 
           <p className="mt-5 max-w-[900px] text-[10px] leading-[1.75] text-[#303944] xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
-            Discover the top resorts that add a five-star touch to your
-            wildlife adventure. From premium jungle views to world-class
-            service, these handpicked stays make every night memorable.
+            {readText(
+              section.description,
+              "Discover the top resorts that add a five-star touch to your wildlife adventure. From premium jungle views to world-class service, these handpicked stays make every night memorable.",
+            )}
           </p>
         </div>
 
         {/* Stats Banner */}
         <div className="mb-12 flex flex-col divide-y divide-[#E8E8E8] rounded-[18px] border border-[#E8E8E8] bg-white p-2 shadow-[0_12px_45px_rgba(0,0,0,0.10)] md:flex-row md:divide-x md:divide-y-0">
-          {stats.map((stat) => (
+          {sectionStats.map((stat, index) => (
             <div
-              key={stat.id}
+              key={stat.id ?? `${stat.label}-${index}`}
               className="flex flex-1 flex-col items-center justify-center p-6 text-center"
             >
               <span className="mb-2 inline-block rounded-lg bg-[#03C35E]/10 px-3 py-1 text-2xl font-black text-[#078B35]">
@@ -132,7 +222,7 @@ export default function ModernResortGuide() {
 
         {/* Filter Pills */}
         <div className="mb-10 flex flex-wrap justify-start gap-2">
-          {filters.map((filter) => (
+          {sectionFilters.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
@@ -148,7 +238,7 @@ export default function ModernResortGuide() {
         </div>
 
         {/* Resort Carousel */}
-        <ResortSlider resorts={filteredResorts} />
+        <ResortSlider key={activeFilter} resorts={filteredResorts} />
 
       </div>
     </section>
@@ -159,7 +249,7 @@ export default function ModernResortGuide() {
 // RESORT SLIDER COMPONENT
 // ========================================
 
-function ResortSlider({ resorts }) {
+function ResortSlider({ resorts }: { resorts: ResortContent[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
 
@@ -182,10 +272,6 @@ function ResortSlider({ resorts }) {
   }, []);
 
   const maxIndex = Math.max(0, resorts.length - itemsPerView);
-
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [resorts]);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
@@ -290,17 +376,17 @@ function ResortSlider({ resorts }) {
 // RESORT CARD COMPONENT
 // ========================================
 
-function ResortCard({ resort }) {
+function ResortCard({ resort }: { resort: ResortContent }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextImage = (e) => {
+  const nextImage = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setCurrentIndex((prev) =>
       prev === resort.images.length - 1 ? 0 : prev + 1
     );
   };
 
-  const prevImage = (e) => {
+  const prevImage = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setCurrentIndex((prev) =>
       prev === 0 ? resort.images.length - 1 : prev - 1

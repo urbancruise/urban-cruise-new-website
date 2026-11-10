@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GlobalJimCorbettPage from "@/app/components/services/GlobalJimCorbettPage";
+import { getVehicle } from "@/lib/cms";
 import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,6 +13,11 @@ export async function generateMetadata(): Promise<Metadata> {
   );
 }
 
-export default function Page() {
-  return <GlobalJimCorbettPage />;
+export default async function Page() {
+  const cmsData = await getVehicle("global", "jim-corbett");
+  return (
+    <GlobalJimCorbettPage
+      cmsSections={cmsData?.vehicle?.sections ?? null}
+    />
+  );
 }

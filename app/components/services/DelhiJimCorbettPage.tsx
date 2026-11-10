@@ -18,8 +18,13 @@ import SafariTypes from "./ui/SafariTypes";
 import SafariPlatforms from "./ui/SafariPlatforms";
 import ResortGuide from "./ui/ResortGuide";
 import TouristAttractions from "./ui/TouristAttractions";
+import OurServices from "./ui/OurServices";
 
-export default function DelhiJimCorbettPage() {
+export default function DelhiJimCorbettPage({
+  cmsSections,
+}: {
+  cmsSections?: Record<string, unknown> | null;
+}) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -34,52 +39,66 @@ export default function DelhiJimCorbettPage() {
           backgroundImageAlt: "Jim Corbett travel service from Delhi",
           vehiclesImageAlt: "Cars and buses for Delhi to Jim Corbett trips",
         }}
+        cmsContent={cmsSections?.hero}
       />
 
       {/* About Section */}
-      <About location="delhi" />
+      <About location="delhi" content={cmsSections?.about} />
 
       {/* How It Works Section */}
-      <HowItWorks location="delhi" />
+      <HowItWorks location="delhi" content={cmsSections?.howitworks} />
 
       {/* Vehicle For Every Group Size Section */}
-      <VehicleForEveryGroupSize location="delhi" />
+      <VehicleForEveryGroupSize
+        location="delhi"
+        content={cmsSections?.groupsize}
+      />
 
       {/* Discover Our Premium Vehicle Rentals Section */}
-      <VehicleForEveryOccasion location="delhi" />
+      <VehicleForEveryOccasion
+        location="delhi"
+        content={cmsSections?.occasion}
+      />
+      <OurServices content={cmsSections?.ourservices} location="delhi" />
 
       {/* About the Destination */}
-      <AboutService />
+      <AboutService content={cmsSections?.aboutservice} />
 
       {/* Wildlife Section */}
-      <Wildlife />
+      <Wildlife content={cmsSections?.wildlife} />
 
       {/* Safari Zones Section */}
-      <SafariZones />
+      <SafariZones content={cmsSections?.safarizones} />
 
       {/* SafariTypes Section */}
-      <SafariTypes />
+      <SafariTypes content={cmsSections?.safaritypes} />
 
       {/* Safari Platforms */}
-      <SafariPlatforms />
+      <SafariPlatforms content={cmsSections?.safariplatforms} />
 
       {/* Resort Guide */}
-      <ResortGuide />
+      <ResortGuide content={cmsSections?.resortguide} />
 
       {/* Tourist Attractions */}
-      <TouristAttractions />
+      <TouristAttractions content={cmsSections?.touristattractions} />
 
       {/* Why Choose Urban Cruise Section */}
-      <WhyChooseUrbanCruise location="delhi" />
+      <WhyChooseUrbanCruise
+        location="delhi"
+        content={cmsSections?.whychoose}
+      />
 
       {/* Testimonials Section */}
-      <Testimonial location="delhi" />
+      <Testimonial location="delhi" content={cmsSections?.testimonials} />
 
       {/* FAQs Section */}
-      <Faqs location="delhi" />
+      <Faqs location="delhi" content={cmsSections?.faq} />
 
-      <VehicleRentalServiceInIndia location="delhi" />
-      <OurTrustedPartner />
+      <VehicleRentalServiceInIndia
+        location="delhi"
+        content={cmsSections?.servicelocations}
+      />
+      <OurTrustedPartner content={cmsSections?.partners} />
     </div>
   );
 }

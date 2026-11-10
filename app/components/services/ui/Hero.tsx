@@ -1,7 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
+import { isRecord, readText } from "./cms-content";
 
 export interface ServiceHeroContent {
   eyebrow?: string;
@@ -21,7 +23,10 @@ interface HeroProps {
   content?: ServiceHeroContent;
 }
 
-const heroComponents = {
+const heroComponents: Record<
+  ServiceLocation,
+  ComponentType<{ content?: ServiceHeroContent }>
+> = {
   delhi: dynamic<{ content?: ServiceHeroContent }>(
     () => import("../../home/hero/DelhiHero")
   ),
@@ -39,7 +44,40 @@ const heroComponents = {
   ),
 };
 
-export default function Hero({ location, content }: HeroProps) {
+export default function Hero({
+  location,
+  content,
+  cmsContent,
+}: HeroProps & { cmsContent?: unknown }) {
   const Component = heroComponents[location];
-  return <Component content={content} />;
+  const section = isRecord(cmsContent) ? cmsContent : {};
+  const normalized: ServiceHeroContent = {
+    ...content,
+    eyebrow: readText(section.eyebrow, content?.eyebrow),
+    title: readText(section.title, content?.title),
+    titleHighlight: readText(section.titleHighlight, content?.titleHighlight),
+    description: readText(section.description, content?.description),
+    backgroundImage: readText(
+      section.backgroundImage,
+      content?.backgroundImage,
+    ),
+    backgroundImageAlt: readText(
+      section.backgroundImageAlt,
+      content?.backgroundImageAlt,
+    ),
+    backgroundImagePublicId: readText(
+      section.backgroundImagePublicId,
+      content?.backgroundImagePublicId,
+    ),
+    vehiclesImage: readText(section.vehiclesImage, content?.vehiclesImage),
+    vehiclesImageAlt: readText(
+      section.vehiclesImageAlt,
+      content?.vehiclesImageAlt,
+    ),
+    vehiclesImagePublicId: readText(
+      section.vehiclesImagePublicId,
+      content?.vehiclesImagePublicId,
+    ),
+  };
+  return <Component content={normalized} />;
 }

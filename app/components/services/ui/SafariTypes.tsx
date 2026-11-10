@@ -21,7 +21,7 @@ const ticks = [6, 9, 12, 15, 18];
 
 type SafariSession = "morning" | "evening";
 
-type SafariTime = {
+interface SafariTime {
   start: string;
   end: string;
   startH: number;
@@ -30,16 +30,16 @@ type SafariTime = {
   capacity: string;
   perPerson: string;
   full: string;
-};
+}
 
-type SafariType = {
+interface SafariType {
   id: string;
   name: string;
   icon: string;
   fullLabel: string;
   morning: SafariTime;
   evening: SafariTime;
-};
+}
 
 const polar = (h: number, r: number) => {
   const a = Math.PI - ((h - AXIS_START) / SPAN) * Math.PI;
@@ -68,7 +68,7 @@ const sessions: { id: SafariSession; label: string; icon: string }[] = [
   { id: "evening", label: "Evening", icon: "🌇" },
 ];
 
-const safariTypes: SafariType[] = [
+const DEFAULT_SAFARI_TYPES: SafariType[] = [
   {
     id: "jeep",
     name: "Jeep Safari",
@@ -150,6 +150,60 @@ const safariTypes: SafariType[] = [
     },
   },
 ];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function readText(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+function readHour(value: unknown, fallback: number): number {
+  if (typeof value !== "number" && typeof value !== "string") return fallback;
+  if (typeof value === "string" && !value.trim()) return fallback;
+  const hour = Number(value);
+  return Number.isFinite(hour) && hour >= AXIS_START && hour <= AXIS_END
+    ? hour
+    : fallback;
+}
+
+function normalizeSafariTime(value: unknown, fallback: SafariTime): SafariTime {
+  if (!isRecord(value)) return fallback;
+  const startH = readHour(value.startH, fallback.startH);
+  const endH = readHour(value.endH, fallback.endH);
+  const validHours = endH > startH;
+  return {
+    start: readText(value.start, fallback.start),
+    end: readText(value.end, fallback.end),
+    startH: validHours ? startH : fallback.startH,
+    endH: validHours ? endH : fallback.endH,
+    distance: readText(value.distance, fallback.distance),
+    capacity: readText(value.capacity, fallback.capacity),
+    perPerson: readText(value.perPerson, fallback.perPerson),
+    full: readText(value.full, fallback.full),
+  };
+}
+
+function normalizeSafariTypes(value: unknown): SafariType[] {
+  if (!Array.isArray(value)) return DEFAULT_SAFARI_TYPES;
+  const types = value.flatMap((item, index): SafariType[] => {
+    if (!isRecord(item)) return [];
+    const fallback =
+      DEFAULT_SAFARI_TYPES[index % DEFAULT_SAFARI_TYPES.length];
+    return [
+      {
+        id: readText(item.id, fallback.id),
+        name: readText(item.name, fallback.name),
+        icon: readText(item.icon, fallback.icon),
+        fullLabel: readText(item.fullLabel, fallback.fullLabel),
+        morning: normalizeSafariTime(item.morning, fallback.morning),
+        evening: normalizeSafariTime(item.evening, fallback.evening),
+      },
+    ];
+  });
+  return types.length ? types : DEFAULT_SAFARI_TYPES;
+}
 
 /* ---------- Small pieces ---------- */
 function Stat({
@@ -299,11 +353,13 @@ function SkyDial({ d, evening }: { d: SafariTime; evening: boolean }) {
 }
 
 /* ---------- Main ---------- */
-export default function SafariTypes() {
+export default function SafariTypes({ content }: { content?: unknown }) {
+  const section = isRecord(content) ? content : {};
+  const safariTypes = normalizeSafariTypes(section.safariTypes);
   const [typeIdx, setTypeIdx] = useState(0);
   const [session, setSession] = useState<SafariSession>("morning");
 
-  const type = safariTypes[typeIdx];
+  const type = safariTypes[Math.min(typeIdx, safariTypes.length - 1)];
   const d = type[session];
   const evening = session === "evening";
 
@@ -315,24 +371,26 @@ export default function SafariTypes() {
           <div className="mb-2 flex w-full items-center justify-start gap-1.5">
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
             <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
-              SAFARI GUIDE
+              {readText(section.eyebrow, "SAFARI GUIDE")}
             </span>
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
 
           <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
-            Types of Safari in Jim Corbett
+            {readText(section.title, "Types of Safari in Jim Corbett")}
           </h2>
 
           <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
-            Find Your Perfect Jungle Adventure
+            {readText(section.subtitle, "Find Your Perfect Jungle Adventure")}
           </p>
 
           <p
             className={`${robotoCondensed.className} mt-5 max-w-[900px] text-[10px] leading-[1.75] text-[#303944] xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base`}
           >
-            Choose from multiple safari experiences. Advance booking is strongly
-            recommended as slots fill up fast.
+            {readText(
+              section.description,
+              "Choose from multiple safari experiences. Advance booking is strongly recommended as slots fill up fast.",
+            )}
           </p>
         </div>
 
