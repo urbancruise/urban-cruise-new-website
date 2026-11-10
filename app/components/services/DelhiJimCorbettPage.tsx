@@ -59,7 +59,7 @@ export default function DelhiJimCorbettPage({
         location="delhi"
         content={cmsSections?.occasion}
       />
-      <OurServices content={cmsSections?.ourservices} location="delhi" />
+      {/* <OurServices content={cmsSections?.ourservices} location="delhi" /> */}
 
       {/* About the Destination */}
       <AboutService content={cmsSections?.aboutservice} />
