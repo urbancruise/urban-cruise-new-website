@@ -59,7 +59,7 @@ export default function GurugramJimCorbettPage({
         location="gurugram"
         content={cmsSections?.occasion}
       />
-      <OurServices content={cmsSections?.ourservices} location="gurugram" />
+      {/* <OurServices content={cmsSections?.ourservices} location="gurugram" /> */}
 
       {/* Jim Corbett destination and safari sections */}
       <AboutService content={cmsSections?.aboutservice} />

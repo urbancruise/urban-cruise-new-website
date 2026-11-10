@@ -49,7 +49,7 @@ export default function GlobalJimCorbettPage({
         location="global"
         content={cmsSections?.occasion}
       />
-      <OurServices content={cmsSections?.ourservices} location="global" />
+      {/* <OurServices content={cmsSections?.ourservices} location="global" /> */}
       <AboutService content={cmsSections?.aboutservice} />
       <Wildlife content={cmsSections?.wildlife} />
       <SafariZones content={cmsSections?.safarizones} />

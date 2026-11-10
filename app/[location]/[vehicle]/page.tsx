@@ -197,8 +197,13 @@ export async function generateMetadata({
 export default async function DynamicPage({ params }: PageProps) {
   const { location, vehicle } = await params;
 
-  if (location === "global" && vehicle === "jim-corbett") {
-    permanentRedirect("/jim-corbett");
+  if (location === "global") {
+    if (vehicle === "jim-corbett") {
+      permanentRedirect("/jim-corbett");
+    }
+    if (SERVICE_SLUG_TO_TYPE[vehicle] === "do-dham") {
+      permanentRedirect("/do-dham-yatra-package");
+    }
   }
 
   // 1. Validate location (async, CMS-driven)
