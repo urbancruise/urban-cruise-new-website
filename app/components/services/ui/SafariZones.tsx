@@ -7,7 +7,7 @@ const robotoCondensed = Roboto_Condensed({
   weight: ["400", "500", "700"],
 });
 
-const zones = [
+const zones: SafariZoneContent[] = [
   {
     name: "Dhikala Zone",
     image: "/images/zones/dhikala.png",
@@ -30,7 +30,45 @@ const zones = [
   },
 ];
 
-export default function SafariZones() {
+interface SafariZoneContent {
+  name: string;
+  image: string;
+  imageAlt?: string;
+  distance: string;
+  duration: string;
+  best: string;
+  description: string;
+  href: string;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function readText(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+export default function SafariZones({ content }: { content?: unknown }) {
+  const section = isRecord(content) ? content : {};
+  const sectionZones: SafariZoneContent[] = Array.isArray(section.zones)
+    ? section.zones.flatMap((item, index) => {
+        if (!isRecord(item) || typeof item.name !== "string") return [];
+        const fallback = zones[index % zones.length];
+        return [{
+          name: item.name,
+          image: readText(item.image, fallback.image),
+          imageAlt: readText(item.imageAlt, `${item.name} map`),
+          distance: readText(item.distance, fallback.distance),
+          duration: readText(item.duration, fallback.duration),
+          best: readText(item.best, fallback.best),
+          description: readText(item.description, fallback.description),
+          href: readText(item.href, fallback.href),
+        }];
+      })
+    : [];
+  const displayZones = sectionZones.length ? sectionZones : zones;
+
   return (
     <section className="w-full bg-white px-4 py-14">
       <div className="mx-auto max-w-6xl">
@@ -39,25 +77,26 @@ export default function SafariZones() {
           <div className="mb-2 flex w-full items-center justify-start gap-1.5">
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
             <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
-              EXPLORE JUNGLE SAFARI ZONES
+              {readText(section.eyebrow, "EXPLORE JUNGLE SAFARI ZONES")}
             </span>
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
 
           <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
-            Jim Corbett National Park, Uttarakhand
+            {readText(section.title, "Jim Corbett National Park, Uttarakhand")}
           </h2>
 
           <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
-            Discover the Best Safari Zones in Jim Corbett
+            {readText(section.subtitle, "Discover the Best Safari Zones in Jim Corbett")}
           </p>
 
           <p
             className={`${robotoCondensed.className} mt-5 max-w-[900px] text-[10px] leading-[1.75] text-[#303944] xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base`}
           >
-            Discover Corbett’s popular safari zones, offering thrilling wildlife
-            sightings, diverse landscapes, and unforgettable jungle experiences
-            for nature lovers and adventure seekers
+            {readText(
+              section.description,
+              "Discover Corbett’s popular safari zones, offering thrilling wildlife sightings, diverse landscapes, and unforgettable jungle experiences for nature lovers and adventure seekers",
+            )}
           </p>
         </div>
 
@@ -65,7 +104,7 @@ export default function SafariZones() {
         <div
           className={`${robotoCondensed.className} mt-16 flex flex-col gap-14 md:gap-12`}
         >
-          {zones.map((zone, i) => {
+          {displayZones.map((zone, i) => {
             const reverse = i % 2 !== 0;
             return (
               <article
@@ -141,7 +180,7 @@ export default function SafariZones() {
                   <div className="relative h-full w-full">
                     <Image
                       src={zone.image}
-                      alt={`${zone.name} map`}
+                      alt={zone.imageAlt || `${zone.name} map`}
                       fill
                       sizes="(max-width: 768px) 90vw, 320px"
                       className="object-contain"

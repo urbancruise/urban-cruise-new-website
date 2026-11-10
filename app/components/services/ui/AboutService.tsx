@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import type { AboutContent } from "../../AboutSelector";
 import AboutParagraphs from "../../home/about/AboutParagraphs";
 
 const DEFAULT_PARAGRAPHS = [
@@ -14,19 +13,46 @@ const DEFAULT_PARAGRAPHS = [
 // Default image: file ko public/images/about-us.jpg me rakhein
 const FALLBACK_IMAGE = "/images/about-us.jpg";
 
-interface AboutProps {
-  content?: AboutContent | null;
+interface AboutServiceContent {
+  eyebrow?: string;
+  title?: string;
+  tagline?: string;
+  image?: string;
+  imageUrl?: string;
+  paragraphs?: string[];
 }
 
-export default function AboutService({ content }: AboutProps) {
-  const eyebrow = content?.eyebrow ?? "About Us";
-  const title = content?.title ?? "URBAN CRUISE";
-  const tagline = content?.tagline ?? "Your Journey, Our Passion";
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
 
-  const imageUrl = content?.imageUrl?.trim() || FALLBACK_IMAGE;
+function readText(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
 
-  const paragraphs = content?.paragraphs?.length
-    ? content.paragraphs
+export default function AboutService({ content }: { content?: unknown }) {
+  const section: AboutServiceContent = isRecord(content)
+    ? {
+        eyebrow: readText(content.eyebrow, "About Us"),
+        title: readText(content.title, "URBAN CRUISE"),
+        tagline: readText(content.tagline, "Your Journey, Our Passion"),
+        imageUrl: readText(content.imageUrl, readText(content.image, "")),
+        paragraphs: Array.isArray(content.paragraphs)
+          ? content.paragraphs.filter(
+              (paragraph): paragraph is string =>
+                typeof paragraph === "string",
+            )
+          : undefined,
+      }
+    : {};
+
+  const eyebrow = section.eyebrow ?? "About Us";
+  const title = section.title ?? "URBAN CRUISE";
+  const tagline = section.tagline ?? "Your Journey, Our Passion";
+  const imageUrl = section.imageUrl?.trim() || FALLBACK_IMAGE;
+
+  const paragraphs = section.paragraphs?.length
+    ? section.paragraphs
     : DEFAULT_PARAGRAPHS;
 
   return (
