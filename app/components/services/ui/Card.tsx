@@ -7,9 +7,15 @@ import type { MouseEvent } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useLocation } from "@/app/context/LocationContext";
 import { getLocationConfig } from "@/app/lib/locationConfig";
+import {
+  isRecord,
+  readRecords,
+  readStringArray,
+  readText,
+} from "./cms-content";
 
-interface CardContent {
-  id: number;
+export interface CardContent {
+  id: number | string;
   name: string;
   place: string;
   description: { title?: string; detail: string }[];
@@ -93,6 +99,63 @@ export const doDhamYatraPackages: CardContent[] = [
         title: "24/7 Assistance",
         detail:
           "Our support team is always available to handle emergencies like bad weather and road closures.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+];
+
+export const charDhamYatraPackages: CardContent[] = [
+  {
+    id: 1,
+    name: "Complete Char Dham Yatra Package",
+    place: "10-12 Days",
+    description: [
+      {
+        title: "Complete Four-Dham Journey",
+        detail:
+          "Visit Yamunotri, Gangotri, Kedarnath, and Badrinath with a planned itinerary and comfortable vehicle travel through the Himalayas.",
+      },
+      {
+        title: "Comfortable Pilgrimage",
+        detail:
+          "Choose a suitable vehicle for your family or group, with an experienced driver familiar with mountain routes.",
+      },
+      {
+        title: "Trip Support",
+        detail:
+          "Get assistance with journey planning, route information, and stops throughout your Char Dham Yatra.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+  {
+    id: 2,
+    name: "Char Dham Yatra from Haridwar",
+    place: "10-12 Days",
+    description: [
+      {
+        title: "Start from Haridwar",
+        detail:
+          "Begin your pilgrimage from Haridwar and travel to Yamunotri, Gangotri, Kedarnath, and Badrinath.",
+      },
+      {
+        title: "Flexible Vehicle Options",
+        detail:
+          "Arrange a comfortable vehicle for your travel group and planned yatra schedule.",
+      },
+      {
+        title: "Mountain Route Experience",
+        detail:
+          "Travel with a professional driver experienced with the roads and conditions of the Himalayan region.",
       },
     ],
     images: [
@@ -204,6 +267,132 @@ export const otherTourPackages: CardContent[] = [
     ],
   },
 ];
+
+const cardSectionDefaults = {
+  dodhampackages: {
+    eyebrow: "Recommended Stay",
+    title: "Do Dham Yatra Packages",
+    subtitle: "Choose The Right Do Dham Yatra Package For You",
+    description:
+      "We offer two types of Do Dham Yatra packages: the Badrinath-Kedarnath tour package and the Gangotri-Yamunotri tour package.",
+    cards: doDhamYatraPackages,
+    columns: "grid-cols-1 md:grid-cols-2",
+    showCallButton: false,
+  },
+  chardhampackages: {
+    eyebrow: "Char Dham Packages",
+    title: "Char Dham Yatra Packages",
+    subtitle: "Choose the Right Char Dham Yatra Package for You",
+    description:
+      "Explore vehicle options and journey plans for visiting Yamunotri, Gangotri, Kedarnath, and Badrinath.",
+    cards: charDhamYatraPackages,
+    columns: "grid-cols-1 md:grid-cols-2",
+    showCallButton: false,
+  },
+  majorstartingpoints: {
+    eyebrow: "Starting Points",
+    title: "Major Starting Point of the Do Dham Yatra",
+    subtitle: "Start Your Sacred Journey from Delhi, Haridwar & Major Cities",
+    description:
+      "Choose a convenient starting point for your Do Dham pilgrimage, with journeys available from Delhi, Haridwar, and major cities.",
+    cards: majorStartingPointOfTheDoDhamYatra,
+    columns: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    showCallButton: false,
+  },
+  othertourpackages: {
+    eyebrow: "Other Tour Packages",
+    title: "Other Tour Packages",
+    subtitle: "Explore Our Additional Sacred Journeys",
+    description:
+      "Choose a convenient starting point for your Do Dham pilgrimage, with journeys available from Delhi, Haridwar, and major cities.",
+    cards: otherTourPackages,
+    columns: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    showCallButton: true,
+  },
+} as const;
+
+type CardSectionKey = keyof typeof cardSectionDefaults;
+
+function normalizeCardList(value: unknown, fallback: CardContent[]) {
+  const cards = readRecords(value).flatMap((card, index): CardContent[] => {
+    if (typeof card.name !== "string" || !card.name.trim()) return [];
+
+    const description = readRecords(card.description).flatMap((item) =>
+      typeof item.detail === "string"
+        ? [
+            {
+              title: readText(item.title) || undefined,
+              detail: item.detail,
+            },
+          ]
+        : [],
+    );
+    const id =
+      typeof card.id === "number" || typeof card.id === "string"
+        ? card.id
+        : index;
+
+    return [
+      {
+        id,
+        name: card.name,
+        place: readText(card.place),
+        description,
+        images: readStringArray(card.images),
+      },
+    ];
+  });
+
+  return cards.length ? cards : fallback;
+}
+
+export function TourPackageCardSection({
+  sectionKey,
+  content,
+}: {
+  sectionKey: CardSectionKey;
+  content?: unknown;
+}) {
+  const defaults = cardSectionDefaults[sectionKey];
+  const section = isRecord(content) ? content : {};
+  const cards = normalizeCardList(section.cards, [...defaults.cards]);
+
+  return (
+    <section className="bg-white py-12">
+      <div className="mx-auto w-full max-w-[1400px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
+        <div className="mb-10">
+          <div className="mb-2 flex items-center justify-start gap-1.5">
+            <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
+            <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em]">
+              {readText(section.eyebrow, defaults.eyebrow)}
+            </span>
+            <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
+          </div>
+          <h2 className="text-[21px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] xs:text-[23px] sm:text-[27px] md:text-[29px]">
+            {readText(section.title, defaults.title)}
+          </h2>
+          <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
+            {readText(section.subtitle, defaults.subtitle)}
+          </p>
+          <p className="mt-5 max-w-[900px] text-[10px] leading-[1.75] text-[#303944] xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
+            {readText(section.description, defaults.description)}
+          </p>
+        </div>
+        <div className={`grid w-full gap-6 ${defaults.columns}`}>
+          {cards.map((card) => (
+            <Card
+              key={card.id}
+              resort={card}
+              showCallButton={defaults.showCallButton}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export const DoDhamCardSection = TourPackageCardSection;
 
 export default function Card({
   resort,
