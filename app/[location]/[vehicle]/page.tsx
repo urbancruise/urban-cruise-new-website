@@ -204,6 +204,9 @@ export default async function DynamicPage({ params }: PageProps) {
     if (SERVICE_SLUG_TO_TYPE[vehicle] === "do-dham") {
       permanentRedirect("/do-dham-yatra-package");
     }
+    if (SERVICE_SLUG_TO_TYPE[vehicle] === "char-dham") {
+      permanentRedirect("/char-dham-yatra-package");
+    }
   }
 
   // 1. Validate location (async, CMS-driven)

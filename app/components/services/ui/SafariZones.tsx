@@ -30,6 +30,53 @@ const zones: SafariZoneContent[] = [
   },
 ];
 
+const charDhamDestinations: SafariZoneContent[] = [
+  {
+    name: "Yamunotri",
+    image:
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000&auto=format&fit=crop",
+    distance: "Garhwal Himalayas",
+    duration: "Pilgrimage",
+    best: "Temple darshan",
+    description:
+      "Visit Yamunotri, the source of the Yamuna River and the westernmost shrine in the Char Dham circuit.",
+    href: "/char-dham-yatra-package",
+  },
+  {
+    name: "Gangotri",
+    image:
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1000&auto=format&fit=crop",
+    distance: "Garhwal Himalayas",
+    duration: "Pilgrimage",
+    best: "Temple darshan",
+    description:
+      "Explore Gangotri, the sacred Himalayan shrine dedicated to Goddess Ganga.",
+    href: "/char-dham-yatra-package",
+  },
+  {
+    name: "Kedarnath",
+    image:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop",
+    distance: "Garhwal Himalayas",
+    duration: "Pilgrimage",
+    best: "Temple darshan",
+    description:
+      "Pay your respects at Kedarnath Temple, one of the most revered Shiva shrines in India.",
+    href: "/char-dham-yatra-package",
+  },
+  {
+    name: "Badrinath",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1000&auto=format&fit=crop",
+    distance: "Garhwal Himalayas",
+    duration: "Pilgrimage",
+    best: "Temple darshan",
+    description:
+      "Visit Badrinath Temple, a sacred shrine dedicated to Lord Vishnu on the Alaknanda River.",
+    href: "/char-dham-yatra-package",
+  },
+];
+
 interface SafariZoneContent {
   name: string;
   image: string;
@@ -49,12 +96,20 @@ function readText(value: unknown, fallback: string): string {
   return typeof value === "string" && value.trim() ? value.trim() : fallback;
 }
 
-export default function SafariZones({ content }: { content?: unknown }) {
+export default function SafariZones({
+  content,
+  variant = "safari",
+}: {
+  content?: unknown;
+  variant?: "safari" | "char-dham";
+}) {
   const section = isRecord(content) ? content : {};
+  const defaultZones =
+    variant === "char-dham" ? charDhamDestinations : zones;
   const sectionZones: SafariZoneContent[] = Array.isArray(section.zones)
     ? section.zones.flatMap((item, index) => {
         if (!isRecord(item) || typeof item.name !== "string") return [];
-        const fallback = zones[index % zones.length];
+        const fallback = defaultZones[index % defaultZones.length];
         return [{
           name: item.name,
           image: readText(item.image, fallback.image),
@@ -67,7 +122,15 @@ export default function SafariZones({ content }: { content?: unknown }) {
         }];
       })
     : [];
-  const displayZones = sectionZones.length ? sectionZones : zones;
+  const displayZones = sectionZones.length ? sectionZones : defaultZones;
+  const cardLabel = readText(
+    section.cardLabel,
+    variant === "char-dham" ? "Char Dham" : "Safari Zone",
+  );
+  const actionLabel = readText(
+    section.actionLabel,
+    variant === "char-dham" ? "Explore Yatra" : "Book Safari",
+  );
 
   return (
     <section className="w-full bg-white px-4 py-14">
@@ -77,17 +140,32 @@ export default function SafariZones({ content }: { content?: unknown }) {
           <div className="mb-2 flex w-full items-center justify-start gap-1.5">
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
             <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
-              {readText(section.eyebrow, "EXPLORE JUNGLE SAFARI ZONES")}
+              {readText(
+                section.eyebrow,
+                variant === "char-dham"
+                  ? "EXPLORE THE CHAR DHAM"
+                  : "EXPLORE JUNGLE SAFARI ZONES",
+              )}
             </span>
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
 
           <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
-            {readText(section.title, "Jim Corbett National Park, Uttarakhand")}
+            {readText(
+              section.title,
+              variant === "char-dham"
+                ? "The Four Sacred Dhams of Uttarakhand"
+                : "Jim Corbett National Park, Uttarakhand",
+            )}
           </h2>
 
           <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
-            {readText(section.subtitle, "Discover the Best Safari Zones in Jim Corbett")}
+            {readText(
+              section.subtitle,
+              variant === "char-dham"
+                ? "Yamunotri, Gangotri, Kedarnath & Badrinath"
+                : "Discover the Best Safari Zones in Jim Corbett",
+            )}
           </p>
 
           <p
@@ -95,7 +173,9 @@ export default function SafariZones({ content }: { content?: unknown }) {
           >
             {readText(
               section.description,
-              "Discover Corbett’s popular safari zones, offering thrilling wildlife sightings, diverse landscapes, and unforgettable jungle experiences for nature lovers and adventure seekers",
+              variant === "char-dham"
+                ? "Plan a pilgrimage to the four sacred shrines of Yamunotri, Gangotri, Kedarnath, and Badrinath in the Garhwal Himalayas."
+                : "Discover Corbett’s popular safari zones, offering thrilling wildlife sightings, diverse landscapes, and unforgettable jungle experiences for nature lovers and adventure seekers",
             )}
           </p>
         </div>
@@ -134,7 +214,7 @@ export default function SafariZones({ content }: { content?: unknown }) {
                   {/* Text */}
                   <div className="relative z-10 mt-[270px] md:mt-0">
                     <p className="text-xs font-medium uppercase tracking-[0.25em] text-[#078B5A]">
-                      Safari Zone {String(i + 1).padStart(2, "0")}
+                      {cardLabel} {String(i + 1).padStart(2, "0")}
                     </p>
 
                     <h3 className="mt-2 text-4xl font-bold">{zone.name}</h3>
@@ -147,13 +227,13 @@ export default function SafariZones({ content }: { content?: unknown }) {
                     {/* Info pills */}
                     <div className="mt-6 flex flex-wrap gap-3 text-sm text-[#142236]">
                       <span className="rounded-full border border-[#03C35E]/20 bg-[#EAF8EF] px-4 py-1.5">
-                        🛣️ {zone.distance}
+                        {variant === "char-dham" ? "📍" : "🛣️"} {zone.distance}
                       </span>
                       <span className="rounded-full border border-[#03C35E]/20 bg-[#EAF8EF] px-4 py-1.5">
                         ⏱️ {zone.duration}
                       </span>
                       <span className="rounded-full border border-[#03C35E]/20 bg-[#EAF8EF] px-4 py-1.5">
-                        🐯 {zone.best}
+                        {variant === "char-dham" ? "🛕" : "🐯"} {zone.best}
                       </span>
                     </div>
 
@@ -161,7 +241,7 @@ export default function SafariZones({ content }: { content?: unknown }) {
                       href={zone.href}
                       className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#F7941E] px-7 py-3 font-bold text-white transition hover:bg-[#E8840A]"
                     >
-                      Book Safari
+                      {actionLabel}
                       <span className="transition-transform group-hover:translate-x-1">
                         →
                       </span>

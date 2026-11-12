@@ -3,8 +3,17 @@
 import Link from "next/link";
 import { FaArrowRight, FaBus, FaCalendarAlt, FaTag, FaStar } from "react-icons/fa";
 import { useLocation } from "@/app/context/LocationContext";
+import { isRecord, readRecords, readText } from "./cms-content";
 
-const vehicles = [
+interface VehiclePackageRow {
+  vehicle: string;
+  layout: string;
+  charDham: string;
+  doDham: string;
+  amenities: string;
+}
+
+const defaultVehicles: VehiclePackageRow[] = [
   { vehicle: "Maruti Suzuki Ertiga",  layout: "6 Seater", charDham: "60,000", doDham: "35,000", amenities: "Captain Seats, AC, Music, Charging Point" },
   { vehicle: "Innova Crysta", layout: "6 Seater", charDham: "66,000", doDham: "38,500", amenities: "Premium Captain Seats, AC, Music, Charging Point" },
   { vehicle: "Maharaja Tempo Traveller 12 Seater VIP Seats", layout: "1x1", charDham: "1,14,000", doDham: "66,500", amenities: "VIP Pushback Maharaja Seats, Premium AC Vents, Music Headrest" },
@@ -20,7 +29,25 @@ const vehicles = [
 const GRID_COLS =
   "grid-cols-[1.4fr_0.9fr_0.9fr_0.9fr_1fr_0.8fr]";
 
-function BookNowLink() {
+function normalizeVehicles(value: unknown): VehiclePackageRow[] {
+  const vehicles = readRecords(value).flatMap((vehicle) =>
+    typeof vehicle.vehicle === "string" && vehicle.vehicle.trim()
+      ? [
+          {
+            vehicle: vehicle.vehicle,
+            layout: readText(vehicle.layout),
+            charDham: readText(vehicle.charDham),
+            doDham: readText(vehicle.doDham),
+            amenities: readText(vehicle.amenities),
+          },
+        ]
+      : [],
+  );
+
+  return vehicles.length ? vehicles : defaultVehicles;
+}
+
+function BookNowLink({ label }: { label: string }) {
   const { getLocationUrl } = useLocation();
 
   return (
@@ -28,7 +55,7 @@ function BookNowLink() {
       href={getLocationUrl("/book")}
       className="group inline-flex h-9 items-center justify-between gap-2 rounded-full bg-[#188A31] pl-4 pr-1 text-[11px] font-bold text-white shadow-sm transition-colors hover:bg-[#116d25]"
     >
-      <span>Book Now</span>
+      <span>{label}</span>
       <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#188A31] transition-transform group-hover:translate-x-0.5">
         <FaArrowRight aria-hidden="true" />
       </span>
@@ -36,7 +63,32 @@ function BookNowLink() {
   );
 }
 
-export default function VehiclePackage() {
+export default function VehiclePackage({ content }: { content?: unknown }) {
+  const section = isRecord(content) ? content : {};
+  const columns = isRecord(section.columns) ? section.columns : {};
+  const vehicles = normalizeVehicles(section.vehicles);
+  const labels = {
+    eyebrow: readText(section.eyebrow, "Vehicles & Packages"),
+    title: readText(section.title, "Vehicle-wise Package Summary"),
+    subtitle: readText(
+      section.subtitle,
+      "Char Dham Yatra & Do Dham Yatra packages 2026",
+    ),
+    description: readText(
+      section.description,
+      "Choose a comfortable Tempo Traveller for your Do Dham pilgrimage. Available in multiple seating layouts for family and group journeys across scenic Himalayan routes.",
+    ),
+    vehicle: readText(columns.vehicle, "Vehicle"),
+    layout: readText(columns.layout, "Seating Config"),
+    charDham: readText(columns.charDham, "Char Dham (12 Days)"),
+    doDham: readText(columns.doDham, "Do Dham (7 Days)"),
+    mobileCharDham: readText(columns.mobileCharDham, "Char Dham"),
+    mobileDoDham: readText(columns.mobileDoDham, "Do Dham"),
+    amenities: readText(columns.amenities, "Amenities"),
+    book: readText(columns.book, "Book"),
+    bookButton: readText(columns.bookButton, "Book Now"),
+  };
+
   return (
     <section className="w-full bg-white py-8 sm:py-10 md:py-12">
       <div className="mx-auto w-full max-w-[1400px] px-4 xs:px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16">
@@ -45,20 +97,18 @@ export default function VehiclePackage() {
             <div className="mb-2 flex items-center gap-2">
               <span className="h-px w-8 bg-gray-400/60 sm:w-10" />
               <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#03C35E] sm:text-[10px]">
-                Vehicles &amp; Packages
+                {labels.eyebrow}
               </span>
               <span className="h-px w-8 bg-gray-400/60 sm:w-10" />
             </div>
             <h2 className="text-[25px] font-extrabold leading-[1.08] tracking-[-0.04em] text-[#142236] sm:text-[32px] md:text-[38px]">
-              Vehicle-wise Package Summary
+              {labels.title}
             </h2>
             <p className="mt-2 font-serif text-[18px] italic leading-tight text-[#03C35E] sm:text-[22px] md:text-[25px]">
-              Char Dham Yatra &amp; Do Dham Yatra packages 2026
+              {labels.subtitle}
             </p>
             <p className="mt-3 max-w-[620px] text-[11px] leading-relaxed text-[#303944] sm:text-xs">
-              Choose a comfortable Tempo Traveller for your Do Dham pilgrimage.
-              Available in multiple seating layouts for family and group
-              journeys across scenic Himalayan routes.
+              {labels.description}
             </p>
           </div>
         </div>
@@ -71,31 +121,31 @@ export default function VehiclePackage() {
             <div className="flex items-center gap-3 border-r border-white/20 px-4 md:px-6">
               <FaBus className="text-xl text-white" aria-hidden="true" />
               <span className="text-[11px] font-extrabold uppercase text-white md:text-xs">
-                Vehicle
+                {labels.vehicle}
               </span>
             </div>
             <div className="flex items-center gap-3 border-r border-white/20 px-4 md:px-6">
               <FaTag className="text-lg text-white" aria-hidden="true" />
               <span className="text-[11px] font-extrabold uppercase text-white md:text-xs">
-                Seating Config
+                {labels.layout}
               </span>
             </div>
             <div className="flex items-center gap-3 border-r border-white/20 px-4 md:px-6">
               <FaTag className="text-lg text-white" aria-hidden="true" />
               <span className="text-[11px] font-extrabold uppercase text-white md:text-xs">
-                Char Dham (12 Days)
+                {labels.charDham}
               </span>
             </div>
             <div className="flex items-center gap-3 border-r border-white/20 px-4 md:px-6">
               <FaTag className="text-lg text-white" aria-hidden="true" />
               <span className="text-[11px] font-extrabold uppercase text-white md:text-xs">
-                Do Dham (7 Days)
+                {labels.doDham}
               </span>
             </div>
             <div className="flex items-center gap-3 border-r border-white/20 px-4 md:px-6">
               <FaStar className="text-lg text-white" aria-hidden="true" />
               <span className="text-[11px] font-extrabold uppercase text-white md:text-xs">
-                Amenities
+                {labels.amenities}
               </span>
             </div>
             <div className="flex items-center gap-3 px-4 md:px-6">
@@ -104,7 +154,7 @@ export default function VehiclePackage() {
                 aria-hidden="true"
               />
               <span className="text-[11px] font-extrabold uppercase text-white md:text-xs">
-                Book
+                {labels.book}
               </span>
             </div>
           </div>
@@ -163,7 +213,7 @@ export default function VehiclePackage() {
 
                 {/* 6. Book */}
                 <div className="flex h-full items-center px-4 md:px-6">
-                  <BookNowLink />
+                  <BookNowLink label={labels.bookButton} />
                 </div>
               </div>
             ))}
@@ -193,7 +243,7 @@ export default function VehiclePackage() {
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   <div className="rounded-lg bg-[#f7fceb] px-3 py-2">
                     <p className="text-[9px] font-bold uppercase text-[#188A31]/70">
-                      Char Dham
+                      {labels.mobileCharDham}
                     </p>
                     <p className="text-sm font-extrabold text-[#188A31]">
                       ₹{vehicle.charDham}
@@ -202,7 +252,7 @@ export default function VehiclePackage() {
                   </div>
                   <div className="rounded-lg bg-[#f7fceb] px-3 py-2">
                     <p className="text-[9px] font-bold uppercase text-[#188A31]/70">
-                      Do Dham
+                      {labels.mobileDoDham}
                     </p>
                     <p className="text-sm font-extrabold text-[#188A31]">
                       ₹{vehicle.doDham}
@@ -215,7 +265,7 @@ export default function VehiclePackage() {
                   <p className="text-[10px] text-[#424a54]">
                     {vehicle.amenities}
                   </p>
-                  <BookNowLink />
+                  <BookNowLink label={labels.bookButton} />
                 </div>
               </div>
             ))}

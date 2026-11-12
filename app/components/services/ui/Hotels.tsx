@@ -50,6 +50,20 @@ const defaultHotels: HotelContent[] = [
   },
 ];
 
+const charDhamHotels: HotelContent[] = [
+  ...defaultHotels,
+  {
+    id: 4,
+    name: "Hotels in Kedarnath",
+    location: "Kedarnath",
+    hotelCount: "18+ Hotels",
+    image:
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000&auto=format&fit=crop",
+    imageAlt: "Mountain accommodation near Kedarnath",
+    description: "Budget to comfortable stays · Meals · Yatra assistance",
+  },
+];
+
 function ReadMoreText({ text }: { text: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const limit = 100;
@@ -97,13 +111,16 @@ function normalizeHotels(value: unknown): HotelContent[] {
 export default function Hotels({
   content,
   location,
+  yatra = "Do Dham",
 }: {
   content?: unknown;
   location: ServiceLocation;
+  yatra?: "Do Dham" | "Char Dham";
 }) {
   const section = isRecord(content) ? content : {};
   const configuredHotels = normalizeHotels(section.hotels);
-  const displayHotels = configuredHotels.length ? configuredHotels : defaultHotels;
+  const defaultHotelList = yatra === "Char Dham" ? charDhamHotels : defaultHotels;
+  const displayHotels = configuredHotels.length ? configuredHotels : defaultHotelList;
   const phone = getLocationConfig(location).phone.replace(/\s/g, "");
 
   return (
@@ -118,7 +135,7 @@ export default function Hotels({
             <span className="block h-px w-6 bg-gray-400/60 sm:w-8 md:w-10 lg:w-12" />
           </div>
           <h2 className="text-[21px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236] xs:text-[23px] sm:text-[27px] md:text-[29px]">
-            {readText(section.title, "Hotels for Your Do Dham Yatra")}
+            {readText(section.title, `Hotels for Your ${yatra} Yatra`)}
           </h2>
           <p className="mt-2 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
             {readText(section.subtitle, "Comfortable Stays Along Your Journey")}
