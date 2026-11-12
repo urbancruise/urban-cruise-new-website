@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { LocationProvider } from "./context/LocationContext";
 import SocialMedia from "./components/social-media/SocialMedia";
+import OfferPopup from "./components/shared/OfferPopup";
 import JsonLdScript from "./components/seo/JsonLdScript";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { createSiteMetadata } from "@/lib/seo";
@@ -32,6 +33,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <SocialMedia />
+          <OfferPopup />
         </LocationProvider>
       </body>
     </html>
