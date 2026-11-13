@@ -3,6 +3,8 @@ export const serviceUrlMappings: Record<string, Record<string, string>> = {
   'global': {
     'jim-corbett': 'jim-corbett',
     'char-dham': 'char-dham-yatra-package',
+    'wedding': 'wedding',
+    'corporate': 'corporate-travel-rental-service',
   },
   'delhi': {
     'jim-corbett': 'delhi-to-jim-corbett-vehicle-rental',

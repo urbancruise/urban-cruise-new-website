@@ -7,6 +7,7 @@ import type { MouseEvent } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useLocation } from "@/app/context/LocationContext";
 import { getLocationConfig } from "@/app/lib/locationConfig";
+import { getServiceUrl } from "@/app/lib/serviceUrlMappings";
 import {
   isRecord,
   readRecords,
@@ -162,6 +163,120 @@ export const charDhamYatraPackages: CardContent[] = [
       "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+];
+
+export const weddingTravelPackages: CardContent[] = [
+  {
+    id: 1,
+    name: "Wedding Car and Convoy",
+    place: "Flexible",
+    description: [
+      {
+        title: "Special Day Travel",
+        detail:
+          "Arrange premium cars for the couple and a coordinated convoy for family members.",
+      },
+      {
+        title: "Professional Chauffeurs",
+        detail:
+          "Travel with experienced drivers and flexible pickup and drop-off timing.",
+      },
+      {
+        title: "Personalized Arrangements",
+        detail:
+          "Choose vehicles and optional decorations to suit your wedding plans.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1200&auto=format&fit=crop",
+    ],
+  },
+  {
+    id: 2,
+    name: "Wedding Guest Transport",
+    place: "Custom Plan",
+    description: [
+      {
+        title: "Comfortable Group Travel",
+        detail:
+          "Choose tempo travellers, mini buses, or luxury buses for your guest group.",
+      },
+      {
+        title: "Venue Transfers",
+        detail:
+          "Coordinate guest pickups, drop-offs, and travel between wedding venues.",
+      },
+      {
+        title: "Flexible Vehicle Options",
+        detail:
+          "Plan transport around your guest count, schedule, and event locations.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop",
+    ],
+  },
+];
+
+export const corporateTravelPackages: CardContent[] = [
+  {
+    id: 1,
+    name: "Employee Transport",
+    place: "Monthly",
+    description: [
+      {
+        title: "Daily Office Commute",
+        detail:
+          "Arrange dependable employee pickups and drop-offs across multiple office routes.",
+      },
+      {
+        title: "Professional Drivers",
+        detail:
+          "Provide employees with comfortable, professionally driven vehicles for their commute.",
+      },
+      {
+        title: "Flexible Scheduling",
+        detail:
+          "Coordinate transport around your team's working hours and route requirements.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1200&auto=format&fit=crop",
+    ],
+  },
+  {
+    id: 2,
+    name: "Executive Travel",
+    place: "Custom",
+    description: [
+      {
+        title: "Premium Vehicles",
+        detail:
+          "Arrange executive vehicles for client meetings, airport transfers, and business trips.",
+      },
+      {
+        title: "Priority Service",
+        detail:
+          "Coordinate punctual pickups with professional drivers and dedicated support.",
+      },
+      {
+        title: "Corporate Events",
+        detail:
+          "Plan coordinated group transport for conferences, events, and team outings.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
     ],
   },
 ];
@@ -400,6 +515,26 @@ const cardSectionDefaults = {
     columns: "grid-cols-1 md:grid-cols-2",
     showCallButton: false,
   },
+  weddingpackages: {
+    eyebrow: "Wedding Packages",
+    title: "Wedding Travel Packages",
+    subtitle: "Choose the Right Wedding Travel Plan for You",
+    description:
+      "Explore comfortable vehicle options for wedding celebrations, couple travel, and guest transportation.",
+    cards: weddingTravelPackages,
+    columns: "grid-cols-1 md:grid-cols-2",
+    showCallButton: false,
+  },
+  corporatepackages: {
+    eyebrow: "Corporate Packages",
+    title: "Corporate Travel Packages",
+    subtitle: "Choose the Right Corporate Travel Plan for You",
+    description:
+      "Explore dependable employee transportation, executive travel, and event transport options for your business.",
+    cards: corporateTravelPackages,
+    columns: "grid-cols-1 md:grid-cols-2",
+    showCallButton: false,
+  },
   pilgrimagepackages: {
     eyebrow: "Pilgrimage Packages",
     title: "Pilgrimage Tour Packages",
@@ -477,6 +612,13 @@ export function TourPackageCardSection({
   const defaults = cardSectionDefaults[sectionKey];
   const section = isRecord(content) ? content : {};
   const cards = normalizeCardList(section.cards, [...defaults.cards]);
+  const { location } = useLocation();
+  const serviceUrl =
+    sectionKey === "weddingpackages"
+      ? getServiceUrl(location, "wedding")
+      : sectionKey === "corporatepackages"
+        ? getServiceUrl(location, "corporate")
+        : undefined;
 
   return (
     <section className="bg-white py-12">
@@ -505,6 +647,9 @@ export function TourPackageCardSection({
               key={card.id}
               resort={card}
               showCallButton={defaults.showCallButton}
+              readMoreHref={
+                serviceUrl ? `${serviceUrl}#package-${card.id}` : undefined
+              }
             />
           ))}
         </div>
@@ -519,10 +664,12 @@ export default function Card({
   resort,
   showTitle = true,
   showCallButton = false,
+  readMoreHref,
 }: {
   resort: CardContent;
   showTitle?: boolean;
   showCallButton?: boolean;
+  readMoreHref?: string;
 }) {
   const [activeImage, setActiveImage] = useState(0);
   const { getLocationUrl, location } = useLocation();
@@ -672,7 +819,10 @@ export default function Card({
             </a>
           ) : (
             <Link
-              href={`/do-dham-yatra-package#package-${resort.id}`}
+              href={
+                readMoreHref ??
+                `/do-dham-yatra-package#package-${resort.id}`
+              }
               className="w-full max-w-[150px] rounded-full border border-[#F7941E] bg-white px-3 py-2 text-center text-sm font-semibold text-[#D97706] transition-colors duration-300 hover:bg-[#F7941E] hover:text-white"
             >
               Read More

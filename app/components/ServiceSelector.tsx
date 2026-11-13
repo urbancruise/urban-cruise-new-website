@@ -47,6 +47,7 @@ const DelhiWeddingPage = dynamic(() => import("./services/DelhiWeddingPage"));
 const GurugramWeddingPage = dynamic(() => import("./services/GurugramWeddingPage"));
 const MumbaiWeddingPage = dynamic(() => import("./services/MumbaiWeddingPage"));
 const PuneWeddingPage = dynamic(() => import("./services/PuneWeddingPage"));
+const GlobalWeddingPage = dynamic(() => import("./services/GlobalWeddingPage"));
 
 // ======================================================
 // LAZY LOAD — CORPORATE
@@ -55,6 +56,7 @@ const DelhiCorporatePage = dynamic(() => import("./services/DelhiCorporatePage")
 const GurugramCorporatePage = dynamic(() => import("./services/GurugramCorporatePage"));
 const MumbaiCorporatePage = dynamic(() => import("./services/MumbaiCorporatePage"));
 const PuneCorporatePage = dynamic(() => import("./services/PuneCorporatePage"));
+const GlobalCorporatePage = dynamic(() => import("./services/GlobalCorporatePage"));
 
 // ======================================================
 // LAZY LOAD — VACATIONS
@@ -101,6 +103,10 @@ const serviceMap: Record<
   string,
   Record<string, React.ComponentType<any>>
 > = {
+  global: {
+    wedding: GlobalWeddingPage,
+    corporate: GlobalCorporatePage,
+  },
   delhi: {
     "jim-corbett": DelhiJimCorbettPage,
     "do-dham": DelhiDoDhamPage,
