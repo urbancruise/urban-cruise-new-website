@@ -166,6 +166,117 @@ export const charDhamYatraPackages: CardContent[] = [
   },
 ];
 
+export const pilgrimagePackages: CardContent[] = [
+  {
+    id: 1,
+    name: "Pilgrimage Tour Package",
+    place: "3 Days",
+    description: [
+      {
+        title: "Sacred Destination Visits",
+        detail:
+          "Plan a comfortable trip to important temples and pilgrimage destinations with a professional driver.",
+      },
+      {
+        title: "Comfortable Vehicle Travel",
+        detail:
+          "Choose a suitable car, tempo traveller, or bus for your family or group.",
+      },
+      {
+        title: "Journey Support",
+        detail:
+          "Get help with route planning, travel stops, and the details of your pilgrimage journey.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+  {
+    id: 2,
+    name: "Premium Pilgrimage Package",
+    place: "5 Days",
+    description: [
+      {
+        title: "A Longer Spiritual Journey",
+        detail:
+          "Explore multiple sacred destinations with time for temple visits and rest along the way.",
+      },
+      {
+        title: "Flexible Vehicle Options",
+        detail:
+          "Arrange a comfortable vehicle to suit your travel group and itinerary.",
+      },
+      {
+        title: "Personalized Travel",
+        detail:
+          "Plan pickup, stops, and destination visits around your group's requirements.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+  {
+    id: 3,
+    name: "Group Pilgrimage Package",
+    place: "4 Days",
+    description: [
+      {
+        title: "Travel Together",
+        detail:
+          "Keep your group together with vehicle options for different group sizes.",
+      },
+      {
+        title: "Planned Temple Visits",
+        detail:
+          "Coordinate temple visits and travel stops with a flexible itinerary.",
+      },
+      {
+        title: "Experienced Drivers",
+        detail:
+          "Travel with a professional driver familiar with long-distance journeys.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+  {
+    id: 4,
+    name: "Custom Pilgrimage Package",
+    place: "Flexible",
+    description: [
+      {
+        title: "Choose Your Destinations",
+        detail:
+          "Create a pilgrimage itinerary around the sacred destinations you want to visit.",
+      },
+      {
+        title: "Flexible Schedule",
+        detail:
+          "Set your travel dates, pickup point, and journey duration to suit your plans.",
+      },
+      {
+        title: "Personalized Experience",
+        detail:
+          "Get a travel plan tailored to your group and vehicle requirements.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+];
+
 export const majorStartingPointOfTheDoDhamYatra: CardContent[] = [
   {
     id: 1,
@@ -286,6 +397,16 @@ const cardSectionDefaults = {
     description:
       "Explore vehicle options and journey plans for visiting Yamunotri, Gangotri, Kedarnath, and Badrinath.",
     cards: charDhamYatraPackages,
+    columns: "grid-cols-1 md:grid-cols-2",
+    showCallButton: false,
+  },
+  pilgrimagepackages: {
+    eyebrow: "Pilgrimage Packages",
+    title: "Pilgrimage Tour Packages",
+    subtitle: "Choose the Right Pilgrimage Package for You",
+    description:
+      "Explore vehicle options and journey plans for visiting sacred destinations across India.",
+    cards: pilgrimagePackages,
     columns: "grid-cols-1 md:grid-cols-2",
     showCallButton: false,
   },

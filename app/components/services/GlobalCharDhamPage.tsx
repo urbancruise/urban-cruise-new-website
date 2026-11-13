@@ -6,7 +6,7 @@ import HowItWorks from "./ui/HowItWorks";
 import VehicleForEveryGroupSize from "./ui/VehicleForEveryGroupSize";
 import VehicleForEveryOccasion from "./ui/VehicleForEveryOccasion";
 import Hotels from "./ui/Hotels";
-import CharDhamPageSections from "./CharDhamPageSections";
+import CharDhamPageSections from "./ui/CharDhamPageSections";
 import WhyChooseUrbanCruise from "./ui/WhyChooseUrbanCruise";
 import Testimonial from "./ui/Testimonial";
 import Faqs from "./ui/Faqs";

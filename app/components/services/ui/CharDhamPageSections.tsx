@@ -1,6 +1,6 @@
 "use client";
 
-import { TourPackageCardSection } from "./ui/Card";
+import { TourPackageCardSection } from "./Card";
 
 export default function CharDhamPageSections({
   cmsSections,
