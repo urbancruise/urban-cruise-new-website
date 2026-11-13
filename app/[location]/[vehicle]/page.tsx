@@ -140,9 +140,11 @@ const SERVICE_SLUG_TO_TYPE: Record<string, string> = {
   "wedding-cars-and-bus-rental-gurugram": "wedding",
   "wedding-cars-and-bus-rental-pune": "wedding",
   "wedding-car-rental-in-mumbai-wedding-bus-rental-in-mumbai": "wedding",
+  "wedding": "wedding",
 
   "corporate-travel-rental-service": "corporate",
   "corporate-bus-service-in-mumbai-corporate-travel-in-mumbai": "corporate",
+  "corporate": "corporate",
 
   "vacation-bus-and-car-rentals-in-delhi": "vacations",
   "vacation-bus-and-car-rentals-in-gurugram": "vacations",
@@ -200,6 +202,12 @@ export default async function DynamicPage({ params }: PageProps) {
   if (location === "global") {
     if (vehicle === "jim-corbett") {
       permanentRedirect("/jim-corbett");
+    }
+    if (vehicle === "wedding") {
+      permanentRedirect("/wedding");
+    }
+    if (SERVICE_SLUG_TO_TYPE[vehicle] === "corporate") {
+      permanentRedirect("/corporate-travel-rental-service");
     }
     if (SERVICE_SLUG_TO_TYPE[vehicle] === "do-dham") {
       permanentRedirect("/do-dham-yatra-package");
