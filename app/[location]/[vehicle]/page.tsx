@@ -146,6 +146,7 @@ const SERVICE_SLUG_TO_TYPE: Record<string, string> = {
   "corporate-bus-service-in-mumbai-corporate-travel-in-mumbai": "corporate",
   "corporate": "corporate",
 
+  "vacations": "vacations",
   "vacation-bus-and-car-rentals-in-delhi": "vacations",
   "vacation-bus-and-car-rentals-in-gurugram": "vacations",
   "vacation-bus-and-car-rentals-in-pune": "vacations",
@@ -205,6 +206,9 @@ export default async function DynamicPage({ params }: PageProps) {
     }
     if (vehicle === "wedding") {
       permanentRedirect("/wedding");
+    }
+    if (SERVICE_SLUG_TO_TYPE[vehicle] === "vacations") {
+      permanentRedirect("/vacations");
     }
     if (SERVICE_SLUG_TO_TYPE[vehicle] === "corporate") {
       permanentRedirect("/corporate-travel-rental-service");
