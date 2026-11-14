@@ -392,6 +392,63 @@ export const pilgrimagePackages: CardContent[] = [
   },
 ];
 
+export const vacationPackages: CardContent[] = [
+  {
+    id: 1,
+    name: "Weekend Getaway",
+    place: "2-3 Days",
+    description: [
+      {
+        title: "Flexible Weekend Itinerary",
+        detail:
+          "Plan a short escape to nearby hill stations, nature retreats, or cities with a schedule tailored to your group.",
+      },
+      {
+        title: "Comfortable Vehicle Options",
+        detail:
+          "Choose a car, tempo traveller, or bus that fits your group size and travel plans.",
+      },
+      {
+        title: "Convenient Trip Support",
+        detail:
+          "Coordinate pickup, sightseeing stops, and return travel with a professional driver.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+  {
+    id: 2,
+    name: "Family Vacation Package",
+    place: "5-7 Days",
+    description: [
+      {
+        title: "Travel Together",
+        detail:
+          "Explore multiple destinations with a vehicle suited to your family or group.",
+      },
+      {
+        title: "Personalized Travel Plan",
+        detail:
+          "Set your destinations, travel dates, and sightseeing stops around your vacation plans.",
+      },
+      {
+        title: "Reliable Journey Support",
+        detail:
+          "Travel with a professional driver and get assistance planning routes and stops.",
+      },
+    ],
+    images: [
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=800&auto=format&fit=crop",
+    ],
+  },
+];
+
 export const majorStartingPointOfTheDoDhamYatra: CardContent[] = [
   {
     id: 1,
@@ -515,6 +572,16 @@ const cardSectionDefaults = {
     columns: "grid-cols-1 md:grid-cols-2",
     showCallButton: false,
   },
+  vacationpackages: {
+    eyebrow: "Vacation Packages",
+    title: "Vacation Travel Packages",
+    subtitle: "Choose the Right Vacation Package for You",
+    description:
+      "Explore comfortable vehicle options and flexible travel plans for weekend getaways and family vacations.",
+    cards: vacationPackages,
+    columns: "grid-cols-1 md:grid-cols-2",
+    showCallButton: false,
+  },
   weddingpackages: {
     eyebrow: "Wedding Packages",
     title: "Wedding Travel Packages",
@@ -618,7 +685,9 @@ export function TourPackageCardSection({
       ? getServiceUrl(location, "wedding")
       : sectionKey === "corporatepackages"
         ? getServiceUrl(location, "corporate")
-        : undefined;
+        : sectionKey === "vacationpackages"
+          ? getServiceUrl(location, "vacations")
+          : undefined;
 
   return (
     <section className="bg-white py-12">

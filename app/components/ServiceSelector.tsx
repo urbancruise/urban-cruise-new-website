@@ -61,6 +61,7 @@ const GlobalCorporatePage = dynamic(() => import("./services/GlobalCorporatePage
 // ======================================================
 // LAZY LOAD — VACATIONS
 // ======================================================
+const GlobalVacationsPage = dynamic(() => import("./services/GlobalVacationsPage"));
 const DelhiVacationsPage = dynamic(() => import("./services/DelhiVacationsPage"));
 const GurugramVacationsPage = dynamic(() => import("./services/GurugramVacationsPage"));
 const MumbaiVacationsPage = dynamic(() => import("./services/MumbaiVacationsPage"));
@@ -106,6 +107,7 @@ const serviceMap: Record<
   global: {
     wedding: GlobalWeddingPage,
     corporate: GlobalCorporatePage,
+    vacations: GlobalVacationsPage,
   },
   delhi: {
     "jim-corbett": DelhiJimCorbettPage,
