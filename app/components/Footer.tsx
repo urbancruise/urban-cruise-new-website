@@ -102,7 +102,7 @@ const infoLinks = [
   { label: "FAQ's", icon: FaCircleQuestion, href: "/faqs" },
   { label: "Blog", icon: FaPenToSquare, href: "/blog" },
   { label: "News & Media", icon: FaNewspaper, href: "/news-media" },
-  { label: "Privacy", icon: FaShieldHalved, href: "/privacy-policy" },
+  { label: "Privacy", icon: FaShieldHalved, href: "/privacy" },
   { label: "Terms & Conditions", icon: FaBook, href: "/terms-conditions" },
 ];
 

@@ -15,7 +15,6 @@ import GlobalFaqsSelector from "@/app/components/GlobalFaqsSelector";
 import VehicleRentalServiceInIndiaSelector from "@/app/components/VehicleRentalServiceInIndiaSelector";
 import OurTrustedPartner from "@/app/components/ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "@/app/components/download-app/DownloadApp";
-import ComingSoon from "./coming-soon";
 import LocationRedirect from "@/app/components/LocationRedirect";
 import JsonLd from "@/app/components/seo/JsonLd";
 import { createSiteMetadata } from "@/lib/seo";
@@ -63,7 +62,6 @@ export default async function Home() {
       />
       <OurTrustedPartner content={sections.partners} />
       <DownloadApp content={sections.downloadapp} />
-      <ComingSoon />
     </div>
   );
 }
