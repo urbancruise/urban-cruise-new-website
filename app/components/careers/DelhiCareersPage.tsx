@@ -1,13 +1,12 @@
 // app/components/careers/DelhiCareersPage.tsx
 "use client";
 
-import ApplyForm from "./ui/ApplyForm";
-import Gallery from "./ui/Gallery";
 import Hero from "./ui/Hero";
 import HiringProcess from "./ui/HiringProcess";
-import OpenRoles from "./ui/OpenRoles";
 import Perks from "./ui/Perks";
 import WhyJoin from "./ui/WhyJoin";
+import DelhiVehicleRentalServiceInIndia from "../home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia";
+import OurTrustedPartner from "../ourtrustedpartner/OurTrustedPartner";
 
 export default function DelhiCareersPage() {
   return (
@@ -36,20 +35,6 @@ export default function DelhiCareersPage() {
           titleHighlight: "to our team members",
         }}
       />
-      <Gallery
-        content={{
-          eyebrow: "Life at Urban Cruise Delhi",
-          title: "A glimpse into",
-          titleHighlight: "our work culture",
-        }}
-      />
-      <OpenRoles
-        content={{
-          eyebrow: "Open Roles",
-          title: "Current",
-          titleHighlight: "job openings",
-        }}
-      />
       <HiringProcess
         content={{
           eyebrow: "Hiring Process",
@@ -57,11 +42,21 @@ export default function DelhiCareersPage() {
           titleHighlight: "join our team",
         }}
       />
-      <ApplyForm
+      <OurTrustedPartner
         content={{
-          eyebrow: "Ready to Apply?",
-          title: "Take the next step",
-          titleHighlight: "in your career",
+          eyebrow: "Our trusted partner",
+          title: "Partnering with",
+          titleHighlight: "the best in the industry",
+        }}
+      />
+      <DelhiVehicleRentalServiceInIndia
+        content={{
+          eyebrow: "Our Network",
+          title: "INDIA",
+          titleHighlight: "",
+          subtitle: "",
+          description:
+            "We take pride in delivering comfortable rides, on-time service and memorable journeys for every customer.",
         }}
       />
     </div>

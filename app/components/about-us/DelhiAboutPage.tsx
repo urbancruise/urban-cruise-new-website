@@ -1,6 +1,8 @@
 // app/components/about-us/DelhiAboutPage.tsx
 "use client";
 
+import DelhiVehicleRentalServiceInIndia from "../home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia";
+import OurTrustedPartner from "../ourtrustedpartner/OurTrustedPartner";
 import About from "./ui/About";
 import Hero from "./ui/Hero";
 import OfficesTeam from "./ui/OfficesTeam";
@@ -35,6 +37,19 @@ export default function DelhiAboutPage() {
         eyebrow: "Meet our team",
         title: "The people behind",
         titleHighlight: "Urban Cruise Delhi",
+      }} />
+      <OurTrustedPartner content={{
+        eyebrow: "Our trusted partner",
+        title: "Partnering with",
+        titleHighlight: "the best in the industry",
+      }} />
+      <DelhiVehicleRentalServiceInIndia content={{
+        eyebrow: "Our Network",
+        title: "INDIA",
+        titleHighlight: "",
+        subtitle: "",
+        description:
+          "We take pride in delivering comfortable rides, on-time service and memorable journeys for every customer.",
       }} />
     </div>
   );

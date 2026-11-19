@@ -1,42 +1,86 @@
-import Link from "next/link";
+// app/components/about-us/ui/Hero.tsx
 import Image from "next/image";
 
-export default function Hero() {
+export interface HeroProps {
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    titleHighlight?: string;
+    description?: string;
+    backgroundImage?: string;
+    backgroundImageAlt?: string;
+    vehiclesImage?: string;
+    vehiclesImageAlt?: string;
+  };
+}
+
+export default function Hero({ content }: HeroProps) {
+  const eyebrow = content?.eyebrow?.trim() || "Urban Cruise bus & car rental";
+  const title = content?.title?.trim() || "About Urban Cruise";
+  const titleHighlight =
+    content?.titleHighlight?.trim() || "Your trusted travel partner";
+  const description =
+    content?.description?.trim() ||
+    "Urban Cruise provides premium car, tempo traveller, and bus rentals in Delhi NCR, with well-maintained vehicles, professional drivers, and transparent pricing for every journey.";
+  const bgImage = content?.backgroundImage?.trim() || "/images/hero/herobg.webp";
+  const vehiclesImage =
+    content?.vehiclesImage?.trim() || "/images/hero/3 images.webp";
+
+  const bgImageAlt =
+    content?.backgroundImageAlt?.trim() || "About Urban Cruise";
+  const vehiclesImageAlt =
+    content?.vehiclesImageAlt?.trim() ||
+    "Premium cars and buses available for rental in Delhi";
+
   return (
-    <section className="relative overflow-hidden bg-[#142236] text-white">
-      <Image
-        src="/images/careers/hero.jpg"
-        alt="Urban Cruise bus on the road"
-        fill
-        priority
-        className="object-cover opacity-25"
-      />
-      <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 md:py-32">
-        <p className="mb-4 inline-block rounded-full bg-[#03C35E]/15 px-4 py-1 text-sm font-medium text-[#03C35E]">
-          We&apos;re hiring across Delhi NCR
-        </p>
-        <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
-          Build your career with Urban Cruise
-        </h1>
-        <p className="mt-5 max-w-xl text-base text-white/80 sm:text-lg">
-          Join the team that moves families, offices and tour groups every day. Fair pay, a
-          respectful workplace and room to grow.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link
-            href="#open-roles"
-            className="rounded-lg bg-[#03C35E] px-6 py-3 font-semibold text-[#142236] transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            See open roles
-          </Link>
-          <Link
-            href="#apply"
-            className="rounded-lg border border-white/40 px-6 py-3 font-semibold transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            Apply now
-          </Link>
+    <section className="relative w-full bg-white">
+      <div className="relative w-full overflow-hidden aspect-[3/4] xs:aspect-[4/5] sm:aspect-[16/12] md:aspect-[16/10] lg:aspect-[16/9] xl:aspect-[21/10]">
+        <Image
+          src={bgImage}
+          alt={bgImageAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[30%] bg-gradient-to-b from-transparent via-white/70 to-white sm:h-[28%] md:h-[26%] lg:h-[24%] xl:h-[22%]" />
+
+        <div className="absolute left-1/2 -translate-x-1/2 z-20 w-full max-w-6xl mx-auto flex flex-col items-center text-center px-4 sm:px-6 lg:px-8 top-[18%] xs:top-[19%] sm:top-[21%] md:top-[20%] lg:top-[19%] xl:top-[20%]">
+          <div className="flex max-w-full items-center justify-center gap-1.5 xs:gap-2 sm:gap-2.5 md:gap-3 mb-1 xs:mb-1.5 sm:mb-2 md:mb-2.5">
+            <span className="hidden sm:block w-6 md:w-8 lg:w-10 h-px bg-gray-400/60" />
+            <span className="text-[8px] xs:text-[9px] sm:text-[9px] md:text-[10px] lg:text-[11px] xl:text-[15px] tracking-[0.15em] xs:tracking-[0.17em] sm:tracking-[0.2em] md:tracking-[0.22em] lg:tracking-[0.25em] xl:tracking-[0.28em] font-bold text-[#03C35E] uppercase whitespace-nowrap">
+              {eyebrow}
+            </span>
+            <span className="hidden sm:block w-6 md:w-8 lg:w-10 h-px bg-gray-400/60" />
+          </div>
+
+          <h1 className="max-w-4xl xs:max-w-4xl sm:max-w-5xl md:max-w-5xl lg:max-w-6xl xl:max-w-6xl text-center text-[24px] xs:text-[26px] sm:text-[28px] md:text-[32px] lg:text-[42px] xl:text-[50px] 2xl:text-[58px] leading-[1.06] xs:leading-[1.04] sm:leading-[1.02] md:leading-[1] lg:leading-[0.98] font-extrabold tracking-[-0.02em] xs:tracking-[-0.025em] sm:tracking-[-0.03em] md:tracking-[-0.035em] text-[#142236] px-2">
+            {title}
+            <br />
+            <span className="text-[#03C35E]">{titleHighlight}</span>
+          </h1>
+
+          <p className="max-w-md xs:max-w-lg sm:max-w-xl md:max-w-2xl mt-1.5 xs:mt-2 sm:mt-1.5 md:mt-2 lg:mt-2.5 px-3 xs:px-4 text-[11px] xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base leading-relaxed font-medium text-gray-600">
+            {description}
+          </p>
+        </div>
+
+        <div className="absolute left-1/2 -translate-x-1/2 z-20 w-full flex items-center justify-center px-2 sm:px-4 top-[52%] xs:top-[51%] sm:top-[30%] md:top-[26%] lg:top-[36%] xl:top-[34%]">
+          <div className="relative w-full mx-auto max-w-[400px] xs:max-w-[400px] sm:max-w-[560px] md:max-w-[700px] lg:max-w-[820px] xl:max-w-[960px] 2xl:max-w-[1080px] aspect-[1080/520] scale-[1.15] xs:scale-[1.15] sm:scale-[1.12] md:scale-[1.12] lg:scale-[1.1] xl:scale-[1.1] 2xl:scale-[1.08]">
+            <Image
+              src={vehiclesImage}
+              alt={vehiclesImageAlt}
+              fill
+              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1080px"
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
+
+      <div className="h-6 xs:h-7 sm:h-8 md:h-10 lg:h-12 xl:h-14 bg-white" />
     </section>
   );
 }
