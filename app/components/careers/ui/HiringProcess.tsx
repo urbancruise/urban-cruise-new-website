@@ -10,6 +10,15 @@ import {
   FaRocket,
 } from "react-icons/fa";
 
+interface HiringProcessProps {
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    titleHighlight?: string;
+    description?: string;
+  };
+}
+
 const steps = [
   {
     icon: FaPaperPlane,
@@ -38,12 +47,17 @@ const steps = [
   },
 ];
 
-export default function HiringProcess() {
+export default function HiringProcess({ content }: HiringProcessProps) {
   const [active, setActive] = useState(0);
   const current = steps[active];
   const CurrentIcon = current.icon;
   const isLast = active === steps.length - 1;
   const progress = (active / (steps.length - 1)) * 100;
+  const eyebrow = content?.eyebrow || "Hiring Process";
+  const title = content?.title || "How hiring";
+  const titleHighlight = content?.titleHighlight || "works";
+  const description =
+    content?.description || "Most people hear back within 3 working days.";
 
   return (
     <section className="bg-white py-16 md:py-24">
@@ -52,12 +66,12 @@ export default function HiringProcess() {
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#03C35E]/40 bg-white px-4 py-1.5 text-sm font-semibold text-[#03C35E]">
             <FaBus />
-            Hiring Process
+            {eyebrow}
           </span>
           <h2 className="mt-4 text-4xl font-extrabold text-[#142236] md:text-5xl">
-            How hiring <span className="text-[#03C35E]">works</span>
+            {title} <span className="text-[#03C35E]">{titleHighlight}</span>
           </h2>
-          <p className="mt-4 text-gray-600">Most people hear back within 3 working days.</p>
+          <p className="mt-4 text-gray-600">{description}</p>
         </div>
 
         {/* Stepper */}

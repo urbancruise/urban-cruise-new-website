@@ -138,22 +138,22 @@ export default function ServicesInVariousCities({
         >
           <div className="mb-3 flex items-center gap-3 sm:mb-4">
             <span className="block h-px w-8 bg-gray-400/60 sm:w-12" />
-            <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#03C35E] sm:text-xs">
+            <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
               {section.eyebrow ?? "Our Locations"}
             </span>
             <span className="block h-px w-8 bg-gray-400/60 sm:w-12" />
           </div>
 
-          <h2 className="text-[26px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] sm:text-3xl md:text-4xl lg:text-5xl">
+          <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
             {section.title ?? "OUR SERVICES IN"}{" "}
             <span className="text-[#188A31]">
               {section.titleHighlight ?? "VARIOUS CITIES"}
             </span>
           </h2>
-          <p className="mt-3 font-serif text-lg italic leading-tight text-[#03C35E] sm:text-2xl">
+          <p className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
             {section.subtitle ?? `Book ${vehicleName} in your preferred city`}
           </p>
-          <p className="mt-4 max-w-[620px] text-xs leading-[1.7] text-[#303944] sm:text-sm lg:text-base">
+          <p className="mt-4 max-w-[620px] text-[10px] leading-[1.7] text-[#303944] xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
             {section.description ??
               `Explore our ${vehicleName} rental services across major cities in India.`}
           </p>

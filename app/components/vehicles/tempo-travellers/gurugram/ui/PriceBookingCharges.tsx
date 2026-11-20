@@ -42,6 +42,7 @@ interface PriceRow {
 interface PriceContent {
   eyebrow?: string;
   title?: string;
+  titleHighlight?: string;
   subtitle?: string;
   description?: string;
   illustration?: string;
@@ -315,6 +316,15 @@ export default function PriceBookingCharges({ content }: Props) {
   // ---- CMS values with static fallbacks ----
   const eyebrow = content?.eyebrow || "PRICES & CHARGES";
   const title = content?.title || "Prices & Charges";
+  const titleParts = title.split("&");
+  const titleHighlight =
+    content?.titleHighlight ||
+    (titleParts.length > 1 ? titleParts.slice(1).join("&").trim() : "");
+  const titlePrefix = content?.titleHighlight
+    ? title
+    : titleParts.length > 1
+      ? `${titleParts[0].trim()} &`
+      : title;
   const subtitle = content?.subtitle || "Tempo Traveller Price Details!";
   const description =
     content?.description ||
@@ -379,33 +389,27 @@ export default function PriceBookingCharges({ content }: Props) {
             {/* EYEBROW */}
             <div className="mb-2.5 flex w-full items-center justify-start gap-1.5 min-[375px]:mb-3 min-[375px]:gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 sm:gap-3 md:gap-3.5 lg:gap-4">
               <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[7px] font-bold uppercase tracking-[0.10em] text-[#03C35E] min-[375px]:text-[8px] min-[375px]:tracking-[0.12em] min-[430px]:text-[8.5px] min-[430px]:tracking-[0.14em] sm:text-[9.5px] sm:tracking-[0.16em] md:text-[10px] lg:text-[11px] xl:text-xs">
+              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-4 shrink-0 bg-gray-400/60 min-[375px]:w-5 min-[430px]:w-6 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
             {/* MAIN HEADING */}
-            <h1 className="max-w-full text-[23px] font-extrabold leading-[1.08] tracking-[-0.035em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[29px] md:text-[34px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
-              {title.includes("&") ? (
-                <>
-                  {title.split("&")[0].trim()}&amp;{" "}
-                  <span className="text-[#188A31]">
-                    {title.split("&")[1].trim()}
-                  </span>
-                </>
-              ) : (
-                title
+            <h1 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
+              {titlePrefix}{" "}
+              {titleHighlight && (
+                <span className="text-[#188A31]">{titleHighlight}</span>
               )}
             </h1>
 
             {/* SUB HEADING */}
-            <p className="mt-2.5 font-serif text-[17px] italic leading-tight text-[#03C35E] min-[375px]:mt-3 min-[375px]:text-[19px] min-[430px]:text-[20px] sm:mt-4 sm:text-[22px] md:text-[24px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]">
+            <p className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
               {subtitle}
             </p>
 
             {/* DESCRIPTION */}
-            <div className="mt-3 max-w-[530px] space-y-2 text-[9.5px] leading-[1.65] text-[#303944] min-[375px]:mt-3.5 min-[375px]:text-[10px] min-[430px]:text-[10.5px] sm:mt-4 sm:text-[11px] md:mt-5 md:text-xs lg:text-sm xl:text-base">
+            <div className="mt-5 max-w-[590px] space-y-3 text-[10px] leading-[1.75] text-[#303944] xs:space-y-4 xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
               <p>{description}</p>
             </div>
           </div>

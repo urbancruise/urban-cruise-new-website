@@ -5,7 +5,6 @@ import { getCmsImageAlt } from "@/app/lib/cms-image-alt";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ServicesInVariousCitiesPlacement } from "@/app/components/vehicles/ServicesInVariousCities";
 
 const FALLBACK_VEHICLES = [
   { name: "Tempo Traveller", size: "9 to 26 Seater", image: "/images/vehiclerentalserviceinindia/IndiaGate.webp" },
@@ -72,21 +71,21 @@ export default function LookingForOtherVehicle({ content }: Props) {
           <div className="w-full max-w-[720px] text-left">
             <div className="mb-3 flex w-full items-center justify-start gap-2 min-[430px]:mb-3.5 min-[430px]:gap-2.5 sm:mb-4 md:gap-3 lg:gap-3.5 xl:gap-4">
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
-              <span className="whitespace-nowrap text-[8px] font-bold uppercase tracking-[0.14em] text-[#03C35E] min-[375px]:text-[8.5px] min-[430px]:text-[9px] min-[430px]:tracking-[0.16em] sm:text-[9.5px] sm:tracking-[0.18em] md:text-[10px] md:tracking-[0.2em] lg:text-[11px] xl:text-xs">
+              <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.15em] text-[#03C35E] xs:text-[10px] sm:text-[10px] sm:tracking-[0.2em] md:text-[11px] lg:text-[12px] lg:tracking-[0.25em] xl:text-[13px]">
                 {eyebrow}
               </span>
               <span className="block h-px w-5 shrink-0 bg-gray-400/60 sm:w-7 md:w-9 lg:w-11 xl:w-12 2xl:w-14" />
             </div>
 
-            <h2 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142236] min-[375px]:text-[25px] min-[430px]:text-[27px] sm:text-[28px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[56px]">
+            <h2 className="text-[21px] xs:text-[23px] sm:text-[27px] md:text-[29px] font-extrabold leading-[1] tracking-[-0.04em] text-[#142236]">
               {title} <span className="text-[#188A31]">{titleHighlight}</span>
             </h2>
 
-            <p className="mt-3 font-serif text-[19px] italic leading-tight text-[#03C35E] min-[375px]:text-[20px] min-[430px]:text-[21px] sm:text-[22px] md:text-[25px] lg:text-[27px] xl:text-[30px] 2xl:text-[32px]">
+            <p className="mt-3 font-serif text-[21px] italic leading-tight text-[#03C35E] xs:text-[23px] sm:text-[27px] md:text-[29px]">
               {subtitle}
             </p>
 
-            <div className="mt-4 max-w-[620px] space-y-3 text-[10px] leading-[1.7] text-[#303944] min-[375px]:text-[10.5px] min-[430px]:text-[11px] sm:mt-5 sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
+            <div className="mt-5 max-w-[590px] space-y-3 text-[10px] leading-[1.75] text-[#303944] xs:space-y-4 xs:text-[11px] sm:text-[11px] md:text-xs lg:text-sm xl:text-base">
               <p>{description}</p>
             </div>
           </div>
@@ -199,7 +198,6 @@ export default function LookingForOtherVehicle({ content }: Props) {
           </motion.div>
         )}
       </div>
-      <ServicesInVariousCitiesPlacement />
     </section>
   );
 }

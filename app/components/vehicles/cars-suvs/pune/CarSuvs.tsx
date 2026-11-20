@@ -15,6 +15,7 @@ import OurTrustedPartner from "../../../ourtrustedpartner/OurTrustedPartner";
 import DownloadApp from "../../../download-app/DownloadApp";
 import PlaceToVisit from "./ui/PlaceToVisit";
 import LookingForOtherVehicle from "./ui/LookingForOtherVehicle";
+import { ServicesInVariousCitiesPlacement } from "@/app/components/vehicles/ServicesInVariousCities";
 
 interface Props {
   cmsMeta?: Record<string, any> | null;
@@ -32,6 +33,7 @@ export default function CarSuvs({ cmsMeta, cmsSections }: Props) {
       <VehicleForEveryBudget content={s.vehiclebudget} />
       <VehicleForEveryGroupSize content={s.groupsize} />
       <LookingForOtherVehicle content={s.lookingvehicle} />
+      <ServicesInVariousCitiesPlacement />
       <VehicleForEveryOccasion content={s.occasion} />
       <WhyChooseUrbanCruise content={s.whychoose} />
       <Testimonials content={s.testimonials} />

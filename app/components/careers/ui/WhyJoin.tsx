@@ -4,6 +4,15 @@ import type { IconType } from "react-icons";
 
 type Perk = { icon: IconType; title: string; text: string };
 
+interface WhyJoinProps {
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    titleHighlight?: string;
+    description?: string;
+  };
+}
+
 const perks: Perk[] = [
   {
     icon: FaChartLine,
@@ -54,7 +63,14 @@ function PerkItem({ perk, side }: { perk: Perk; side: "left" | "right" }) {
   );
 }
 
-export default function WhyJoin() {
+export default function WhyJoin({ content }: WhyJoinProps) {
+  const eyebrow = content?.eyebrow || "Careers at Urban Cruise";
+  const title = content?.title || "Why work";
+  const titleHighlight = content?.titleHighlight || "with us";
+  const description =
+    content?.description ||
+    "Urban Cruise started with a simple idea: travel should be safe, clean and on time. Our drivers, coordinators and support staff make that happen every day, and we treat them like the backbone of the company.";
+
   return (
     <section
       className="bg-white py-16 md:py-24"
@@ -70,15 +86,13 @@ export default function WhyJoin() {
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#03C35E]/40 bg-white px-4 py-1.5 text-sm font-semibold text-[#03C35E]">
             <FaBus />
-            Careers at Urban Cruise
+            {eyebrow}
           </span>
           <h2 className="mt-4 text-4xl font-extrabold text-[#142236] md:text-5xl">
-            Why work <span className="text-[#03C35E]">with us</span>
+            {title} <span className="text-[#03C35E]">{titleHighlight}</span>
           </h2>
           <p className="mt-4 text-gray-600">
-            Urban Cruise started with a simple idea: travel should be safe, clean and on time.
-            Our drivers, coordinators and support staff make that happen every day, and we treat
-            them like the backbone of the company.
+            {description}
           </p>
         </div>
 

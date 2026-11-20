@@ -9,9 +9,26 @@ import { testimonials } from "./TestimonialsData";
 
 const TESTIMONIALS_PER_PAGE = 6;
 
-export default function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    titleHighlight?: string;
+    description?: string;
+  };
+}
+
+export default function TestimonialsSection({
+  content,
+}: TestimonialsSectionProps) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const eyebrow = content?.eyebrow || "Customer Testimonials";
+  const title = content?.title || "Experiences That";
+  const titleHighlight = content?.titleHighlight || "Speak For Us.";
+  const description =
+    content?.description ||
+    "Every journey has a story. Read what our customers have to say about their experience with Urban Cruise.";
 
   const filteredTestimonials = useMemo(() => {
     return activeFilter === "all"
@@ -44,17 +61,16 @@ export default function TestimonialsSection() {
           <div className="max-w-2xl">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#03C35E]/20 bg-white px-4 py-2 text-sm font-bold text-[#087F35]">
               <span className="h-2 w-2 rounded-full bg-[#03C35E]" />
-              CUSTOMER TESTIMONIALS
+              {eyebrow}
             </div>
 
             <h2 className="text-3xl font-extrabold tracking-tight text-[#142236] sm:text-4xl lg:text-5xl">
-              Experiences That
-              <span className="block text-[#03C35E]">Speak For Us.</span>
+              {title}
+              <span className="block text-[#03C35E]">{titleHighlight}</span>
             </h2>
 
             <p className="mt-5 max-w-xl text-base leading-7 text-gray-600 md:text-lg">
-              Every journey has a story. Read what our customers have to say
-              about their experience with Urban Cruise.
+              {description}
             </p>
           </div>
 

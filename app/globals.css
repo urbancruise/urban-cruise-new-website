@@ -335,7 +335,7 @@ body {
   position: relative;
   width: 100%;
   max-width: 100%;
-  height: clamp(280px, 50vw, 850px);
+  height: clamp(280px, min(44vw, 72vh), 850px);
   min-height: 280px;
   overflow: hidden;
   background: transparent;
@@ -363,9 +363,9 @@ body {
 
 @media (max-width: 374px) {
   .map-section {
-    height: 78vw;
-    min-height: 245px;
-    max-height: 310px;
+    height: clamp(260px, min(90vw, 72vh), 390px);
+    min-height: 260px;
+    max-height: 390px;
   }
 
   #map {
@@ -374,16 +374,16 @@ body {
   }
 
   .city-label {
-    font-size: 10px;
+    font-size: 15px;
   }
 
   .final-title {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.08em;
   }
 
   .final-sub {
-    font-size: 5.5px;
+    font-size: 8px;
     letter-spacing: 0.05em;
   }
 }
@@ -394,21 +394,21 @@ body {
 
 @media (min-width: 375px) and (max-width: 430px) {
   .map-section {
-    height: 72vw;
-    min-height: 270px;
-    max-height: 330px;
+    height: clamp(260px, min(90vw, 72vh), 390px);
+    min-height: 260px;
+    max-height: 390px;
   }
 
   .city-label {
-    font-size: 10px;
+    font-size: 15px;
   }
 
   .final-title {
-    font-size: 8.5px;
+    font-size: 11px;
   }
 
   .final-sub {
-    font-size: 6px;
+    font-size: 8px;
   }
 }
 
@@ -418,13 +418,13 @@ body {
 
 @media (min-width: 431px) and (max-width: 639px) {
   .map-section {
-    height: 62vw;
-    min-height: 290px;
-    max-height: 390px;
+    height: clamp(300px, min(75vw, 72vh), 460px);
+    min-height: 300px;
+    max-height: 460px;
   }
 
   .city-label {
-    font-size: 10px;
+    font-size: 14px;
   }
 }
 
@@ -434,7 +434,7 @@ body {
 
 @media (min-width: 640px) and (max-width: 767px) {
   .map-section {
-    height: 55vw;
+    height: clamp(340px, min(60vw, 72vh), 480px);
     min-height: 340px;
     max-height: 460px;
   }
@@ -446,7 +446,7 @@ body {
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .map-section {
-    height: 52vw;
+    height: clamp(360px, min(52vw, 72vh), 520px);
     min-height: 360px;
     max-height: 520px;
   }
@@ -462,7 +462,7 @@ body {
 
 @media (min-width: 1024px) and (max-width: 1279px) {
   .map-section {
-    height: 48vw;
+    height: clamp(420px, min(48vw, 72vh), 600px);
     min-height: 420px;
     max-height: 600px;
   }
@@ -474,7 +474,7 @@ body {
 
 @media (min-width: 1280px) and (max-width: 1439px) {
   .map-section {
-    height: 46vw;
+    height: clamp(450px, min(46vw, 72vh), 650px);
     min-height: 450px;
     max-height: 650px;
   }
@@ -486,7 +486,7 @@ body {
 
 @media (min-width: 1440px) and (max-width: 1919px) {
   .map-section {
-    height: 44vw;
+    height: clamp(480px, min(44vw, 72vh), 700px);
     min-height: 480px;
     max-height: 700px;
   }
@@ -498,7 +498,7 @@ body {
 
 @media (min-width: 1920px) and (max-width: 2559px) {
   .map-section {
-    height: 42vw;
+    height: clamp(550px, min(42vw, 72vh), 850px);
     min-height: 550px;
     max-height: 850px;
   }
@@ -510,7 +510,7 @@ body {
 
 @media (min-width: 2560px) {
   .map-section {
-    height: 40vw;
+    height: clamp(600px, min(40vw, 72vh), 900px);
     min-height: 600px;
     max-height: 900px;
   }

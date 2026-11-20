@@ -363,7 +363,7 @@ function VehicleCard({
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto] sm:items-center px-2.5 pt-[75px] sm:px-2.5 sm:pt-[75px] md:px-2.5 md:pt-[90px] xl:px-2.5 xl:pt-[95px] 2xl:px-2.5 2xl:pt-[80px]">
         <div className="min-w-0">
-          <h3 className="truncate text-[20px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] min-[375px]:text-[21px] sm:text-[22px] md:text-[24px]">
+          <h3 className="text-[20px] font-extrabold leading-tight tracking-[-0.04em] text-[#142236] min-[375px]:text-[21px] sm:text-[22px] md:text-[24px]">
             {vehicle.name}
           </h3>
 

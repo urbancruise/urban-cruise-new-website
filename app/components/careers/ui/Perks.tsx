@@ -8,6 +8,15 @@ import {
   FaBus,
 } from "react-icons/fa";
 
+interface PerksProps {
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    titleHighlight?: string;
+    description?: string;
+  };
+}
+
 const departments = [
   {
     icon: FaChartLine,
@@ -47,7 +56,14 @@ const departments = [
   },
 ];
 
-export default function Perks() {
+export default function Perks({ content }: PerksProps) {
+  const eyebrow = content?.eyebrow || "Our Departments";
+  const title = content?.title || "Find your";
+  const titleHighlight = content?.titleHighlight || "team";
+  const description =
+    content?.description ||
+    "Whether you love driving, selling, planning or building technology, there is a team at Urban Cruise where your skills can take us, and your career, further.";
+
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -55,14 +71,13 @@ export default function Perks() {
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#03C35E]/40 bg-white px-4 py-1.5 text-sm font-semibold text-[#03C35E]">
             <FaBus />
-            Our Departments
+            {eyebrow}
           </span>
           <h2 className="mt-4 text-4xl font-extrabold text-[#142236] md:text-5xl">
-            Find your <span className="text-[#03C35E]">team</span>
+            {title} <span className="text-[#03C35E]">{titleHighlight}</span>
           </h2>
           <p className="mt-4 text-gray-600">
-            Whether you love driving, selling, planning or building technology, there is a team
-            at Urban Cruise where your skills can take us, and your career, further.
+            {description}
           </p>
         </div>
 
