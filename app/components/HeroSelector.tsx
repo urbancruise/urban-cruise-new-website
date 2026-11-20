@@ -5,12 +5,13 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
-const DelhiHero = dynamic(() => import("./home/hero/DelhiHero"));
-const GurugramHero = dynamic(() => import("./home/hero/GurugramHero"));
-const MumbaiHero = dynamic(() => import("./home/hero/MumbaiHero"));
-const PuneHero = dynamic(() => import("./home/hero/PuneHero"));
-const DefaultHero = dynamic(() => import("./home/hero/DefaultHero"));
+const DelhiHero = dynamic(() => import("./home/hero/DelhiHero"), { loading: SectionSkeleton });
+const GurugramHero = dynamic(() => import("./home/hero/GurugramHero"), { loading: SectionSkeleton });
+const MumbaiHero = dynamic(() => import("./home/hero/MumbaiHero"), { loading: SectionSkeleton });
+const PuneHero = dynamic(() => import("./home/hero/PuneHero"), { loading: SectionSkeleton });
+const DefaultHero = dynamic(() => import("./home/hero/DefaultHero"), { loading: SectionSkeleton });
 
 interface HeroSelectorProps {
   content?: {

@@ -5,12 +5,13 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
-const DelhiFaqs = dynamic(() => import("./home/faq's/DelhiFaq’s"));
-const GurugramFaqs = dynamic(() => import("./home/faq's/GurugramFaq’s"));
-const MumbaiFaqs = dynamic(() => import("./home/faq's/MumbaiFaq's"));
-const PuneFaqs = dynamic(() => import("./home/faq's/PuneFaq’s"));
-const DefaultFaqs = dynamic(() => import("./home/faq's/DefaultFaq's"));
+const DelhiFaqs = dynamic(() => import("./home/faq's/DelhiFaq’s"), { loading: SectionSkeleton });
+const GurugramFaqs = dynamic(() => import("./home/faq's/GurugramFaq’s"), { loading: SectionSkeleton });
+const MumbaiFaqs = dynamic(() => import("./home/faq's/MumbaiFaq's"), { loading: SectionSkeleton });
+const PuneFaqs = dynamic(() => import("./home/faq's/PuneFaq’s"), { loading: SectionSkeleton });
+const DefaultFaqs = dynamic(() => import("./home/faq's/DefaultFaq's"), { loading: SectionSkeleton });
 
 export interface FaqItem {
   number?: string;

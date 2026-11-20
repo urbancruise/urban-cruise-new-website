@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 export interface VehicleGroupSizeItem {
   type?: string;
@@ -35,23 +36,23 @@ export interface VehicleForEveryGroupSizeProps {
 
 const DelhiVehicleForEveryGroupSize =
   dynamic<VehicleForEveryGroupSizeProps>(() =>
-    import("./home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize")
+    import("./home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   );
 const GurugramVehicleForEveryGroupSize =
   dynamic<VehicleForEveryGroupSizeProps>(() =>
-    import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
+    import("./home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   );
 const MumbaiVehicleForEveryGroupSize =
   dynamic<VehicleForEveryGroupSizeProps>(() =>
-    import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
+    import("./home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   );
 const PuneVehicleForEveryGroupSize =
   dynamic<VehicleForEveryGroupSizeProps>(() =>
-    import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
+    import("./home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   );
 const DefaultVehicleForEveryGroupSize =
   dynamic<VehicleForEveryGroupSizeProps>(() =>
-    import("./home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize")
+    import("./home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   );
 
 export default function VehicleForEveryGroupSizeSelector({

@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 export interface BudgetContent {
   eyebrow?: string;
@@ -34,19 +35,19 @@ export interface VehicleForEveryBudgetProps {
 }
 
 const DelhiVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
-  import("./home/vehicleforeverybudget/DelhiVehicleForEveryBudget")
+  import("./home/vehicleforeverybudget/DelhiVehicleForEveryBudget"), { loading: SectionSkeleton }
 );
 const GurugramVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
-  import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget")
+  import("./home/vehicleforeverybudget/GurugramVehicleForEveryBudget"), { loading: SectionSkeleton }
 );
 const MumbaiVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
-  import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget")
+  import("./home/vehicleforeverybudget/MumbaiVehicleForEveryBudget"), { loading: SectionSkeleton }
 );
 const PuneVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
-  import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget")
+  import("./home/vehicleforeverybudget/PuneVehicleForEveryBudget"), { loading: SectionSkeleton }
 );
 const DefaultVehicleForEveryBudget = dynamic<VehicleForEveryBudgetProps>(() =>
-  import("./home/vehicleforeverybudget/DefaultVehicleForEveryBudget")
+  import("./home/vehicleforeverybudget/DefaultVehicleForEveryBudget"), { loading: SectionSkeleton }
 );
 
 export default function VehicleForEveryBudgetSelector({

@@ -4,12 +4,13 @@
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 // Lazy load about-us components for better performance
-const DelhiAboutPage = dynamic(() => import("./about-us/DelhiAboutPage"));
-const GurugramAboutPage = dynamic(() => import("./about-us/GurugramAboutPage"));
-const MumbaiAboutPage = dynamic(() => import("./about-us/MumbaiAboutPage"));
-const PuneAboutPage = dynamic(() => import("./about-us/PuneAboutPage"));
+const DelhiAboutPage = dynamic(() => import("./about-us/DelhiAboutPage"), { loading: SectionSkeleton });
+const GurugramAboutPage = dynamic(() => import("./about-us/GurugramAboutPage"), { loading: SectionSkeleton });
+const MumbaiAboutPage = dynamic(() => import("./about-us/MumbaiAboutPage"), { loading: SectionSkeleton });
+const PuneAboutPage = dynamic(() => import("./about-us/PuneAboutPage"), { loading: SectionSkeleton });
 
 // Fallback component for missing about-us pages
 function AboutComingSoon() {

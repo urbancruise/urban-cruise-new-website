@@ -4,12 +4,13 @@
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 // Lazy load testimonials components for better performance
-const DelhiTestimonialsPage = dynamic(() => import("./testimonials/DelhiTestimonialsPage"));
-const GurugramTestimonialsPage = dynamic(() => import("./testimonials/GurugramTestimonialsPage"));
-const MumbaiTestimonialsPage = dynamic(() => import("./testimonials/MumbaiTestimonialsPage"));
-const PuneTestimonialsPage = dynamic(() => import("./testimonials/PuneTestimonialsPage"));
+const DelhiTestimonialsPage = dynamic(() => import("./testimonials/DelhiTestimonialsPage"), { loading: SectionSkeleton });
+const GurugramTestimonialsPage = dynamic(() => import("./testimonials/GurugramTestimonialsPage"), { loading: SectionSkeleton });
+const MumbaiTestimonialsPage = dynamic(() => import("./testimonials/MumbaiTestimonialsPage"), { loading: SectionSkeleton });
+const PuneTestimonialsPage = dynamic(() => import("./testimonials/PuneTestimonialsPage"), { loading: SectionSkeleton });
 
 // Fallback component for missing testimonials pages
 function TestimonialsComingSoon() {

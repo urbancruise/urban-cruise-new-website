@@ -1,31 +1,32 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import {
   ServicesInCitiesContext,
 } from "@/app/components/vehicles/ServicesInVariousCities";
 
 const vehiclePages = {
-  "car-suvs": dynamic(() => import("./vehicles/DelhiCarSuvsPage")),
-  ertiga: dynamic(() => import("./vehicles/DelhiErtigaPage")),
-  "innova-crysta": dynamic(() => import("./vehicles/DelhiInnovaCrystaPage")),
-  hycross: dynamic(() => import("./vehicles/DelhiHycrossPage")),
-  "luxury-cars-suvs": dynamic(() => import("./vehicles/DelhiLuxuryCarsSuvsPage")),
-  "mercedes-sprinter": dynamic(() => import("./vehicles/DelhiMercedesSprinterPage")),
-  "luxury-vans": dynamic(() => import("./vehicles/DelhiLuxuryVansPage")),
-  "tempo-traveller": dynamic(() => import("./vehicles/DelhiTempoTravellerPage")),
+  "car-suvs": dynamic(() => import("./vehicles/DelhiCarSuvsPage"), { loading: SectionSkeleton }),
+  ertiga: dynamic(() => import("./vehicles/DelhiErtigaPage"), { loading: SectionSkeleton }),
+  "innova-crysta": dynamic(() => import("./vehicles/DelhiInnovaCrystaPage"), { loading: SectionSkeleton }),
+  hycross: dynamic(() => import("./vehicles/DelhiHycrossPage"), { loading: SectionSkeleton }),
+  "luxury-cars-suvs": dynamic(() => import("./vehicles/DelhiLuxuryCarsSuvsPage"), { loading: SectionSkeleton }),
+  "mercedes-sprinter": dynamic(() => import("./vehicles/DelhiMercedesSprinterPage"), { loading: SectionSkeleton }),
+  "luxury-vans": dynamic(() => import("./vehicles/DelhiLuxuryVansPage"), { loading: SectionSkeleton }),
+  "tempo-traveller": dynamic(() => import("./vehicles/DelhiTempoTravellerPage"), { loading: SectionSkeleton }),
   "maharaja-tempo-traveller": dynamic(
-    () => import("./vehicles/DelhiMaharajaTempoTravellerPage"),
+    () => import("./vehicles/DelhiMaharajaTempoTravellerPage"), { loading: SectionSkeleton },
   ),
-  urbania: dynamic(() => import("./vehicles/DelhiUrbaniaPage")),
-  "mini-bus": dynamic(() => import("./vehicles/DelhiMiniBusPage")),
-  "luxury-bus": dynamic(() => import("./vehicles/DelhiLuxuryBusPage")),
-  "volvo-bus": dynamic(() => import("./vehicles/DelhiVolvoBusPage")),
-  "bharat-benz-bus": dynamic(() => import("./vehicles/DelhiBharatBenzBusPage")),
+  urbania: dynamic(() => import("./vehicles/DelhiUrbaniaPage"), { loading: SectionSkeleton }),
+  "mini-bus": dynamic(() => import("./vehicles/DelhiMiniBusPage"), { loading: SectionSkeleton }),
+  "luxury-bus": dynamic(() => import("./vehicles/DelhiLuxuryBusPage"), { loading: SectionSkeleton }),
+  "volvo-bus": dynamic(() => import("./vehicles/DelhiVolvoBusPage"), { loading: SectionSkeleton }),
+  "bharat-benz-bus": dynamic(() => import("./vehicles/DelhiBharatBenzBusPage"), { loading: SectionSkeleton }),
   "bus-with-washroom": dynamic(
-    () => import("./vehicles/DelhiBusWithWashroomPage"),
+    () => import("./vehicles/DelhiBusWithWashroomPage"), { loading: SectionSkeleton },
   ),
-  "sleeper-bus": dynamic(() => import("./vehicles/DelhiSleeperBusPage")),
+  "sleeper-bus": dynamic(() => import("./vehicles/DelhiSleeperBusPage"), { loading: SectionSkeleton }),
 } as const;
 
 export type GlobalVehicleSlug = keyof typeof vehiclePages;

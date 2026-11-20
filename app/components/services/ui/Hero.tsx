@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
 import { isRecord, readText } from "./cms-content";
@@ -28,19 +29,19 @@ const heroComponents: Record<
   ComponentType<{ content?: ServiceHeroContent }>
 > = {
   delhi: dynamic<{ content?: ServiceHeroContent }>(
-    () => import("../../home/hero/DelhiHero")
+    () => import("../../home/hero/DelhiHero"), { loading: SectionSkeleton }
   ),
   gurugram: dynamic<{ content?: ServiceHeroContent }>(
-    () => import("../../home/hero/GurugramHero")
+    () => import("../../home/hero/GurugramHero"), { loading: SectionSkeleton }
   ),
   mumbai: dynamic<{ content?: ServiceHeroContent }>(
-    () => import("../../home/hero/MumbaiHero")
+    () => import("../../home/hero/MumbaiHero"), { loading: SectionSkeleton }
   ),
   pune: dynamic<{ content?: ServiceHeroContent }>(
-    () => import("../../home/hero/PuneHero")
+    () => import("../../home/hero/PuneHero"), { loading: SectionSkeleton }
   ),
   global: dynamic<{ content?: ServiceHeroContent }>(
-    () => import("../../home/hero/DefaultHero")
+    () => import("../../home/hero/DefaultHero"), { loading: SectionSkeleton }
   ),
 };
 

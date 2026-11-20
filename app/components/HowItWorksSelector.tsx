@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 export interface HowItWorksStep {
   number: string;
@@ -29,19 +30,19 @@ export interface HowItWorksSelectorProps {
 }
 
 const DelhiHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
-  import("./home/howItworks/DelhiHowItWorks")
+  import("./home/howItworks/DelhiHowItWorks"), { loading: SectionSkeleton }
 );
 const GurugramHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
-  import("./home/howItworks/GurugramHowItWorks")
+  import("./home/howItworks/GurugramHowItWorks"), { loading: SectionSkeleton }
 );
 const MumbaiHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
-  import("./home/howItworks/MumbaiHowItWorks")
+  import("./home/howItworks/MumbaiHowItWorks"), { loading: SectionSkeleton }
 );
 const PuneHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
-  import("./home/howItworks/PuneHowItWorks")
+  import("./home/howItworks/PuneHowItWorks"), { loading: SectionSkeleton }
 );
 const DefaultHowItWorks = dynamic<HowItWorksSelectorProps>(() =>
-  import("./home/howItworks/DefaultHowItWorks")
+  import("./home/howItworks/DefaultHowItWorks"), { loading: SectionSkeleton }
 );
 
 export default function HowItWorksSelector({

@@ -6,6 +6,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import { useLocation } from "@/app/context/LocationContext";
 
 // ======================================================
@@ -13,19 +14,19 @@ import { useLocation } from "@/app/context/LocationContext";
 // ======================================================
 
 const DelhiFaqs = dynamic(
-  () => import("./home/faq's/DelhiFaq’s")
+  () => import("./home/faq's/DelhiFaq’s"), { loading: SectionSkeleton }
 );
 
 const GurugramFaqs = dynamic(
-  () => import("./home/faq's/GurugramFaq’s")
+  () => import("./home/faq's/GurugramFaq’s"), { loading: SectionSkeleton }
 );
 
 const MumbaiFaqs = dynamic(
-  () => import("./home/faq's/MumbaiFaq's")
+  () => import("./home/faq's/MumbaiFaq's"), { loading: SectionSkeleton }
 );
 
 const PuneFaqs = dynamic(
-  () => import("./home/faq's/PuneFaq’s")
+  () => import("./home/faq's/PuneFaq’s"), { loading: SectionSkeleton }
 );
 
 // ======================================================

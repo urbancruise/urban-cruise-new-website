@@ -96,9 +96,9 @@ function TrustBadge({
   delay?: number;
 }) {
   const positionClasses = {
-    left: `left-[-6px] top-[38%] min-[375px]:left-[-8px] min-[430px]:left-[-12px] sm:left-[-16px] sm:top-[36%] md:left-[-18px] lg:left-[-18px] xl:left-[-24px] 2xl:left-[100px] 2xl:top-[45%]`,
+    left: `left-0 top-[38%] min-[375px]:left-[-8px] min-[430px]:left-[-12px] sm:left-[-16px] sm:top-[36%] md:left-[-18px] lg:left-[-18px] xl:left-[-24px] 2xl:left-[100px] 2xl:top-[45%]`,
     bottom: `bottom-[2%] left-1/2 -translate-x-1/2 sm:bottom-[4%] md:bottom-[3%] lg:bottom-[2%] xl:bottom-[6%] 2xl:bottom-[12%]`,
-    right: `right-[-6px] top-[42%] min-[375px]:right-[-8px] min-[430px]:right-[-12px] sm:right-[-16px] sm:top-[40%] md:right-[-18px] lg:right-[-18px] xl:right-[-24px] 2xl:right-[180px] 2xl:top-[10%]`,
+    right: `right-0 top-[42%] min-[375px]:right-[-8px] min-[430px]:right-[-12px] sm:right-[-16px] sm:top-[40%] md:right-[-18px] lg:right-[-18px] xl:right-[-24px] 2xl:right-[180px] 2xl:top-[10%]`,
   };
 
   const containerVariants: Variants = {
@@ -216,7 +216,7 @@ export default function MumbaiVehicleForEveryBudget({
             </motion.div>
           </div>
 
-          <div className="relative flex w-full items-center justify-center lg:justify-end lg:overflow-visible">
+          <div className="relative flex w-full min-w-0 items-center justify-center lg:justify-end lg:overflow-visible">
             <motion.div
               className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[270px] w-[270px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl min-[375px]:h-[300px] min-[375px]:w-[300px] min-[430px]:h-[330px] min-[430px]:w-[330px] sm:h-[370px] sm:w-[370px] md:h-[430px] md:w-[430px] lg:h-[450px] lg:w-[450px] xl:h-[520px] xl:w-[520px] 2xl:h-[590px] 2xl:w-[590px]"
               style={{
@@ -229,7 +229,7 @@ export default function MumbaiVehicleForEveryBudget({
             />
 
             <motion.div
-              className="relative z-10 w-[340px] max-w-none shrink-0 min-[375px]:w-[360px] min-[430px]:w-[390px] sm:w-[440px] md:w-[500px] lg:w-[540px] xl:w-[620px] 2xl:w-[700px] lg:-mr-[40px] xl:-mr-[55px] 2xl:-mr-[70px]"
+              className="relative z-10 w-full min-w-0 max-w-[340px] min-[375px]:max-w-[360px] min-[430px]:max-w-[390px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[540px] xl:max-w-[620px] 2xl:max-w-[700px]"
               initial={{ scale: 0.7, opacity: 0, x: 50 }}
               animate={{ scale: 1, opacity: 1, x: 0 }}
               transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.3 }}

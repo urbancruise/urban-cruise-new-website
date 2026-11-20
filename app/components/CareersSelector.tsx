@@ -4,12 +4,13 @@
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 // Lazy load careers components for better performance
-const DelhiCareersPage = dynamic(() => import("./careers/DelhiCareersPage"));
-const GurugramCareersPage = dynamic(() => import("./careers/GurugramCareersPage"));
-const MumbaiCareersPage = dynamic(() => import("./careers/MumbaiCareersPage"));
-const PuneCareersPage = dynamic(() => import("./careers/PuneCareersPage"));
+const DelhiCareersPage = dynamic(() => import("./careers/DelhiCareersPage"), { loading: SectionSkeleton });
+const GurugramCareersPage = dynamic(() => import("./careers/GurugramCareersPage"), { loading: SectionSkeleton });
+const MumbaiCareersPage = dynamic(() => import("./careers/MumbaiCareersPage"), { loading: SectionSkeleton });
+const PuneCareersPage = dynamic(() => import("./careers/PuneCareersPage"), { loading: SectionSkeleton });
 
 // Fallback component for missing careers pages
 function CareersComingSoon() {

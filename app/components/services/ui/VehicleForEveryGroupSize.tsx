@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
 import type {
@@ -14,19 +15,19 @@ const sectionComponents: Record<
   ComponentType<VehicleForEveryGroupSizeProps>
 > = {
   delhi: dynamic(
-    () => import("../../home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize")
+    () => import("../../home/vehicleforeverygroupsize/DelhiVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   ),
   gurugram: dynamic(
-    () => import("../../home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize")
+    () => import("../../home/vehicleforeverygroupsize/GurugramVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   ),
   mumbai: dynamic(
-    () => import("../../home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize")
+    () => import("../../home/vehicleforeverygroupsize/MumbaiVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   ),
   pune: dynamic(
-    () => import("../../home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize")
+    () => import("../../home/vehicleforeverygroupsize/PuneVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   ),
   global: dynamic(
-    () => import("../../home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize")
+    () => import("../../home/vehicleforeverygroupsize/DefaultVehicleForEveryGroupSize"), { loading: SectionSkeleton }
   ),
 };
 

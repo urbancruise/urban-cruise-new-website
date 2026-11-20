@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
 import type {
@@ -14,19 +15,19 @@ const sectionComponents: Record<
   ComponentType<WhyChooseUrbanCruiseProps>
 > = {
   delhi: dynamic<WhyChooseUrbanCruiseProps>(
-    () => import("../../home/whychooseurbancruise/DelhiWhyChooseUrbanCruise")
+    () => import("../../home/whychooseurbancruise/DelhiWhyChooseUrbanCruise"), { loading: SectionSkeleton }
   ),
   gurugram: dynamic<WhyChooseUrbanCruiseProps>(
-    () => import("../../home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
+    () => import("../../home/whychooseurbancruise/GurugramWhyChooseUrbanCruise"), { loading: SectionSkeleton }
   ),
   mumbai: dynamic<WhyChooseUrbanCruiseProps>(
-    () => import("../../home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
+    () => import("../../home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise"), { loading: SectionSkeleton }
   ),
   pune: dynamic<WhyChooseUrbanCruiseProps>(
-    () => import("../../home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
+    () => import("../../home/whychooseurbancruise/PuneWhyChooseUrbanCruise"), { loading: SectionSkeleton }
   ),
   global: dynamic<WhyChooseUrbanCruiseProps>(
-    () => import("../../home/whychooseurbancruise/DefaultWhyChooseUrbanCruise")
+    () => import("../../home/whychooseurbancruise/DefaultWhyChooseUrbanCruise"), { loading: SectionSkeleton }
   ),
 };
 

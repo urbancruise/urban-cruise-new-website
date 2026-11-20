@@ -1,4 +1,4 @@
-import AboutUsSelector from "@/app/components/AboutUsSelector";
+import GlobalAboutPage from "@/app/components/about-us/GlobalAboutPage";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
@@ -20,7 +20,7 @@ export default function AboutUrbanCruisePage() {
         description="Learn about Urban Cruise and our nationwide vehicle rental services."
         path="/about-urban-cruise"
       />
-      <AboutUsSelector />
+      <GlobalAboutPage />
     </>
   );
 }

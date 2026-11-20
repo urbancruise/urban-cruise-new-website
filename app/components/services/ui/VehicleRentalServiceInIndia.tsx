@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
 import type {
@@ -17,31 +18,31 @@ const sectionComponents: Record<
     () =>
       import(
         "../../home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia"
-      )
+      ), { loading: SectionSkeleton }
   ),
   gurugram: dynamic(
     () =>
       import(
         "../../home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia"
-      )
+      ), { loading: SectionSkeleton }
   ),
   mumbai: dynamic(
     () =>
       import(
         "../../home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia"
-      )
+      ), { loading: SectionSkeleton }
   ),
   pune: dynamic(
     () =>
       import(
         "../../home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia"
-      )
+      ), { loading: SectionSkeleton }
   ),
   global: dynamic(
     () =>
       import(
         "../../home/vehiclerentalserviceinindia/DefaultVehicleRentalServiceInIndia"
-      )
+      ), { loading: SectionSkeleton }
   ),
 };
 

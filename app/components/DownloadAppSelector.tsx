@@ -3,6 +3,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import { useLocation } from "@/app/context/LocationContext";
 
 // ======================================================
@@ -15,9 +16,7 @@ const DownloadApp = dynamic(
       "./download-app/DownloadApp" 
     ),
   {
-    loading: () => (
-      <div className="min-h-[400px] w-full bg-white" />
-    ),
+    loading: SectionSkeleton,
   }
 );
 

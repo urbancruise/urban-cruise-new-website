@@ -5,6 +5,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import { useLocation } from "@/app/context/LocationContext";
 import {
   ServicesInCitiesContext,
@@ -13,130 +14,130 @@ import {
 // ======================================================
 // LAZY LOAD — CARS & SUVs
 // ======================================================
-const DelhiCarSuvsPage = dynamic(() => import("./vehicles/DelhiCarSuvsPage"));
-const GurugramCarSuvsPage = dynamic(() => import("./vehicles/GurugramCarSuvsPage"));
-const MumbaiCarSuvsPage = dynamic(() => import("./vehicles/MumbaiCarSuvsPage"));
-const PuneCarSuvsPage = dynamic(() => import("./vehicles/PuneCarSuvsPage"));
+const DelhiCarSuvsPage = dynamic(() => import("./vehicles/DelhiCarSuvsPage"), { loading: SectionSkeleton });
+const GurugramCarSuvsPage = dynamic(() => import("./vehicles/GurugramCarSuvsPage"), { loading: SectionSkeleton });
+const MumbaiCarSuvsPage = dynamic(() => import("./vehicles/MumbaiCarSuvsPage"), { loading: SectionSkeleton });
+const PuneCarSuvsPage = dynamic(() => import("./vehicles/PuneCarSuvsPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — ERTIGA
 // ======================================================
-const DelhiErtigaPage = dynamic(() => import("./vehicles/DelhiErtigaPage"));
-const GurugramErtigaPage = dynamic(() => import("./vehicles/GurugramErtigaPage"));
-const MumbaiErtigaPage = dynamic(() => import("./vehicles/MumbaiErtigaPage"));
-const PuneErtigaPage = dynamic(() => import("./vehicles/PuneErtigaPage"));
+const DelhiErtigaPage = dynamic(() => import("./vehicles/DelhiErtigaPage"), { loading: SectionSkeleton });
+const GurugramErtigaPage = dynamic(() => import("./vehicles/GurugramErtigaPage"), { loading: SectionSkeleton });
+const MumbaiErtigaPage = dynamic(() => import("./vehicles/MumbaiErtigaPage"), { loading: SectionSkeleton });
+const PuneErtigaPage = dynamic(() => import("./vehicles/PuneErtigaPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — INNOVA CRYSTA
 // ======================================================
-const DelhiInnovaCrystaPage = dynamic(() => import("./vehicles/DelhiInnovaCrystaPage"));
-const GurugramInnovaCrystaPage = dynamic(() => import("./vehicles/GurugramInnovaCrystaPage"));
-const MumbaiInnovaCrystaPage = dynamic(() => import("./vehicles/MumbaiInnovaCrystaPage"));
-const PuneInnovaCrystaPage = dynamic(() => import("./vehicles/PuneInnovaCrystaPage"));
+const DelhiInnovaCrystaPage = dynamic(() => import("./vehicles/DelhiInnovaCrystaPage"), { loading: SectionSkeleton });
+const GurugramInnovaCrystaPage = dynamic(() => import("./vehicles/GurugramInnovaCrystaPage"), { loading: SectionSkeleton });
+const MumbaiInnovaCrystaPage = dynamic(() => import("./vehicles/MumbaiInnovaCrystaPage"), { loading: SectionSkeleton });
+const PuneInnovaCrystaPage = dynamic(() => import("./vehicles/PuneInnovaCrystaPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — INNOVA HYCCROSS
 // ======================================================
-const DelhiHycrossPage = dynamic(() => import("./vehicles/DelhiHycrossPage"));
-const GurugramHycrossPage = dynamic(() => import("./vehicles/GurugramHycrossPage"));
-const MumbaiHycrossPage = dynamic(() => import("./vehicles/MumbaiHycrossPage"));
-const PuneHycrossPage = dynamic(() => import("./vehicles/PuneHycrossPage"));
+const DelhiHycrossPage = dynamic(() => import("./vehicles/DelhiHycrossPage"), { loading: SectionSkeleton });
+const GurugramHycrossPage = dynamic(() => import("./vehicles/GurugramHycrossPage"), { loading: SectionSkeleton });
+const MumbaiHycrossPage = dynamic(() => import("./vehicles/MumbaiHycrossPage"), { loading: SectionSkeleton });
+const PuneHycrossPage = dynamic(() => import("./vehicles/PuneHycrossPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — LUXURY CARS & SUVs
 // ======================================================
-const DelhiLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/DelhiLuxuryCarsSuvsPage"));
-const GurugramLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/GurugramLuxuryCarsSuvsPage"));
-const MumbaiLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/MumbaiLuxuryCarsSuvsPage"));
-const PuneLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/PuneLuxuryCarsSuvsPage"));
+const DelhiLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/DelhiLuxuryCarsSuvsPage"), { loading: SectionSkeleton });
+const GurugramLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/GurugramLuxuryCarsSuvsPage"), { loading: SectionSkeleton });
+const MumbaiLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/MumbaiLuxuryCarsSuvsPage"), { loading: SectionSkeleton });
+const PuneLuxuryCarsSuvsPage = dynamic(() => import("./vehicles/PuneLuxuryCarsSuvsPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — MERCEDES SPRINTER
 // ======================================================
-const DelhiMercedesSprinterPage = dynamic(() => import("./vehicles/DelhiMercedesSprinterPage"));
-const GurugramMercedesSprinterPage = dynamic(() => import("./vehicles/GurugramMercedesSprinterPage"));
-const MumbaiMercedesSprinterPage = dynamic(() => import("./vehicles/MumbaiMercedesSprinterPage"));
-const PuneMercedesSprinterPage = dynamic(() => import("./vehicles/PuneMercedesSprinterPage"));
+const DelhiMercedesSprinterPage = dynamic(() => import("./vehicles/DelhiMercedesSprinterPage"), { loading: SectionSkeleton });
+const GurugramMercedesSprinterPage = dynamic(() => import("./vehicles/GurugramMercedesSprinterPage"), { loading: SectionSkeleton });
+const MumbaiMercedesSprinterPage = dynamic(() => import("./vehicles/MumbaiMercedesSprinterPage"), { loading: SectionSkeleton });
+const PuneMercedesSprinterPage = dynamic(() => import("./vehicles/PuneMercedesSprinterPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — LUXURY VANS
 // ======================================================
-const DelhiLuxuryVansPage = dynamic(() => import("./vehicles/DelhiLuxuryVansPage"));
-const GurugramLuxuryVansPage = dynamic(() => import("./vehicles/GurugramLuxuryVansPage"));
-const MumbaiLuxuryVansPage = dynamic(() => import("./vehicles/MumbaiLuxuryVansPage"));
-const PuneLuxuryVansPage = dynamic(() => import("./vehicles/PuneLuxuryVansPage"));
+const DelhiLuxuryVansPage = dynamic(() => import("./vehicles/DelhiLuxuryVansPage"), { loading: SectionSkeleton });
+const GurugramLuxuryVansPage = dynamic(() => import("./vehicles/GurugramLuxuryVansPage"), { loading: SectionSkeleton });
+const MumbaiLuxuryVansPage = dynamic(() => import("./vehicles/MumbaiLuxuryVansPage"), { loading: SectionSkeleton });
+const PuneLuxuryVansPage = dynamic(() => import("./vehicles/PuneLuxuryVansPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — TEMPO TRAVELLER
 // ======================================================
-const DelhiTempoTravellerPage = dynamic(() => import("./vehicles/DelhiTempoTravellerPage"));
-const GurugramTempoTravellerPage = dynamic(() => import("./vehicles/GurugramTempoTravellerPage"));
-const MumbaiTempoTravellerPage = dynamic(() => import("./vehicles/MumbaiTempoTravellerPage"));
-const PuneTempoTravellerPage = dynamic(() => import("./vehicles/PuneTempoTravellerPage"));
+const DelhiTempoTravellerPage = dynamic(() => import("./vehicles/DelhiTempoTravellerPage"), { loading: SectionSkeleton });
+const GurugramTempoTravellerPage = dynamic(() => import("./vehicles/GurugramTempoTravellerPage"), { loading: SectionSkeleton });
+const MumbaiTempoTravellerPage = dynamic(() => import("./vehicles/MumbaiTempoTravellerPage"), { loading: SectionSkeleton });
+const PuneTempoTravellerPage = dynamic(() => import("./vehicles/PuneTempoTravellerPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — MAHARAJA TEMPO TRAVELLER
 // ======================================================
-const DelhiMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/DelhiMaharajaTempoTravellerPage"));
-const GurugramMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/GurugramMaharajaTempoTravellerPage"));
-const MumbaiMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/MumbaiMaharajaTempoTravellerPage"));
-const PuneMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/PuneMaharajaTempoTravellerPage"));
+const DelhiMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/DelhiMaharajaTempoTravellerPage"), { loading: SectionSkeleton });
+const GurugramMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/GurugramMaharajaTempoTravellerPage"), { loading: SectionSkeleton });
+const MumbaiMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/MumbaiMaharajaTempoTravellerPage"), { loading: SectionSkeleton });
+const PuneMaharajaTempoTravellerPage = dynamic(() => import("./vehicles/PuneMaharajaTempoTravellerPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — URBANIA
 // ======================================================
-const DelhiUrbaniaPage = dynamic(() => import("./vehicles/DelhiUrbaniaPage"));
-const GurugramUrbaniaPage = dynamic(() => import("./vehicles/GurugramUrbaniaPage"));
-const MumbaiUrbaniaPage = dynamic(() => import("./vehicles/MumbaiUrbaniaPage"));
-const PuneUrbaniaPage = dynamic(() => import("./vehicles/PuneUrbaniaPage"));
+const DelhiUrbaniaPage = dynamic(() => import("./vehicles/DelhiUrbaniaPage"), { loading: SectionSkeleton });
+const GurugramUrbaniaPage = dynamic(() => import("./vehicles/GurugramUrbaniaPage"), { loading: SectionSkeleton });
+const MumbaiUrbaniaPage = dynamic(() => import("./vehicles/MumbaiUrbaniaPage"), { loading: SectionSkeleton });
+const PuneUrbaniaPage = dynamic(() => import("./vehicles/PuneUrbaniaPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — MINI BUS
 // ======================================================
-const DelhiMiniBusPage = dynamic(() => import("./vehicles/DelhiMiniBusPage"));
-const GurugramMiniBusPage = dynamic(() => import("./vehicles/GurugramMiniBusPage"));
-const MumbaiMiniBusPage = dynamic(() => import("./vehicles/MumbaiMiniBusPage"));
-const PuneMiniBusPage = dynamic(() => import("./vehicles/PuneMiniBusPage"));
+const DelhiMiniBusPage = dynamic(() => import("./vehicles/DelhiMiniBusPage"), { loading: SectionSkeleton });
+const GurugramMiniBusPage = dynamic(() => import("./vehicles/GurugramMiniBusPage"), { loading: SectionSkeleton });
+const MumbaiMiniBusPage = dynamic(() => import("./vehicles/MumbaiMiniBusPage"), { loading: SectionSkeleton });
+const PuneMiniBusPage = dynamic(() => import("./vehicles/PuneMiniBusPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — LUXURY BUS
 // ======================================================
-const DelhiLuxuryBusPage = dynamic(() => import("./vehicles/DelhiLuxuryBusPage"));
-const GurugramLuxuryBusPage = dynamic(() => import("./vehicles/GurugramLuxuryBusPage"));
-const MumbaiLuxuryBusPage = dynamic(() => import("./vehicles/MumbaiLuxuryBusPage"));
-const PuneLuxuryBusPage = dynamic(() => import("./vehicles/PuneLuxuryBusPage"));
+const DelhiLuxuryBusPage = dynamic(() => import("./vehicles/DelhiLuxuryBusPage"), { loading: SectionSkeleton });
+const GurugramLuxuryBusPage = dynamic(() => import("./vehicles/GurugramLuxuryBusPage"), { loading: SectionSkeleton });
+const MumbaiLuxuryBusPage = dynamic(() => import("./vehicles/MumbaiLuxuryBusPage"), { loading: SectionSkeleton });
+const PuneLuxuryBusPage = dynamic(() => import("./vehicles/PuneLuxuryBusPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — VOLVO BUS
 // ======================================================
-const DelhiVolvoBusPage = dynamic(() => import("./vehicles/DelhiVolvoBusPage"));
-const GurugramVolvoBusPage = dynamic(() => import("./vehicles/GurugramVolvoBusPage"));
-const MumbaiVolvoBusPage = dynamic(() => import("./vehicles/MumbaiVolvoBusPage"));
-const PuneVolvoBusPage = dynamic(() => import("./vehicles/PuneVolvoBusPage"));
+const DelhiVolvoBusPage = dynamic(() => import("./vehicles/DelhiVolvoBusPage"), { loading: SectionSkeleton });
+const GurugramVolvoBusPage = dynamic(() => import("./vehicles/GurugramVolvoBusPage"), { loading: SectionSkeleton });
+const MumbaiVolvoBusPage = dynamic(() => import("./vehicles/MumbaiVolvoBusPage"), { loading: SectionSkeleton });
+const PuneVolvoBusPage = dynamic(() => import("./vehicles/PuneVolvoBusPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — BHARAT BENZ BUS
 // ======================================================
-const DelhiBharatBenzBusPage = dynamic(() => import("./vehicles/DelhiBharatBenzBusPage"));
-const GurugramBharatBenzBusPage = dynamic(() => import("./vehicles/GurugramBharatBenzBusPage"));
-const MumbaiBharatBenzBusPage = dynamic(() => import("./vehicles/MumbaiBharatBenzBusPage"));
-const PuneBharatBenzBusPage = dynamic(() => import("./vehicles/PuneBharatBenzBusPage"));
+const DelhiBharatBenzBusPage = dynamic(() => import("./vehicles/DelhiBharatBenzBusPage"), { loading: SectionSkeleton });
+const GurugramBharatBenzBusPage = dynamic(() => import("./vehicles/GurugramBharatBenzBusPage"), { loading: SectionSkeleton });
+const MumbaiBharatBenzBusPage = dynamic(() => import("./vehicles/MumbaiBharatBenzBusPage"), { loading: SectionSkeleton });
+const PuneBharatBenzBusPage = dynamic(() => import("./vehicles/PuneBharatBenzBusPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — BUS WITH WASHROOM
 // ======================================================
-const DelhiBusWithWashroomPage = dynamic(() => import("./vehicles/DelhiBusWithWashroomPage"));
-const GurugramBusWithWashroomPage = dynamic(() => import("./vehicles/GurugramBusWithWashroomPage"));
-const MumbaiBusWithWashroomPage = dynamic(() => import("./vehicles/MumbaiBusWithWashroomPage"));
-const PuneBusWithWashroomPage = dynamic(() => import("./vehicles/PuneBusWithWashroomPage"));
+const DelhiBusWithWashroomPage = dynamic(() => import("./vehicles/DelhiBusWithWashroomPage"), { loading: SectionSkeleton });
+const GurugramBusWithWashroomPage = dynamic(() => import("./vehicles/GurugramBusWithWashroomPage"), { loading: SectionSkeleton });
+const MumbaiBusWithWashroomPage = dynamic(() => import("./vehicles/MumbaiBusWithWashroomPage"), { loading: SectionSkeleton });
+const PuneBusWithWashroomPage = dynamic(() => import("./vehicles/PuneBusWithWashroomPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — SLEEPER BUS
 // ======================================================
-const DelhiSleeperBusPage = dynamic(() => import("./vehicles/DelhiSleeperBusPage"));
-const GurugramSleeperBusPage = dynamic(() => import("./vehicles/GurugramSleeperBusPage"));
-const MumbaiSleeperBusPage = dynamic(() => import("./vehicles/MumbaiSleeperBusPage"));
-const PuneSleeperBusPage = dynamic(() => import("./vehicles/PuneSleeperBusPage"));
+const DelhiSleeperBusPage = dynamic(() => import("./vehicles/DelhiSleeperBusPage"), { loading: SectionSkeleton });
+const GurugramSleeperBusPage = dynamic(() => import("./vehicles/GurugramSleeperBusPage"), { loading: SectionSkeleton });
+const MumbaiSleeperBusPage = dynamic(() => import("./vehicles/MumbaiSleeperBusPage"), { loading: SectionSkeleton });
+const PuneSleeperBusPage = dynamic(() => import("./vehicles/PuneSleeperBusPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // TYPES

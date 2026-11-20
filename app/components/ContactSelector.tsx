@@ -4,12 +4,13 @@
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 // Lazy load contact components for better performance
-const DelhiContactPage = dynamic(() => import("./contact/DelhiContactPage"));
-const GurugramContactPage = dynamic(() => import("./contact/GurugramContactPage"));
-const MumbaiContactPage = dynamic(() => import("./contact/MumbaiContactPage"));
-const PuneContactPage = dynamic(() => import("./contact/PuneContactPage"));
+const DelhiContactPage = dynamic(() => import("./contact/DelhiContactPage"), { loading: SectionSkeleton });
+const GurugramContactPage = dynamic(() => import("./contact/GurugramContactPage"), { loading: SectionSkeleton });
+const MumbaiContactPage = dynamic(() => import("./contact/MumbaiContactPage"), { loading: SectionSkeleton });
+const PuneContactPage = dynamic(() => import("./contact/PuneContactPage"), { loading: SectionSkeleton });
 
 // Fallback component for missing contact pages
 function ContactComingSoon() {

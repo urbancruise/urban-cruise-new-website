@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ServiceLocation } from "./types";
 import type { AboutContent } from "../../AboutSelector";
 import type { ComponentType } from "react";
@@ -9,11 +10,11 @@ const aboutComponents: Record<
   ServiceLocation,
   ComponentType<{ content?: AboutContent | null }>
 > = {
-  delhi: dynamic(() => import("../../home/about/DelhiAbout")),
-  gurugram: dynamic(() => import("../../home/about/GurugramAbout")),
-  mumbai: dynamic(() => import("../../home/about/MumbaiAbout")),
-  pune: dynamic(() => import("../../home/about/PuneAbout")),
-  global: dynamic(() => import("../../home/about/DefaultAbout")),
+  delhi: dynamic(() => import("../../home/about/DelhiAbout"), { loading: SectionSkeleton }),
+  gurugram: dynamic(() => import("../../home/about/GurugramAbout"), { loading: SectionSkeleton }),
+  mumbai: dynamic(() => import("../../home/about/MumbaiAbout"), { loading: SectionSkeleton }),
+  pune: dynamic(() => import("../../home/about/PuneAbout"), { loading: SectionSkeleton }),
+  global: dynamic(() => import("../../home/about/DefaultAbout"), { loading: SectionSkeleton }),
 };
 
 function normalizeContent(value: unknown): AboutContent | null {

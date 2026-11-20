@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 export interface ServiceCityItem {
   name: string;
@@ -28,23 +29,23 @@ export interface VehicleRentalServiceProps {
 
 const DelhiVehicleRentalServiceInIndia =
   dynamic<VehicleRentalServiceProps>(() =>
-    import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia")
+    import("./home/vehiclerentalserviceinindia/DelhiVehicleRentalServiceInIndia"), { loading: SectionSkeleton }
   );
 const GurugramVehicleRentalServiceInIndia =
   dynamic<VehicleRentalServiceProps>(() =>
-    import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia")
+    import("./home/vehiclerentalserviceinindia/GurugramVehicleRentalServiceInIndia"), { loading: SectionSkeleton }
   );
 const MumbaiVehicleRentalServiceInIndia =
   dynamic<VehicleRentalServiceProps>(() =>
-    import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia")
+    import("./home/vehiclerentalserviceinindia/MumbaiVehicleRentalServiceInIndia"), { loading: SectionSkeleton }
   );
 const PuneVehicleRentalServiceInIndia =
   dynamic<VehicleRentalServiceProps>(() =>
-    import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia")
+    import("./home/vehiclerentalserviceinindia/PuneVehicleRentalServiceInIndia"), { loading: SectionSkeleton }
   );
 const DefaultVehicleRentalServiceInIndia =
   dynamic<VehicleRentalServiceProps>(() =>
-    import("./home/vehiclerentalserviceinindia/DefaultVehicleRentalServiceInIndia")
+    import("./home/vehiclerentalserviceinindia/DefaultVehicleRentalServiceInIndia"), { loading: SectionSkeleton }
   );
 
 export default function VehicleRentalServiceInIndiaSelector({

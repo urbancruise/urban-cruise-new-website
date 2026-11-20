@@ -4,12 +4,13 @@
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 // Lazy load partner components for better performance
-const DelhiPartnerPage = dynamic(() => import("./partner/DelhiPartnerPage"));
-const GurugramPartnerPage = dynamic(() => import("./partner/GurugramPartnerPage"));
-const MumbaiPartnerPage = dynamic(() => import("./partner/MumbaiPartnerPage"));
-const PunePartnerPage = dynamic(() => import("./partner/PunePartnerPage"));
+const DelhiPartnerPage = dynamic(() => import("./partner/DelhiPartnerPage"), { loading: SectionSkeleton });
+const GurugramPartnerPage = dynamic(() => import("./partner/GurugramPartnerPage"), { loading: SectionSkeleton });
+const MumbaiPartnerPage = dynamic(() => import("./partner/MumbaiPartnerPage"), { loading: SectionSkeleton });
+const PunePartnerPage = dynamic(() => import("./partner/PunePartnerPage"), { loading: SectionSkeleton });
 
 // Fallback component for missing partner pages
 function PartnerComingSoon() {

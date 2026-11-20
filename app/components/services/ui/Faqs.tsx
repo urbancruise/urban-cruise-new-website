@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
 import type { FaqsContent, FaqsProps } from "@/app/components/FaqsSelector";
@@ -10,11 +11,11 @@ const sectionComponents: Record<
   ServiceLocation,
   ComponentType<FaqsProps>
 > = {
-  delhi: dynamic(() => import("../../home/faq's/DelhiFaq’s")),
-  gurugram: dynamic(() => import("../../home/faq's/GurugramFaq’s")),
-  mumbai: dynamic(() => import("../../home/faq's/MumbaiFaq's")),
-  pune: dynamic(() => import("../../home/faq's/PuneFaq’s")),
-  global: dynamic(() => import("../../home/faq's/DefaultFaq's")),
+  delhi: dynamic(() => import("../../home/faq's/DelhiFaq’s"), { loading: SectionSkeleton }),
+  gurugram: dynamic(() => import("../../home/faq's/GurugramFaq’s"), { loading: SectionSkeleton }),
+  mumbai: dynamic(() => import("../../home/faq's/MumbaiFaq's"), { loading: SectionSkeleton }),
+  pune: dynamic(() => import("../../home/faq's/PuneFaq’s"), { loading: SectionSkeleton }),
+  global: dynamic(() => import("../../home/faq's/DefaultFaq's"), { loading: SectionSkeleton }),
 };
 
 export default function Faqs({

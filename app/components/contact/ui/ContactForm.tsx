@@ -22,14 +22,15 @@ type ContactFormContent = {
   titleHighlight: string;
 };
 
+export interface ContactDetails {
+  officeHeading?: string;
+  phones: { label?: string; value: string }[];
+  emails: { label: string; value: string }[];
+  offices: { location?: string; address: string }[];
+}
+
 const LOCATIONS = ["Delhi", "Mumbai", "Pune", "Gurgaon", "Noida"];
 const SOURCES = ["Google Search", "Instagram", "Friend / Referral", "Facebook", "Others"];
-
-const OFFICES = [
-  "B-14, Gali no. 10, Shashi Garden, Mayur Vihar Phase 1, Delhi-110091",
-  "834, Gali Beri Wali, Bazar Sita Ram, Old Delhi, Delhi, 110006",
-  "C/o 4c plus, 3rd Floor Mahalaxmi Plaza, Vaishali, Ghaziabad, UP-201010",
-];
 
 function IconField({
   icon,
@@ -72,10 +73,37 @@ const DEFAULT_CONTENT: ContactFormContent = {
   titleHighlight: "Urban Cruise",
 };
 
+const DEFAULT_CONTACT_DETAILS: ContactDetails = {
+  officeHeading: "Offices in Delhi / NCR",
+  phones: [
+    { value: "(+91) 93240 48224" },
+    { value: "(+91) 89289 46056" },
+  ],
+  emails: [
+    { label: "Booking", value: "delhi@urbancruise.in" },
+    { label: "Attachment", value: "partner@urbancruise.in" },
+  ],
+  offices: [
+    {
+      address:
+        "B-14, Gali no. 10, Shashi Garden, Mayur Vihar Phase 1, Delhi-110091",
+    },
+    {
+      address: "834, Gali Beri Wali, Bazar Sita Ram, Old Delhi, Delhi, 110006",
+    },
+    {
+      address:
+        "C/o 4c plus, 3rd Floor Mahalaxmi Plaza, Vaishali, Ghaziabad, UP-201010",
+    },
+  ],
+};
+
 export default function ContactForm({
   content = DEFAULT_CONTENT,
+  contactDetails = DEFAULT_CONTACT_DETAILS,
 }: {
   content?: ContactFormContent;
+  contactDetails?: ContactDetails;
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
@@ -125,12 +153,16 @@ export default function ContactForm({
               </span>
               <div className="text-sm">
                 <p className="font-bold text-[#142236]">Call Us</p>
-                <a href="tel:+919324048224" className="block text-gray-600 hover:text-[#03C35E]">
-                  (+91) 93240 48224
-                </a>
-                <a href="tel:+918928946056" className="block text-gray-600 hover:text-[#03C35E]">
-                  (+91) 89289 46056
-                </a>
+                {contactDetails.phones.map(({ label, value }) => (
+                  <a
+                    key={`${label ?? ""}-${value}`}
+                    href={`tel:${value.replace(/[^\d+]/g, "")}`}
+                    className="block text-gray-600 hover:text-[#03C35E]"
+                  >
+                    {label ? `${label}: ` : ""}
+                    {value}
+                  </a>
+                ))}
               </div>
             </div>
 
@@ -140,29 +172,37 @@ export default function ContactForm({
               </span>
               <div className="text-sm">
                 <p className="font-bold text-[#142236]">Email Us</p>
-                <p className="text-gray-600">
-                  Booking:{" "}
-                  <a href="mailto:delhi@urbancruise.in" className="font-semibold text-[#142236] hover:text-[#03C35E]">
-                    delhi@urbancruise.in
-                  </a>
-                </p>
-                <p className="text-gray-600">
-                  Attachment:{" "}
-                  <a href="mailto:partner@urbancruise.in" className="font-semibold text-[#142236] hover:text-[#03C35E]">
-                    partner@urbancruise.in
-                  </a>
-                </p>
+                {contactDetails.emails.map(({ label, value }) => (
+                  <p key={`${label}-${value}`} className="text-gray-600">
+                    {label}:{" "}
+                    <a
+                      href={`mailto:${value}`}
+                      className="font-semibold text-[#142236] hover:text-[#03C35E]"
+                    >
+                      {value}
+                    </a>
+                  </p>
+                ))}
               </div>
             </div>
 
             <div className="rounded-2xl bg-white p-6 text-[#142236] shadow-md ring-1 ring-black/5">
               <p className="mb-4 flex items-center gap-2 font-bold">
-                <FaMapMarkerAlt className="text-[#03C35E]" /> Offices in Delhi / NCR
+                <FaMapMarkerAlt className="text-[#03C35E]" />{" "}
+                {contactDetails.officeHeading}
               </p>
               <ul className="space-y-4 text-sm text-gray-600">
-                {OFFICES.map((addr) => (
-                  <li key={addr} className="border-l-2 border-[#03C35E] pl-3 leading-6">
-                    {addr}
+                {contactDetails.offices.map(({ location, address }) => (
+                  <li
+                    key={`${location ?? ""}-${address}`}
+                    className="border-l-2 border-[#03C35E] pl-3 leading-6"
+                  >
+                    {location && (
+                      <span className="font-semibold text-[#142236]">
+                        {location}:{" "}
+                      </span>
+                    )}
+                    {address}
                   </li>
                 ))}
               </ul>

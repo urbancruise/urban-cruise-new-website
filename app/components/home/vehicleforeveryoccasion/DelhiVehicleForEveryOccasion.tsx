@@ -778,7 +778,7 @@ export default function DelhiVehicleForEveryOccasion({
                 whileHover={{ scale: 1.12, boxShadow: "0 8px 20px rgba(3,195,94,0.3)" }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Previous occasion"
-                className="absolute left-[-7px] top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-[#159A27] text-white shadow-[0_5px_15px_rgba(3,195,94,0.25)] transition sm:left-[-15px] sm:h-10 sm:w-10 md:left-[-20px] lg:left-[-27px]"
+                className="absolute left-0 top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-[#159A27] text-white shadow-[0_5px_15px_rgba(3,195,94,0.25)] transition sm:left-[-15px] sm:h-10 sm:w-10 md:left-[-20px] lg:left-[-27px]"
               >
                 <IoIosArrowBack className="text-[17px]" />
               </motion.button>
@@ -789,7 +789,7 @@ export default function DelhiVehicleForEveryOccasion({
                 whileHover={{ scale: 1.12, boxShadow: "0 8px 20px rgba(3,195,94,0.3)" }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Next occasion"
-                className="absolute right-[-7px] top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-[#159A27] text-white shadow-[0_5px_15px_rgba(3,195,94,0.25)] transition sm:right-[-15px] sm:h-10 sm:w-10 md:right-[-20px] lg:right-[-27px]"
+                className="absolute right-0 top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-[#159A27] text-white shadow-[0_5px_15px_rgba(3,195,94,0.25)] transition sm:right-[-15px] sm:h-10 sm:w-10 md:right-[-20px] lg:right-[-27px]"
               >
                 <IoIosArrowForward className="text-[17px]" />
               </motion.button>

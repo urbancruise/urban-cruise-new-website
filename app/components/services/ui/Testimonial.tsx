@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
 import type {
@@ -14,11 +15,11 @@ const sectionComponents: Record<
   ServiceLocation,
   ComponentType<TestimonialsProps>
 > = {
-  delhi: dynamic(() => import("../../home/testimonial/DelhiTestimonial")),
-  gurugram: dynamic(() => import("../../home/testimonial/GurugramTestimonial")),
-  mumbai: dynamic(() => import("../../home/testimonial/MumbaiTestimonial")),
-  pune: dynamic(() => import("../../home/testimonial/PuneTestimonial")),
-  global: dynamic(() => import("../../home/testimonial/DefaultTestimonial")),
+  delhi: dynamic(() => import("../../home/testimonial/DelhiTestimonial"), { loading: SectionSkeleton }),
+  gurugram: dynamic(() => import("../../home/testimonial/GurugramTestimonial"), { loading: SectionSkeleton }),
+  mumbai: dynamic(() => import("../../home/testimonial/MumbaiTestimonial"), { loading: SectionSkeleton }),
+  pune: dynamic(() => import("../../home/testimonial/PuneTestimonial"), { loading: SectionSkeleton }),
+  global: dynamic(() => import("../../home/testimonial/DefaultTestimonial"), { loading: SectionSkeleton }),
 };
 
 export default function Testimonial({

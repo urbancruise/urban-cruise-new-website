@@ -25,7 +25,7 @@ export default function DesktopNavigation({ state }: DesktopNavigationProps) {
     links.map((item) => <Link key={item.href} href={getHref(item.href)} className={linkClassName} onClick={close}>{item.label}</Link>);
 
   return (
-    <div className="hidden lg:flex items-center gap-2 lg:gap-3 xl:gap-4 2xl:gap-6">
+    <div className="hidden xl:flex items-center gap-2 lg:gap-3 xl:gap-4 2xl:gap-6">
       <div className="relative" onMouseEnter={() => openMenu("about")} onMouseLeave={() => closeMenu("about")}>
         <MenuButton label="About Us" open={desktopMenu === "about"} />
         {desktopMenu === "about" && <div className={`${dropdownClassName} w-52 sm:w-56 md:w-60 lg:w-64`} onMouseEnter={() => openMenu("about")} onMouseLeave={() => closeMenu("about")}>{renderLinks(aboutLinks, getAboutLink, () => closeMenu("about"))}</div>}

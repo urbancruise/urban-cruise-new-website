@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 export interface WhyChooseBenefitItem {
   number: string;
@@ -30,19 +31,19 @@ export interface WhyChooseUrbanCruiseProps {
 }
 
 const DelhiWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
-  import("./home/whychooseurbancruise/DelhiWhyChooseUrbanCruise")
+  import("./home/whychooseurbancruise/DelhiWhyChooseUrbanCruise"), { loading: SectionSkeleton }
 );
 const GurugramWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
-  import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise")
+  import("./home/whychooseurbancruise/GurugramWhyChooseUrbanCruise"), { loading: SectionSkeleton }
 );
 const MumbaiWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
-  import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise")
+  import("./home/whychooseurbancruise/MumbaiWhyChooseUrbanCruise"), { loading: SectionSkeleton }
 );
 const PuneWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
-  import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise")
+  import("./home/whychooseurbancruise/PuneWhyChooseUrbanCruise"), { loading: SectionSkeleton }
 );
 const DefaultWhyChoose = dynamic<WhyChooseUrbanCruiseProps>(() =>
-  import("./home/whychooseurbancruise/DefaultWhyChooseUrbanCruise")
+  import("./home/whychooseurbancruise/DefaultWhyChooseUrbanCruise"), { loading: SectionSkeleton }
 );
 
 export default function WhyChooseUrbanCruiseSelector({

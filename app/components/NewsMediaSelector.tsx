@@ -4,12 +4,13 @@
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 // Lazy load News & Media components for better performance
-const DelhiNewsMediaPage = dynamic(() => import("./news-media/DelhiNewsMediaPage"));
-const GurugramNewsMediaPage = dynamic(() => import("./news-media/GurugramNewsMediaPage"));
-const MumbaiNewsMediaPage = dynamic(() => import("./news-media/MumbaiNewsMediaPage"));
-const PuneNewsMediaPage = dynamic(() => import("./news-media/PuneNewsMediaPage"));
+const DelhiNewsMediaPage = dynamic(() => import("./news-media/DelhiNewsMediaPage"), { loading: SectionSkeleton });
+const GurugramNewsMediaPage = dynamic(() => import("./news-media/GurugramNewsMediaPage"), { loading: SectionSkeleton });
+const MumbaiNewsMediaPage = dynamic(() => import("./news-media/MumbaiNewsMediaPage"), { loading: SectionSkeleton });
+const PuneNewsMediaPage = dynamic(() => import("./news-media/PuneNewsMediaPage"), { loading: SectionSkeleton });
 
 // Fallback component for missing News & Media pages
 function NewsMediaComingSoon() {

@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 import type { ComponentType } from "react";
 import type { ServiceLocation } from "./types";
 import type { HowItWorksSelectorProps } from "@/app/components/HowItWorksSelector";
@@ -10,11 +11,11 @@ const sectionComponents: Record<
   ServiceLocation,
   ComponentType<HowItWorksSelectorProps>
 > = {
-  delhi: dynamic(() => import("../../home/howItworks/DelhiHowItWorks")),
-  gurugram: dynamic(() => import("../../home/howItworks/GurugramHowItWorks")),
-  mumbai: dynamic(() => import("../../home/howItworks/MumbaiHowItWorks")),
-  pune: dynamic(() => import("../../home/howItworks/PuneHowItWorks")),
-  global: dynamic(() => import("../../home/howItworks/DefaultHowItWorks")),
+  delhi: dynamic(() => import("../../home/howItworks/DelhiHowItWorks"), { loading: SectionSkeleton }),
+  gurugram: dynamic(() => import("../../home/howItworks/GurugramHowItWorks"), { loading: SectionSkeleton }),
+  mumbai: dynamic(() => import("../../home/howItworks/MumbaiHowItWorks"), { loading: SectionSkeleton }),
+  pune: dynamic(() => import("../../home/howItworks/PuneHowItWorks"), { loading: SectionSkeleton }),
+  global: dynamic(() => import("../../home/howItworks/DefaultHowItWorks"), { loading: SectionSkeleton }),
 };
 
 export default function HowItWorks({

@@ -12,7 +12,7 @@ export default function MobileNavigation({ state }: { state: NavbarState }) {
   if (!isOpen) return null;
   const toggle = (open: boolean) => open ? <FaChevronUp /> : <FaChevronDown />;
   const links = (items: { href: string; label: string }[], href: (path: string) => string, close: () => void) => items.map((item) => <Link key={item.href} href={href(item.href)} className="block px-4 py-2.5 text-xs sm:text-sm text-[#3A3D33] hover:bg-white/60 hover:text-[#03C35E] rounded-xl" onClick={close}>{item.label}</Link>);
-  return <div className="relative z-30 lg:hidden mt-2 border-t border-white/60 px-2 pt-3 pb-5 max-h-[75vh] overflow-y-auto bg-white/25 backdrop-blur-xl rounded-b-2xl animate-in slide-in-from-top-4 duration-300">
+  return <div className="relative z-30 xl:hidden mt-2 border-t border-white/60 px-2 pt-3 pb-5 max-h-[75vh] overflow-y-auto bg-white/25 backdrop-blur-xl rounded-b-2xl animate-in slide-in-from-top-4 duration-300">
     <button onClick={() => setMobileAboutOpen(!mobileAboutOpen)} className={`w-full flex items-center justify-between px-4 py-3 text-xs sm:text-sm font-medium rounded-xl ${mobileAboutOpen ? "text-[#03C35E] bg-white/60" : "text-[#3A3D33] hover:bg-white/50"}`}><span>About Us</span>{toggle(mobileAboutOpen)}</button>
     {mobileAboutOpen && <div className="pl-4 pb-2">{links(aboutLinks, getAboutLink, () => setMobileAboutOpen(false))}</div>}
     <button onClick={() => setMobileVehiclesOpen(!mobileVehiclesOpen)} className={`w-full flex items-center justify-between px-4 py-3 text-xs sm:text-sm font-medium rounded-xl ${mobileVehiclesOpen ? "text-[#03C35E] bg-white/60" : "text-[#3A3D33] hover:bg-white/50"}`}><span>Our Vehicles</span>{toggle(mobileVehiclesOpen)}</button>

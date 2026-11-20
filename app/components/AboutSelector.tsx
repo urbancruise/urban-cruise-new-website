@@ -5,21 +5,22 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 const DelhiAbout = dynamic<{ content?: AboutContent | null }>(
-  () => import("./home/about/DelhiAbout")
+  () => import("./home/about/DelhiAbout"), { loading: SectionSkeleton }
 );
 const GurugramAbout = dynamic<{ content?: AboutContent | null }>(
-  () => import("./home/about/GurugramAbout")
+  () => import("./home/about/GurugramAbout"), { loading: SectionSkeleton }
 );
 const MumbaiAbout = dynamic<{ content?: AboutContent | null }>(
-  () => import("./home/about/MumbaiAbout")
+  () => import("./home/about/MumbaiAbout"), { loading: SectionSkeleton }
 );
 const PuneAbout = dynamic<{ content?: AboutContent | null }>(
-  () => import("./home/about/PuneAbout")
+  () => import("./home/about/PuneAbout"), { loading: SectionSkeleton }
 );
 const DefaultAbout = dynamic<{ content?: AboutContent | null }>(
-  () => import("./home/about/DefaultAbout")
+  () => import("./home/about/DefaultAbout"), { loading: SectionSkeleton }
 );
 
 export interface AboutContent {

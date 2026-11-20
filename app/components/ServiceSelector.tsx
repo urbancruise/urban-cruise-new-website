@@ -7,73 +7,74 @@
 import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 // ======================================================
 // LAZY LOAD — JIM CORBETT
 // ======================================================
-const DelhiJimCorbettPage = dynamic(() => import("./services/DelhiJimCorbettPage"));
-const GurugramJimCorbettPage = dynamic(() => import("./services/GurugramJimCorbettPage"));
-const MumbaiJimCorbettPage = dynamic(() => import("./services/MumbaiJimCorbettPage"));
-const PuneJimCorbettPage = dynamic(() => import("./services/PuneJimCorbettPage"));
+const DelhiJimCorbettPage = dynamic(() => import("./services/DelhiJimCorbettPage"), { loading: SectionSkeleton });
+const GurugramJimCorbettPage = dynamic(() => import("./services/GurugramJimCorbettPage"), { loading: SectionSkeleton });
+const MumbaiJimCorbettPage = dynamic(() => import("./services/MumbaiJimCorbettPage"), { loading: SectionSkeleton });
+const PuneJimCorbettPage = dynamic(() => import("./services/PuneJimCorbettPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — DO DHAM YATRA
 // ======================================================
-const DelhiDoDhamPage = dynamic(() => import("./services/DelhiDoDhamPage"));
-const GurugramDoDhamPage = dynamic(() => import("./services/GurugramDoDhamPage"));
-const MumbaiDoDhamPage = dynamic(() => import("./services/MumbaiDoDhamPage"));
-const PuneDoDhamPage = dynamic(() => import("./services/PuneDoDhamPage"));
+const DelhiDoDhamPage = dynamic(() => import("./services/DelhiDoDhamPage"), { loading: SectionSkeleton });
+const GurugramDoDhamPage = dynamic(() => import("./services/GurugramDoDhamPage"), { loading: SectionSkeleton });
+const MumbaiDoDhamPage = dynamic(() => import("./services/MumbaiDoDhamPage"), { loading: SectionSkeleton });
+const PuneDoDhamPage = dynamic(() => import("./services/PuneDoDhamPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — CHAR DHAM YATRA
 // ======================================================
-const DelhiCharDhamPage = dynamic(() => import("./services/DelhiCharDhamPage"));
-const GurugramCharDhamPage = dynamic(() => import("./services/GurugramCharDhamPage"));
-const MumbaiCharDhamPage = dynamic(() => import("./services/MumbaiCharDhamPage"));
-const PuneCharDhamPage = dynamic(() => import("./services/PuneCharDhamPage"));
+const DelhiCharDhamPage = dynamic(() => import("./services/DelhiCharDhamPage"), { loading: SectionSkeleton });
+const GurugramCharDhamPage = dynamic(() => import("./services/GurugramCharDhamPage"), { loading: SectionSkeleton });
+const MumbaiCharDhamPage = dynamic(() => import("./services/MumbaiCharDhamPage"), { loading: SectionSkeleton });
+const PuneCharDhamPage = dynamic(() => import("./services/PuneCharDhamPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — PILGRIMAGE
 // ======================================================
-const DelhiPilgrimagePage = dynamic(() => import("./services/DelhiPilgrimagePage"));
-const GurugramPilgrimagePage = dynamic(() => import("./services/GurugramPilgrimagePage"));
-const MumbaiPilgrimagePage = dynamic(() => import("./services/MumbaiPilgrimagePage"));
-const PunePilgrimagePage = dynamic(() => import("./services/PunePilgrimagePage"));
+const DelhiPilgrimagePage = dynamic(() => import("./services/DelhiPilgrimagePage"), { loading: SectionSkeleton });
+const GurugramPilgrimagePage = dynamic(() => import("./services/GurugramPilgrimagePage"), { loading: SectionSkeleton });
+const MumbaiPilgrimagePage = dynamic(() => import("./services/MumbaiPilgrimagePage"), { loading: SectionSkeleton });
+const PunePilgrimagePage = dynamic(() => import("./services/PunePilgrimagePage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — WEDDING
 // ======================================================
-const DelhiWeddingPage = dynamic(() => import("./services/DelhiWeddingPage"));
-const GurugramWeddingPage = dynamic(() => import("./services/GurugramWeddingPage"));
-const MumbaiWeddingPage = dynamic(() => import("./services/MumbaiWeddingPage"));
-const PuneWeddingPage = dynamic(() => import("./services/PuneWeddingPage"));
-const GlobalWeddingPage = dynamic(() => import("./services/GlobalWeddingPage"));
+const DelhiWeddingPage = dynamic(() => import("./services/DelhiWeddingPage"), { loading: SectionSkeleton });
+const GurugramWeddingPage = dynamic(() => import("./services/GurugramWeddingPage"), { loading: SectionSkeleton });
+const MumbaiWeddingPage = dynamic(() => import("./services/MumbaiWeddingPage"), { loading: SectionSkeleton });
+const PuneWeddingPage = dynamic(() => import("./services/PuneWeddingPage"), { loading: SectionSkeleton });
+const GlobalWeddingPage = dynamic(() => import("./services/GlobalWeddingPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — CORPORATE
 // ======================================================
-const DelhiCorporatePage = dynamic(() => import("./services/DelhiCorporatePage"));
-const GurugramCorporatePage = dynamic(() => import("./services/GurugramCorporatePage"));
-const MumbaiCorporatePage = dynamic(() => import("./services/MumbaiCorporatePage"));
-const PuneCorporatePage = dynamic(() => import("./services/PuneCorporatePage"));
-const GlobalCorporatePage = dynamic(() => import("./services/GlobalCorporatePage"));
+const DelhiCorporatePage = dynamic(() => import("./services/DelhiCorporatePage"), { loading: SectionSkeleton });
+const GurugramCorporatePage = dynamic(() => import("./services/GurugramCorporatePage"), { loading: SectionSkeleton });
+const MumbaiCorporatePage = dynamic(() => import("./services/MumbaiCorporatePage"), { loading: SectionSkeleton });
+const PuneCorporatePage = dynamic(() => import("./services/PuneCorporatePage"), { loading: SectionSkeleton });
+const GlobalCorporatePage = dynamic(() => import("./services/GlobalCorporatePage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — VACATIONS
 // ======================================================
-const GlobalVacationsPage = dynamic(() => import("./services/GlobalVacationsPage"));
-const DelhiVacationsPage = dynamic(() => import("./services/DelhiVacationsPage"));
-const GurugramVacationsPage = dynamic(() => import("./services/GurugramVacationsPage"));
-const MumbaiVacationsPage = dynamic(() => import("./services/MumbaiVacationsPage"));
-const PuneVacationsPage = dynamic(() => import("./services/PuneVacationsPage"));
+const GlobalVacationsPage = dynamic(() => import("./services/GlobalVacationsPage"), { loading: SectionSkeleton });
+const DelhiVacationsPage = dynamic(() => import("./services/DelhiVacationsPage"), { loading: SectionSkeleton });
+const GurugramVacationsPage = dynamic(() => import("./services/GurugramVacationsPage"), { loading: SectionSkeleton });
+const MumbaiVacationsPage = dynamic(() => import("./services/MumbaiVacationsPage"), { loading: SectionSkeleton });
+const PuneVacationsPage = dynamic(() => import("./services/PuneVacationsPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // LAZY LOAD — LOCAL TRAVEL
 // ======================================================
-const DelhiLocalTravelPage = dynamic(() => import("./services/DelhiLocalTravelPage"));
-const GurugramLocalTravelPage = dynamic(() => import("./services/GurugramLocalTravelPage"));
-const MumbaiLocalTravelPage = dynamic(() => import("./services/MumbaiLocalTravelPage"));
-const PuneLocalTravelPage = dynamic(() => import("./services/PuneLocalTravelPage"));
+const DelhiLocalTravelPage = dynamic(() => import("./services/DelhiLocalTravelPage"), { loading: SectionSkeleton });
+const GurugramLocalTravelPage = dynamic(() => import("./services/GurugramLocalTravelPage"), { loading: SectionSkeleton });
+const MumbaiLocalTravelPage = dynamic(() => import("./services/MumbaiLocalTravelPage"), { loading: SectionSkeleton });
+const PuneLocalTravelPage = dynamic(() => import("./services/PuneLocalTravelPage"), { loading: SectionSkeleton });
 
 // ======================================================
 // TYPES

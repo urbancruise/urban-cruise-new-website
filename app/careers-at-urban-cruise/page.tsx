@@ -1,4 +1,4 @@
-import CareersSelector from "@/app/components/CareersSelector";
+import GlobalCareersContent from "@/app/components/careers/GlobalCareersPage";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
@@ -19,7 +19,7 @@ export default function GlobalCareersPage() {
         description="Explore careers and join the Urban Cruise travel team."
         path="/careers-at-urban-cruise"
       />
-      <CareersSelector />
+      <GlobalCareersContent />
     </>
   );
 }

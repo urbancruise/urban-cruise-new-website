@@ -5,6 +5,7 @@ import React from "react";
 import { useLocation } from "@/app/context/LocationContext";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import SectionSkeleton from "@/app/components/shared/SectionSkeleton";
 
 export interface TestimonialItem {
   id?: number;
@@ -34,19 +35,19 @@ export interface TestimonialsProps {
 }
 
 const DelhiTestimonials = dynamic<TestimonialsProps>(() =>
-  import("./home/testimonial/DelhiTestimonial")
+  import("./home/testimonial/DelhiTestimonial"), { loading: SectionSkeleton }
 );
 const GurugramTestimonials = dynamic<TestimonialsProps>(() =>
-  import("./home/testimonial/GurugramTestimonial")
+  import("./home/testimonial/GurugramTestimonial"), { loading: SectionSkeleton }
 );
 const MumbaiTestimonials = dynamic<TestimonialsProps>(() =>
-  import("./home/testimonial/MumbaiTestimonial")
+  import("./home/testimonial/MumbaiTestimonial"), { loading: SectionSkeleton }
 );
 const PuneTestimonials = dynamic<TestimonialsProps>(() =>
-  import("./home/testimonial/PuneTestimonial")
+  import("./home/testimonial/PuneTestimonial"), { loading: SectionSkeleton }
 );
 const DefaultTestimonials = dynamic<TestimonialsProps>(() =>
-  import("./home/testimonial/DefaultTestimonial")
+  import("./home/testimonial/DefaultTestimonial"), { loading: SectionSkeleton }
 );
 
 export default function TestimonialSelector({ content }: TestimonialsProps) {

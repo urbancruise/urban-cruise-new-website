@@ -72,7 +72,7 @@ export default function PuneVehicleRentalServiceInIndia({
             className="w-full"
           >
             <div className="w-full">
-              <div className="h-[300px] w-full sm:h-[340px] md:h-[380px] lg:h-[420px] xl:h-[450px] 2xl:h-[800px]">
+              <div className="w-full">
                 <IndiaMap />
               </div>
             </div>

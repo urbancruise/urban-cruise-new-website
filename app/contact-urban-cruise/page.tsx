@@ -1,4 +1,4 @@
-import ContactSelector from "@/app/components/ContactSelector";
+import GlobalContactContent from "@/app/components/contact/GlobalContactPage";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
@@ -20,7 +20,7 @@ export default function GlobalContactPage() {
         description="Contact Urban Cruise for vehicle rental bookings and travel support across India."
         path="/contact-urban-cruise"
       />
-      <ContactSelector />
+      <GlobalContactContent />
     </>
   );
 }
