@@ -104,6 +104,15 @@ export function getFullServiceUrl(location: string, path: string): string {
   ) {
     return '/jim-corbett';
   }
+
+  if (
+    location === 'global' &&
+    (cleanPath === 'bus-and-car-rental-for-local-travel' ||
+      cleanPath ===
+        'bus-rental-for-local-travel-sightseeing-in-mumbai-mumbai-darshan-airport-transfer')
+  ) {
+    return '/bus-and-car-rental-for-local-travel';
+  }
   
   // If path already has location, return as is
   if (AVAILABLE_LOCATIONS.includes(cleanPath.split('/')[0])) {

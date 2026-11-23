@@ -6,6 +6,7 @@ export const serviceUrlMappings: Record<string, Record<string, string>> = {
     'wedding': 'wedding',
     'corporate': 'corporate-travel-rental-service',
     'vacations': 'vacations',
+    'local-travel': 'bus-and-car-rental-for-local-travel',
   },
   'delhi': {
     'jim-corbett': 'delhi-to-jim-corbett-vehicle-rental',

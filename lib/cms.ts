@@ -162,11 +162,25 @@ export interface VehicleDetailResponse {
   updatedAt: string;
 }
 
-export async function getVehicle(citySlug: string, vehicleSlug: string) {
+// Map website location slugs to CMS city slugs.
+// CMS has cities: Delhi, Global, Gurugram, Mumbai, Pune — matching the
+// website locations exactly, so we pass them through directly.
+const LOCATION_TO_CITY: Record<string, string> = {
+  global: "global",
+  delhi: "delhi",
+  gurugram: "gurugram",
+  mumbai: "mumbai",
+  pune: "pune",
+};
+
+function resolveCity(location: string): string {
+  return LOCATION_TO_CITY[location] || location;
+}
+
+export async function getVehicle(location: string, vehicleSlug: string) {
+  const citySlug = resolveCity(location);
   return cmsFetch<VehicleDetailResponse>(
-    `/api/public/vehicles?city=${encodeURIComponent(
-      citySlug
-    )}&slug=${encodeURIComponent(vehicleSlug)}`,
+    `/api/public/vehicles?city=${encodeURIComponent(citySlug)}&slug=${encodeURIComponent(vehicleSlug)}`,
     {
       revalidate: 60,
       tags: [`vehicle:${citySlug}:${vehicleSlug}`],

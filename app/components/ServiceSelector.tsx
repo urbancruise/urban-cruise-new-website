@@ -71,6 +71,7 @@ const PuneVacationsPage = dynamic(() => import("./services/PuneVacationsPage"), 
 // ======================================================
 // LAZY LOAD — LOCAL TRAVEL
 // ======================================================
+const GlobalLocalTravelPage = dynamic(() => import("./services/GlobalLocalTravelPage"), { loading: SectionSkeleton });
 const DelhiLocalTravelPage = dynamic(() => import("./services/DelhiLocalTravelPage"), { loading: SectionSkeleton });
 const GurugramLocalTravelPage = dynamic(() => import("./services/GurugramLocalTravelPage"), { loading: SectionSkeleton });
 const MumbaiLocalTravelPage = dynamic(() => import("./services/MumbaiLocalTravelPage"), { loading: SectionSkeleton });
@@ -109,6 +110,7 @@ const serviceMap: Record<
     wedding: GlobalWeddingPage,
     corporate: GlobalCorporatePage,
     vacations: GlobalVacationsPage,
+    "local-travel": GlobalLocalTravelPage,
   },
   delhi: {
     "jim-corbett": DelhiJimCorbettPage,
