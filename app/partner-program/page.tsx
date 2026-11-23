@@ -1,4 +1,4 @@
-import PartnerSelector from "@/app/components/PartnerSelector";
+import GlobalPartnerPage from "@/app/components/partner/GlobalPartnerPage";
 import PageJsonLd from "@/app/components/seo/PageJsonLd";
 import { getCmsSeoMetadata } from "@/lib/cms-seo-metadata";
 
@@ -20,7 +20,7 @@ export default function GlobalPartnerProgramPage() {
         description="Build dependable travel and mobility solutions with Urban Cruise."
         path="/partner-program"
       />
-      <PartnerSelector />
+      <GlobalPartnerPage />
     </>
   );
 }
