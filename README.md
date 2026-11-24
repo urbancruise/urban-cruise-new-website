@@ -44,6 +44,15 @@ chatbot apps, and add this website's exact origin to `CHATBOT_REALTIME_ALLOWED_O
 chatbot service environment. If the realtime service is unavailable, the widget continues checking
 for agent replies through the existing REST API.
 
+## CMS website cache revalidation
+
+To clear cached website content immediately after a CMS publish or update,
+configure `REVALIDATE_SECRET` in this website's server environment and set the
+same server-only value in the CMS environment. The CMS also needs
+`WEBSITE_ORIGIN` pointing to this website (for example,
+`http://localhost:3000` locally). Never expose the secret through a
+`NEXT_PUBLIC_*` variable. Restart both apps after changing these values.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
