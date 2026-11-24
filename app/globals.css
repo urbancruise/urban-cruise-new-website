@@ -525,7 +525,12 @@ body {
   .animate-float,
   .animate-gradient,
   .animate-car,
-  .animate-cyclist {
+  .animate-cyclist,
+  .animate-chat-launcher {
+    animation: none !important;
+  }
+
+  .animate-chat-widget-in {
     animation: none !important;
   }
 }
@@ -533,4 +538,32 @@ body {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes chat-launcher-pulse {
+  0%, 100% {
+    box-shadow: 0 10px 28px rgba(8, 127, 53, 0.35);
+  }
+  50% {
+    box-shadow: 0 10px 32px rgba(8, 127, 53, 0.58);
+  }
+}
+
+.animate-chat-launcher {
+  animation: chat-launcher-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes chat-widget-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-chat-widget-in {
+  animation: chat-widget-in 220ms ease-out both;
 }

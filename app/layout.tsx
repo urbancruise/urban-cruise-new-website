@@ -6,6 +6,7 @@ import { LocationProvider } from "./context/LocationContext";
 import SocialMedia from "./components/social-media/SocialMedia";
 import OfferPopup from "./components/shared/OfferPopup";
 import JsonLdScript from "./components/seo/JsonLdScript";
+import ChatWidgetEmbed from "./components/ChatWidgetEmbed";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { createSiteMetadata } from "@/lib/seo";
 import "./globals.css";
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Footer />
           <SocialMedia />
           <OfferPopup />
+          <ChatWidgetEmbed />
         </LocationProvider>
       </body>
     </html>
