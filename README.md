@@ -35,6 +35,24 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Chatbot real-time connection
+
+The embedded chatbot uses the Socket.IO service hosted by the chatbot repository. Set
+`NEXT_PUBLIC_CHAT_REALTIME_URL` to the browser-reachable service URL in this app's environment
+(for example, `http://localhost:5002` in local development). Configure the same URL in the CMS and
+chatbot apps, and add this website's exact origin to `CHATBOT_REALTIME_ALLOWED_ORIGINS` in the
+chatbot service environment. If the realtime service is unavailable, the widget continues checking
+for agent replies through the existing REST API.
+
+## CMS website cache revalidation
+
+To clear cached website content immediately after a CMS publish or update,
+configure `REVALIDATE_SECRET` in this website's server environment and set the
+same server-only value in the CMS environment. The CMS also needs
+`WEBSITE_ORIGIN` pointing to this website (for example,
+`http://localhost:3000` locally). Never expose the secret through a
+`NEXT_PUBLIC_*` variable. Restart both apps after changing these values.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

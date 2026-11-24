@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { FaArrowRight, FaMessage, FaXmark } from "react-icons/fa6";
+import { io } from "socket.io-client";
+import { useLocation } from "@/app/context/LocationContext";
 
 type Language = "en" | "hi";
 
@@ -13,12 +16,13 @@ interface ChatReply {
 
 interface ChatMessage {
   id: string;
-  role: "assistant" | "user";
+  role: "assistant" | "user" | "agent";
   text: string;
   replies?: ChatReply[];
 }
 
 interface ChatConfig {
+  mode: "day" | "night";
   welcomeMessage: Record<Language, string>;
   menu: Array<{ id: string; en: string; hi: string }>;
 }
@@ -30,6 +34,14 @@ interface Category {
 }
 
 export default function ChatWidgetEmbed() {
+  const { selectedLocation, availableLocations } = useLocation();
+  const pathname = usePathname();
+  const routeLocation = pathname?.split("/").filter(Boolean)[0];
+  const locationSlug = selectedLocation ?? (
+    routeLocation && availableLocations.includes(routeLocation)
+      ? routeLocation
+      : "global"
+  );
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState<Language>("en");
   const [config, setConfig] = useState<ChatConfig | null>(null);
@@ -39,10 +51,14 @@ export default function ChatWidgetEmbed() {
   const [menu, setMenu] = useState<Category[]>([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [pollError, setPollError] = useState("");
   const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
+  const [realtimeConnected, setRealtimeConnected] = useState(false);
+  const [agentTyping, setAgentTyping] = useState(false);
   const dialogRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const agentTypingTimer = useRef<number | null>(null);
 
   useEffect(() => {
     if (!open || initialized) return;
@@ -58,7 +74,7 @@ export default function ChatWidgetEmbed() {
           fetch("/api/chat/sessions", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ languageCode: "en" }),
+            body: JSON.stringify({ languageCode: "en", locationSlug }),
           }),
         ]);
 
@@ -101,7 +117,99 @@ export default function ChatWidgetEmbed() {
     return () => {
       active = false;
     };
-  }, [open, initialized]);
+  }, [open, initialized, locationSlug]);
+
+  useEffect(() => {
+    const realtimeUrl = process.env.NEXT_PUBLIC_CHAT_REALTIME_URL;
+    if (!open || config?.mode !== "day" || !sessionToken || !realtimeUrl) return;
+
+    const socket = io(realtimeUrl, {
+      auth: { sessionToken },
+      reconnection: true,
+      timeout: 5000,
+    });
+    socket.on("connect", () => setRealtimeConnected(true));
+    socket.on("disconnect", () => {
+      setRealtimeConnected(false);
+      setAgentTyping(false);
+    });
+    socket.on("connect_error", () => setRealtimeConnected(false));
+    socket.on("chat:agent-message", (event: unknown) => {
+      if (!event || typeof event !== "object") return;
+      const message = event as { id?: unknown; text?: unknown };
+      if (typeof message.id !== "string" || typeof message.text !== "string") return;
+      const id = message.id;
+      const text = message.text;
+      setMessages((current) => current.some((item) => item.id === message.id)
+        ? current
+        : [...current, { id, role: "agent", text }]);
+    });
+    socket.on("agent:typing", (event: unknown) => {
+      if (!event || typeof event !== "object" || typeof (event as { typing?: unknown }).typing !== "boolean") return;
+      const typing = (event as { typing: boolean }).typing;
+      setAgentTyping(typing);
+      if (agentTypingTimer.current !== null) window.clearTimeout(agentTypingTimer.current);
+      if (typing) {
+        agentTypingTimer.current = window.setTimeout(() => {
+          setAgentTyping(false);
+          agentTypingTimer.current = null;
+        }, 3000);
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+      if (agentTypingTimer.current !== null) {
+        window.clearTimeout(agentTypingTimer.current);
+        agentTypingTimer.current = null;
+      }
+    };
+  }, [open, config?.mode, sessionToken]);
+
+  useEffect(() => {
+    if (!open || config?.mode !== "day" || !sessionToken) return;
+    let active = true;
+    let polling = false;
+
+    async function checkForAgentReplies() {
+      if (polling) return;
+      polling = true;
+      try {
+        const response = await fetch("/api/chat/messages", {
+          headers: { Authorization: `Bearer ${sessionToken}` },
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Agent replies are temporarily unavailable.");
+        const data = await response.json() as { messages?: Array<{ id: string; author: string; text: string }> };
+        if (!active) return;
+        setPollError("");
+        const agentMessages = (data.messages ?? [])
+          .filter((message) => message.author === "agent")
+          .map((message) => ({ id: message.id, role: "agent" as const, text: message.text }));
+        setMessages((current) => {
+          const currentIds = new Set(current.map((message) => message.id));
+          const newMessages = agentMessages.filter((message) => !currentIds.has(message.id));
+          return newMessages.length ? [...current, ...newMessages] : current;
+        });
+      } catch (pollingError) {
+        if (active) {
+          setPollError(pollingError instanceof Error ? pollingError.message : "Agent replies are unavailable.");
+        }
+      } finally {
+        polling = false;
+      }
+    }
+
+    void checkForAgentReplies();
+    const timer = window.setInterval(
+      () => void checkForAgentReplies(),
+      realtimeConnected ? 15000 : 5000,
+    );
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+    };
+  }, [open, config?.mode, sessionToken, realtimeConnected]);
 
   useEffect(() => {
     if (open) closeRef.current?.focus();
@@ -155,6 +263,7 @@ export default function ChatWidgetEmbed() {
       });
       const data = await response.json();
       if (!response.ok) throw new Error("Your message could not be sent.");
+      setPollError("");
       const result = data.response as {
         text: string;
         quickReplies: ChatReply[];
@@ -281,6 +390,11 @@ export default function ChatWidgetEmbed() {
                           : "rounded-bl-sm bg-white text-slate-900 shadow-[0_2px_12px_rgba(15,23,42,0.06)]"
                       }`}
                     >
+                      {chatMessage.role === "agent" && (
+                        <span className="mb-1 block text-xs font-semibold text-[#087F35]">
+                          Urban Cruise agent
+                        </span>
+                      )}
                       <p className="whitespace-pre-wrap break-words">{chatMessage.text}</p>
                       {chatMessage.replies && chatMessage.replies.length > 0 && (
                         <div className="mt-3 flex flex-wrap gap-2">
@@ -303,9 +417,14 @@ export default function ChatWidgetEmbed() {
                     </div>
                   </div>
                 ))}
-                {error && (
+                {agentTyping && (
+                  <p className="text-xs text-slate-600" role="status" aria-label="Agent is typing">
+                    {isHindi ? "एजेंट टाइप कर रहा है..." : "Agent is typing..."}
+                  </p>
+                )}
+                {(error || pollError) && (
                   <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800" role="alert">
-                    {error}
+                    {error || pollError}
                   </p>
                 )}
               </div>

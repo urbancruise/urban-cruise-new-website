@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    for (const tag of tags) revalidateTag(tag, "default");
+    for (const tag of tags) revalidateTag(tag, { expire: 0 });
     for (const path of paths) revalidatePath(path);
 
     return NextResponse.json({

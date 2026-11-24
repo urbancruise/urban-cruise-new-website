@@ -132,7 +132,7 @@ export async function getHomeSections(citySlug: string) {
     `/api/public/home?city=${encodeURIComponent(citySlug)}`,
     {
       revalidate: 60,
-      tags: [`home:${citySlug}`],
+      tags: ["home", `home:${citySlug}`],
     }
   );
 }
@@ -148,7 +148,7 @@ export interface VehiclesResponse {
 export async function getVehicles(citySlug: string) {
   return cmsFetch<VehiclesResponse>(
     `/api/public/vehicles?city=${encodeURIComponent(citySlug)}`,
-    { revalidate: 60, tags: [`vehicles:${citySlug}`] }
+    { revalidate: 60, tags: ["vehicles", `vehicles:${citySlug}`] }
   );
 }
 
@@ -183,7 +183,7 @@ export async function getVehicle(location: string, vehicleSlug: string) {
     `/api/public/vehicles?city=${encodeURIComponent(citySlug)}&slug=${encodeURIComponent(vehicleSlug)}`,
     {
       revalidate: 60,
-      tags: [`vehicle:${citySlug}:${vehicleSlug}`],
+      tags: ["vehicles", `vehicle:${citySlug}:${vehicleSlug}`],
     }
   );
 }
@@ -230,7 +230,7 @@ export async function getSeoByPath(path: string) {
   const encoded = encodeURIComponent(path);
   return cmsFetch<SeoResponse>(`/api/public/seo?path=${encoded}`, {
     revalidate: 300,
-    tags: [`seo:${path}`],
+    tags: ["seo", `seo:${path}`],
   });
 }
 
@@ -239,6 +239,7 @@ export async function getSeoBySlug(slug: string, citySlug?: string) {
   if (citySlug) params.set("city", citySlug);
   return cmsFetch<SeoResponse>(`/api/public/seo?${params.toString()}`, {
     revalidate: 300,
+    tags: ["seo"],
   });
 }
 
