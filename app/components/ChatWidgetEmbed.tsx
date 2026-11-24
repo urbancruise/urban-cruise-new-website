@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { FaArrowRight, FaMessage, FaXmark } from "react-icons/fa6";
+import { useLocation } from "@/app/context/LocationContext";
 
 type Language = "en" | "hi";
 
@@ -30,6 +32,14 @@ interface Category {
 }
 
 export default function ChatWidgetEmbed() {
+  const { selectedLocation, availableLocations } = useLocation();
+  const pathname = usePathname();
+  const routeLocation = pathname?.split("/").filter(Boolean)[0];
+  const locationSlug = selectedLocation ?? (
+    routeLocation && availableLocations.includes(routeLocation)
+      ? routeLocation
+      : "global"
+  );
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState<Language>("en");
   const [config, setConfig] = useState<ChatConfig | null>(null);
@@ -58,7 +68,7 @@ export default function ChatWidgetEmbed() {
           fetch("/api/chat/sessions", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ languageCode: "en" }),
+            body: JSON.stringify({ languageCode: "en", locationSlug }),
           }),
         ]);
 
@@ -101,7 +111,7 @@ export default function ChatWidgetEmbed() {
     return () => {
       active = false;
     };
-  }, [open, initialized]);
+  }, [open, initialized, locationSlug]);
 
   useEffect(() => {
     if (open) closeRef.current?.focus();
