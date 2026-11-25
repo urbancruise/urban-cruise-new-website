@@ -140,6 +140,11 @@ export default function ChatWidgetEmbed() {
       if (typeof message.id !== "string" || typeof message.text !== "string") return;
       const id = message.id;
       const text = message.text;
+      setAgentTyping(false);
+      if (agentTypingTimer.current !== null) {
+        window.clearTimeout(agentTypingTimer.current);
+        agentTypingTimer.current = null;
+      }
       setMessages((current) => current.some((item) => item.id === message.id)
         ? current
         : [...current, { id, role: "agent", text }]);
@@ -189,7 +194,15 @@ export default function ChatWidgetEmbed() {
         setMessages((current) => {
           const currentIds = new Set(current.map((message) => message.id));
           const newMessages = agentMessages.filter((message) => !currentIds.has(message.id));
-          return newMessages.length ? [...current, ...newMessages] : current;
+          if (newMessages.length) {
+            setAgentTyping(false);
+            if (agentTypingTimer.current !== null) {
+              window.clearTimeout(agentTypingTimer.current);
+              agentTypingTimer.current = null;
+            }
+            return [...current, ...newMessages];
+          }
+          return current;
         });
       } catch (pollingError) {
         if (active) {
@@ -269,14 +282,24 @@ export default function ChatWidgetEmbed() {
         quickReplies: ChatReply[];
         relatedQuestions?: Array<{ id: number; question: string }>;
       };
-      addMessage("assistant", result.text, [
-        ...result.quickReplies,
-        ...(result.relatedQuestions ?? []).map((faq) => ({
-          type: "faq" as const,
-          label: faq.question,
-          value: faq.id,
-        })),
-      ]);
+      if (result.text) {
+        addMessage("assistant", result.text, [
+          ...result.quickReplies,
+          ...(result.relatedQuestions ?? []).map((faq) => ({
+            type: "faq" as const,
+            label: faq.question,
+            value: faq.id,
+          })),
+        ]);
+      }
+      if (data.queued === false) {
+        setAgentTyping(true);
+        if (agentTypingTimer.current !== null) window.clearTimeout(agentTypingTimer.current);
+        agentTypingTimer.current = window.setTimeout(() => {
+          setAgentTyping(false);
+          agentTypingTimer.current = null;
+        }, 30000);
+      }
     } catch (sendError) {
       setError(sendError instanceof Error ? sendError.message : "Your message could not be sent.");
     } finally {
@@ -419,7 +442,7 @@ export default function ChatWidgetEmbed() {
                 ))}
                 {agentTyping && (
                   <p className="text-xs text-slate-600" role="status" aria-label="Agent is typing">
-                    {isHindi ? "एजेंट टाइप कर रहा है..." : "Agent is typing..."}
+                    {isHindi ? "टाइप कर रहा है..." : "Typing..."}
                   </p>
                 )}
                 {(error || pollError) && (
